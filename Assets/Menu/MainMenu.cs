@@ -11,6 +11,15 @@ public class MainMenu : MonoBehaviour
         GOs[1].SetActive(true);
     }
 
+    public void goTOGO(int lint)
+    {
+        for (int i = 0; i < GOs.Count; i++)
+        {
+            if(lint == i) GOs[i].SetActive(true);
+            else GOs[i].SetActive(false);
+        }
+    }
+
     public void Quit()
     {
         if (Application.isEditor) UnityEditor.EditorApplication.isPlaying = false;
