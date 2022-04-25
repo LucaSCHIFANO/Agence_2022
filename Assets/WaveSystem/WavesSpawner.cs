@@ -60,8 +60,7 @@ public class WavesSpawner : MonoBehaviour
 
     void SpawnAnEnemy()
     {
-        Vector3 spawnPoint = new Vector3(transform.position.x + Random.Range(-spawnRange, spawnRange + 1),
-            transform.position.y, transform.position.z + Random.Range(-spawnRange, spawnRange + 1));
+        Vector3 spawnPoint = new Vector3(transform.position.x + Random.Range(-spawnRange, spawnRange + 1), transform.position.y, transform.position.z + Random.Range(-spawnRange, spawnRange + 1));
         var enemy2 = Instantiate(enemy, spawnPoint, transform.rotation);
         enemy2.GetComponent<TestWaveEnemy>().target = WavesManager.Instance.target;
     }

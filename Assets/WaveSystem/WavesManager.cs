@@ -50,6 +50,7 @@ public class WavesManager : MonoBehaviour
     }
 
     
+    
     public void addSpawerToList(WavesSpawner spawner)
     {
         activeSpawner.Add(spawner);

@@ -603,9 +603,9 @@ MonoBehaviour:
   - {fileID: 1200436386}
   - {fileID: 919814637}
   _wavesList:
-  - enemyNumber: 0
-    delayBetwSpawn: 0
-    _sides: 01000000
+  - enemyNumber: 10
+    delayBetwSpawn: 0.5
+    _sides: 0100000000000000
   currentWave:
     enemyNumber: 0
     delayBetwSpawn: 0
@@ -614,7 +614,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   target: {fileID: 2059899373}
-  startWave: 0
+  startWave: 1
+  valeurtest: 1.5
 --- !u!1 &1200436384
 GameObject:
   m_ObjectHideFlags: 0
