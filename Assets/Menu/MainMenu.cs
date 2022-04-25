@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public List<GameObject> GOs = new List<GameObject>();
+    public void Play()
     {
-        
+        GOs[0].SetActive(false);
+        GOs[1].SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Quit()
     {
-        
+        if (Application.isEditor) UnityEditor.EditorApplication.isPlaying = false;
+        else Application.Quit();
     }
 }
