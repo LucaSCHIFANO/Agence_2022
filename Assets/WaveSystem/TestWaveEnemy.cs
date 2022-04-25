@@ -18,7 +18,6 @@ public class TestWaveEnemy : MonoBehaviour
     {
         if (other.gameObject == target.gameObject)
         {
-            Debug.Log("colliderator");
             Destroy(gameObject);
         }
     }

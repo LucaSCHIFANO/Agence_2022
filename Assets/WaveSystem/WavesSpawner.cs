@@ -37,7 +37,6 @@ public class WavesSpawner : MonoBehaviour
             }   
         }
 
-
         if (returnTrue)
         {
             WavesManager.Instance.addSpawerToList(this);
@@ -45,6 +44,8 @@ public class WavesSpawner : MonoBehaviour
       
     }
 
+    
+    
     void Update()
     {
         if (launch)
