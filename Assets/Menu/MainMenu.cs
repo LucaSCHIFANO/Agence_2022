@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
@@ -9,6 +10,8 @@ public class MainMenu : MonoBehaviour
 
     public List<GameObject> lobbySwitch = new List<GameObject>();
     public List<Button> lobbyButton = new List<Button>();
+    
+    public AudioMixer audioMix ;
     public void Play()
     {
         GOs[0].SetActive(false);
@@ -47,6 +50,26 @@ public class MainMenu : MonoBehaviour
         else Application.Quit();
     }
 
+    public void SaveSlider1(float volume)
+    {
+        audioMix.SetFloat("MasterVol", volume);
+    }
+    public void SaveSlider2(float volume)
+    {
+        audioMix.SetFloat("MusicVol", volume);
+    }
+    public void SaveSlider3(float volume)
+    {
+        audioMix.SetFloat("SFXVol", volume);
+    }
+    
+
+
+
+    #region Online
+
+    
+    
     public void Refresh()
     {
         Debug.Log("La il faut refresh julien");
@@ -66,5 +89,7 @@ public class MainMenu : MonoBehaviour
     {
         Application.OpenURL("https://www.youtube.com/watch?v=jbSbneyZxVI");
     }
+    
+    #endregion
     
 }
