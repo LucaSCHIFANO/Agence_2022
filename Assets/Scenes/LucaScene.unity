@@ -408,6 +408,7 @@ MonoBehaviour:
   _side: 3
   launch: 0
   enemy: {fileID: 2750137927162480026, guid: 38e264fb93d5ffe46bf103d1ffd697e0, type: 3}
+  empty: 0
 --- !u!1 &919814635
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,6 +457,7 @@ MonoBehaviour:
   _side: 1
   launch: 0
   enemy: {fileID: 2750137927162480026, guid: 38e264fb93d5ffe46bf103d1ffd697e0, type: 3}
+  empty: 0
 --- !u!1 &981666337
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,6 +506,7 @@ MonoBehaviour:
   _side: 2
   launch: 0
   enemy: {fileID: 2750137927162480026, guid: 38e264fb93d5ffe46bf103d1ffd697e0, type: 3}
+  empty: 0
 --- !u!1 &1029586880
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,6 +555,7 @@ MonoBehaviour:
   _side: 0
   launch: 0
   enemy: {fileID: 2750137927162480026, guid: 38e264fb93d5ffe46bf103d1ffd697e0, type: 3}
+  empty: 0
 --- !u!1 &1062521071
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,13 +607,22 @@ MonoBehaviour:
   - {fileID: 1200436386}
   - {fileID: 919814637}
   _wavesList:
-  - enemyNumber: 100
+  - delayBefore: 2
+    enemyNumber: 20
     delayBetwSpawn: 0.5
-    _sides: 01000000000000000200000003000000
+    _sides: 01000000000000000300000002000000
+    delayAfter: 1
+  - delayBefore: 2
+    enemyNumber: 20
+    delayBetwSpawn: 0.5
+    _sides: 01000000000000000300000002000000
+    delayAfter: 5
   currentWave:
+    delayBefore: 0
     enemyNumber: 0
     delayBetwSpawn: 0
     _sides: 
+    delayAfter: 0
   callForSpawners:
     m_PersistentCalls:
       m_Calls: []
@@ -664,6 +677,7 @@ MonoBehaviour:
   _side: 1
   launch: 0
   enemy: {fileID: 2750137927162480026, guid: 38e264fb93d5ffe46bf103d1ffd697e0, type: 3}
+  empty: 0
 --- !u!1 &2059899369
 GameObject:
   m_ObjectHideFlags: 0

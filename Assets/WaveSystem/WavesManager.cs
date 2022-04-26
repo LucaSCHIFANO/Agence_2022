@@ -14,6 +14,7 @@ public class WavesManager : MonoBehaviour
     [SerializeField] private List<Waves> _wavesList = new List<Waves>();
     
     private int wavesCount = 0;
+    private bool waveEnded;
     [HideInInspector] public Waves currentWave;
     
     //Event Spawn
@@ -42,6 +43,7 @@ public class WavesManager : MonoBehaviour
         if (startWave)
         {
             startWave = false;
+            waveEnded = false;
             currentWave = _wavesList[wavesCount];
             callForSpawners.Invoke(currentWave);
             
@@ -86,10 +88,10 @@ public class WavesManager : MonoBehaviour
             orderSpawn.Add(Random.Range(0, spawnerCount));
         }
 
-        for (int i = 0; i < orderSpawn.Count; i++)
+        /*for (int i = 0; i < orderSpawn.Count; i++)
         {
             Debug.Log(orderSpawn[i]);
-        }
+        }*/
         
         orderSpawn = suffleList(orderSpawn);
         StartCoroutine(spawnEnemies(orderSpawn));
@@ -113,13 +115,56 @@ public class WavesManager : MonoBehaviour
 
     IEnumerator spawnEnemies(List<int> order)
     {
+        yield return new WaitForSeconds(currentWave.delayBefore);
+        
         for (int i = 0; i < order.Count; i++)
         {
             activeSpawner[order[i]].launch = true;
             yield return new WaitForSeconds(currentWave.delayBetwSpawn);
         }
         
-        wavesCount++;
+        waveEnded = true;
+        
+    }
+    
+    
+    IEnumerator timeBtwWaves()
+    {
+        yield return new WaitForSeconds(currentWave.delayAfter);
+
+        if (wavesCount >= _wavesList.Count - 1)
+        {
+            Debug.Log("Fin de lvl");
+        }
+        else
+        {
+            wavesCount++;
+            startWave = true;
+        }
+        
+
+    }
+
+    public void checkEndWave()
+    {
+        if (waveEnded)
+        {
+            var isOk = true;
+            for (int i = 0; i < activeSpawner.Count; i++)
+            {
+                if (!activeSpawner[i].empty)
+                {
+                    isOk = false;
+                    break;
+                }
+
+            }
+
+            if (isOk)
+            {
+                StartCoroutine(timeBtwWaves());
+            }
+        }
     }
 
 
@@ -129,9 +174,11 @@ public class WavesManager : MonoBehaviour
     [System.Serializable]
     public class Waves
     {
+        public float delayBefore;
         public float enemyNumber;
         public float delayBetwSpawn;
         public List<WavesSpawner.Side> _sides = new List<WavesSpawner.Side>();
+        public float delayAfter;
     }
     
     [System.Serializable]

@@ -19,6 +19,9 @@ public class WavesSpawner : MonoBehaviour
     public bool launch;
     public GameObject enemy;
 
+    private int spawned;
+    [HideInInspector] public bool empty = true;
+
 
     private void Start()
     {
@@ -63,6 +66,21 @@ public class WavesSpawner : MonoBehaviour
         Vector3 spawnPoint = new Vector3(transform.position.x + Random.Range(-spawnRange, spawnRange + 1), transform.position.y, transform.position.z + Random.Range(-spawnRange, spawnRange + 1));
         var enemy2 = Instantiate(enemy, spawnPoint, transform.rotation);
         enemy2.GetComponent<TestWaveEnemy>().target = WavesManager.Instance.target;
+        enemy2.GetComponent<TestWaveEnemy>().mySpawn = this;
+        
+        empty = false;
+        spawned++;
+
+    }
+
+    public void spawnedDeath()
+    {
+        spawned--;
+        if (spawned == 0)
+        {
+            empty = true;
+            WavesManager.Instance.checkEndWave();
+        }
     }
 
     private void OnDrawGizmosSelected()

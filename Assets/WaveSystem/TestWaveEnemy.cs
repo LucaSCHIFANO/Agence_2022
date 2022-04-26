@@ -8,6 +8,7 @@ public class TestWaveEnemy : MonoBehaviour
 {
     public Transform target;
     public float speed;
+    public WavesSpawner mySpawn;
 
     void Update()
     {
@@ -18,6 +19,7 @@ public class TestWaveEnemy : MonoBehaviour
     {
         if (other.gameObject == target.gameObject)
         {
+            mySpawn.spawnedDeath();
             Destroy(gameObject);
         }
     }
