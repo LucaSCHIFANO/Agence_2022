@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +11,15 @@ public class MainMenu : MonoBehaviour
 
     public List<GameObject> lobbySwitch = new List<GameObject>();
     public List<Button> lobbyButton = new List<Button>();
-    
+    public List<Slider> sliderList = new List<Slider>();
+
     public AudioMixer audioMix ;
+
+    private void Start()
+    {
+        getSlider();
+    }
+
     public void Play()
     {
         GOs[0].SetActive(false);
@@ -50,20 +58,33 @@ public class MainMenu : MonoBehaviour
         else Application.Quit();
     }
 
-    public void SaveSlider1(float volume)
+    public void SetSlider1(float volume)
     {
         audioMix.SetFloat("MasterVol", volume);
+        saveSlider("MasterVol", volume);
     }
-    public void SaveSlider2(float volume)
+    public void SetSlider2(float volume)
     {
         audioMix.SetFloat("MusicVol", volume);
+        saveSlider("MusicVol", volume);
     }
-    public void SaveSlider3(float volume)
+    public void SetSlider3(float volume)
     {
         audioMix.SetFloat("SFXVol", volume);
+        saveSlider("SFXVol", volume);
+    }
+
+    private void saveSlider(string nameVol, float volume)
+    {
+        PlayerPrefs.SetFloat(nameVol, volume);
     }
     
-
+    private void getSlider()
+    {
+        sliderList[0].value = PlayerPrefs.GetFloat("MasterVol");
+        sliderList[1].value = PlayerPrefs.GetFloat("MusicVol");
+        sliderList[2].value = PlayerPrefs.GetFloat("SFXVol");
+    }
 
 
     #region Online
