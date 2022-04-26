@@ -7,11 +7,35 @@ public class Enemy : MonoBehaviour
     protected bool isDead;
     protected int actualHealth;
 
-    [SerializeField] protected int maxHealth;
+    protected GameObject[] weapons; // WeaponSO type
 
+    [SerializeField] protected Transform[] weaponsPosition;
+    
     public virtual void Initialization(EnemySO _enemySo)
     {
         actualHealth = _enemySo.health;
+
+        // TEMP
+        if (_enemySo.weapons.Length > 1)
+        {
+            weapons = new GameObject[1];
+
+            int randomWeapon = Random.Range(0, _enemySo.weapons.Length);
+            weapons[0] = _enemySo.weapons[randomWeapon];
+        }
+        else if (_enemySo.weapons.Length == 1)
+        {
+            weapons = new GameObject[1];
+            weapons[0] = _enemySo.weapons[0];
+        }
+
+        if (weapons != null)
+        {
+            GameObject nWeapon = Instantiate(weapons[0], weaponsPosition[0].position, Quaternion.identity);
+            nWeapon.transform.parent = weaponsPosition[0];
+        }
+        // TEMP
+        
     }
     
     public virtual void TakeDamage(int _damages)

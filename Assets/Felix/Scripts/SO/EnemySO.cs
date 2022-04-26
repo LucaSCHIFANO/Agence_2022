@@ -6,7 +6,9 @@ using UnityEngine;
 public class EnemySO : ScriptableObject
 {
     public int health;
-    // Weapons array to generate on the vehicle model
+    public float speed;
+    [Space]
+    public GameObject[] weapons; // Weapons array to generate on the vehicle model // WeaponSO type
     public bool isKamikaze;
     [Space]
     public GameObject enemyPrefab;
