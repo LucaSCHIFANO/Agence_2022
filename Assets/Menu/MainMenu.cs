@@ -61,5 +61,10 @@ public class MainMenu : MonoBehaviour
     {
         Application.OpenURL("https://www.youtube.com/watch?v=dpbnVJDip6I");
     }
+
+    public void ready()
+    {
+        Application.OpenURL("https://www.youtube.com/watch?v=jbSbneyZxVI");
+    }
     
 }
