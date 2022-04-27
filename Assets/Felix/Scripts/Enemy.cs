@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,37 +8,62 @@ public class Enemy : MonoBehaviour
     protected bool isDead;
     protected int actualHealth;
 
-    protected GameObject[] weapons; // WeaponSO type
+    protected WeaponBase[] weapons; // WeaponSO type
 
     [SerializeField] protected Transform[] weaponsPosition;
+
+    [SerializeField] protected Transform shootObject; // DEBUG
     
     public virtual void Initialization(EnemySO _enemySo)
     {
         actualHealth = _enemySo.health;
 
         // TEMP
-        if (_enemySo.weapons.Length > 1)
+        GameObject[] weaponsObject;
+        
+        if (_enemySo.weapons.Length >= weaponsPosition.Length)
         {
-            weapons = new GameObject[1];
+            weaponsObject = new GameObject[weaponsPosition.Length];
 
-            int randomWeapon = Random.Range(0, _enemySo.weapons.Length);
-            weapons[0] = _enemySo.weapons[randomWeapon];
+            for (int i = 0; i < weaponsPosition.Length; i++)
+            {
+                weaponsObject[i] = _enemySo.weapons[i];
+            }
         }
-        else if (_enemySo.weapons.Length == 1)
+        else
         {
-            weapons = new GameObject[1];
-            weapons[0] = _enemySo.weapons[0];
+            weaponsObject = new GameObject[_enemySo.weapons.Length];
+
+            for (int i = 0; i < _enemySo.weapons.Length; i++)
+            {
+                weaponsObject[i] = _enemySo.weapons[i];
+            }
         }
 
-        if (weapons != null)
+        if (weaponsObject != null)
         {
-            GameObject nWeapon = Instantiate(weapons[0], weaponsPosition[0].position, Quaternion.identity);
-            nWeapon.transform.parent = weaponsPosition[0];
+            weapons = new WeaponBase[weaponsObject.Length];
+            
+            for (int i = 0; i < weaponsObject.Length; i++)
+            {
+                GameObject nWeapon = Instantiate(weaponsObject[i], weaponsPosition[i].position, weaponsPosition[i].rotation);
+                nWeapon.transform.parent = weaponsPosition[i];
+                weapons[i] = nWeapon.GetComponent<WeaponBase>();
+            }
         }
         // TEMP
         
     }
-    
+
+    private void FixedUpdate()
+    {
+        for (int i = 0; i < weapons.Length; i++)
+        {
+            //weapons[i].gameObject.transform.rotation // ROTATE WEAPON
+            weapons[i].Shoot();
+        }
+    }
+
     public virtual void TakeDamage(int _damages)
     {
         if (isDead) return;

@@ -11,7 +11,7 @@ public class EnemySpawnDebug : MonoBehaviour
     {
         if (enemy != null)
         {
-            GameObject enemyGo = Instantiate(enemy.enemyPrefab);
+            GameObject enemyGo = Instantiate(enemy.enemyPrefab, Vector3.zero, Quaternion.identity);
             enemyGo.GetComponent<Enemy>().Initialization(enemy);
         }
     }
