@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class WTreeButton : MonoBehaviour
 {
    private Image image;
+   private bool cannotBeSelected;
 
    private void Start()
    {
@@ -15,7 +16,7 @@ public class WTreeButton : MonoBehaviour
 
    public void selected()
    {
-      UpgradeMenu.Instance.upgradeWeapon1(this);
+      if(!cannotBeSelected) UpgradeMenu.Instance.upgradeWeapon1(this);
       
    }
 
@@ -27,11 +28,13 @@ public class WTreeButton : MonoBehaviour
    public void notSelectedYet()
    {
       image.color = Color.gray;
+      cannotBeSelected = false;
    }
    
    public void unselectable()
    {
       image.color = Color.black;
+      cannotBeSelected = true;
    }
    
 }
