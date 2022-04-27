@@ -9,7 +9,7 @@ public class UpgradeMenu : MonoBehaviour
    public List<GameObject> screenList = new List<GameObject>();
    
    [Header("Forteresse")]
-   private List<int> upgradesF = new List<int>(3); //upgrades forteresse en int
+   private List<int> upgradesF = new List<int>(); //upgrades forteresse en int
    [SerializeField] private List<Image> upgradesFVisu = new List<Image>(); //upgrades forteresse mais les visus
    [SerializeField] private List<GameObject> upgradesFButton = new List<GameObject>(); //upgrades forteresse mais les buttons +
 
@@ -61,4 +61,5 @@ public class UpgradeMenu : MonoBehaviour
       }
       #endregion
    }
+   
 }
