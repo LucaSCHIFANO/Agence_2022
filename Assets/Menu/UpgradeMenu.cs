@@ -21,8 +21,14 @@ public class UpgradeMenu : MonoBehaviour
    [SerializeField] private List<Image> upgradesCVisu = new List<Image>(); //upgrades forteresse mais les visus
    [SerializeField] private List<GameObject> upgradesCButton = new List<GameObject>(); //upgrades forteresse mais les buttons +
 
-   [Header("Weapons1")] [SerializeField] private List<listWeapon> UpgradeW1Button = new List<listWeapon>();
-
+   [Header("Weapons1")]
+   [SerializeField] private List<listWeapon> UpgradeW1Button = new List<listWeapon>();
+   private int upgardesLevel = 1;
+   
+   [Header("Weapons2")]
+   [SerializeField] private List<listWeapon> UpgradeW2Button = new List<listWeapon>();
+   private int upgardesLevel2 = 1;
+   
    #region Singleton
    private static UpgradeMenu instance;
    public static UpgradeMenu Instance { get => instance; set => instance = value; }
@@ -42,9 +48,17 @@ public class UpgradeMenu : MonoBehaviour
          upgradesF.Add(0);
          upgradesC.Add(0);
       }
-
-      disablgrayAllWeapon1();
+      
+      
+      //pour tout set et que ca bug pas
+      gotoScreen(3);
+      upgradeWeapon1(UpgradeW1Button[0].buttons[0]);
+      gotoScreen(4);
+      upgradeWeapon2(UpgradeW2Button[0].buttons[0]);
+      gotoScreen(0);
    }
+   
+   
 
    public void gotoScreen(int lint)
    {
@@ -78,14 +92,23 @@ public class UpgradeMenu : MonoBehaviour
          {
             if (UpgradeW1Button[i].buttons.Contains(buttonTree))
             {
-               if(!found) UpgradeW1Button[i].buttons[j].turnOn();
+               if (j == 0 || !found) UpgradeW1Button[i].buttons[j].buyed();
+               else if(upgardesLevel == j) UpgradeW1Button[i].buttons[j].turnOn();
                else UpgradeW1Button[i].buttons[j].notSelectedYet();
+               
+               
+               if (UpgradeW1Button[i].buttons[j] == buttonTree)
+               {
+                  found = true;
+                  UpgradeW1Button[i].buttons[j].buyed();
 
-               if (UpgradeW1Button[i].buttons[j] == buttonTree) found = true;
+               }
             }
             else break;
          }
       }
+
+      upgardesLevel++;
    }
 
    private void disableAllWeapon1()
@@ -98,8 +121,51 @@ public class UpgradeMenu : MonoBehaviour
          }
       }
    }
+   
+   
+   
+   public void upgradeWeapon2(WTreeButton buttonTree)
+   {
+      disableAllWeapon2();
+      
+      for (int i = 0; i < UpgradeW2Button.Count; i++)
+      {
+         var found = false;
+         for (int j = 0; j < UpgradeW2Button[i].buttons.Count; j++)
+         {
+            if (UpgradeW2Button[i].buttons.Contains(buttonTree))
+            {
+               if (j == 0 || !found) UpgradeW2Button[i].buttons[j].buyed();
+               else if(upgardesLevel2 == j) UpgradeW2Button[i].buttons[j].turnOn();
+               else UpgradeW2Button[i].buttons[j].notSelectedYet();
+               
+               
+               if (UpgradeW2Button[i].buttons[j] == buttonTree)
+               {
+                  found = true;
+                  UpgradeW2Button[i].buttons[j].buyed();
 
-   private void disablgrayAllWeapon1()
+               }
+            }
+            else break;
+         }
+      }
+
+      upgardesLevel2++;
+   }
+
+   private void disableAllWeapon2()
+   {
+      for (int i = 0; i < UpgradeW2Button.Count; i++)
+      {
+         for (int j = 0; j < UpgradeW2Button[i].buttons.Count; j++)
+         {
+            UpgradeW2Button[i].buttons[j].unselectable();
+         }
+      }
+   }
+
+   /*private void disablgrayAllWeapon1()
    {
       for (int i = 0; i < UpgradeW1Button.Count; i++)
       {
@@ -108,7 +174,7 @@ public class UpgradeMenu : MonoBehaviour
             UpgradeW1Button[i].buttons[j].notSelectedYet();
          }
       }
-   }
+   }*/
 
    /*private void updateVisu()
    {

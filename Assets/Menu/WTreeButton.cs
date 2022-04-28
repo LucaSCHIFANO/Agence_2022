@@ -8,32 +8,44 @@ public class WTreeButton : MonoBehaviour
 {
    private Image image;
    private bool cannotBeSelected;
+   public bool firstWeapon;
 
-   private void Start()
+   private void Awake()
    {
       image = GetComponent<Image>();
    }
 
    public void selected()
    {
-      if(!cannotBeSelected) UpgradeMenu.Instance.upgradeWeapon1(this);
+      if (!cannotBeSelected)
+      {
+         if(firstWeapon) UpgradeMenu.Instance.upgradeWeapon1(this);
+         else UpgradeMenu.Instance.upgradeWeapon2(this);
+      }
       
+   }
+
+   public void buyed()
+   {
+      image.color = new Color(0, 0, 0, 0);
+      cannotBeSelected = true;
    }
 
    public void turnOn()
    {
-      image.color = Color.white;
+      image.color = new Color(0.5f, 0.5f, 0.5f, 0.2f);
+      cannotBeSelected = false;
    }
 
    public void notSelectedYet()
    {
-      image.color = Color.gray;
-      cannotBeSelected = false;
+      image.color = new Color(0.5f, 0.5f, 0.5f, 0.8f);
+      cannotBeSelected = true;
    }
    
    public void unselectable()
    {
-      image.color = Color.black;
+      image.color = new Color(0, 0 ,0, 0.9f);
       cannotBeSelected = true;
    }
    
