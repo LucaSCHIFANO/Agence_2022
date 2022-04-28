@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,14 +13,16 @@ public class UpgradeMenu : MonoBehaviour
    private int intUpgrade = 4;
    
    [Header("Forteresse")]
-   private List<int> upgradesF = new List<int>(); //upgrades forteresse en int
    [SerializeField] private List<Image> upgradesFVisu = new List<Image>(); //upgrades forteresse mais les visus
    [SerializeField] private List<GameObject> upgradesFButton = new List<GameObject>(); //upgrades forteresse mais les buttons +
+   [SerializeField] private List<TextMeshProUGUI> listPriceF = new List<TextMeshProUGUI>();
+   private List<int> upgradesF = new List<int>(); //upgrades forteresse en int
    
    [Header("Camion")]
-   private List<int> upgradesC = new List<int>(); //upgrades forteresse en int
    [SerializeField] private List<Image> upgradesCVisu = new List<Image>(); //upgrades forteresse mais les visus
    [SerializeField] private List<GameObject> upgradesCButton = new List<GameObject>(); //upgrades forteresse mais les buttons +
+   [SerializeField] private List<TextMeshProUGUI> listPriceC = new List<TextMeshProUGUI>();
+   private List<int> upgradesC = new List<int>(); //upgrades forteresse en int
 
    [Header("Weapons1")]
    [SerializeField] private List<listWeapon> UpgradeW1Button = new List<listWeapon>();
@@ -28,7 +31,13 @@ public class UpgradeMenu : MonoBehaviour
    [Header("Weapons2")]
    [SerializeField] private List<listWeapon> UpgradeW2Button = new List<listWeapon>();
    private int upgardesLevel2 = 1;
-   
+
+
+   [Header("Price Upgrade --- GD")]
+   public List<listInt> FPrice = new List<listInt>();
+   public List<listInt> CPrice = new List<listInt>();
+
+
    #region Singleton
    private static UpgradeMenu instance;
    public static UpgradeMenu Instance { get => instance; set => instance = value; }
@@ -48,14 +57,21 @@ public class UpgradeMenu : MonoBehaviour
          upgradesF.Add(0);
          upgradesC.Add(0);
       }
-      
-      
-      //pour tout set et que ca bug pas
+
+
+
+
+      #region pour tout set et que ca bug pas
+      gotoScreen(1);
+      visuF();
+      gotoScreen(2);
+      visuC();
       gotoScreen(3);
       upgradeWeapon1(UpgradeW1Button[0].buttons[0]);
       gotoScreen(4);
       upgradeWeapon2(UpgradeW2Button[0].buttons[0]);
       gotoScreen(0);
+      #endregion
    }
    
    
@@ -68,18 +84,42 @@ public class UpgradeMenu : MonoBehaviour
          else screenList[i].SetActive(false);
       }
    }
+   
+   
+   
+   
+   
+   
 
    public void upgradeForteresse(int lint)
    {
-      upgradesF[lint]++;
-      visuF();
+      if (FPrice[lint].intList[upgradesF[lint]] <= ScrapMetal.Instance.scrap)
+      {
+         ScrapMetal.Instance.addMoney(-FPrice[lint].intList[upgradesF[lint]]);
+
+         upgradesF[lint]++;
+         visuF();
+      }
    }
    
    public void upgradeCamion(int lint)
    {
-      upgradesC[lint]++;
-      visuC();
+      if (CPrice[lint].intList[upgradesC[lint]] <= ScrapMetal.Instance.scrap)
+      {
+         ScrapMetal.Instance.addMoney(-CPrice[lint].intList[upgradesC[lint]]);
+
+         upgradesC[lint]++;
+         visuC();
+      }
    }
+   
+   
+   
+   
+   
+   
+   
+   
 
    public void upgradeWeapon1(WTreeButton buttonTree)
    {
@@ -124,6 +164,12 @@ public class UpgradeMenu : MonoBehaviour
    
    
    
+   
+   
+   
+   
+   
+   
    public void upgradeWeapon2(WTreeButton buttonTree)
    {
       disableAllWeapon2();
@@ -165,6 +211,13 @@ public class UpgradeMenu : MonoBehaviour
       }
    }
 
+   
+   
+   
+   
+   
+   
+   
    /*private void disablgrayAllWeapon1()
    {
       for (int i = 0; i < UpgradeW1Button.Count; i++)
@@ -182,6 +235,13 @@ public class UpgradeMenu : MonoBehaviour
       visuC();
    }*/
 
+   
+   
+   
+   
+   
+   
+   
 
    private void visuF()
    {
@@ -202,6 +262,12 @@ public class UpgradeMenu : MonoBehaviour
 
          if(upgradesF[i]==intUpgrade) upgradesFButton[i].SetActive(false);
          multi++;
+      }
+
+
+      for (int i = 0; i < listPriceF.Count; i++)
+      {
+         if(listPriceF[i].IsActive()) listPriceF[i].text = FPrice[i].intList[upgradesF[i]].ToString();
       }
    }
    
@@ -224,6 +290,11 @@ public class UpgradeMenu : MonoBehaviour
 
          if(upgradesC[i]==intUpgrade) upgradesCButton[i].SetActive(false);
          multi++;
+         
+         for (int j = 0; j < listPriceF.Count; j++)
+         {
+            if(listPriceC[j].IsActive()) listPriceC[j].text = CPrice[j].intList[upgradesC[j]].ToString();
+         }
       }
    }
 
@@ -232,5 +303,12 @@ public class UpgradeMenu : MonoBehaviour
    public class listWeapon
    {
       public List<WTreeButton> buttons;
+   }
+   
+   [System.Serializable]
+   public class listInt
+   {
+      public string newName;
+      public List<int> intList;
    }
 }
