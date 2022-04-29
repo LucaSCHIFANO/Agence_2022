@@ -27,10 +27,12 @@ public class UpgradeMenu : MonoBehaviour
    [Header("Weapons1")]
    [SerializeField] private List<listWeapon> UpgradeW1Button = new List<listWeapon>();
    private int upgardesLevel = 1;
+   [HideInInspector] public WTreeButton lastUpgrade1;
    
    [Header("Weapons2")]
    [SerializeField] private List<listWeapon> UpgradeW2Button = new List<listWeapon>();
    private int upgardesLevel2 = 1;
+   [HideInInspector] public WTreeButton lastUpgrade2;
 
 
    [Header("Price Upgrade --- GD")]
@@ -148,6 +150,7 @@ public class UpgradeMenu : MonoBehaviour
          }
       }
 
+      lastUpgrade1 = buttonTree;
       upgardesLevel++;
    }
 
@@ -197,6 +200,7 @@ public class UpgradeMenu : MonoBehaviour
          }
       }
 
+      lastUpgrade2 = buttonTree;
       upgardesLevel2++;
    }
 
