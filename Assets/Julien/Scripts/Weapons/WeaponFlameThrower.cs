@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class WeaponFlameThrower : WeaponBase
@@ -10,8 +11,10 @@ public class WeaponFlameThrower : WeaponBase
 
     public override void Shoot()
     {
-        _particleSystem.Play();
+        if (bulletLeft <= 0) return;
         
         base.Shoot();
+        
+        _particleSystem.Play();
     }
 }

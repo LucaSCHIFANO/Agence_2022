@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class WeaponMachineGun : WeaponBase
@@ -11,6 +12,9 @@ public class WeaponMachineGun : WeaponBase
     public override void Shoot()
     {
         if (shootingTimer > 0) return;
+        if (bulletLeft <= 0) return;
+        
+        base.Shoot();
         
         if (_fireType == WeaponFireType.Hitscan)
         {
@@ -30,7 +34,5 @@ public class WeaponMachineGun : WeaponBase
         }
         
         shootingTimer = 1 / _fireRate;
-        
-        base.Shoot();
     }
 }

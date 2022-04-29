@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public abstract class WeaponBase : MonoBehaviour
@@ -19,9 +21,19 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField]
     protected GameObject _bulletPrefab;
 
+    [SerializeField] protected int magazineSize;
+    [SerializeField] protected float reloadTime;
+
     #endregion
 
+    protected int bulletLeft;
+    protected bool isReloading;
     protected float shootingTimer;
+
+    protected virtual void Start()
+    {
+        bulletLeft = magazineSize;
+    }
 
     protected virtual void FixedUpdate()
     {
@@ -30,6 +42,26 @@ public abstract class WeaponBase : MonoBehaviour
 
     public virtual void Shoot()
     {
+        bulletLeft--;
+        
         EventSystem.ShootEvent();
     }
+
+    public void Reload()
+    {
+        if (isReloading) return;
+        
+        isReloading = true;
+        StartCoroutine(ReloadCoroutine());
+    }
+
+    IEnumerator ReloadCoroutine()
+    {
+        yield return new WaitForSecondsRealtime(reloadTime);
+
+        bulletLeft = magazineSize;
+        isReloading = false;
+    }
+    
+    
 }

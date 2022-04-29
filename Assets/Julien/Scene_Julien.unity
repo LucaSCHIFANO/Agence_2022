@@ -283,6 +283,8 @@ MonoBehaviour:
   _fireRate: 1
   _shootingPoint: {fileID: 0}
   _bulletPrefab: {fileID: 0}
+  magazineSize: 0
+  reloadTime: 0
   _particleSystem: {fileID: 592835564}
 --- !u!1 &216113894
 GameObject:
@@ -5571,6 +5573,8 @@ MonoBehaviour:
   _shootingPoint: {fileID: 892029261}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
     type: 3}
+  magazineSize: 0
+  reloadTime: 0
   _fireType: 0
   _spread: 0
 --- !u!1 &592835563
@@ -10834,6 +10838,8 @@ MonoBehaviour:
   _shootingPoint: {fileID: 1303933044}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
     type: 3}
+  magazineSize: 0
+  reloadTime: 0
   _numberOfBullet: 10
   _spread: 20
 --- !u!114 &1098558740
@@ -10941,10 +10947,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8374b065814149847a722e4fe0d2db30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponUpgrades: []
-  _weaponUpgradeCost: 
-  _statsUpgrades: []
-  _statsUpgradeCost: 
 --- !u!1 &1212728788
 GameObject:
   m_ObjectHideFlags: 0
@@ -11176,6 +11178,8 @@ MonoBehaviour:
   _shootingPoint: {fileID: 39084258}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
     type: 3}
+  magazineSize: 10
+  reloadTime: 3
   _fireType: 1
   _spread: 10
 --- !u!114 &1497257709
@@ -11340,6 +11344,8 @@ MonoBehaviour:
   _shootingPoint: {fileID: 687760314}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
     type: 3}
+  magazineSize: 0
+  reloadTime: 0
   _fireType: 1
   _spread: 10
   _numberOfShot: 3
@@ -11664,6 +11670,8 @@ MonoBehaviour:
   _fireRate: 1
   _shootingPoint: {fileID: 0}
   _bulletPrefab: {fileID: 0}
+  magazineSize: 0
+  reloadTime: 0
   _particleSystem: {fileID: 259897296}
 --- !u!1 &2118626266
 GameObject:

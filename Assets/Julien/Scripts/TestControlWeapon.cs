@@ -24,5 +24,10 @@ public class TestControlWeapon : MonoBehaviour
         {
             GetComponent<WeaponBase>().Shoot();
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            GetComponent<WeaponBase>().Reload();
+        }
     }
 }

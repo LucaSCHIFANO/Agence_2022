@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class WeaponShotgun : WeaponBase
@@ -10,6 +11,9 @@ public class WeaponShotgun : WeaponBase
     public override void Shoot()
     {
         if (shootingTimer > 0) return;
+        if (bulletLeft <= 0) return;
+        
+        base.Shoot();
         
         // (Modifier cette ligne si object pooling)
         for (int i = 0; i < _numberOfBullet; i++)
@@ -20,7 +24,5 @@ public class WeaponShotgun : WeaponBase
         }
         
         shootingTimer = 1 / _fireRate;
-        
-        base.Shoot();
     }
 }
