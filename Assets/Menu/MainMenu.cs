@@ -8,6 +8,7 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu : NetworkBehaviour
@@ -34,6 +35,7 @@ public class MainMenu : NetworkBehaviour
     [SerializeField] private Transform _InLobbyList;
     [SerializeField] private TextMeshProUGUI _InLobbyCode;
     [SerializeField] private TextMeshProUGUI _InLobbyName;
+    [SerializeField] private GameObject _InLobbyLaunchButton;
 
     private NetworkList<LobbyPlayersState> lobbyPlayers;
 
@@ -265,6 +267,11 @@ public class MainMenu : NetworkBehaviour
             _InLobbyList.GetChild(i).gameObject.SetActive(i < lobbyJoined.Players.Count);
         }
 
+        if (IsHost)
+        {
+            _InLobbyLaunchButton.SetActive(true);
+        }
+
         Debug.Log("Lobby Info Completed !");
     }
 
@@ -292,6 +299,11 @@ public class MainMenu : NetworkBehaviour
                 break;
             }
         }
+    }
+
+    public void StartGame()
+    {
+        NetworkManager.Singleton.SceneManager.LoadScene("LucaScene", LoadSceneMode.Single);
     }
 
     #endregion

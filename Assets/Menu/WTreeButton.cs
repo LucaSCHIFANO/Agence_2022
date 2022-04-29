@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class WTreeButton : MonoBehaviour
 {
+   public int id;
+   
    private Image image;
    private TextMeshProUGUI text;
    private bool cannotBeSelected;

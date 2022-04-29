@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Collections;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UpgradeMenu : MonoBehaviour
+public class UpgradeMenu : NetworkBehaviour
 {
    public List<GameObject> screenList = new List<GameObject>();
 
@@ -45,23 +46,37 @@ public class UpgradeMenu : MonoBehaviour
    public static UpgradeMenu Instance { get => instance; set => instance = value; }
    #endregion
 
+   private NetworkList<int> upgradesForteresseServer;
+   private NetworkList<int> upgradesCamionServer;
+   private NetworkList<int> unlockedWeaponServer;
+
    private void Awake()
    {
       if (Instance == null)
          Instance = this;
+      
+      
+      upgradesForteresseServer = new NetworkList<int>();
+      upgradesCamionServer = new NetworkList<int>();
+      unlockedWeaponServer = new NetworkList<int>();
    }
 
 
    private void Start()
    {
+      Debug.Log("Start Init");
+
       for (int i = 0; i < 3; i++)
       {
          upgradesF.Add(0);
+         upgradesForteresseServer.Add(0);
+         upgradesCamionServer.Add(0);
          upgradesC.Add(0);
       }
-
-
-
+      
+      Debug.Log("End Init");
+      
+      Debug.Log(upgradesForteresseServer.Count);
 
       #region pour tout set et que ca bug pas
       gotoScreen(1);
@@ -75,8 +90,17 @@ public class UpgradeMenu : MonoBehaviour
       gotoScreen(0);
       #endregion
    }
-   
-   
+
+   public override void OnNetworkSpawn()
+   {
+      base.OnNetworkSpawn();
+
+      if (IsClient)
+      {
+         upgradesForteresseServer.OnListChanged += UpgradesForteresseServerOnChanged;
+      }
+   }
+
 
    public void gotoScreen(int lint)
    {
@@ -86,12 +110,6 @@ public class UpgradeMenu : MonoBehaviour
          else screenList[i].SetActive(false);
       }
    }
-   
-   
-   
-   
-   
-   
 
    public void upgradeForteresse(int lint)
    {
@@ -99,8 +117,7 @@ public class UpgradeMenu : MonoBehaviour
       {
          ScrapMetal.Instance.addMoney(-FPrice[lint].intList[upgradesF[lint]]);
 
-         upgradesF[lint]++;
-         visuF();
+         UpgradeForteresseServerRpc(lint);
       }
    }
    
@@ -294,11 +311,11 @@ public class UpgradeMenu : MonoBehaviour
 
          if(upgradesC[i]==intUpgrade) upgradesCButton[i].SetActive(false);
          multi++;
-         
-         for (int j = 0; j < listPriceF.Count; j++)
-         {
-            if(listPriceC[j].IsActive()) listPriceC[j].text = CPrice[j].intList[upgradesC[j]].ToString();
-         }
+      }
+      
+      for (int j = 0; j < listPriceF.Count; j++)
+      {
+         if(listPriceC[j].IsActive()) listPriceC[j].text = CPrice[j].intList[upgradesC[j]].ToString();
       }
    }
 
@@ -315,4 +332,29 @@ public class UpgradeMenu : MonoBehaviour
       public string newName;
       public List<int> intList;
    }
+
+
+
+   #region Online
+
+
+   [ServerRpc]
+   public void UpgradeForteresseServerRpc(int upgradeIndex)
+   {
+      Debug.Log("Is Owner" + IsOwner);
+      
+      Debug.Log(upgradesForteresseServer);
+      
+      upgradesForteresseServer[upgradeIndex]++;
+   }
+
+   private void UpgradesForteresseServerOnChanged(NetworkListEvent<int> newList)
+   {
+      upgradesF[newList.Index] = newList.Value;
+      visuF();
+   }
+   
+   
+
+   #endregion
 }
