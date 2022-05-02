@@ -10,8 +10,11 @@ public class WTreeButton : MonoBehaviour
    private Image image;
    private TextMeshProUGUI text;
    private bool cannotBeSelected;
-   public bool firstWeapon;
-   public int price;
+   [HideInInspector]public bool canBeUpgrades;
+   [SerializeField] private bool firstWeapon;
+   [SerializeField] private int price;
+
+   public WTreeButton previousUpgrades;
 
    private void Awake()
    {
@@ -37,6 +40,7 @@ public class WTreeButton : MonoBehaviour
       image.color = new Color(0, 0, 0, 0);
       cannotBeSelected = true;
       text.gameObject.SetActive(false);
+      canBeUpgrades = false;
    }
 
    public void turnOn()
@@ -44,6 +48,7 @@ public class WTreeButton : MonoBehaviour
       image.color = new Color(0.5f, 0.5f, 0.5f, 0.2f);
       cannotBeSelected = false;
       text.gameObject.SetActive(true);
+      canBeUpgrades = true;
    }
 
    public void notSelectedYet()
@@ -51,6 +56,7 @@ public class WTreeButton : MonoBehaviour
       image.color = new Color(0.5f, 0.5f, 0.5f, 0.8f);
       cannotBeSelected = true;
       text.gameObject.SetActive(false);
+      canBeUpgrades = true;
    }
    
    public void unselectable()
@@ -58,6 +64,7 @@ public class WTreeButton : MonoBehaviour
       image.color = new Color(0, 0 ,0, 0.9f);
       cannotBeSelected = true;
       text.gameObject.SetActive(false);
+      canBeUpgrades = false;
    }
    
 }

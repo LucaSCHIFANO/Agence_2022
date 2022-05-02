@@ -24,13 +24,15 @@ public class UpgradeMenu : MonoBehaviour
    [SerializeField] private List<TextMeshProUGUI> listPriceC = new List<TextMeshProUGUI>();
    private List<int> upgradesC = new List<int>(); //upgrades forteresse en int
 
-   [Header("Weapons1")]
-   [SerializeField] private List<listWeapon> UpgradeW1Button = new List<listWeapon>();
+
+
+   [Header("Weapons1")] 
+   public List<WTreeButton> listAllButton1 = new List<WTreeButton>();
    private int upgardesLevel = 1;
    [HideInInspector] public WTreeButton lastUpgrade1;
    
    [Header("Weapons2")]
-   [SerializeField] private List<listWeapon> UpgradeW2Button = new List<listWeapon>();
+   public List<WTreeButton> listAllButton2 = new List<WTreeButton>();
    private int upgardesLevel2 = 1;
    [HideInInspector] public WTreeButton lastUpgrade2;
 
@@ -69,9 +71,9 @@ public class UpgradeMenu : MonoBehaviour
       gotoScreen(2);
       visuC();
       gotoScreen(3);
-      upgradeWeapon1(UpgradeW1Button[0].buttons[0]);
+      upgradeWeapon1(listAllButton1[0]);
       gotoScreen(4);
-      upgradeWeapon2(UpgradeW2Button[0].buttons[0]);
+      upgradeWeapon2(listAllButton2[0]);
       gotoScreen(0);
       #endregion
    }
@@ -126,48 +128,36 @@ public class UpgradeMenu : MonoBehaviour
    public void upgradeWeapon1(WTreeButton buttonTree)
    {
       disableAllWeapon1();
-      
-      for (int i = 0; i < UpgradeW1Button.Count; i++)
-      {
-         var found = false;
-         for (int j = 0; j < UpgradeW1Button[i].buttons.Count; j++)
-         {
-            if (UpgradeW1Button[i].buttons.Contains(buttonTree))
-            {
-               if (j == 0 || !found) UpgradeW1Button[i].buttons[j].buyed();
-               else if(upgardesLevel == j) UpgradeW1Button[i].buttons[j].turnOn();
-               else UpgradeW1Button[i].buttons[j].notSelectedYet();
-               
-               
-               if (UpgradeW1Button[i].buttons[j] == buttonTree)
-               {
-                  found = true;
-                  UpgradeW1Button[i].buttons[j].buyed();
 
-               }
-            }
-            else break;
+      var currentButtonTree = buttonTree;
+      bool finished = false;
+
+      while (!finished)
+      {
+         currentButtonTree.buyed();
+         if (currentButtonTree.previousUpgrades != null) currentButtonTree = currentButtonTree.previousUpgrades;
+         else finished = true;
+      }
+
+
+      for (int i = 0; i < listAllButton1.Count; i++)
+      {
+         if (listAllButton1[i].previousUpgrades != null)
+         {
+            if (listAllButton1[i].previousUpgrades == buttonTree) listAllButton1[i].turnOn();
+            else if (listAllButton1[i].previousUpgrades.canBeUpgrades) listAllButton1[i].notSelectedYet();
          }
       }
 
-      lastUpgrade1 = buttonTree;
-      upgardesLevel++;
    }
 
    private void disableAllWeapon1()
    {
-      for (int i = 0; i < UpgradeW1Button.Count; i++)
+      for (int i = 0; i < listAllButton1.Count; i++)
       {
-         for (int j = 0; j < UpgradeW1Button[i].buttons.Count; j++)
-         {
-            UpgradeW1Button[i].buttons[j].unselectable();
-         }
+         listAllButton1[i].unselectable();
       }
    }
-   
-   
-   
-   
    
    
    
@@ -177,41 +167,31 @@ public class UpgradeMenu : MonoBehaviour
    {
       disableAllWeapon2();
       
-      for (int i = 0; i < UpgradeW2Button.Count; i++)
-      {
-         var found = false;
-         for (int j = 0; j < UpgradeW2Button[i].buttons.Count; j++)
-         {
-            if (UpgradeW2Button[i].buttons.Contains(buttonTree))
-            {
-               if (j == 0 || !found) UpgradeW2Button[i].buttons[j].buyed();
-               else if(upgardesLevel2 == j) UpgradeW2Button[i].buttons[j].turnOn();
-               else UpgradeW2Button[i].buttons[j].notSelectedYet();
-               
-               
-               if (UpgradeW2Button[i].buttons[j] == buttonTree)
-               {
-                  found = true;
-                  UpgradeW2Button[i].buttons[j].buyed();
+      var currentButtonTree = buttonTree;
+      bool finished = false;
 
-               }
-            }
-            else break;
+      while (!finished)
+      {
+         currentButtonTree.buyed();
+         if (currentButtonTree.previousUpgrades != null) currentButtonTree = currentButtonTree.previousUpgrades;
+         else finished = true;
+      }
+      
+      for (int i = 0; i < listAllButton2.Count; i++)
+      {
+         if (listAllButton1[i].previousUpgrades != null)
+         {
+            if (listAllButton2[i].previousUpgrades == buttonTree) listAllButton2[i].turnOn();
+            else if (listAllButton2[i].previousUpgrades.canBeUpgrades) listAllButton2[i].notSelectedYet();
          }
       }
-
-      lastUpgrade2 = buttonTree;
-      upgardesLevel2++;
    }
-
+   
    private void disableAllWeapon2()
    {
-      for (int i = 0; i < UpgradeW2Button.Count; i++)
+      for (int i = 0; i < listAllButton2.Count; i++)
       {
-         for (int j = 0; j < UpgradeW2Button[i].buttons.Count; j++)
-         {
-            UpgradeW2Button[i].buttons[j].unselectable();
-         }
+         listAllButton2[i].unselectable();
       }
    }
 
@@ -219,25 +199,13 @@ public class UpgradeMenu : MonoBehaviour
    
    
    
-   
-   
-   
-   /*private void disablgrayAllWeapon1()
-   {
-      for (int i = 0; i < UpgradeW1Button.Count; i++)
-      {
-         for (int j = 0; j < UpgradeW1Button[i].buttons.Count; j++)
-         {
-            UpgradeW1Button[i].buttons[j].notSelectedYet();
-         }
-      }
-   }*/
 
-   /*private void updateVisu()
+   
+   private void updateVisu()
    {
       visuF();
       visuC();
-   }*/
+   }
 
    
    
@@ -302,12 +270,7 @@ public class UpgradeMenu : MonoBehaviour
       }
    }
 
-
-   [System.Serializable]
-   public class listWeapon
-   {
-      public List<WTreeButton> buttons;
-   }
+   
    
    [System.Serializable]
    public class listInt
