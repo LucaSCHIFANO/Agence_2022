@@ -61,7 +61,6 @@ public class GroundGenerator : MonoBehaviour
         }
 
         chunckLimits = new Bounds(Vector3.zero, ChunkSize);
-        Debug.Log(chunckLimits);
     }
 
 
