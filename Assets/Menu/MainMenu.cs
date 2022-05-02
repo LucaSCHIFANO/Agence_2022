@@ -200,14 +200,14 @@ public class MainMenu : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        DisplayLobbyInfo(false);
-
         Debug.Log("Is CLient" + IsClient);
         Debug.Log("Is Server" + IsServer);
 
         if (IsClient)
         {
             lobbyPlayers.OnListChanged += HandleLobbyPlayersChange;
+            
+            DisplayLobbyInfo(false);
         }
 
         if (IsServer)
@@ -224,6 +224,8 @@ public class MainMenu : NetworkBehaviour
 
     public override void OnDestroy()
     {
+        base.OnDestroy();
+        
         EventSystem.OnJoinLobbyEvent -= OnJoinLobbyEvent;
         lobbyPlayers.OnListChanged -= HandleLobbyPlayersChange;
 
@@ -232,8 +234,6 @@ public class MainMenu : NetworkBehaviour
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnectedCallback;
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnectCallback;
         }
-
-        base.OnDestroy();
     }
 
     public async void LeaveLobby()
@@ -245,12 +245,11 @@ public class MainMenu : NetworkBehaviour
     {
         goTOGO(2);
         Debug.Log("Lobby Joined");
+        DisplayLobbyInfo(false);
     }
 
     async void DisplayLobbyInfo(bool refresh)
     {
-        if (!IsOwner) return;
-
         Debug.Log("Displaying Lobby Info");
 
         if (refresh) await LobbyManager.instance.RefreshCurrentLobby();
@@ -281,6 +280,8 @@ public class MainMenu : NetworkBehaviour
         {
             _InLobbyList.GetChild(i).gameObject.SetActive(lobbyPlayers.Count > i);
         }
+        
+        // DisplayLobbyInfo(false);
     }
 
     private void OnClientConnectedCallback(ulong clientId)

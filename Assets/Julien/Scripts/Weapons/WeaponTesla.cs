@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class WeaponTesla : WeaponBase
 {
-    [Header("Tesla Config")] [SerializeField]
-    private ParticleSystem _particleSystem;
-
     public override void Shoot()
     {
+        if (shootingTimer > 0) return;
         if (bulletLeft <= 0) return;
         
         base.Shoot();
         
-        _particleSystem.Play();
+        GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation);
+        
+        shootingTimer = 1 / _fireRate;
     }
 }
