@@ -172,9 +172,6 @@ public class UpgradeMenu : NetworkBehaviour
             ScrapMetal.Instance.addMoney(-CPrice[lint].intList[upgradesC[lint]]);
 
             UpgradeCamionServerRpc(lint);
-            
-            upgradesC[lint]++;
-            visuC();
         }
     }
 
@@ -356,7 +353,7 @@ public class UpgradeMenu : NetworkBehaviour
     [ServerRpc(RequireOwnership = false, Delivery = RpcDelivery.Reliable)]
     public void UpgradeForteresseServerRpc(int upgradeIndex, ServerRpcParams serverRpcParams = default)
     {
-        if (serverRpcParams.Receive.SenderClientId == NetworkManager.Singleton.LocalClientId) return;
+        // if (serverRpcParams.Receive.SenderClientId != NetworkManager.Singleton.LocalClientId) return;
         
         upgradesForteresseServer[upgradeIndex]++;
     }
@@ -364,7 +361,7 @@ public class UpgradeMenu : NetworkBehaviour
     [ServerRpc(RequireOwnership = false, Delivery = RpcDelivery.Reliable)]
     public void UpgradeCamionServerRpc(int upgradeIndex, ServerRpcParams serverRpcParams = default)
     {
-        if (serverRpcParams.Receive.SenderClientId == NetworkManager.Singleton.LocalClientId) return;
+        // if (serverRpcParams.Receive.SenderClientId == NetworkManager.Singleton.LocalClientId) return;
         
         upgradesCamionServer[upgradeIndex]++;
     }
