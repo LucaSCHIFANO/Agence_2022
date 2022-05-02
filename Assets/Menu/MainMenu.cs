@@ -37,6 +37,8 @@ public class MainMenu : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI _InLobbyName;
     [SerializeField] private GameObject _InLobbyLaunchButton;
 
+    [SerializeField] private string gameMapName = "CTest";
+
     private NetworkList<LobbyPlayersState> lobbyPlayers;
 
     private void Start()
@@ -304,7 +306,7 @@ public class MainMenu : NetworkBehaviour
 
     public void StartGame()
     {
-        NetworkManager.Singleton.SceneManager.LoadScene("LucaScene", LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.LoadScene(gameMapName, LoadSceneMode.Single);
     }
 
     #endregion
