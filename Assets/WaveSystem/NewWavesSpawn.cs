@@ -1,15 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.SubsystemsImplementation;
 using Random = UnityEngine.Random;
 
 public class NewWavesSpawn : MonoBehaviour
 {
+    [Header("Object")]
+    public Transform player;
     public Transform target;
+    
+    [Header("Enemy")]
     public NewTestEnemy enemy;
     public List<float> listSphere = new List<float>();
+
+    [Header("Other")] public float minDistance; 
     public bool spawn;
 
     private void Update()
@@ -24,8 +31,13 @@ public class NewWavesSpawn : MonoBehaviour
 
     private void spawnEnemy(NewTestEnemy lenemy)
     {
-        Vector3 spawnDistance = Random.onUnitSphere * lenemy.distanceSpawn;
-        spawnDistance = new Vector3(spawnDistance.x, 0, spawnDistance.z);
+        Vector3 spawnDistance = Vector3.zero;
+
+        while (Vector3.Distance(spawnDistance, player.position) < minDistance)
+        {
+            spawnDistance = Random.onUnitSphere * lenemy.distanceSpawn;
+            spawnDistance = new Vector3(spawnDistance.x, 0, spawnDistance.z);
+        }
 
         var enemyObject = Instantiate(lenemy.gameObject, spawnDistance, transform.rotation);
         enemyObject.GetComponent<NewTestEnemy>().target = target;
@@ -39,5 +51,7 @@ public class NewWavesSpawn : MonoBehaviour
         {
             Gizmos.DrawWireSphere(transform.position, listSphere[i]);
         }
+        
+        Gizmos.DrawWireSphere(player.position, minDistance);
     }
 }
