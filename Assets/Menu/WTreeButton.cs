@@ -32,15 +32,15 @@ public class WTreeButton : MonoBehaviour
          if (firstWeapon)
          {
             UpgradeMenu.Instance.UnlockWeapon1ServerRpc(id);
-            UpgradeMenu.Instance.upgradeWeapon1(this);
+            // UpgradeMenu.Instance.upgradeWeapon1(this);
          }
          else
          {
             UpgradeMenu.Instance.UnlockWeapon2ServerRpc(id);
-            UpgradeMenu.Instance.upgradeWeapon2(this);
+            // UpgradeMenu.Instance.upgradeWeapon2(this);
          }
 
-         ScrapMetal.Instance.addMoney(-price);
+         ScrapMetal.Instance.addMoneyServerRpc(-price);
       }
       
    }
