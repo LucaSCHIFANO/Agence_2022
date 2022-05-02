@@ -201,7 +201,7 @@ public class Testet : MonoBehaviour
             float wheelRotRate = speed / wheelRadius;
 
             if (velocity.magnitude > 0)
-                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (transform.rotation.eulerAngles.y + currWheelDelta / 10) * Mathf.Min(velocity.magnitude, 1), transform.rotation.eulerAngles.z);
+                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (transform.rotation.eulerAngles.y + currWheelDelta / 10), transform.rotation.eulerAngles.z);
             Vector3 finalPos = transform.position + /*transform.forward*/velocity * Time.deltaTime/* * (20 - (Mathf.Min(Mathf.Abs(currWheelDelta), 20)))*/;
             //Debug.Log(20 - (Mathf.Min(Mathf.Abs(currWheelDelta), 20)));
 
