@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class WTreeButton : MonoBehaviour
 {
+   public int id;
+   
    private Image image;
    private TextMeshProUGUI text;
    private bool cannotBeSelected;
@@ -27,8 +29,16 @@ public class WTreeButton : MonoBehaviour
    {
       if (!cannotBeSelected && ScrapMetal.Instance.scrap >= price)
       {
-         if(firstWeapon) UpgradeMenu.Instance.upgradeWeapon1(this);
-         else UpgradeMenu.Instance.upgradeWeapon2(this);
+         if (firstWeapon)
+         {
+            UpgradeMenu.Instance.UnlockWeapon1ServerRpc(id);
+            UpgradeMenu.Instance.upgradeWeapon1(this);
+         }
+         else
+         {
+            UpgradeMenu.Instance.UnlockWeapon2ServerRpc(id);
+            UpgradeMenu.Instance.upgradeWeapon2(this);
+         }
 
          ScrapMetal.Instance.addMoney(-price);
       }
