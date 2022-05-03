@@ -219,16 +219,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftFrontWheel: {fileID: 2216819461975651914}
   rightFrontWheel: {fileID: 2216819463144456837}
-  cdrag: 50
-  crr: 20
+  cdrag: 5
+  crr: 2
   cbreak: 3000
   weight: 1000
-  cornerStiff: 50
+  cornerStiff: 0.01
   enginePower: 50
   tyreLoad: 5000
   wheelRotSped: 100
   inertia: 10
   maxWheelDelta: 30
+  maxGripForce: 150
+  bar: 0
+  throttleAccelSpeed: 2
+  throttleDeccelSpeed: 1
+  throttleForce:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &2216819461730630313
 MonoBehaviour:
   m_ObjectHideFlags: 0
