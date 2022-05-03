@@ -889,11 +889,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1809398145}
   target: {fileID: 2059899373}
-  enemy: {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
   listSphere:
   - 30
-  minDistance: 33.98
+  minDistance: 20
   spawn: 0
+  currentWave:
+    delayBefore: 0
+    delayBetwSpawn: 0
+    delayAfter: 0
+    listEnemy: []
+    wavesCounter: 0
+  _wavesList:
+  - delayBefore: 2
+    delayBetwSpawn: 1
+    delayAfter: 2
+    listEnemy:
+    - enemy:
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+    - enemy:
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+    - enemy:
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+    wavesCounter: 0
+  - delayBefore: 2
+    delayBetwSpawn: 1
+    delayAfter: 2
+    listEnemy:
+    - enemy:
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+    - enemy:
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+    - enemy:
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+      - {fileID: 6135919493815682846, guid: 2a9187ab0adff6742b09b5f299ff2bb0, type: 3}
+    wavesCounter: 0
 --- !u!1 &1809398144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1154,7 +1194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 809718257}
   endPoint: {fileID: 2082008797}
-  timeToGo: 5
+  timeToGo: 0.5
 --- !u!1 &2082008796
 GameObject:
   m_ObjectHideFlags: 0
