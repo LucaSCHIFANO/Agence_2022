@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Testet : MonoBehaviour
+public class Testet : NetworkBehaviour
 {
 
     [Header("Front wheels")]
@@ -37,13 +38,15 @@ public class Testet : MonoBehaviour
     Vector3 velocity;
     void Start()
     {
+        if (!IsOwner) return;
+        
+        Debug.Log("Test get rewired");
         player = Rewired.ReInput.players.GetPlayer(0); // get the player by id
     }
 
-
     void Update()
     {
-        //Debug.Log(drifting);
+        if (!IsOwner) return;
         if (Input.GetKeyDown(KeyCode.Space)) drifting = !drifting;
         //Debug.Log(velocity);
         //Debug.Log(currWheelDelta);
@@ -51,9 +54,15 @@ public class Testet : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!IsOwner) return;
+        Debug.Log("Fixed Update");
+        
         if (drifting)
         {
             Vector3 vec = transform.forward * player.GetAxis("Throttle");// Input.GetAxis("Vertical");
+            
+            Debug.Log(vec);
+            
             float rot = Input.GetAxis("Horizontal");
 
             //transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y + rot, 0));
@@ -226,6 +235,8 @@ public class Testet : MonoBehaviour
 
             transform.position = finalPos;
 
+            Debug.Log(transform.position);
+            
             float rot = Input.GetAxis("Horizontal");
 
             currWheelDelta += rot;
