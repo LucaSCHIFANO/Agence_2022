@@ -21,7 +21,7 @@ public class NewWavesSpawn : MonoBehaviour
 
     private void Update()
     {
-        if (spawn)
+        if (spawn || Input.GetKeyDown((KeyCode.Return)))
         {
             spawn = false;
             spawnEnemy(enemy);
@@ -31,11 +31,12 @@ public class NewWavesSpawn : MonoBehaviour
 
     private void spawnEnemy(NewTestEnemy lenemy)
     {
-        Vector3 spawnDistance = Vector3.zero;
+        Vector3 spawnDistance = transform.position + (Random.onUnitSphere * lenemy.distanceSpawn);
+        spawnDistance = new Vector3(spawnDistance.x, 0, spawnDistance.z);
 
         while (Vector3.Distance(spawnDistance, player.position) < minDistance)
         {
-            spawnDistance = Random.onUnitSphere * lenemy.distanceSpawn;
+            spawnDistance = transform.position + (Random.onUnitSphere * lenemy.distanceSpawn);
             spawnDistance = new Vector3(spawnDistance.x, 0, spawnDistance.z);
         }
 
