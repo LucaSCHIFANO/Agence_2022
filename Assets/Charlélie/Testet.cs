@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class Testet : MonoBehaviour
 {
-    public GameObject leftFrontWheel, rightFrontWheel;
+
+    [Header("Front wheels")]
+    public GameObject leftFrontWheel;
+    public GameObject rightFrontWheel;
+
     float currWheelDelta;
     Vector3 pos, prevPos;
+
+    [Space(10)]
+    [Header("Physics variables")]
     public float cdrag = 0.5f;
     public float crr = 0.5f;
     public float cbreak = 5;
@@ -17,6 +24,9 @@ public class Testet : MonoBehaviour
     public float wheelRotSped = 10;
     public float inertia = 10;
     public float maxWheelDelta = 30;
+    public float maxGripForce = 150;
+
+
     Vector3 prevRot;
     float wheelRadius = 0.1f;
     Vector3 angVel;
@@ -33,10 +43,10 @@ public class Testet : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(drifting);
+        //Debug.Log(drifting);
         if (Input.GetKeyDown(KeyCode.Space)) drifting = !drifting;
         //Debug.Log(velocity);
-        Debug.Log(currWheelDelta);
+        //Debug.Log(currWheelDelta);
     }
 
     private void FixedUpdate()
@@ -69,7 +79,7 @@ public class Testet : MonoBehaviour
             angVel = (transform.rotation.eulerAngles - prevRot) / Time.deltaTime;
 
 
-            //Debug.Log("ANGULAR SPEED: " + angularSpeed);
+            Debug.Log("ANGULAR SPEED: " + angVel);
             prevRot = transform.rotation.eulerAngles;
 
             Vector3 frr = -crr * velocity;
@@ -104,7 +114,7 @@ public class Testet : MonoBehaviour
             }
             
 
-            //if (rot == 0 && (currWheelDelta < 30.0f || currWheelDelta > -30.0f)) drifting = false;
+            if (rot == 0 && (angVel.y > -maxGripForce || angVel.y < maxGripForce)) drifting = false;
 
             if (Input.GetKeyDown(KeyCode.E)) currWheelDelta = 0;
             leftFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
@@ -122,6 +132,8 @@ public class Testet : MonoBehaviour
 
             float fLatFront = cornerStiff * slipAngleFront;
             float fLatRear = cornerStiff * slipAngleRear;
+
+            //Debug.Log(fLatFront + "  " + fLatRear);
 
             fLatFront = Mathf.Min(fLatFront, 5);
             fLatRear = Mathf.Min(fLatRear, 5);
@@ -188,6 +200,7 @@ public class Testet : MonoBehaviour
         {
             pos = transform.position;
             Vector3 vec = transform.forward * player.GetAxis("Throttle");//Input.GetAxis("Vertical");
+            Debug.Log(player.GetAxis("Throttle"));
             Vector3 dist = pos - prevPos;
             velocity = dist + vec / Time.deltaTime;
             prevPos = pos;
@@ -200,6 +213,12 @@ public class Testet : MonoBehaviour
 
             float wheelRotRate = speed / wheelRadius;
 
+            angVel = (transform.rotation.eulerAngles - prevRot) / Time.deltaTime;
+
+
+            Debug.Log("ANGULAR SPEED: " + angVel);
+            prevRot = transform.rotation.eulerAngles;
+
             if (velocity.magnitude > 0)
                 transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (transform.rotation.eulerAngles.y + currWheelDelta / 10), transform.rotation.eulerAngles.z);
             Vector3 finalPos = transform.position + /*transform.forward*/velocity * Time.deltaTime/* * (20 - (Mathf.Min(Mathf.Abs(currWheelDelta), 20)))*/;
@@ -211,7 +230,7 @@ public class Testet : MonoBehaviour
 
             currWheelDelta += rot;
 
-            //if (rot == 1 && (currWheelDelta >= 30.0f || currWheelDelta <= -30.0f)) drifting = true;
+            if (angVel.y <= -maxGripForce || angVel.y >= maxGripForce) drifting = true;
 
 
             if (currWheelDelta > 30) currWheelDelta = 30;

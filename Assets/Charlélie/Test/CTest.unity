@@ -811,6 +811,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8748736824380086705, guid: f2a5d2199769f2742bebc31efb95be6f,
         type: 3}
+      propertyPath: _userData.configVars.defaultJoystickAxis2DDeadZoneType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8748736824380086705, guid: f2a5d2199769f2742bebc31efb95be6f,
+        type: 3}
       propertyPath: _userData.players.Array.data[1]._assignKeyboardOnStart
       value: 1
       objectReference: {fileID: 0}
@@ -911,13 +916,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8748736824380086705, guid: f2a5d2199769f2742bebc31efb95be6f,
         type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[0]._axisRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8748736824380086705, guid: f2a5d2199769f2742bebc31efb95be6f,
+        type: 3}
       propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[10]._actionId
       value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8748736824380086705, guid: f2a5d2199769f2742bebc31efb95be6f,
         type: 3}
       propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[11]._actionId
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8748736824380086705, guid: f2a5d2199769f2742bebc31efb95be6f,
         type: 3}
@@ -2854,3 +2864,4 @@ MonoBehaviour:
   wheelRotSped: 100
   inertia: 10
   maxWheelDelta: 30
+  maxGripForce: 150
