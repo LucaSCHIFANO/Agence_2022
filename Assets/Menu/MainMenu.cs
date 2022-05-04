@@ -35,10 +35,8 @@ public class MainMenu : NetworkBehaviour
     [SerializeField] private Transform _InLobbyList;
     [SerializeField] private TextMeshProUGUI _InLobbyCode;
     [SerializeField] private TextMeshProUGUI _InLobbyName;
-    [SerializeField] private GameObject _InLobbyLaunchButton;
-
-    [SerializeField] private string gameMapName = "CTest";
-
+    [SerializeField] private List<GameObject> _InLobbyHostButton;
+    
     private NetworkList<LobbyPlayersState> lobbyPlayers;
 
     private void Start()
@@ -270,7 +268,10 @@ public class MainMenu : NetworkBehaviour
 
         if (IsHost)
         {
-            _InLobbyLaunchButton.SetActive(true);
+            foreach (GameObject hostButton in _InLobbyHostButton)
+            {
+                hostButton.SetActive(true);
+            }
         }
 
         Debug.Log("Lobby Info Completed !");
@@ -304,7 +305,7 @@ public class MainMenu : NetworkBehaviour
         }
     }
 
-    public void StartGame()
+    public void StartGame(string gameMapName)
     {
         NetworkManager.Singleton.SceneManager.LoadScene(gameMapName, LoadSceneMode.Single);
     }

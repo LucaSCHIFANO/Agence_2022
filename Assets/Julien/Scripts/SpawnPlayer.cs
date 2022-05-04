@@ -7,6 +7,8 @@ public class SpawnPlayer : NetworkBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
 
+    [SerializeField] private List<Transform> spawnPoint;
+
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -15,14 +17,15 @@ public class SpawnPlayer : NetworkBehaviour
         
         if (IsServer)
         {
-            
+            int i = 0;
             Debug.Log("Is Server true");
             foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
             {
                 Debug.Log("Spawning Car for client " + clientId);
 
-                GameObject car = Instantiate(playerPrefab);
+                GameObject car = Instantiate(playerPrefab,spawnPoint[i]);
                 car.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
+                i++;
             }
 
         }

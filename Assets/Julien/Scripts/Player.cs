@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : NetworkBehaviour
 {
     [SerializeField] private GameObject camera;
+    [SerializeField] private MonoBehaviour scriptToActivate;
     
     public override void OnNetworkSpawn()
     {
@@ -16,6 +17,7 @@ public class Player : NetworkBehaviour
         if (IsOwner)
         {
             camera.SetActive(true);
+            scriptToActivate.enabled = true;
         }
     }
 }
