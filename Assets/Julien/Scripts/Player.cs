@@ -24,12 +24,15 @@ public class Player : NetworkBehaviour
         camera.player = this;
         camera.Init();
     }
+  
 
     private void Update()
     {
         //TEMPORARY
         if (Input.GetKeyDown(KeyCode.C))
             camera.ChangeCameraPosition();
+
+        camera.UpdateCamera();
     }
 
     public void StartCamCoroutine(Transform start, Transform end)

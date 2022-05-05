@@ -67,7 +67,7 @@ public class Testet : NetworkBehaviour
     private void FixedUpdate()
     {
         //if (!IsOwner) return;
-        Debug.Log("Fixed Update");
+        //Debug.Log("Fixed Update");
 
         if (drifting)
         {
@@ -338,7 +338,7 @@ public class Testet : NetworkBehaviour
             if (acceleration < maxAccel && player.GetAxis("Throttle") > 0) acceleration += Time.deltaTime / 50;
             else if (acceleration > 0 && player.GetAxis("Throttle") == 0) acceleration -= Time.deltaTime / 50;
 
-            Debug.Log(acceleration);
+            //Debug.Log(acceleration);
 
             velocity = dist + vec / Time.deltaTime;
             prevPos = pos;
@@ -368,7 +368,7 @@ public class Testet : NetworkBehaviour
 
             transform.position = finalPos;
 
-            Debug.Log(velocity);
+            //Debug.Log(velocity);
 
 
             float rot = Input.GetAxis("Horizontal");
