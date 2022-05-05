@@ -34,6 +34,12 @@ public class PlayerCamera
 
     public PlayerActionType startAction;
 
+    public bool tpsCamFollowCar;
+    public float cameraAngularVelocity = 60f;
+    float cameraDistance;
+    float cameraAngleY = 0;
+    float cameraAngleX = 0;
+
     [HideInInspector]
     public Action currAction;
 
@@ -42,11 +48,10 @@ public class PlayerCamera
     bool _isMoving = false;
 
     private Rewired.Player rPlayer;
-    Vector2 angle;
 
     public void Init()
     {
-        //angle = -1.57f; //To update
+        cameraDistance = Vector3.Distance(player.transform.position, cam.transform.position);
         rPlayer = Rewired.ReInput.players.GetPlayer(0);
         switch (startAction)
         {
@@ -108,67 +113,30 @@ public class PlayerCamera
         yield return null;
     }
 
-    float speed = 2;
-
+    
     public void UpdateCamera()
     {
-        angle = new Vector2(rPlayer.GetAxis("MoveCamX"), rPlayer.GetAxis("MoveCamY"));
+        if (tpsCamFollowCar) return;
 
-        Vector3 mySphericalCoord = SphericalMathHelpers.CartesianToSpherical(cam.transform.position);
-        mySphericalCoord.z += angle.y * speed * Time.deltaTime;
-        mySphericalCoord.y += angle.x * speed * Time.deltaTime;
-        cam.transform.position = SphericalMathHelpers.SphericalToCartesian(mySphericalCoord);
-        
-        cam.transform.LookAt(player.transform.position);
-    }
+        float angleDelta = cameraAngularVelocity * Time.deltaTime;
 
-}
+        cameraAngleX += rPlayer.GetAxis("MoveCamY") * angleDelta;
+        cameraAngleY += rPlayer.GetAxis("MoveCamX") * angleDelta;
 
+        //Protections
+        cameraAngleX = Mathf.Clamp(cameraAngleX, -90f, 90f);
+        cameraAngleY = Mathf.Repeat(cameraAngleY, 360f);
 
-public static class SphericalMathHelpers
-{
+        Quaternion cameraRotation =
+            Quaternion.AngleAxis(cameraAngleY, Vector3.up)
+            * Quaternion.AngleAxis(cameraAngleX, Vector3.right);
 
-    public static Vector3 SphericalToCartesian(Vector3 sphericalCoord)
-    {
-        return SphericalToCartesian(sphericalCoord.x, sphericalCoord.y, sphericalCoord.z);
-    }
+        Vector3 cameraPosition =
+            player.transform.position
+            + cameraRotation * Vector3.back * cameraDistance;
 
-    public static Vector3 SphericalToCartesian(float radius, float azimuth, float elevation)
-    {
+        cam.transform.position = cameraPosition;
+        cam.transform.rotation = cameraRotation;
 
-        float a = radius * Mathf.Cos(elevation);
-
-        Vector3 result = new Vector3();
-        result.x = a * Mathf.Cos(azimuth);
-        result.y = radius * Mathf.Sin(elevation);
-        result.z = a * Mathf.Sin(azimuth);
-
-        return result;
-    }
-
-    /// <summary>
-    /// Return Vector3 is x = radius, y = polar, z = elevation.
-    /// </summary>
-    /// <param name="cartCoords"></param>
-    /// <returns></returns>
-    public static Vector3 CartesianToSpherical(Vector3 cartCoords)
-    {
-        float _radius, _azimuth, _elevation;
-
-        if (cartCoords.x == 0)
-            cartCoords.x = Mathf.Epsilon;
-
-        _radius = Mathf.Sqrt((cartCoords.x * cartCoords.x)
-        + (cartCoords.y * cartCoords.y)
-        + (cartCoords.z * cartCoords.z));
-
-        _azimuth = Mathf.Atan(cartCoords.z / cartCoords.x);
-
-        if (cartCoords.x < 0)
-            _azimuth += Mathf.PI;
-        _elevation = Mathf.Asin(cartCoords.y / _radius);
-
-        Vector3 result = new Vector3(_radius, _azimuth, _elevation);
-        return result;
     }
 }
