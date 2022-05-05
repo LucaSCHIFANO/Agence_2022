@@ -88,7 +88,6 @@ public class UpgradeMenu : NetworkBehaviour
 
     private void Start()
     {
-
         if (IsHost)
         {
             for (int i = 0; i < 3; i++)
