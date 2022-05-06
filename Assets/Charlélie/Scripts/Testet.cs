@@ -352,7 +352,7 @@ public class Testet : NetworkBehaviour
             pos = transform.position;
             Vector3 vec = transform.forward * throttleForce.Evaluate(bar);//Input.GetAxis("Vertical");
             Vector3 dist = pos - prevPos;
-
+            
             if (acceleration < maxAccel && player.GetAxis("Throttle") > 0) acceleration += Time.deltaTime / accelForce;
             else if (acceleration > 0 && player.GetAxis("Throttle") == 0) acceleration -= Time.deltaTime / accelForce;
 
@@ -385,6 +385,7 @@ public class Testet : NetworkBehaviour
                 //remorque.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (remorque.transform.rotation.eulerAngles.y - currWheelDelta / 10), transform.rotation.eulerAngles.z);
 
             }
+            
             Vector3 finalPos = transform.position + velocity * Time.deltaTime;
             //Debug.Log(20 - (Mathf.Min(Mathf.Abs(currWheelDelta), 20)));
             

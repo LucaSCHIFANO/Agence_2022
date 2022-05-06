@@ -42,8 +42,8 @@ public class CanBePossessed : NetworkBehaviour
                 if (Input.GetKey(KeyCode.E))
                 {
                     _playerController = _playerNear;
-                    ChangeOwnerServerRpc();
                     _playerController.Possess(mainSeat);
+                    ChangeOwnerServerRpc();
                     gameObjectsToActivate.ForEach((o) => { o.SetActive(true); });
                     scriptToActivate.ForEach((o) => { o.enabled = true; });
                 }

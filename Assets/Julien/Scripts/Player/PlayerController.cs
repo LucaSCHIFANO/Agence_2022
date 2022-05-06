@@ -130,6 +130,8 @@ public class PlayerController : NetworkBehaviour
     public void Possess(Transform seat)
     {
         GetComponent<Collider>().enabled = false;
+        _controller.enabled = false;
+        
         transform.position = seat.position;
         transform.rotation = seat.rotation;
         cameraPossessRotation = seat.rotation;
@@ -142,11 +144,13 @@ public class PlayerController : NetworkBehaviour
 
     public void Unpossess(Transform exitPoint)
     {
-        GetComponent<Collider>().enabled = true;
         Camera.SetActive(true);
         
         transform.position = exitPoint.position;
         transform.rotation = exitPoint.rotation;
+        
+        GetComponent<Collider>().enabled = true;
+        _controller.enabled = true;
     }
 
     public void Unpossess()
