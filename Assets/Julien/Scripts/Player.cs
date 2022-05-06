@@ -21,18 +21,24 @@ public class Player : NetworkBehaviour
 
     private void Start()
     {
-        camera.player = this;
-        camera.Init();
+        if (IsOwner && IsClient)
+        {
+            camera.player = this;
+            camera.Init();
+        }
     }
   
 
     private void Update()
     {
-        //TEMPORARY
-        if (Input.GetKeyDown(KeyCode.C))
-            camera.ChangeCameraPosition();
+        if (IsOwner && IsClient)
+        {
+            //TEMPORARY
+            if (Input.GetKeyDown(KeyCode.C))
+                camera.ChangeCameraPosition();
 
-        camera.UpdateCamera();
+            camera.UpdateCamera();
+        }
     }
 
     public void StartCamCoroutine(Transform start, Transform end)

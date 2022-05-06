@@ -50,7 +50,7 @@ public class Testet : NetworkBehaviour
 
     void Start()
     {
-        //if (!IsOwner) return;
+        if (!IsOwner) return;
 
         Debug.Log("Test get rewired");
         player = Rewired.ReInput.players.GetPlayer(0); // get the player by id
@@ -58,7 +58,7 @@ public class Testet : NetworkBehaviour
 
     void Update()
     {
-        //if (!IsOwner) return;
+        if (!IsOwner) return;
         if (Input.GetKeyDown(KeyCode.Space)) drifting = !drifting;
         //Debug.Log(velocity);
         //Debug.Log(currWheelDelta);
@@ -66,7 +66,7 @@ public class Testet : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        //if (!IsOwner) return;
+        if (!IsOwner) return;
         //Debug.Log("Fixed Update");
 
         if (drifting)
