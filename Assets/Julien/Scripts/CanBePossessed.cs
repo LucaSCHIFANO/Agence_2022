@@ -14,42 +14,56 @@ public class CanBePossessed : NetworkBehaviour
 
     private NetworkVariable<bool> isPossessed = new NetworkVariable<bool>(false);
 
+    private PlayerController _playerNear;
     private PlayerController _playerController;
 
     private void Update()
     {
-
         if (IsOwner && IsClient)
         {
-            if (!isPossessed.Value) return;
-            
-            if (Input.GetKeyDown(KeyCode.E))
+            if (isPossessed.Value)
             {
-                gameObjectsToActivate.ForEach((o) => { o.SetActive(false); });
-                scriptToActivate.ForEach((o) => { o.enabled = false; });
-                _playerController.enabled = true;
-                _playerController.Unpossess(exitPoint);
-                _playerController = null;
-                Invoke(nameof(ResetOwner), .2f);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    gameObjectsToActivate.ForEach((o) => { o.SetActive(false); });
+                    scriptToActivate.ForEach((o) => { o.enabled = false; });
+                    _playerController.enabled = true;
+                    _playerController.Unpossess(exitPoint);
+                    _playerController = null;
+                    Invoke(nameof(ResetOwner), .2f);
+                }
+            }
+        }
+
+        if (!isPossessed.Value)
+        {
+            if (_playerNear != null)
+            {
+                if (Input.GetKey(KeyCode.E))
+                {
+                    _playerController = _playerNear;
+                    ChangeOwnerServerRpc();
+                    _playerController.Possess(mainSeat);
+                    gameObjectsToActivate.ForEach((o) => { o.SetActive(true); });
+                    scriptToActivate.ForEach((o) => { o.enabled = true; });
+                }
             }
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerExit(Collider other)
+    {
+        _playerNear = null;
+    }
+
+    private void OnTriggerEnter(Collider other)
     {
         if (isPossessed.Value) return;
         
         
         if (other.gameObject.TryGetComponent(out PlayerController playerController))
         {
-            if (Input.GetKey(KeyCode.E))
-            {
-                ChangeOwnerServerRpc();
-                playerController.Possess(mainSeat);
-                _playerController = playerController;
-                gameObjectsToActivate.ForEach((o) => { o.SetActive(true); });
-                scriptToActivate.ForEach((o) => { o.enabled = true; });
-            }
+            _playerNear = playerController;
         }
     }
 

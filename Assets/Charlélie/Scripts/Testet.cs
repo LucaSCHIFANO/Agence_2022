@@ -63,7 +63,7 @@ public class Testet : NetworkBehaviour
 
     void Start()
     {
-        if (!IsOwner) return;
+        // if (!IsOwner) return;
 
         Debug.Log("Test get rewired");
         player = Rewired.ReInput.players.GetPlayer(0); // get the player by id
@@ -387,7 +387,7 @@ public class Testet : NetworkBehaviour
             }
             Vector3 finalPos = transform.position + velocity * Time.deltaTime;
             //Debug.Log(20 - (Mathf.Min(Mathf.Abs(currWheelDelta), 20)));
-
+            
             transform.position = finalPos;
 
             //Debug.Log(velocity);

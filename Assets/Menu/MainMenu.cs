@@ -139,7 +139,7 @@ public class MainMenu : NetworkBehaviour
     {
         if (!PlayerPrefs.HasKey("username"))
         {
-            PlayerPrefs.SetString("username", "u gay");
+            PlayerPrefs.SetString("username", "New Player");
         }
         
         _usernameField.text = PlayerPrefs.GetString("username");
