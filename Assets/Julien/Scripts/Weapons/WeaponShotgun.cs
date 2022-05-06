@@ -10,8 +10,8 @@ public class WeaponShotgun : WeaponBase
 
     public override void Shoot()
     {
-        if (shootingTimer > 0) return;
-        if (bulletLeft <= 0) return;
+        if (_shootingTimer > 0) return;
+        if (_isOverHeat) return;
         
         base.Shoot();
         
@@ -23,6 +23,6 @@ public class WeaponShotgun : WeaponBase
                     Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
         }
         
-        shootingTimer = 1 / _fireRate;
+        _shootingTimer = 1 / _fireRate;
     }
 }

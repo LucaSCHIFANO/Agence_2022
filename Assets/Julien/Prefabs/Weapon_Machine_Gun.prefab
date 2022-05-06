@@ -385,8 +385,13 @@ MonoBehaviour:
   _shootingPoint: {fileID: 7192941487095535729}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
     type: 3}
-  magazineSize: 1000
-  reloadTime: 1
+  _bulletToOverHeat: 100
+  _coolDownPerSecond: 10
+  _timeBeforeCoolDown: 2
+  _timeCoolDown: 0
+  _isOverHeat: 0
+  _isCoolDown: 0
+  overHeatPourcent: 0
   _fireType: 1
   _spread: 2
 --- !u!114 &967086811462645455

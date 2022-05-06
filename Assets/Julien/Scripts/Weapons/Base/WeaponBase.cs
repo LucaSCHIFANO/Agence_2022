@@ -22,47 +22,60 @@ public abstract class WeaponBase : NetworkBehaviour
     [SerializeField]
     protected GameObject _bulletPrefab;
 
-    [SerializeField] protected int magazineSize;
-    [SerializeField] protected float reloadTime;
+    
+    [SerializeField] protected float _bulletToOverHeat;
+    
+    [Tooltip("Pourcent of overheat gauge remove per second")]
+    [SerializeField] protected float _coolDownPerSecond;
+    [SerializeField] protected float _timeBeforeCoolDown;
+
 
     #endregion
-
-    protected int bulletLeft;
-    protected bool isReloading;
-    protected float shootingTimer;
+    
+    
+    // New overheat system
+    protected float _shootingTimer;
+    protected float _timeCoolDown;
+    public bool _isOverHeat;
+    public bool _isCoolDown;
+    
+    [SerializeField][Range(0, 100)] private float overHeatPourcent;
 
     protected virtual void Start()
     {
-        bulletLeft = magazineSize;
+        overHeatPourcent = 0;
     }
 
     protected virtual void FixedUpdate()
     {
-        if (shootingTimer >= 0) shootingTimer -= Time.deltaTime;
+        if (_shootingTimer >= 0) _shootingTimer -= Time.deltaTime;
     }
 
     public virtual void Shoot()
     {
-        bulletLeft--;
+        overHeatPourcent += (100 / _bulletToOverHeat);
+        if (overHeatPourcent >= 100) _isOverHeat = true;
+        _timeCoolDown = _timeBeforeCoolDown;
         
         EventSystem.ShootEvent();
     }
 
     public void Reload()
     {
-        if (isReloading) return;
+        if (_isOverHeat) return;
         
-        isReloading = true;
-        StartCoroutine(ReloadCoroutine());
+        _isOverHeat = true;
     }
 
-    IEnumerator ReloadCoroutine()
+    private void Update()
     {
-        yield return new WaitForSecondsRealtime(reloadTime);
+        if (_isCoolDown || _isOverHeat) overHeatPourcent -= _coolDownPerSecond * Time.deltaTime;
+        else if(!_isCoolDown) _timeCoolDown -= Time.deltaTime;
 
-        bulletLeft = magazineSize;
-        isReloading = false;
+        if (_timeCoolDown <= 0) _isCoolDown = true;
+        else _isCoolDown = false;
+        if (overHeatPourcent <= 0) _isOverHeat = false;
+
+        overHeatPourcent = Mathf.Clamp(overHeatPourcent, 0, 100);
     }
-    
-    
 }

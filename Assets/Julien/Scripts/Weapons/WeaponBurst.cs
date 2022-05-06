@@ -32,8 +32,8 @@ public class WeaponBurst : WeaponBase
     public override void Shoot()
     {
         isShooting = true;
-        if (shootingTimer > 0) return;
-        if (bulletLeft <= 0) return;
+        if (_shootingTimer > 0) return;
+        if (_isOverHeat) return;
         
         base.Shoot();
         
@@ -54,12 +54,12 @@ public class WeaponBurst : WeaponBase
                 Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
         }
         shootedRound++;
-        shootingTimer = .1f;
+        _shootingTimer = .1f;
 
         if (shootedRound >= _numberOfShot)
         {
             shootedRound = 0;
-            shootingTimer = 1 / _fireRate;
+            _shootingTimer = 1 / _fireRate;
             isShooting = false;
         }
     }

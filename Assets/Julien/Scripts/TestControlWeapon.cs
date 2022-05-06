@@ -19,6 +19,7 @@ public class TestControlWeapon : NetworkBehaviour
 
     [SerializeField] private float clampRotation;
     [SerializeField] private Vector2 weaponSensibility;
+
     
     private void Update()
     {
@@ -29,9 +30,6 @@ public class TestControlWeapon : NetworkBehaviour
 
             if (!isPossessed.Value) return;
 
-            /*float leftRight = Input.GetAxis("Horizontal");
-            float upDown = Input.GetAxis("Vertical");*/
-            
             float leftRight = Input.GetAxis("Mouse X") * weaponSensibility.x;
             float upDown = Input.GetAxis("Mouse Y") * weaponSensibility.y;
 
@@ -49,10 +47,10 @@ public class TestControlWeapon : NetworkBehaviour
                 GetComponent<WeaponBase>().Shoot();
             }
 
-            if (Input.GetKeyDown(KeyCode.R))
+            /*if (Input.GetKeyDown(KeyCode.R))
             {
                 GetComponent<WeaponBase>().Reload();
-            }
+            }*/
 
             if (Input.GetKeyDown(KeyCode.E))
             {
