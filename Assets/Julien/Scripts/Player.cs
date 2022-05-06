@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : NetworkBehaviour
 {
-    [SerializeField] private GameObject camera;
+    public PlayerCamera camera;
     
     public override void OnNetworkSpawn()
     {
@@ -15,7 +15,33 @@ public class Player : NetworkBehaviour
 
         if (IsOwner)
         {
-            camera.SetActive(true);
+            camera.cam.gameObject.SetActive(true);
         }
+    }
+
+    private void Start()
+    {
+        camera.player = this;
+        camera.Init();
+    }
+  
+
+    private void Update()
+    {
+        //TEMPORARY
+        if (Input.GetKeyDown(KeyCode.C))
+            camera.ChangeCameraPosition();
+
+        camera.UpdateCamera();
+    }
+
+    public void StartCamCoroutine(Transform start, Transform end)
+    {
+        StartCoroutine(camera.CameraChangeCoroutine(start, end));
+    }
+
+    public void PlayerChangeAction()
+    {
+        //TODO
     }
 }

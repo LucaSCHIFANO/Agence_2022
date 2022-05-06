@@ -36,17 +36,29 @@ public class Testet : NetworkBehaviour
     private Rewired.Player player;
 
     Vector3 velocity;
+
+    float acceleration;
+    float maxAccel = 1;
+
+    [Range(0.0f, 1.0f)]
+    public float bar;
+    public float throttleAccelSpeed;
+    public float throttleDeccelSpeed;
+
+    public AnimationCurve throttleForce;
+
+
     void Start()
     {
-        if (!IsOwner) return;
-        
+        //if (!IsOwner) return;
+
         Debug.Log("Test get rewired");
         player = Rewired.ReInput.players.GetPlayer(0); // get the player by id
     }
 
     void Update()
     {
-        if (!IsOwner) return;
+        //if (!IsOwner) return;
         if (Input.GetKeyDown(KeyCode.Space)) drifting = !drifting;
         //Debug.Log(velocity);
         //Debug.Log(currWheelDelta);
@@ -54,15 +66,16 @@ public class Testet : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (!IsOwner) return;
-        Debug.Log("Fixed Update");
-        
+        //if (!IsOwner) return;
+        //Debug.Log("Fixed Update");
+
         if (drifting)
         {
+            #region driftTemp
             Vector3 vec = transform.forward * player.GetAxis("Throttle");// Input.GetAxis("Vertical");
-            
+
             Debug.Log(vec);
-            
+
             float rot = Input.GetAxis("Horizontal");
 
             //transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y + rot, 0));
@@ -83,7 +96,7 @@ public class Testet : NetworkBehaviour
 
 
             velocity = vec + distance / Time.deltaTime;
-            
+
 
             angVel = (transform.rotation.eulerAngles - prevRot) / Time.deltaTime;
 
@@ -121,7 +134,7 @@ public class Testet : NetworkBehaviour
                     if (currWheelDelta < 0) currWheelDelta = 0;
                 }
             }
-            
+
 
             if (rot == 0 && (angVel.y > -maxGripForce || angVel.y < maxGripForce)) drifting = false;
 
@@ -204,17 +217,134 @@ public class Testet : NetworkBehaviour
             //Debug.Log(transform.rotation.eulerAngles.y + leftFrontWheel.transform.rotation.eulerAngles.y / 20);
             //transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, fRot, transform.rotation.eulerAngles.z);
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y - angularSpeed * Time.deltaTime, transform.rotation.eulerAngles.z);
+            #endregion
+            #region temp
+            /*
+            //pos = transform.position;
+            //Vector3 vec = transform.forward * player.GetAxis("Throttle");//Input.GetAxis("Vertical");
+            //Vector3 dist = pos - prevPos;
+            //Debug.Log(dist);
+            //prevPos = pos;
+            ///*
+            //velocity = dist + vec / Time.deltaTime;
+            //prevPos = pos;
+            //
+            //if (velocity.x > 30) velocity.x = 30;
+            //velocity.y = 0;
+            //if (velocity.z > 30) velocity.z = 30;
+            //
+            //
+            //float speed = Mathf.Sqrt(velocity.x * velocity.x + velocity.z * velocity.z);
+            //
+            //float wheelRotRate = speed / wheelRadius;
+            //
+            //angVel = (transform.rotation.eulerAngles - prevRot) / Time.deltaTime;
+            //
+            //
+            //Debug.Log("ANGULAR SPEED: " + angVel);
+            //prevRot = transform.rotation.eulerAngles;
+            //
+            //if (velocity.magnitude > 0)
+            //    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (transform.rotation.eulerAngles.y + currWheelDelta / 10), transform.rotation.eulerAngles.z);
+            //Vector3 finalPos = transform.position + velocity * Time.deltaTime;
+            ////Debug.Log(20 - (Mathf.Min(Mathf.Abs(currWheelDelta), 20)));
+            //*/
+            //
+            //
+            //
+            //velocity = vec + dist / Time.deltaTime;
+            //
+            //Vector3 frr = -crr * velocity;
+            //
+            //float speed = Mathf.Sqrt(velocity.x * velocity.x + velocity.z * velocity.z);
+            //float wheelRotRate = speed / wheelRadius;
+            //
+            //
+            //Vector3 fdrag;// = -cdrag * velocity * Vector3.Magnitude(velocity);
+            //fdrag.x = -cdrag * velocity.x * speed;
+            //fdrag.y = 0;//-cdrag * velocity.y * speed;
+            //fdrag.z = -cdrag * velocity.z * speed;
+            //
+            //
+            //Vector3 ftraction = transform.forward * enginePower;
+            //
+            //
+            //Vector3 flong;
+            //
+            //flong = ftraction + fdrag + frr;
+            //
+            //
+            //Vector3 accel = flong / weight;
+            //
+            //
+            //velocity += Time.deltaTime * accel;
+            //
+            //velocity.y = 0;
+            //
+            //
+            //Debug.Log("ANGULAR SPEED: " + angVel);
+            //prevRot = transform.rotation.eulerAngles;
+            //
+            //if (velocity.magnitude > 0)
+            //    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (transform.rotation.eulerAngles.y + currWheelDelta / 10), transform.rotation.eulerAngles.z);
+            //
+            //Vector3 finalPos = transform.position + Time.deltaTime * velocity;
+            //
+            //transform.position = finalPos;
+            //
+            ////Debug.Log(velocity);
+            //
+            //
+            //float rot = Input.GetAxis("Horizontal");
+            //
+            //currWheelDelta += rot;
+            //
+            ////if (angVel.y <= -maxGripForce || angVel.y >= maxGripForce) drifting = true;
+            //
+            //
+            //if (currWheelDelta > 30) currWheelDelta = 30;
+            //else if (currWheelDelta < -30) currWheelDelta = -30;
+            //
+            //if (rot == 0)
+            //{
+            //    if (currWheelDelta < 0)
+            //    {
+            //        currWheelDelta += (wheelRotRate / 10) * Time.deltaTime;
+            //        if (currWheelDelta > 0) currWheelDelta = 0;
+            //    }
+            //    else if (currWheelDelta > 0)
+            //    {
+            //        currWheelDelta -= (wheelRotRate / 10) * Time.deltaTime;
+            //        if (currWheelDelta < 0) currWheelDelta = 0;
+            //    }
+            //}
+            //
+            //leftFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
+            //rightFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
+            //*/
+            #endregion
         }
         else
         {
+            if (bar < 1) bar += player.GetAxis("Throttle") * Time.deltaTime * throttleAccelSpeed;
+            if (bar > 1) bar = 1;
+            if (bar > 0) bar -= Time.deltaTime / throttleDeccelSpeed;
+            if (bar < 0) bar = 0;
+
             pos = transform.position;
-            Vector3 vec = transform.forward * player.GetAxis("Throttle");//Input.GetAxis("Vertical");
-            Debug.Log(player.GetAxis("Throttle"));
+            Vector3 vec = transform.forward * throttleForce.Evaluate(bar);//Input.GetAxis("Vertical");
             Vector3 dist = pos - prevPos;
+
+            if (acceleration < maxAccel && player.GetAxis("Throttle") > 0) acceleration += Time.deltaTime / 50;
+            else if (acceleration > 0 && player.GetAxis("Throttle") == 0) acceleration -= Time.deltaTime / 50;
+
+            //Debug.Log(acceleration);
+
             velocity = dist + vec / Time.deltaTime;
             prevPos = pos;
 
             if (velocity.x > 30) velocity.x = 30;
+            velocity.y = 0;
             if (velocity.z > 30) velocity.z = 30;
 
 
@@ -225,18 +355,22 @@ public class Testet : NetworkBehaviour
             angVel = (transform.rotation.eulerAngles - prevRot) / Time.deltaTime;
 
 
-            Debug.Log("ANGULAR SPEED: " + angVel);
+            //Debug.Log("ANGULAR SPEED: " + angVel);
             prevRot = transform.rotation.eulerAngles;
+
+            velocity.x += (transform.forward.x * acceleration) / Time.deltaTime;
+            velocity.z += (transform.forward.z * acceleration) / Time.deltaTime;
 
             if (velocity.magnitude > 0)
                 transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (transform.rotation.eulerAngles.y + currWheelDelta / 10), transform.rotation.eulerAngles.z);
-            Vector3 finalPos = transform.position + /*transform.forward*/velocity * Time.deltaTime/* * (20 - (Mathf.Min(Mathf.Abs(currWheelDelta), 20)))*/;
+            Vector3 finalPos = transform.position + velocity * Time.deltaTime;
             //Debug.Log(20 - (Mathf.Min(Mathf.Abs(currWheelDelta), 20)));
 
             transform.position = finalPos;
 
-            Debug.Log(transform.position);
-            
+            //Debug.Log(velocity);
+
+
             float rot = Input.GetAxis("Horizontal");
 
             currWheelDelta += rot;
@@ -263,7 +397,6 @@ public class Testet : NetworkBehaviour
 
             leftFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
             rightFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-
         }
     }
 }
