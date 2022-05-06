@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.Netcode;
 
-public class ScrapMetal : MonoBehaviour
+public class ScrapMetal : NetworkBehaviour
 {
     public int scrap;
     public TextMeshProUGUI textSmetals;
-    
+
+    private NetworkVariable<int> scrapLeft = new NetworkVariable<int>();
+
     #region Singleton
     private static ScrapMetal instance;
     public static ScrapMetal Instance { get => instance; set => instance = value; }
@@ -19,22 +22,42 @@ public class ScrapMetal : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
+
+        scrapLeft.Value = scrap;
     }
-    
-    
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        if (IsClient)
+        {
+            scrapLeft.OnValueChanged += OnScrapChanged;
+        }
+        
+    }
+
+    private void OnScrapChanged(int previousvalue, int newvalue)
+    {
+        actuText();
+        scrap = newvalue;
+        Debug.Log($"Scrap : {scrap} | Server Scrap : {scrapLeft.Value}");
+    }
+
+
     private void Start()
     {
         actuText();
     }
 
-    public void addMoney(int lint)
+    [ServerRpc(Delivery = RpcDelivery.Reliable, RequireOwnership = false)]
+    public void addMoneyServerRpc(int lint)
     {
-        scrap += lint;
-        actuText();
+        scrapLeft.Value += lint;
     }
 
     public void actuText()
     {
-        textSmetals.text = "Metals : " + scrap.ToString();
+        textSmetals.text = "Metals : " + scrapLeft.Value.ToString();
     }
 }

@@ -21,6 +21,11 @@ public class MainMenu : NetworkBehaviour
 
     public AudioMixer audioMix;
 
+    [Header("Options")]
+    [SerializeField] private TMP_InputField _usernameField;
+    [SerializeField] private List<Color> _colorSkin;
+    [SerializeField] private Image _skinImage;
+
     [Header("Lobby List Config")]
     [SerializeField] private GameObject noLobbyFound;
     [SerializeField] private GameObject lobbyRow;
@@ -32,18 +37,33 @@ public class MainMenu : NetworkBehaviour
     [SerializeField] private Toggle _CreateLobbyIsPrivate;
 
     [Header("In Lobby Config")]
-    [SerializeField] private Transform _InLobbyList;
+    [SerializeField] public Transform _InLobbyList;
+    [SerializeField] private GameObject _InLobbyPlayerRow;
     [SerializeField] private TextMeshProUGUI _InLobbyCode;
     [SerializeField] private TextMeshProUGUI _InLobbyName;
     [SerializeField] private GameObject _InLobbyLaunchButton;
 
+    [SerializeField] private string gameMapName = "CTest";
+
     private NetworkList<LobbyPlayersState> lobbyPlayers;
+
+    private int currentSelectedColor;
+
+    public static MainMenu instance;
+
+    private void Awake()
+    {
+        if (instance != null) Destroy(this);
+        instance = this;
+    }
 
     private void Start()
     {
         lobbyPlayers = new NetworkList<LobbyPlayersState>();
         EventSystem.OnJoinLobbyEvent += OnJoinLobbyEvent;
         getSlider();
+        GetUsername();
+        GetSkinColor();
     }
 
     public void Play()
@@ -108,6 +128,47 @@ public class MainMenu : NetworkBehaviour
     private void saveSlider(string nameVol, float volume)
     {
         PlayerPrefs.SetFloat(nameVol, volume);
+    }
+
+    public void SetUsername(string username)
+    {
+        PlayerPrefs.SetString("username", username);
+    }
+
+    public void GetUsername()
+    {
+        if (!PlayerPrefs.HasKey("username"))
+        {
+            PlayerPrefs.SetString("username", "u gay");
+        }
+        
+        _usernameField.text = PlayerPrefs.GetString("username");
+    }
+
+    public void GetSkinColor()
+    {
+        if (!PlayerPrefs.HasKey("skinColor"))
+        {
+            PlayerPrefs.SetInt("skinColor", 0);
+        }
+
+        ChangeSkinColor(PlayerPrefs.GetInt("skinColor"));
+    }
+
+    public void NextSkin(int skip)
+    {
+        ChangeSkinColor(currentSelectedColor + skip);
+    }
+
+    private void ChangeSkinColor(int getInt)
+    {
+        currentSelectedColor = getInt;
+
+        if (currentSelectedColor >= _colorSkin.Count) currentSelectedColor = 0;
+        if (currentSelectedColor < 0) currentSelectedColor = (_colorSkin.Count - 1);
+        
+        PlayerPrefs.SetInt("skinColor", currentSelectedColor);
+        _skinImage.color = _colorSkin[currentSelectedColor];
     }
 
     private void getSlider()
@@ -176,7 +237,7 @@ public class MainMenu : NetworkBehaviour
     {
         if (string.IsNullOrEmpty(_LobbyListCode.text)) return;
 
-        Lobby lobby = await LobbyManager.instance.JoinLobby(lobbyCode: _LobbyListCode.text);
+        Lobby lobby = await LobbyManager.instance.JoinLobby(PlayerPrefs.GetString("username"), PlayerPrefs.GetInt("skinColor"), lobbyCode: _LobbyListCode.text);
         if (lobby != null)
         {
             Debug.Log("Joining Lobby...");
@@ -191,7 +252,7 @@ public class MainMenu : NetworkBehaviour
 
         CreateLobbyOptions options = new CreateLobbyOptions();
         options.IsPrivate = _CreateLobbyIsPrivate.isOn;
-        Lobby lobby = await LobbyManager.instance.CreateLobby(_CreateLobbyName.text, 3, options);
+        Lobby lobby = await LobbyManager.instance.CreateLobby(_CreateLobbyName.text, 3, options, PlayerPrefs.GetString("username"), PlayerPrefs.GetInt("skinColor"));
 
         Debug.Log("Creating Lobby Completed...");
         Debug.Log("Joining Lobby...");
@@ -200,18 +261,17 @@ public class MainMenu : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        Debug.Log("Is CLient" + IsClient);
-        Debug.Log("Is Server" + IsServer);
-
         if (IsClient)
         {
             lobbyPlayers.OnListChanged += HandleLobbyPlayersChange;
-            
+
             DisplayLobbyInfo(false);
         }
 
         if (IsServer)
         {
+            // _InLobbyList.GetComponent<NetworkObject>().Spawn();
+            
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectCallback;
 
@@ -261,9 +321,17 @@ public class MainMenu : NetworkBehaviour
         _InLobbyCode.text = $"Lobby Code : {lobbyJoined.LobbyCode}";
         _InLobbyName.text = lobbyJoined.Name;
 
-        for (int i = 0; i < lobbyJoined.MaxPlayers; i++)
+        for (int i = 0; i < _InLobbyList.childCount; i++)
         {
-            _InLobbyList.GetChild(i).gameObject.SetActive(i < lobbyJoined.Players.Count);
+            if (i < lobbyPlayers.Count)
+            {
+                _InLobbyList.GetChild(i).gameObject.SetActive(true);
+                _InLobbyList.GetChild(i).GetComponent<PlayerRowDisplay>().DisplayPlayerName(lobbyPlayers[i].PlayerName);
+            }
+            else
+            {
+                _InLobbyList.GetChild(i).gameObject.SetActive(false);
+            }
         }
 
         if (IsHost)
@@ -273,21 +341,15 @@ public class MainMenu : NetworkBehaviour
 
         Debug.Log("Lobby Info Completed !");
     }
-
-    void HandleLobbyPlayersChange(NetworkListEvent<LobbyPlayersState> lobbyState)
-    {
-        for (int i = 0; i < _InLobbyList.childCount; i++)
-        {
-            _InLobbyList.GetChild(i).gameObject.SetActive(lobbyPlayers.Count > i);
-        }
-        
-        // DisplayLobbyInfo(false);
-    }
+    
 
     private void OnClientConnectedCallback(ulong clientId)
     {
         lobbyPlayers.Add(new LobbyPlayersState()
-            { ClientId = clientId, IsReady = false, PlayerName = "Aoi Bebou *w*" });
+            { ClientId = clientId, IsReady = false, PlayerName = RelayManager.GetPlayerData(clientId).HasValue ? RelayManager.GetPlayerData(clientId).Value.Username : "Player X" });
+        
+        // GameObject playerRow = Instantiate(_InLobbyPlayerRow);
+        // playerRow.GetComponent<NetworkObject>().Spawn(true);
     }
 
     private void OnClientDisconnectCallback(ulong clientId)
@@ -297,14 +359,34 @@ public class MainMenu : NetworkBehaviour
             if (lobbyPlayers[i].ClientId == clientId)
             {
                 lobbyPlayers.RemoveAt(i);
+                // Destroy(_InLobbyList.GetChild(i).gameObject);
                 break;
             }
         }
     }
+    
+    void HandleLobbyPlayersChange(NetworkListEvent<LobbyPlayersState> lobbyState)
+    {
+        for (int i = 0; i < _InLobbyList.childCount; i++)
+        {
+            if (i < lobbyPlayers.Count)
+            {
+                _InLobbyList.GetChild(i).gameObject.SetActive(true);
+                _InLobbyList.GetChild(i).GetComponent<PlayerRowDisplay>().DisplayPlayerName(lobbyPlayers[i].PlayerName);
+            }
+            else
+            {
+                _InLobbyList.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+        
+        // DisplayLobbyInfo(false);
+    }
+
 
     public void StartGame()
     {
-        NetworkManager.Singleton.SceneManager.LoadScene("LucaScene", LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.LoadScene(gameMapName, LoadSceneMode.Single);
     }
 
     #endregion

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Unity.Netcode;
 using UnityEngine;
 
 public class WeaponMachineGun : WeaponBase
@@ -29,10 +30,17 @@ public class WeaponMachineGun : WeaponBase
         else if (_fireType == WeaponFireType.Projectile)
         {
             // (Modifier cette ligne si object pooling)
-            GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-_spread, _spread),
-                Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
+            ShootProjectileServerRpc();
         }
         
         shootingTimer = 1 / _fireRate;
+    }
+
+    [ServerRpc]
+    void ShootProjectileServerRpc()
+    {
+        GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-_spread, _spread),
+            Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
+        bulletGO.GetComponent<NetworkObject>().Spawn();
     }
 }

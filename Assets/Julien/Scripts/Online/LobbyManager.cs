@@ -30,7 +30,7 @@ public class LobbyManager : MonoBehaviour
 
     public Lobby currentLobby;
 
-    public async Task<Lobby> JoinLobby(string lobbyCode = null, string lobbyId = null)
+    public async Task<Lobby> JoinLobby(string userName, int choosenColor, string lobbyCode = null, string lobbyId = null)
     {
         Lobby lobby = null;
         try
@@ -48,7 +48,7 @@ public class LobbyManager : MonoBehaviour
             {
                 string relayCode = lobby.Data["joinCode"].Value;
 
-                await RelayManager.instance.JoinRelay(relayCode);
+                await RelayManager.instance.JoinRelay(relayCode, userName, choosenColor);
 
                 NetworkManager.Singleton.StartClient();
             }
@@ -85,7 +85,7 @@ public class LobbyManager : MonoBehaviour
         return null;
     }
 
-    public async Task<Lobby> QuickJoinLobby(QuickJoinLobbyOptions options)
+    public async Task<Lobby> QuickJoinLobby(QuickJoinLobbyOptions options, string userName, int choosenColor)
     {
         Lobby lobby = null;
         try
@@ -94,7 +94,7 @@ public class LobbyManager : MonoBehaviour
 
             string relayCode = lobby.Data["joinCode"].Value;
 
-            await RelayManager.instance.JoinRelay(relayCode);
+            await RelayManager.instance.JoinRelay(relayCode, userName, choosenColor);
 
             NetworkManager.Singleton.StartClient();
         }
@@ -107,11 +107,11 @@ public class LobbyManager : MonoBehaviour
         return lobby;
     }
 
-    public async Task<Lobby> CreateLobby(string lobbyName, int maxPlayer, CreateLobbyOptions lobbyOptions)
+    public async Task<Lobby> CreateLobby(string lobbyName, int maxPlayer, CreateLobbyOptions lobbyOptions, string userName, int choosenColor)
     {
         try
         {
-            RelayHostData relayHostData = await RelayManager.instance.SetupRelay(maxPlayer - 1);
+            RelayHostData relayHostData = await RelayManager.instance.SetupRelay(maxPlayer - 1, userName, choosenColor);
 
             if (lobbyOptions.Data != null)
             {
@@ -199,5 +199,29 @@ public class LobbyManager : MonoBehaviour
             Lobbies.Instance.SendHeartbeatPingAsync(lobbyId);
             yield return delay;
         }
+    }
+
+    public async Task<Lobby> UpdateLobbyData(bool locked, string hostId, Dictionary<string, DataObject> others)
+    {
+        if (currentLobby == null) return null;
+        
+        try
+        {
+            UpdateLobbyOptions options = new UpdateLobbyOptions();
+            options.IsLocked = locked;
+            options.HostId = hostId;
+            options.Data = others;
+
+            Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(currentLobby.Id, options);
+            
+            currentLobby = lobby;
+            return lobby;
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+
+        return null;
     }
 }

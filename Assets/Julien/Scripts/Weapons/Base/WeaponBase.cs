@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
+using Unity.Netcode;
 using UnityEngine;
 
-public abstract class WeaponBase : MonoBehaviour
+public abstract class WeaponBase : NetworkBehaviour
 {
     #region Exposed Variables
 

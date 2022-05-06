@@ -45,10 +45,6 @@ public class UpgradeMenu : NetworkBehaviour
     [Header("Price Upgrade --- GD")] public List<listInt> FPrice = new List<listInt>();
     public List<listInt> CPrice = new List<listInt>();
 
-
-    private List<WTreeButton> allPossibleButtonWeapon1 = new List<WTreeButton>();
-    private List<WTreeButton> allPossibleButtonWeapon2 = new List<WTreeButton>();
-
     #region Singleton
 
     private static UpgradeMenu instance;
@@ -139,7 +135,7 @@ public class UpgradeMenu : NetworkBehaviour
     {
         if (FPrice[lint].intList[upgradesF[lint]] <= ScrapMetal.Instance.scrap)
         {
-            ScrapMetal.Instance.addMoney(-FPrice[lint].intList[upgradesF[lint]]);
+            ScrapMetal.Instance.addMoneyServerRpc(-FPrice[lint].intList[upgradesF[lint]]);
 
             UpgradeForteresseServerRpc(lint);
         }
@@ -149,7 +145,7 @@ public class UpgradeMenu : NetworkBehaviour
     {
         if (CPrice[lint].intList[upgradesC[lint]] <= ScrapMetal.Instance.scrap)
         {
-            ScrapMetal.Instance.addMoney(-CPrice[lint].intList[upgradesC[lint]]);
+            ScrapMetal.Instance.addMoneyServerRpc(-CPrice[lint].intList[upgradesC[lint]]);
 
             UpgradeCamionServerRpc(lint);
         }
@@ -312,32 +308,24 @@ public class UpgradeMenu : NetworkBehaviour
     [ServerRpc(RequireOwnership = false, Delivery = RpcDelivery.Reliable)]
     public void UpgradeForteresseServerRpc(int upgradeIndex, ServerRpcParams serverRpcParams = default)
     {
-        // if (serverRpcParams.Receive.SenderClientId != NetworkManager.Singleton.LocalClientId) return;
-        
         upgradesForteresseServer[upgradeIndex]++;
     }
 
     [ServerRpc(RequireOwnership = false, Delivery = RpcDelivery.Reliable)]
     public void UpgradeCamionServerRpc(int upgradeIndex, ServerRpcParams serverRpcParams = default)
     {
-        // if (serverRpcParams.Receive.SenderClientId == NetworkManager.Singleton.LocalClientId) return;
-        
         upgradesCamionServer[upgradeIndex]++;
     }
 
     [ServerRpc(RequireOwnership = false, Delivery = RpcDelivery.Reliable)]
     public void UnlockWeapon1ServerRpc(int weaponIdToUnlock, ServerRpcParams serverRpcParams = default)
     {
-        if (serverRpcParams.Receive.SenderClientId == NetworkManager.Singleton.LocalClientId) return;
-        
         unlockedWeapon1Server.Add(weaponIdToUnlock);
     }
 
     [ServerRpc(RequireOwnership = false, Delivery = RpcDelivery.Reliable)]
     public void UnlockWeapon2ServerRpc(int weaponIdToUnlock, ServerRpcParams serverRpcParams = default)
     {
-        if (serverRpcParams.Receive.SenderClientId == NetworkManager.Singleton.LocalClientId) return;
-        
         unlockedWeapon2Server.Add(weaponIdToUnlock);
     }
 
@@ -359,24 +347,22 @@ public class UpgradeMenu : NetworkBehaviour
 
     private void UnlockWeapon1ServerOnChanged(NetworkListEvent<int> newList)
     {
-        foreach (WTreeButton buttons in allPossibleButtonWeapon1)
+        WTreeButton weaponBuyed = listAllButton1.Find((button) =>
         {
-            if (buttons.id == newList.Value)
-            {
-                upgradeWeapon1(buttons);
-            }
-        }
+            return button.id == newList.Value;
+        });
+        
+        upgradeWeapon1(weaponBuyed);
     }
 
     private void UnlockWeapon2ServerOnChanged(NetworkListEvent<int> newList)
     {
-        foreach (WTreeButton buttons in allPossibleButtonWeapon2)
+        WTreeButton weaponBuyed = listAllButton2.Find((button) =>
         {
-            if (buttons.id == newList.Value)
-            {
-                upgradeWeapon2(buttons);
-            }
-        }
+            return button.id == newList.Value;
+        });
+        
+        upgradeWeapon2(weaponBuyed);
     }
 
     #endregion
