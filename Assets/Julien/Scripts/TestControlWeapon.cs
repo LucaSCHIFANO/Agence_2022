@@ -16,6 +16,9 @@ public class TestControlWeapon : NetworkBehaviour
     private NetworkVariable<bool> isPossessed = new NetworkVariable<bool>(false);
 
     private PlayerController _playerController;
+
+    [SerializeField] private float clampRotation;
+    [SerializeField] private Vector2 weaponSensibility;
     
     private void Update()
     {
@@ -26,9 +29,20 @@ public class TestControlWeapon : NetworkBehaviour
 
             if (!isPossessed.Value) return;
 
-            float leftRight = Input.GetAxis("Horizontal");
+            /*float leftRight = Input.GetAxis("Horizontal");
+            float upDown = Input.GetAxis("Vertical");*/
+            
+            float leftRight = Input.GetAxis("Mouse X") * weaponSensibility.x;
+            float upDown = Input.GetAxis("Mouse Y") * weaponSensibility.y;
 
+            transform.Rotate(Vector3.left, upDown);
             transform.Rotate(Vector3.up, leftRight);
+
+            Vector3 eulerRotation = transform.rotation.eulerAngles;
+            transform.rotation = Quaternion.Euler(eulerRotation.x, eulerRotation.y, 0);
+            
+            
+            
 
             if (Input.GetMouseButton(0))
             {

@@ -367,6 +367,8 @@ MonoBehaviour:
   activateDeactivate: 283
   activated: 0
   camera: {fileID: 5147668227004191488}
+  clampRotation: 30
+  weaponSensibility: {x: 10, y: 10}
 --- !u!114 &7192941488078450303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,8 +385,8 @@ MonoBehaviour:
   _shootingPoint: {fileID: 7192941487095535729}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
     type: 3}
-  magazineSize: 10
-  reloadTime: 3
+  magazineSize: 1000
+  reloadTime: 1
   _fireType: 1
   _spread: 2
 --- !u!114 &967086811462645455
