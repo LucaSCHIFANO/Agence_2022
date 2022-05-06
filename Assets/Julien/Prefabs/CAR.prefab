@@ -327,11 +327,11 @@ MonoBehaviour:
   wheelRotSped: 100
   inertia: 10
   maxWheelDelta: 30
-  maxGripForce: 150
+  maxGripForce: 200
   bar: 0
   throttleAccelSpeed: 2
   throttleDeccelSpeed: 1
-  accelForce: 0
+  accelForce: 10
   throttleForce:
     serializedVersion: 2
     m_Curve:
@@ -356,9 +356,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  remorque: {fileID: 0}
+  remorque: {fileID: 7790341083850612970}
   sand: 5000
   road: 10
+  remorqueTurningSpeed: 300
+  remorqueMaxDelta: 20
 --- !u!114 &312021732072444816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,7 +410,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     cam: {fileID: 2216819462963450220}
     startAction: 1
-    tpsCamFollowCar: 0
+    tpsCamFollowCar: 1
     cameraAngularVelocity: 60
     currAction:
       action: 0

@@ -63,7 +63,7 @@ public class Testet : NetworkBehaviour
 
     void Start()
     {
-        //if (!IsOwner) return;
+        if (!IsOwner) return;
 
         Debug.Log("Test get rewired");
         player = Rewired.ReInput.players.GetPlayer(0); // get the player by id
@@ -71,7 +71,7 @@ public class Testet : NetworkBehaviour
 
     void Update()
     {
-        //if (!IsOwner) return;
+        if (!IsOwner) return;
         if (Input.GetKeyDown(KeyCode.Space)) drifting = !drifting;
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
@@ -84,7 +84,7 @@ public class Testet : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        //if (!IsOwner) return;
+        if (!IsOwner) return;
         //Debug.Log("Fixed Update");
 
         if (drifting)
@@ -382,7 +382,7 @@ public class Testet : NetworkBehaviour
             if (velocity.magnitude > 0)
             {
                 transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (transform.rotation.eulerAngles.y + currWheelDelta / 10), transform.rotation.eulerAngles.z);
-                remorque.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (remorque.transform.rotation.eulerAngles.y - currWheelDelta / 10), transform.rotation.eulerAngles.z);
+                //remorque.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (remorque.transform.rotation.eulerAngles.y - currWheelDelta / 10), transform.rotation.eulerAngles.z);
 
             }
             Vector3 finalPos = transform.position + velocity * Time.deltaTime;
@@ -420,7 +420,7 @@ public class Testet : NetworkBehaviour
             leftFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
             rightFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
         }
-        UpdateRemorque();
+        //UpdateRemorque();
     }
 
     void UpdateRemorque()

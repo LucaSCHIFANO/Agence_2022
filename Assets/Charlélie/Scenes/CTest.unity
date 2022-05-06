@@ -141,7 +141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef3aa91293598f469a9103c60427910, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mat: {fileID: 2100000, guid: c8b76044682ae4e40bd85cdd72ba1d35, type: 2}
 --- !u!1 &1229447025
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,31 +288,6 @@ PrefabInstance:
       propertyPath: camera.cameraDistance
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 312021732072444816, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: camera.tpsCamFollowCar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 312021732072444816, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: camera.walk.fpsCam.allow
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 312021732072444816, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: camera.walk.tpsCam.allow
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 312021732072444816, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: camera.walk.fpsCam.startWith
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 312021732072444816, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: camera.walk.tpsCam.startWith
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1825063954157573252, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
       propertyPath: GlobalObjectIdHash
@@ -324,26 +298,6 @@ PrefabInstance:
       propertyPath: mat
       value: 
       objectReference: {fileID: 2100000, guid: c8b76044682ae4e40bd85cdd72ba1d35, type: 2}
-    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: remorque
-      value: 
-      objectReference: {fileID: 1824034891}
-    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: accelForce
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: maxGripForce
-      value: 999
-      objectReference: {fileID: 0}
-    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: remorqueTurningSpeed
-      value: 300
-      objectReference: {fileID: 0}
     - target: {fileID: 2216819461730630316, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
       propertyPath: m_Name
@@ -424,26 +378,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -8.4
       objectReference: {fileID: 0}
-    - target: {fileID: 4005788610774588132, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4005788610774588132, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4005788610774588132, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4005788610774588132, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2973a11b671c9ac4f8ad4b5c7bed9216, type: 3}
 --- !u!1 &1624584465
@@ -509,12 +443,6 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!1 &1824034891 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7790341083850612970, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-    type: 3}
-  m_PrefabInstance: {fileID: 1422664578}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1838709360
 GameObject:
   m_ObjectHideFlags: 0
