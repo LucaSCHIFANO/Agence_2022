@@ -19,8 +19,8 @@ public class TestControlWeapon : NetworkBehaviour
 
     [SerializeField] private float clampRotation;
     [SerializeField] private Vector2 weaponSensibility;
-
     
+
     private void Update()
     {
         if (IsOwner && IsClient)
@@ -60,6 +60,8 @@ public class TestControlWeapon : NetworkBehaviour
                 _playerController.Unpossess();
                 _playerController = null;
                 Invoke(nameof(ResetOwner), .2f);
+                GetComponent<WeaponBase>().isPossessed = false;
+                CanvasInGame.Instance.showOverheat(false);
             }
         }
     }
@@ -82,6 +84,8 @@ public class TestControlWeapon : NetworkBehaviour
                 playerController.Possess(gameObject);
                 _playerController = playerController;
                 camera.SetActive(true);
+                GetComponent<WeaponBase>().isPossessed = true;
+                CanvasInGame.Instance.showOverheat(true);
             }
         }
     }

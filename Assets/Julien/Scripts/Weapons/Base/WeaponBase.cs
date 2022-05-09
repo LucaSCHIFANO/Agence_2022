@@ -3,6 +3,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class WeaponBase : NetworkBehaviour
 {
@@ -29,6 +30,9 @@ public abstract class WeaponBase : NetworkBehaviour
     [SerializeField] protected float _coolDownPerSecond;
     [SerializeField] protected float _timeBeforeCoolDown;
 
+    [SerializeField] protected Color maincolor;
+    [SerializeField] protected Color overHeatColor;
+
 
     #endregion
     
@@ -36,20 +40,27 @@ public abstract class WeaponBase : NetworkBehaviour
     // New overheat system
     protected float _shootingTimer;
     protected float _timeCoolDown;
-    public bool _isOverHeat;
-    public bool _isCoolDown;
+    protected bool _isOverHeat;
+    protected bool _isCoolDown;
+
+    [HideInInspector] public bool isPossessed;
+    
+    protected CanvasInGame canvas;
+
     
     [SerializeField][Range(0, 100)] private float overHeatPourcent;
 
     protected virtual void Start()
     {
         overHeatPourcent = 0;
+        canvas = CanvasInGame.Instance;
     }
 
     protected virtual void FixedUpdate()
     {
         if (_shootingTimer >= 0) _shootingTimer -= Time.deltaTime;
     }
+
 
     public virtual void Shoot()
     {
@@ -77,5 +88,12 @@ public abstract class WeaponBase : NetworkBehaviour
         if (overHeatPourcent <= 0) _isOverHeat = false;
 
         overHeatPourcent = Mathf.Clamp(overHeatPourcent, 0, 100);
+        
+        
+        if (!isPossessed) return;
+
+        canvas.overheatSlider.fillAmount = (overHeatPourcent / 100);
+        if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
+        else canvas.overheatSlider.color = maincolor;
     }
 }

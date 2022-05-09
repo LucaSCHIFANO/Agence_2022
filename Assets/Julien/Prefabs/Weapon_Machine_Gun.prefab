@@ -388,9 +388,9 @@ MonoBehaviour:
   _bulletToOverHeat: 100
   _coolDownPerSecond: 10
   _timeBeforeCoolDown: 2
-  _timeCoolDown: 0
-  _isOverHeat: 0
-  _isCoolDown: 0
+  maincolor: {r: 1, g: 0.5, b: 0.5, a: 1}
+  overHeatColor: {r: 0.5283019, g: 0, b: 0, a: 1}
+  isPossessed: 0
   overHeatPourcent: 0
   _fireType: 1
   _spread: 2
