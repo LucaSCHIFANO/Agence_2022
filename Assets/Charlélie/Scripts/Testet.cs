@@ -384,11 +384,12 @@ public class Testet : NetworkBehaviour
             prevRot = transform.rotation.eulerAngles;
 
             Vector3 frr = -50 * velocity * speed;
-            Vector3 breaking = player.GetAxis("Breaking") * -transform.forward * 2000;
+            Vector3 breaking = player.GetAxis("Breaking") * -transform.forward * 10000;
 
             Vector3 fTot = frr + breaking;
 
             Vector3 accel = fTot / 1000;
+            Debug.Log(accel);
 
             velocity.x += (transform.forward.x * acceleration) / Time.deltaTime;
             velocity.z += (transform.forward.z * acceleration) / Time.deltaTime;

@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : NetworkBehaviour
 {
     public PlayerCamera camera;
+    Rewired.Player player;
     
     public override void OnNetworkSpawn()
     {
@@ -22,14 +23,14 @@ public class Player : NetworkBehaviour
     private void Start()
     {
         camera.player = this;
+        player = Rewired.ReInput.players.GetPlayer(0);
         camera.Init();
     }
   
 
     private void Update()
     {
-        //TEMPORARY
-        if (Input.GetKeyDown(KeyCode.C))
+        if (player.GetButtonDown("ChangeCamView"))
             camera.ChangeCameraPosition();
 
         camera.UpdateCamera();
