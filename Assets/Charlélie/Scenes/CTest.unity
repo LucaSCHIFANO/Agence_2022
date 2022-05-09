@@ -123,24 +123,28 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &1067931681 stripped
+--- !u!1 &1170884847 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 2216819462963450208, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+  m_CorrespondingSourceObject: {fileID: 7790341083850612970, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
     type: 3}
   m_PrefabInstance: {fileID: 1422664578}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1067931686
-MonoBehaviour:
+--- !u!54 &1170884851
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1067931681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aef3aa91293598f469a9103c60427910, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_GameObject: {fileID: 1170884847}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1229447025
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,6 +274,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 312021732072444816, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 312021732072444816, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
       propertyPath: camera.radius
       value: 5.46
       objectReference: {fileID: 0}
@@ -288,6 +297,16 @@ PrefabInstance:
       propertyPath: camera.cameraDistance
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 393288030046556132, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 700881242013139351, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1825063954157573252, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
       propertyPath: GlobalObjectIdHash
@@ -295,13 +314,78 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
+      propertyPath: bar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
       propertyPath: mat
       value: 
       objectReference: {fileID: 2100000, guid: c8b76044682ae4e40bd85cdd72ba1d35, type: 2}
+    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: accelForce
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: wheelRotSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: throttleAccelSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: throttleDeccelSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: remorqueTurningSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: throttleForce.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: throttleForce.m_Curve.Array.data[1].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: throttleForce.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: throttleForce.m_Curve.Array.data[1].outSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216819461730630313, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2216819461730630316, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
       propertyPath: m_Name
       value: CAR
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216819461730630316, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2216819461730630318, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
@@ -377,6 +461,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -8.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005788610774588132, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005788610774588132, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005788610774588132, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493843612398896913, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2973a11b671c9ac4f8ad4b5c7bed9216, type: 3}
