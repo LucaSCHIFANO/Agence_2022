@@ -6,11 +6,11 @@ using UnityEngine;
 public class Player : NetworkBehaviour
 {
     public PlayerCamera camera;
-    
+
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        
+
         Debug.Log("Spawned in game");
 
         if (IsOwner)
@@ -24,15 +24,18 @@ public class Player : NetworkBehaviour
         camera.player = this;
         camera.Init();
     }
-  
+
 
     private void Update()
     {
-        //TEMPORARY
-        if (Input.GetKeyDown(KeyCode.C))
-            camera.ChangeCameraPosition();
+        if (IsOwner && IsClient)
+        {
+            //TEMPORARY
+            if (Input.GetKeyDown(KeyCode.C))
+                camera.ChangeCameraPosition();
 
-        camera.UpdateCamera();
+            camera.UpdateCamera();
+        }
     }
 
     public void StartCamCoroutine(Transform start, Transform end)
