@@ -254,9 +254,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24c802fda830ee340a74fd8710bf9852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aTexture: {fileID: 8600000, guid: 428bcb8a0d1b5bf44ac5e47c16758f94, type: 2}
-  rTex: {fileID: 8600000, guid: 428bcb8a0d1b5bf44ac5e47c16758f94, type: 2}
-  mat: {fileID: 2100000, guid: 33ab746f74cca244d9144d6b48e852fc, type: 2}
 --- !u!1 &687532580
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &687532581
 Transform:
   m_ObjectHideFlags: 0
@@ -1482,7 +1479,7 @@ PrefabInstance:
     - target: {fileID: 1187491880904854147, guid: e229470716bf9784b82b26581ee95485,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1187491880904854148, guid: e229470716bf9784b82b26581ee95485,
         type: 3}
