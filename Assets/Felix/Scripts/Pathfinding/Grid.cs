@@ -9,19 +9,17 @@ namespace Pathfinding
         private Node[,] grid;
         private float nodeDiameter;
         private int gridSizeX, gridSizeZ;
-        
-        public List<Node> path;
 
         public int MaxSize => gridSizeX * gridSizeZ;
-        
-        public bool onlyDisplayPath;
+
+        public bool displayGrid = true;
         [Space]
         public Vector2 gridSize;
         public float nodeRadius;
 
         public LayerMask obstructedMask;
 
-        private void Start()
+        private void Awake()
         {
             nodeDiameter = nodeRadius * 2;
             gridSizeX = Mathf.RoundToInt(gridSize.x / nodeDiameter);
@@ -83,6 +81,78 @@ namespace Pathfinding
 
             return grid[x, y];
         }
+
+        public Node[] OptimizedNodesFromTransform(Transform _object)
+        {
+            List<Node> nodes = new List<Node>();
+
+            // TODO:
+            // Add rotation to the scale
+            
+            // Add 0.5f to always round to upper int value
+            int nbX = Mathf.RoundToInt(_object.localScale.x / nodeRadius / 2 + 0.5f);
+            int nbZ = Mathf.RoundToInt(_object.localScale.z / nodeRadius / 2 + 0.5f);
+
+            for (int i = -nbX; i <= nbX; i+=nbX*2)
+            {
+                for (int w = -nbZ; w <= nbZ; w++)
+                {
+                    Node node = NodeFromPoint(new Vector3(_object.position.x + i * _object.localScale.x / (nbX * 2), _object.position.y, _object.position.z + w * _object.localScale.z / (nbZ * 2)));
+                    
+                    if (!nodes.Contains(node))
+                        nodes.Add(node);
+                }
+            }
+            
+            for (int i = -nbZ; i <= nbZ; i+=nbZ*2)
+            {
+                for (int w = -nbX; w <= nbX; w++)
+                {
+                    Node node = NodeFromPoint(new Vector3(_object.position.x + w * _object.localScale.x / (nbX * 2), _object.position.y, _object.position.z + i * _object.localScale.z / (nbZ * 2)));
+                    
+                    if (!nodes.Contains(node))
+                        nodes.Add(node);
+                }
+            }
+
+            return nodes.ToArray();
+        }
+        
+        public Node[] OptimizedNodesFromTransform(Vector3 _position, Transform _object)
+        {
+            List<Node> nodes = new List<Node>();
+
+            // TODO:
+            // Add rotation to the scale
+            
+            // Add 0.5f to always round to upper int value
+            int nbX = Mathf.RoundToInt(_object.localScale.x / nodeRadius / 2 + 0.5f);
+            int nbZ = Mathf.RoundToInt(_object.localScale.z / nodeRadius / 2 + 0.5f);
+
+            for (int i = -nbX; i <= nbX; i+=nbX*2)
+            {
+                for (int w = -nbZ; w <= nbZ; w++)
+                {
+                    Node node = NodeFromPoint(new Vector3(_position.x + i * _object.localScale.x / (nbX * 2), _position.y, _position.z + w * _object.localScale.z / (nbZ * 2)));
+                    
+                    if (!nodes.Contains(node))
+                        nodes.Add(node);
+                }
+            }
+            
+            for (int i = -nbZ; i <= nbZ; i+=nbZ*2)
+            {
+                for (int w = -nbX; w <= nbX; w++)
+                {
+                    Node node = NodeFromPoint(new Vector3(_position.x + w * _object.localScale.x / (nbX * 2), _position.y, _position.z + i * _object.localScale.z / (nbZ * 2)));
+                    
+                    if (!nodes.Contains(node))
+                        nodes.Add(node);
+                }
+            }
+
+            return nodes.ToArray();
+        }
         
         private void OnDrawGizmos()
         {
@@ -97,33 +167,16 @@ namespace Pathfinding
                 Gizmos.color = new Color(0f, 0f, 0f, 0.5f);
                 Gizmos.DrawCube(transform.position, new Vector3(gridSize.x, 1, gridSize.y));
             }
-
-            if (onlyDisplayPath)
+            
+            if (grid != null && displayGrid)
             {
-                if (path != null)
+                foreach (Node n in grid)
                 {
-                    foreach (Node n in path)
-                    {
-                        Gizmos.color = Color.cyan;
-                        Gizmos.DrawCube(n.position, Vector3.one * (nodeDiameter - 0.1f));
-                    }
+                    Gizmos.color = n.isObstructed ? new Color(1f, 0f, 0f, 0.5f) : new Color(0f, 0f, 0f, 0.5f);
+                    Gizmos.DrawCube(n.position, Vector3.one * (nodeDiameter - 0.1f));
                 }
             }
-            else
-            {
-                if (grid != null)
-                {
-                    foreach (Node n in grid)
-                    {
-                        Gizmos.color = n.isObstructed ? new Color(1f, 0f, 0f, 0.5f) : new Color(0f, 0f, 0f, 0.5f);
-                    
-                        if (path != null && path.Contains(n))
-                            Gizmos.color = Color.cyan;
-                    
-                        Gizmos.DrawCube(n.position, Vector3.one * (nodeDiameter - 0.1f));
-                    }
-                }
-            }
+            
         }
     }
 }
