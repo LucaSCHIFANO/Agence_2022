@@ -42,6 +42,8 @@ public class PlayerController : NetworkBehaviour
     private NetworkVariable<FixedString32Bytes> displayName = new NetworkVariable<FixedString32Bytes>();
     private NetworkVariable<int> selectedMaterial = new NetworkVariable<int>();
 
+    [SerializeField] protected Animator anim;
+
     private void Start()
     {
         _controller = GetComponent<CharacterController>();
@@ -102,6 +104,15 @@ public class PlayerController : NetworkBehaviour
             if (Input.GetKey(KeyCode.Space))
             {
                 moveDirection.y = jumpForce;
+            }
+
+            if (moveDirection.x != 0 || moveDirection.z != 0)
+            {
+                anim.SetFloat("SpeedFront", 1);
+            }
+            else
+            {
+                anim.SetFloat("SpeedFront", 0);
             }
         }
 
