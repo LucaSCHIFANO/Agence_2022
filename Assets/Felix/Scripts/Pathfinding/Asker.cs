@@ -24,13 +24,13 @@ public class Asker : MonoBehaviour
         //PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
 
         gridTemp = FindObjectOfType<Grid>();
-        objectNodes = gridTemp.OptimizedNodesFromTransform(transform);
+        objectNodes = gridTemp.OptimizedNodesFromTransform(transform.position, transform);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return))
-            objectNodes = gridTemp.OptimizedNodesFromTransform(transform);
+            objectNodes = gridTemp.OptimizedNodesFromTransform(transform.position, transform);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -43,6 +43,7 @@ public class Asker : MonoBehaviour
         if (_pathSuccess)
         {
             path = _newPath;
+            targetIndex = 0;
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
         }
@@ -78,7 +79,7 @@ public class Asker : MonoBehaviour
         {
             for (int i = targetIndex; i < path.Length; i++)
             {
-                Gizmos.color = Color.cyan;
+                Gizmos.color = Color.green;
                 Gizmos.DrawCube(path[i], Vector3.one);
 
                 if (i == targetIndex)

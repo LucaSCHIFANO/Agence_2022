@@ -120,7 +120,7 @@ namespace Pathfinding
         
         public Node[] OptimizedNodesFromTransform(Vector3 _position, Transform _object)
         {
-            List<Node> nodes = new List<Node>();
+            /*List<Node> nodes = new List<Node>();
 
             // TODO:
             // Add rotation to the scale
@@ -145,6 +145,37 @@ namespace Pathfinding
                 for (int w = -nbX; w <= nbX; w++)
                 {
                     Node node = NodeFromPoint(new Vector3(_position.x + w * _object.localScale.x / (nbX * 2), _position.y, _position.z + i * _object.localScale.z / (nbZ * 2)));
+                    
+                    if (!nodes.Contains(node))
+                        nodes.Add(node);
+                }
+            }
+
+            return nodes.ToArray();*/
+            
+            List<Node> nodes = new List<Node>();
+
+            int nbX = Mathf.RoundToInt(_object.localScale.x / nodeRadius / 2 + 0.5f);
+            int nbZ = Mathf.RoundToInt(_object.localScale.z / nodeRadius / 2 + 0.5f);
+
+            for (int i = -nbX; i <= nbX; i+=nbX*2)
+            {
+                for (int w = -nbZ; w <= nbZ; w++)
+                {
+                    //Node node = NodeFromPoint(new Vector3(_position.x + i * _object.localScale.x / (nbX * 2), _position.y, _position.z + w * _object.localScale.z / (nbZ * 2)));
+                    Node node = NodeFromPoint(_position + _object.right * (i * _object.localScale.x / (nbX * 2)) + _object.forward * (w * _object.localScale.z / (nbZ * 2)));
+                    
+                    if (!nodes.Contains(node))
+                        nodes.Add(node);
+                }
+            }
+            
+            for (int i = -nbZ; i <= nbZ; i+=nbZ*2)
+            {
+                for (int w = -nbX; w <= nbX; w++)
+                {
+                    //Node node = NodeFromPoint(new Vector3(_position.x + w * _object.localScale.x / (nbX * 2), _position.y, _position.z + i * _object.localScale.z / (nbZ * 2)));
+                    Node node = NodeFromPoint(_position + _object.right * (w * _object.localScale.x / (nbX * 2)) + _object.forward * (i * _object.localScale.z / (nbZ * 2)));
                     
                     if (!nodes.Contains(node))
                         nodes.Add(node);
