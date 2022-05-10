@@ -45,7 +45,7 @@ public abstract class WeaponBase : NetworkBehaviour
 
     [HideInInspector] public bool isPossessed;
     
-    protected CanvasInGame canvas;
+    public CanvasInGame canvas;
 
     
     [SerializeField][Range(0, 100)] private float overHeatPourcent;
@@ -53,6 +53,11 @@ public abstract class WeaponBase : NetworkBehaviour
     protected virtual void Start()
     {
         overHeatPourcent = 0;
+        Invoke("delayStart", 1);
+    }
+
+    private void delayStart()
+    {
         canvas = CanvasInGame.Instance;
     }
 
