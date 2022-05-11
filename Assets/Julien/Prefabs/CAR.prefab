@@ -237,7 +237,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2216819461730630318}
-  - component: {fileID: 2216819461730630319}
   - component: {fileID: 2216819461730630312}
   - component: {fileID: 312021732072444816}
   - component: {fileID: 2216819461730630313}
@@ -270,39 +269,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2216819461730630319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2216819461730630316}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd1d10755724ed44bb14a7215b35ef33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet: {fileID: 8899922252124548775, guid: 433c384c8cc9feb43b9a5be2a1d57dc8, type: 3}
-  cdrag: 50
-  crr: 20
-  cbreak: 3000
-  weight: 1000
-  cornerStiff: 1
-  enginePower: 50
-  tyreLoad: 5000
-  wheelRotSped: 50
-  inertia: 5
-  maxWheelDelta: 30
-  leftFrontWheel: {fileID: 2216819461975651914}
-  rightFrontWheel: {fileID: 2216819463144456837}
-  showDist: 0
-  showFLong: 0
-  showVel: 1
-  showAngVel: 0
-  showDrag: 0
-  showRr: 0
-  showSpeed: 0
-  freeMovement: 0
 --- !u!114 &2216819461730630312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,14 +293,14 @@ MonoBehaviour:
   wheelRotSped: 100
   inertia: 10
   maxWheelDelta: 30
-  maxGripForce: 200
+  maxGripForce: 75
   airFriction: 20
   bar: 0
   throttleAccelSpeed: 2
   throttleDeccelSpeed: 0.5
   accelForce: 0.01
   maxAccel: 20
-  maxSpeed: 10
+  maxVelocity: 20
   throttleForce:
     serializedVersion: 2
     m_Curve:
@@ -362,9 +328,16 @@ MonoBehaviour:
   remorque: {fileID: 7790341083850612970}
   remorqueTurningSpeed: 10
   remorqueMaxDelta: 20
-  wheelRotSpeed: 1
+  wheelRotSpeed: 0.1
   sand: 5000
   road: 10
+  vals:
+    _Velocity: {x: 0, y: 0, z: 0}
+    _AngularVelocity: {x: 0, y: 0, z: 0}
+    _Acceleration: 0
+    _Speed: 0
+    _WheelDelta: 0
+    _GripVal: 0
 --- !u!114 &312021732072444816
 MonoBehaviour:
   m_ObjectHideFlags: 0
