@@ -37,8 +37,8 @@ public class PlayerCamera
     public bool tpsCamFollowCar;
     public float cameraAngularVelocity = 60f;
     float cameraDistance;
-    float cameraAngleY = 0;
-    float cameraAngleX = 0;
+    public float cameraAngleY = 0;
+    public float cameraAngleX = 0;
 
     [HideInInspector]
     public Action currAction;
@@ -73,7 +73,9 @@ public class PlayerCamera
         else currAction._currCam = currAction.tpsCam;
         cam.transform.position = currAction._currCam.camTransform.position;
         cam.transform.rotation = currAction._currCam.camTransform.rotation;
+        cameraAngleX = 20f; //FIXME
     }
+
 
     public void ChangeCameraPosition()
     {
@@ -89,8 +91,11 @@ public class PlayerCamera
 
             case CameraViewType.TPS:
                 if (!currAction.fpsCam.allow) return;
-                player.StartCamCoroutine(currAction._currCam.camTransform, currAction.fpsCam.camTransform);
+                player.StartCamCoroutine(cam.transform, currAction.fpsCam.camTransform);
                 currAction._currCam = currAction.fpsCam;
+                //TEMPORARY
+                cameraAngleX = 20f;
+                cameraAngleY = 0f;
                 break;
         }
 
@@ -116,7 +121,8 @@ public class PlayerCamera
     
     public void UpdateCamera()
     {
-        if (tpsCamFollowCar) return;
+        //Debug.Log(cameraAngleX + "  " + cameraAngleY);
+        if (tpsCamFollowCar || currAction._currCam.camView == CameraViewType.FPS) return;
 
         float angleDelta = cameraAngularVelocity * Time.deltaTime;
 
