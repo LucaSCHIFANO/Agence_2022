@@ -442,6 +442,7 @@ public class TruckPhysics : NetworkBehaviour
                 }
 
             }
+            
             Vector3 finalPos = transform.position + velocity * Time.deltaTime;
 
             transform.position = finalPos;

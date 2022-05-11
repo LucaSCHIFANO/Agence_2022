@@ -1,22 +1,25 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : NetworkBehaviour
 {
     [SerializeField] private float velocity;
     [SerializeField] private float destroyTimer;
 
     private void Start()
     {
-        Destroy(gameObject, destroyTimer);
+        if (IsServer)
+            Destroy(gameObject, destroyTimer);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.position += transform.forward * velocity * Time.deltaTime;
+        if (IsServer)
+            transform.position += transform.forward * velocity * Time.deltaTime;
     }
 
    /* private void OnCollisionEnter(Collision other)

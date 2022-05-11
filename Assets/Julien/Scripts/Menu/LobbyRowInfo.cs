@@ -19,7 +19,7 @@ public class LobbyRowInfo : MonoBehaviour
 
     public async void JoinLobby()
     {
-        Lobby joinedLobby = await LobbyManager.instance.JoinLobby(lobbyId: lobby.Id);
+        Lobby joinedLobby = await LobbyManager.instance.JoinLobby(PlayerPrefs.GetString("username"), PlayerPrefs.GetInt("skinColor"), lobbyId: lobby.Id);
         EventSystem.JoinLobbyEvent(joinedLobby);
     }
 }
