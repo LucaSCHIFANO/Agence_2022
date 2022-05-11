@@ -35,10 +35,11 @@ public class Testet : NetworkBehaviour
     bool drifting = false;
     private Rewired.Player player;
 
-    Vector3 velocity;
+    Vector3 velocity, prevVel;
 
     float acceleration;
-    float maxAccel = 1;
+
+    public float airFriction;
 
     [Space(20)]
     [Header("Throttle")]
@@ -47,6 +48,8 @@ public class Testet : NetworkBehaviour
     public float throttleAccelSpeed;
     public float throttleDeccelSpeed;
     public float accelForce;
+    public float maxAccel;
+    public float maxSpeed;
 
     public AnimationCurve throttleForce;
 
@@ -73,7 +76,7 @@ public class Testet : NetworkBehaviour
         //if (!IsOwner) return;
 
         Debug.Log("Test get rewired");
-        player = Rewired.ReInput.players.GetPlayer(0); // get the player by id
+        player = Rewired.ReInput.players.GetPlayer(0);
     }
 
     void Update()
@@ -85,8 +88,6 @@ public class Testet : NetworkBehaviour
             if (accelForce == sand) accelForce = road;
             else if (accelForce == road) accelForce = sand;
         }
-        //Debug.Log(velocity);
-        //Debug.Log(currWheelDelta);
     }
 
     private void FixedUpdate()
@@ -353,28 +354,39 @@ public class Testet : NetworkBehaviour
         {
             if (bar < 1) bar += player.GetAxis("Throttle") * (throttleAccelSpeed * Time.deltaTime);
             if (bar > 1) bar = 1;
-            if (bar > 0) bar -= Time.deltaTime / throttleDeccelSpeed;
+            if (bar > 0 && player.GetAxis("Throttle") < 1) bar -= ((player.GetAxis("Breaking") / 2) * Time.deltaTime) + Time.deltaTime * throttleDeccelSpeed;
             if (bar < 0) bar = 0;
 
             pos = transform.position;
-            Vector3 vec = transform.forward * throttleForce.Evaluate(bar);//Input.GetAxis("Vertical");
+            Vector3 vec = transform.forward * throttleForce.Evaluate(bar);
             Vector3 dist = pos - prevPos;
 
-            if (acceleration < maxAccel && player.GetAxis("Throttle") > 0) acceleration += Time.deltaTime * accelForce;
-            else if (acceleration > 0 && player.GetAxis("Throttle") == 0) acceleration -= Time.deltaTime * accelForce;
-
-            //Debug.Log(acceleration);
-
-            velocity = dist + vec / Time.deltaTime;
+            
+            
             prevPos = pos;
 
-            if (velocity.x > 30) velocity.x = 30;
-            velocity.y = 0;
-            if (velocity.z > 30) velocity.z = 30;
+            velocity = dist + vec / Time.deltaTime;
 
 
             float speed = Mathf.Sqrt(velocity.x * velocity.x + velocity.z * velocity.z);
+            //Debug.Log(speed);
+            /*
+            if (velocity.magnitude < maxSpeed)
+            {
+                if (acceleration < maxAccel && player.GetAxis("Throttle") > 0) acceleration += Time.deltaTime * accelForce;
+                else if (acceleration > 0 && player.GetAxis("Throttle") == 0) acceleration -= Time.deltaTime * accelForce;
+            }
+            */
+            if (acceleration < maxAccel && player.GetAxis("Throttle") > 0) acceleration += Time.deltaTime * accelForce;
+            else if (acceleration > 0 && player.GetAxis("Throttle") == 0) acceleration -= Time.deltaTime * accelForce;
+            //Debug.Log(acceleration);
 
+            float val = Mathf.Sqrt((maxSpeed * maxSpeed) / 2);
+            //Debug.Log(val);
+
+            //velocity.x = Mathf.Min(velocity.x, val/* + ((maxSpeed - val) - velocity.z)*/);
+            //velocity.z = Mathf.Min(velocity.z, val/* + ((maxSpeed - val) - velocity.x)*/);
+            //Debug.Log(velocity);
             float wheelRotRate = speed / wheelRadius;
 
             angVel = (transform.rotation.eulerAngles - prevRot) / Time.deltaTime;
@@ -383,16 +395,23 @@ public class Testet : NetworkBehaviour
             //Debug.Log("ANGULAR SPEED: " + angVel);
             prevRot = transform.rotation.eulerAngles;
 
-            Vector3 frr = -50 * velocity * speed;
+            Vector3 frr = -airFriction * velocity * speed;
             Vector3 breaking = player.GetAxis("Breaking") * -transform.forward * 10000;
 
             Vector3 fTot = frr + breaking;
 
             Vector3 accel = fTot / 1000;
-            Debug.Log(accel);
-
+            //Debug.Log(accel);
+            /*
+            if (velocity.magnitude < maxSpeed)
+            {
+                velocity.x += (transform.forward.x * acceleration) / Time.deltaTime;
+                velocity.z += (transform.forward.z * acceleration) / Time.deltaTime;
+            }
+            */
             velocity.x += (transform.forward.x * acceleration) / Time.deltaTime;
             velocity.z += (transform.forward.z * acceleration) / Time.deltaTime;
+            //Debug.Log(speed);
 
             velocity += Time.deltaTime * accel;
             velocity.y = 0;
@@ -413,7 +432,7 @@ public class Testet : NetworkBehaviour
 
             transform.position = finalPos;
 
-
+            prevVel = velocity;
 
             float rot = Input.GetAxis("Horizontal");
 
@@ -448,39 +467,6 @@ public class Testet : NetworkBehaviour
 
     void UpdateRemorque()
     {
-        /*
-        pos = remorque.transform.position;
-        Vector3 vec = remorque.transform.forward * throttleForce.Evaluate(bar);//Input.GetAxis("Vertical");
-        Vector3 dist = pos - prevPos;
-
-        if (acceleration < maxAccel && player.GetAxis("Throttle") > 0) acceleration += Time.deltaTime / 50;
-        else if (acceleration > 0 && player.GetAxis("Throttle") == 0) acceleration -= Time.deltaTime / 50;
-
-        //Debug.Log(acceleration);
-
-        velocity = dist + vec / Time.deltaTime;
-        prevPos = pos;
-
-        if (velocity.x > 30) velocity.x = 30;
-        velocity.y = 0;
-        if (velocity.z > 30) velocity.z = 30;
-
-
-        float speed = Mathf.Sqrt(velocity.x * velocity.x + velocity.z * velocity.z);
-
-        float wheelRotRate = speed / wheelRadius;
-
-        angVel = (remorque.transform.rotation.eulerAngles - prevRot) / Time.deltaTime;
-
-
-        //Debug.Log("ANGULAR SPEED: " + angVel);
-        prevRot = remorque.transform.rotation.eulerAngles;
-        
-        velocity.x += (remorque.transform.forward.x * acceleration) / Time.deltaTime;
-        velocity.z += (remorque.transform.forward.z * acceleration) / Time.deltaTime;
-        */
-
-
         float dotSpeed = Vector3.Dot(remorque.transform.forward, transform.forward);
         delta = Mathf.Acos(dotSpeed / (remorque.transform.forward.magnitude * transform.forward.magnitude)) * 100;
 
@@ -500,41 +486,6 @@ public class Testet : NetworkBehaviour
             remorque.transform.rotation = transform.rotation;
             isRemorqueTurning = false;
         }
-        
-        //if (velocity.magnitude > 0)
-        //   remorque.transform.rotation = Quaternion.Euler(remorque.transform.rotation.eulerAngles.x, (remorque.transform.rotation.eulerAngles.y + currWheelDelta / 5), remorque.transform.rotation.eulerAngles.z);
-        //Vector3 finalPos = remorque.transform.position + velocity * Time.deltaTime;
-        //Debug.Log(20 - (Mathf.Min(Mathf.Abs(currWheelDelta), 20)));
-
-            //remorque.transform.position = finalPos;
-
-            //Debug.Log(velocity);
-
-            /*
-            float rot = Input.GetAxis("Horizontal");
-
-            currWheelDelta += rot;
-
-            //if (angVel.y <= -maxGripForce || angVel.y >= maxGripForce) drifting = true;
-
-
-            if (currWheelDelta > 30) currWheelDelta = 30;
-            else if (currWheelDelta < -30) currWheelDelta = -30;
-
-            if (rot == 0)
-            {
-                if (currWheelDelta < 0)
-                {
-                    currWheelDelta += (wheelRotRate / 10) * Time.deltaTime;
-                    if (currWheelDelta > 0) currWheelDelta = 0;
-                }
-                else if (currWheelDelta > 0)
-                {
-                    currWheelDelta -= (wheelRotRate / 10) * Time.deltaTime;
-                    if (currWheelDelta < 0) currWheelDelta = 0;
-                }
-            }
-            */
     }
 
     

@@ -245,15 +245,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 312021732072444816, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: camera.tpsCamFollowCar
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1825063954157573252, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2115632138
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: accelForce
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 2216819461730630312, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
+        type: 3}
+      propertyPath: throttleDeccelSpeed
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2216819461730630316, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
