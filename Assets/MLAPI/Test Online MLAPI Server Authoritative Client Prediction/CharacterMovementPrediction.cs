@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -13,10 +14,7 @@ public class CharacterMovementPrediction : NetworkBehaviour
 
 
     private Queue<ClientInputState> serverInputs = new Queue<ClientInputState>();
-    
-    
-    
-    
+
     private ClientInputState _inputState = new ClientInputState();
     private int simulationFrame;
     
@@ -65,7 +63,7 @@ public class CharacterMovementPrediction : NetworkBehaviour
 
     void MovePlayer(Transform toMove, ClientInputState inputState)
     {
-        if (inputState == null)
+        if (!inputState.initialized)
         {
             inputState = defaultInputState;
         }
@@ -91,7 +89,8 @@ public class CharacterMovementPrediction : NetworkBehaviour
         _inputState = new ClientInputState
         {
             pressedInput = new Vector2(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal")),
-            jumped = Input.GetButton("Jump")
+            jumped = Input.GetButton("Jump"),
+            initialized = true
         };
     }
 
@@ -104,7 +103,7 @@ public class CharacterMovementPrediction : NetworkBehaviour
         Debug.Log("Sending input to server");
         SendInputStateServerRpc(_inputState);
 
-        if (serverSimulationState != null) Reconciliate();
+        if (serverSimulationState.initialized) Reconciliate();
 
         SimulationState simulationState = CurrentSimulationState(localTransform, velocity, _inputState);
 
@@ -125,7 +124,7 @@ public class CharacterMovementPrediction : NetworkBehaviour
         ClientInputState cachedInputState = _inputStateCache[cacheIndex];
         SimulationState cachedSimulationState = _simulationStateCache[cacheIndex];
         
-        if (cachedInputState == null || cachedSimulationState == null)
+        if (!cachedInputState.initialized || !cachedSimulationState.initialized)
         {
             localTransform.position = serverSimulationState.position;
             velocity = serverSimulationState.velocity;
@@ -155,7 +154,7 @@ public class CharacterMovementPrediction : NetworkBehaviour
                 ClientInputState rewindCachedInputState = _inputStateCache[rewindCacheIndex];
                 SimulationState rewindCachedSimulationState = _simulationStateCache[rewindCacheIndex];
 
-                if (rewindCachedInputState == null || rewindCachedSimulationState == null)
+                if (!rewindCachedInputState.initialized || !rewindCachedSimulationState.initialized)
                 {
                     ++rewindFrame;
                     continue;
@@ -182,7 +181,8 @@ public class CharacterMovementPrediction : NetworkBehaviour
         {
             position = toMove.position,
             velocity = velocity,
-            simulationFrame = inputState.simulationFrame
+            simulationFrame = inputState.simulationFrame,
+            initialized = true
         };
     }
 
@@ -202,9 +202,9 @@ public class CharacterMovementPrediction : NetworkBehaviour
 
     void FixedUpdateServer()
     {
-        ClientInputState state = null;
+        ClientInputState state;
 
-        while (serverInputs.Count > 0 && (state = serverInputs.Dequeue()) != null)
+        while (serverInputs.Count > 0 && (state = serverInputs.Dequeue()).initialized)
         {
             MovePlayer(distantTransform, state);
 
@@ -225,7 +225,7 @@ public class CharacterMovementPrediction : NetworkBehaviour
     [ClientRpc]
     void ServerSimulationStateClientRpc(SimulationState simulationState, ClientRpcParams clientRpcParams = default)
     {
-        if (serverSimulationState?.simulationFrame < simulationState.simulationFrame)
+        if (serverSimulationState.simulationFrame < simulationState.simulationFrame)
         {
             serverSimulationState = simulationState;
         }

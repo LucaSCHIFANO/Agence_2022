@@ -1,15 +1,17 @@
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
-public class ClientInputState : INetworkSerializable
+public struct ClientInputState : INetworkSerializable
 {
-
     public Vector2 pressedInput;
     // public float rotationX;
     public bool jumped;
     public int simulationFrame;
+
+    public bool initialized;
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
@@ -17,5 +19,6 @@ public class ClientInputState : INetworkSerializable
         // serializer.SerializeValue(ref rotationX);
         serializer.SerializeValue(ref jumped);
         serializer.SerializeValue(ref simulationFrame);
+        serializer.SerializeValue(ref initialized);
     }
 }
