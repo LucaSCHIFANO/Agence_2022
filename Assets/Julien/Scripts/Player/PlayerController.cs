@@ -85,7 +85,16 @@ public class PlayerController : NetworkBehaviour
             
             transform.rotation = originalRotation * Quaternion.AngleAxis(rotationX, Vector3.up);
             Camera.transform.localRotation = originalCamRotation * Quaternion.AngleAxis(rotationY, -Vector3.right);
+            
+            anim.SetBool("isWalking", (moveDirection.x != 0 || moveDirection.z != 0));
+            // anim.gameObject.GetComponent<NetworkAnimator>().SetTrigger(0, true);
+            // anim.gameObject.GetComponent<NetworkAnimator>().SetTrigger(1, true);
+            
         }
+        
+        //if(IsClient) anim.SetBool("isWalking", (moveDirection.x != 0 || moveDirection.z != 0));
+        
+       
     }
 
     private void FixedUpdate()
@@ -106,15 +115,7 @@ public class PlayerController : NetworkBehaviour
             {
                 moveDirection.y = jumpForce;
             }
-
-            if (moveDirection.x != 0 || moveDirection.z != 0)
-            {
-                anim.SetFloat("SpeedFront", 1);
-            }
-            else
-            {
-                anim.SetFloat("SpeedFront", 0);
-            }
+            
         }
 
         // Gravity
