@@ -127,7 +127,6 @@ public class PlayerCamera
     
     public void UpdateCamera()
     {
-        //Debug.Log(cameraAngleX + "  " + cameraAngleY);
         if (tpsCamFollowCar || currAction._currCam.camView == CameraViewType.FPS) return;
 
         float angleDelta = cameraAngularVelocity * Time.deltaTime;
@@ -138,7 +137,7 @@ public class PlayerCamera
         //Protections
         cameraAngleX = Mathf.Clamp(cameraAngleX, maxNegAngleX, 90f);
         cameraAngleY = Mathf.Repeat(cameraAngleY, 360f);
-        Debug.Log(cameraAngleX);
+
         Quaternion cameraRotation =
             Quaternion.AngleAxis(cameraAngleY, Vector3.up)
             * Quaternion.AngleAxis(cameraAngleX, Vector3.right);
