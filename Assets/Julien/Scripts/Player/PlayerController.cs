@@ -86,6 +86,7 @@ public class PlayerController : NetworkBehaviour
             transform.rotation = originalRotation * Quaternion.AngleAxis(rotationX, Vector3.up);
             Camera.transform.localRotation = originalCamRotation * Quaternion.AngleAxis(rotationY, -Vector3.right);
             
+            MakePlayerAnimServerRpc((moveDirection.x != 0 || moveDirection.z != 0));
             anim.SetBool("isWalking", (moveDirection.x != 0 || moveDirection.z != 0));
             // anim.gameObject.GetComponent<NetworkAnimator>().SetTrigger(0, true);
             // anim.gameObject.GetComponent<NetworkAnimator>().SetTrigger(1, true);
@@ -230,6 +231,14 @@ public class PlayerController : NetworkBehaviour
         {
             renderer.material = skinColor[newColorSkin];
         }
+    }
+
+    [ServerRpc]
+    void MakePlayerAnimServerRpc(bool isWalking)
+    {
+        if (IsOwner && IsClient) return;
+        
+        anim.SetBool("isWalking", isWalking);
     }
     
 /* Server Authoritative (faut regarder comment forcer le déplacement depuis le client)
