@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &453345831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 453345832}
+  m_Layer: 0
+  m_Name: Seat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &453345832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453345831}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.41, y: 0, z: 0.52}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2216819461730630318}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1745961682
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1745961683}
+  m_Layer: 0
+  m_Name: ExitPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1745961683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745961682}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.2, y: -0.39, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2216819461730630318}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &289689692473140172
 GameObject:
   m_ObjectHideFlags: 0
@@ -48,7 +110,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2927991719342637025
 Transform:
   m_ObjectHideFlags: 0
@@ -237,12 +299,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2216819461730630318}
-  - component: {fileID: 2216819461730630319}
   - component: {fileID: 2216819461730630312}
   - component: {fileID: 312021732072444816}
   - component: {fileID: 2216819461730630313}
   - component: {fileID: 1825063954157573252}
   - component: {fileID: 393288030046556132}
+  - component: {fileID: 69341504895247121}
+  - component: {fileID: 3875887000089824931}
   m_Layer: 0
   m_Name: CAR
   m_TagString: Untagged
@@ -267,42 +330,11 @@ Transform:
   - {fileID: 2927991719342637025}
   - {fileID: 2216819463211125012}
   - {fileID: 2216819461646276129}
+  - {fileID: 1745961683}
+  - {fileID: 453345832}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2216819461730630319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2216819461730630316}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd1d10755724ed44bb14a7215b35ef33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet: {fileID: 8899922252124548775, guid: 433c384c8cc9feb43b9a5be2a1d57dc8, type: 3}
-  cdrag: 50
-  crr: 20
-  cbreak: 3000
-  weight: 1000
-  cornerStiff: 1
-  enginePower: 50
-  tyreLoad: 5000
-  wheelRotSped: 50
-  inertia: 5
-  maxWheelDelta: 30
-  leftFrontWheel: {fileID: 2216819461975651914}
-  rightFrontWheel: {fileID: 2216819463144456837}
-  showDist: 0
-  showFLong: 0
-  showVel: 1
-  showAngVel: 0
-  showDrag: 0
-  showRr: 0
-  showSpeed: 0
-  freeMovement: 0
 --- !u!114 &2216819461730630312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,7 +342,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2216819461730630316}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ebdb40bb8ea6ba48adea062a68954be, type: 3}
   m_Name: 
@@ -372,7 +404,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2216819461730630316}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da95ca421aeb5fe4c80b2ea21dd348e1, type: 3}
   m_Name: 
@@ -493,7 +525,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2216819461730630316}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2c1a8b518cc97140b2e2b89134c5695, type: 3}
   m_Name: 
@@ -541,6 +573,39 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
+--- !u!114 &69341504895247121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2216819461730630316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e5710cc11836f0498d76c5fc0d7188e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptToActivate:
+  - {fileID: 2216819461730630312}
+  - {fileID: 312021732072444816}
+  - {fileID: 393288030046556132}
+  gameObjectsToActivate:
+  - {fileID: 700881242013139351}
+  exitPoint: {fileID: 1745961683}
+  mainSeat: {fileID: 453345832}
+--- !u!65 &3875887000089824931
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2216819461730630316}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.0374646, y: 1, z: 3.1786942}
+  m_Center: {x: -0.011971235, y: 0, z: -0.19343537}
 --- !u!1 &2216819461954796469
 GameObject:
   m_ObjectHideFlags: 0
