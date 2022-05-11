@@ -104,6 +104,7 @@ public class UpgradeMenu : NetworkBehaviour
         gotoScreen(4);
         upgradeWeapon2(listAllButton2[0]);
         gotoScreen(0);
+        gameObject.SetActive(false);
 
         #endregion
     }
@@ -292,6 +293,13 @@ public class UpgradeMenu : NetworkBehaviour
         {
             if (listPriceC[j].IsActive()) listPriceC[j].text = CPrice[j].intList[upgradesC[j]].ToString();
         }
+    }
+
+
+    public void quitUpgrade()
+    {
+        gotoScreen(0);
+        Shop.Instance.quitShop();
     }
 
 
