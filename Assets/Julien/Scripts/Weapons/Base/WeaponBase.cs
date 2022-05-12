@@ -43,6 +43,8 @@ public abstract class WeaponBase : NetworkBehaviour
     protected bool _isOverHeat;
     protected bool _isCoolDown;
 
+    [HideInInspector] public PlayerController possessor;
+
     [HideInInspector] public bool isPossessed;
     
     public CanvasInGame canvas;
@@ -52,6 +54,7 @@ public abstract class WeaponBase : NetworkBehaviour
 
     protected virtual void Start()
     {
+        isPossessed = false;
         overHeatPourcent = 0;
         Invoke("delayStart", 2);
     }
@@ -96,6 +99,8 @@ public abstract class WeaponBase : NetworkBehaviour
         
         
         if (!isPossessed) return;
+        
+        if(!possessor.IsLocalPlayer) return;
 
         canvas.overheatSlider.fillAmount = (overHeatPourcent / 100);
         if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
