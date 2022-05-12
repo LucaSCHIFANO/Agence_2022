@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Jobs;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -7,7 +8,9 @@ public class Shop : NetworkBehaviour
 {
     private PlayerController _playerController;
     private NetworkVariable<bool> isPossessed = new NetworkVariable<bool>(false);
+    [SerializeField] protected TruckArea truckArea;
     
+
     #region Singleton
 
     private static Shop instance;
@@ -54,6 +57,18 @@ public class Shop : NetworkBehaviour
             
             if (Input.GetKey(KeyCode.E))
             {
+                var okay = false;
+                foreach (var VARIABLE in truckArea.objectInAreaTruck)
+                {
+                    if (VARIABLE.gameObject.tag == "Car")
+                    {
+                        okay = true;
+                        break;
+                    }
+                }
+                
+                if(!okay) return;
+
                 CanvasInGame.Instance.showShop(true);
                 
                 if (player.IsLocalPlayer)
