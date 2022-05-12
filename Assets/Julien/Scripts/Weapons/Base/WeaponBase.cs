@@ -3,6 +3,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class WeaponBase : NetworkBehaviour
 {
@@ -22,47 +23,82 @@ public abstract class WeaponBase : NetworkBehaviour
     [SerializeField]
     protected GameObject _bulletPrefab;
 
-    [SerializeField] protected int magazineSize;
-    [SerializeField] protected float reloadTime;
+    
+    [SerializeField] protected float _bulletToOverHeat;
+    
+    [Tooltip("Pourcent of overheat gauge remove per second")]
+    [SerializeField] protected float _coolDownPerSecond;
+    [SerializeField] protected float _timeBeforeCoolDown;
+
+    [SerializeField] protected Color maincolor;
+    [SerializeField] protected Color overHeatColor;
+
 
     #endregion
+    
+    
+    // New overheat system
+    protected float _shootingTimer;
+    protected float _timeCoolDown;
+    protected bool _isOverHeat;
+    protected bool _isCoolDown;
 
-    protected int bulletLeft;
-    protected bool isReloading;
-    protected float shootingTimer;
+    [HideInInspector] public bool isPossessed;
+    
+    public CanvasInGame canvas;
+
+    
+    [SerializeField][Range(0, 100)] private float overHeatPourcent;
 
     protected virtual void Start()
     {
-        bulletLeft = magazineSize;
+        overHeatPourcent = 0;
+        Invoke("delayStart", 1);
+    }
+
+    private void delayStart()
+    {
+        canvas = CanvasInGame.Instance;
     }
 
     protected virtual void FixedUpdate()
     {
-        if (shootingTimer >= 0) shootingTimer -= Time.deltaTime;
+        if (_shootingTimer >= 0) _shootingTimer -= Time.deltaTime;
     }
+
 
     public virtual void Shoot()
     {
-        bulletLeft--;
+        overHeatPourcent += (100 / _bulletToOverHeat);
+        if (overHeatPourcent >= 100) _isOverHeat = true;
+        _timeCoolDown = _timeBeforeCoolDown;
         
         EventSystem.ShootEvent();
     }
 
     public void Reload()
     {
-        if (isReloading) return;
+        if (_isOverHeat) return;
         
-        isReloading = true;
-        StartCoroutine(ReloadCoroutine());
+        _isOverHeat = true;
     }
 
-    IEnumerator ReloadCoroutine()
+    private void Update()
     {
-        yield return new WaitForSecondsRealtime(reloadTime);
+        if (_isCoolDown || _isOverHeat) overHeatPourcent -= _coolDownPerSecond * Time.deltaTime;
+        else if(!_isCoolDown) _timeCoolDown -= Time.deltaTime;
 
-        bulletLeft = magazineSize;
-        isReloading = false;
+        if (_timeCoolDown <= 0) _isCoolDown = true;
+        else _isCoolDown = false;
+        if (overHeatPourcent <= 0) _isOverHeat = false;
+
+        overHeatPourcent = Mathf.Clamp(overHeatPourcent, 0, 100);
+        
+        
+        if (!isPossessed) return;
+
+        canvas.overheatSlider.fillAmount = (overHeatPourcent / 100);
+        if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
+        else canvas.overheatSlider.color = maincolor;
     }
-    
-    
 }

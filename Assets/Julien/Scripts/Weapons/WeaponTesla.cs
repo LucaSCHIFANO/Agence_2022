@@ -7,13 +7,13 @@ public class WeaponTesla : WeaponBase
 {
     public override void Shoot()
     {
-        if (shootingTimer > 0) return;
-        if (bulletLeft <= 0) return;
+        if (_shootingTimer > 0) return;
+        if (_isOverHeat) return;
         
         base.Shoot();
         
         GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation);
         
-        shootingTimer = 1 / _fireRate;
+        _shootingTimer = 1 / _fireRate;
     }
 }

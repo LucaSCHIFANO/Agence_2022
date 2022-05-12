@@ -11,10 +11,10 @@ public class WeaponFlameThrower : WeaponBase
 
     public override void Shoot()
     {
-        if (bulletLeft <= 0) return;
-        
+        if (_shootingTimer > 0) return;
+        if (_isOverHeat) return;
         base.Shoot();
-        
+
         _particleSystem.Play();
     }
 }

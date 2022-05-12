@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
@@ -41,6 +42,8 @@ public class PlayerController : NetworkBehaviour
     
     private NetworkVariable<FixedString32Bytes> displayName = new NetworkVariable<FixedString32Bytes>();
     private NetworkVariable<int> selectedMaterial = new NetworkVariable<int>();
+
+    [SerializeField] protected Animator anim;
 
     private void Start()
     {
@@ -82,7 +85,17 @@ public class PlayerController : NetworkBehaviour
             
             transform.rotation = originalRotation * Quaternion.AngleAxis(rotationX, Vector3.up);
             Camera.transform.localRotation = originalCamRotation * Quaternion.AngleAxis(rotationY, -Vector3.right);
+            
+            MakePlayerAnimServerRpc((moveDirection.x != 0 || moveDirection.z != 0));
+            anim.SetBool("isWalking", (moveDirection.x != 0 || moveDirection.z != 0));
+            // anim.gameObject.GetComponent<NetworkAnimator>().SetTrigger(0, true);
+            // anim.gameObject.GetComponent<NetworkAnimator>().SetTrigger(1, true);
+            
         }
+        
+        //if(IsClient) anim.SetBool("isWalking", (moveDirection.x != 0 || moveDirection.z != 0));
+        
+       
     }
 
     private void FixedUpdate()
@@ -103,6 +116,7 @@ public class PlayerController : NetworkBehaviour
             {
                 moveDirection.y = jumpForce;
             }
+            
         }
 
         // Gravity
@@ -217,6 +231,14 @@ public class PlayerController : NetworkBehaviour
         {
             renderer.material = skinColor[newColorSkin];
         }
+    }
+
+    [ServerRpc]
+    void MakePlayerAnimServerRpc(bool isWalking)
+    {
+        if (IsOwner && IsClient) return;
+        
+        anim.SetBool("isWalking", isWalking);
     }
     
 /* Server Authoritative (faut regarder comment forcer le déplacement depuis le client)
