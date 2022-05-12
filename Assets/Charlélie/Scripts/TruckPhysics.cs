@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class Testet : NetworkBehaviour
+public class TruckPhysics : NetworkBehaviour
 {
 
     [Header("Front wheels")]
