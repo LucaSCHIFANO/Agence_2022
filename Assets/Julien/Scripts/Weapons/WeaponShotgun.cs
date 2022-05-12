@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using UnityEngine;
+using Unity.Netcode;
 
 public class WeaponShotgun : WeaponBase
 {
@@ -15,14 +16,24 @@ public class WeaponShotgun : WeaponBase
         
         base.Shoot();
         
+        ShootProjectileServerRpc();
+
+        
+        _shootingTimer = 1 / _fireRate;
+    }
+    
+    
+    
+    [ServerRpc]
+    void ShootProjectileServerRpc()
+    {
         // (Modifier cette ligne si object pooling)
         for (int i = 0; i < _numberOfBullet; i++)
         {
             GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position,
                 _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-_spread, _spread),
                     Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
+            bulletGO.GetComponent<NetworkObject>().Spawn();
         }
-        
-        _shootingTimer = 1 / _fireRate;
     }
 }

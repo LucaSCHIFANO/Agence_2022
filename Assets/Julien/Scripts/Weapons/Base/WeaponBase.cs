@@ -53,7 +53,7 @@ public abstract class WeaponBase : NetworkBehaviour
     protected virtual void Start()
     {
         overHeatPourcent = 0;
-        Invoke("delayStart", 1);
+        Invoke("delayStart", 2);
     }
 
     private void delayStart()
