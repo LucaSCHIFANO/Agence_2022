@@ -299,7 +299,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2216819461730630318}
-  - component: {fileID: 2216819461730630312}
+  - component: {fileID: 8197020221474899894}
   - component: {fileID: 312021732072444816}
   - component: {fileID: 2216819461730630313}
   - component: {fileID: 1825063954157573252}
@@ -335,7 +335,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2216819461730630312
+--- !u!114 &8197020221474899894
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -349,24 +349,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftFrontWheel: {fileID: 2216819461975651914}
   rightFrontWheel: {fileID: 2216819463144456837}
-  cdrag: 5
-  crr: 2
-  cbreak: 3000
-  weight: 1000
-  cornerStiff: 0.01
+  cdrag: 0.5
+  crr: 0.5
+  cbreak: 5
+  weight: 1
+  cornerStiff: 20
   enginePower: 50
   tyreLoad: 5000
-  wheelRotSped: 100
+  wheelRotSped: 10
   inertia: 10
-  maxWheelDelta: 30
-  maxGripForce: 200
+  maxWheelDelta: 20
+  maxGripForce: 150
   airFriction: 20
   bar: 0
   throttleAccelSpeed: 2
   throttleDeccelSpeed: 0.5
-  accelForce: 0.01
+  accelForce: 0.1
   maxAccel: 20
-  maxSpeed: 10
+  maxSpeed: 20
   throttleForce:
     serializedVersion: 2
     m_Curve:
@@ -394,7 +394,7 @@ MonoBehaviour:
   remorque: {fileID: 7790341083850612970}
   remorqueTurningSpeed: 10
   remorqueMaxDelta: 20
-  wheelRotSpeed: 1
+  wheelRotSpeed: 0.5
   sand: 5000
   road: 10
 --- !u!114 &312021732072444816
@@ -586,7 +586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptToActivate:
-  - {fileID: 2216819461730630312}
+  - {fileID: 8197020221474899894}
   - {fileID: 312021732072444816}
   - {fileID: 393288030046556132}
   gameObjectsToActivate:
@@ -1131,8 +1131,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1.4242827, z: 0.99999964}
+  m_Center: {x: 0, y: -0.21214134, z: 0}
 --- !u!1 &2216819462887879542
 GameObject:
   m_ObjectHideFlags: 0
