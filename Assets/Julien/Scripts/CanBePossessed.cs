@@ -30,6 +30,7 @@ public class CanBePossessed : NetworkBehaviour
                     _playerController.enabled = true;
                     _playerController.Unpossess(exitPoint);
                     _playerController = null;
+                    _playerNear = null;
                     Invoke(nameof(ResetOwner), .2f);
                 }
             }
@@ -53,7 +54,11 @@ public class CanBePossessed : NetworkBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        _playerNear = null;
+        
+        if (other.gameObject.TryGetComponent(out PlayerController playerController))
+        {
+            _playerNear = null;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
