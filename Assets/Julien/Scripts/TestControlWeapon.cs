@@ -61,6 +61,7 @@ public class TestControlWeapon : NetworkBehaviour
                 _playerController = null;
                 Invoke(nameof(ResetOwner), .2f);
                 GetComponent<WeaponBase>().isPossessed = false;
+                GetComponent<WeaponBase>().possessor = null;
                 CanvasInGame.Instance.showOverheat(false);
             }
         }
@@ -85,6 +86,7 @@ public class TestControlWeapon : NetworkBehaviour
                 _playerController = playerController;
                 camera.SetActive(true);
                 GetComponent<WeaponBase>().isPossessed = true;
+                GetComponent<WeaponBase>().possessor = playerController;
                 CanvasInGame.Instance.showOverheat(true);
             }
         }

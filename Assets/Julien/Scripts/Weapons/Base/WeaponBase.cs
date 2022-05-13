@@ -33,6 +33,8 @@ public abstract class WeaponBase : NetworkBehaviour
     [SerializeField] protected Color maincolor;
     [SerializeField] protected Color overHeatColor;
 
+    [SerializeField] protected GameObject bulletEffect;
+
 
     #endregion
     
@@ -43,6 +45,8 @@ public abstract class WeaponBase : NetworkBehaviour
     protected bool _isOverHeat;
     protected bool _isCoolDown;
 
+    [HideInInspector] public PlayerController possessor;
+
     [HideInInspector] public bool isPossessed;
     
     public CanvasInGame canvas;
@@ -52,8 +56,9 @@ public abstract class WeaponBase : NetworkBehaviour
 
     protected virtual void Start()
     {
+        isPossessed = false;
         overHeatPourcent = 0;
-        Invoke("delayStart", 1);
+        Invoke("delayStart", 2);
     }
 
     private void delayStart()
@@ -96,9 +101,41 @@ public abstract class WeaponBase : NetworkBehaviour
         
         
         if (!isPossessed) return;
+        
+        if(!possessor.IsLocalPlayer) return;
 
         canvas.overheatSlider.fillAmount = (overHeatPourcent / 100);
         if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
         else canvas.overheatSlider.color = maincolor;
+    }
+    
+    
+    //creer une particule qd une bullet touche un mur
+    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    protected void BulletEffectClientRpc(Vector3 impactPoint)
+    {
+        if(IsOwner) return;
+        Instantiate(bulletEffect, impactPoint, transform.rotation);
+    }
+    
+    [ServerRpc(Delivery = RpcDelivery.Unreliable)]
+    protected void CreateBulletEffectServerRpc(Vector3 impactPoint)
+    {
+        BulletEffectClientRpc(impactPoint);
+    }
+    
+    
+    
+    //creer la balle override en fct de l'arme
+    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    protected virtual void ShootBulletClientRpc()
+    {
+        if(IsOwner) return;
+    }
+    
+    [ServerRpc(Delivery = RpcDelivery.Unreliable)]
+    protected void ShootBulletServerRpc()
+    {
+        ShootBulletClientRpc();
     }
 }
