@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -11,7 +12,22 @@ public class CharacterMovementPrediction : NetworkBehaviour
     [SerializeField] private Transform localTransform;
     [SerializeField] private Transform distantTransform;
     [SerializeField] private List<Renderer> distantModel;
+    [SerializeField] private GameObject Camera;
+    
+    
+    [SerializeField] private Vector2 sensitivity = new Vector2(10, 10);
 
+    [SerializeField] private float minimumY = -60;
+    [SerializeField] private float maximumY = 60;
+
+    [SerializeField] private float gravity;
+
+    [SerializeField] private float movementSpeed;
+    [SerializeField] private float runSpeed;
+    [SerializeField] private float jumpForce;
+    
+    
+    
 
     private Queue<ClientInputState> serverInputs = new Queue<ClientInputState>();
 
@@ -30,9 +46,23 @@ public class CharacterMovementPrediction : NetworkBehaviour
     
     
     private ClientInputState defaultInputState = new ClientInputState();
+    
+    private Quaternion originalRotation;
+    private Quaternion originalCamRotation;
 
+    private float rotationX;
+    private float rotationY;
+    
+    private NetworkVariable<FixedString32Bytes> displayName = new NetworkVariable<FixedString32Bytes>();
+    private NetworkVariable<int> selectedMaterial = new NetworkVariable<int>();
+    
     void Start()
     {
+        if (IsServer)
+        {
+            StartServer();
+        }
+        
         if (IsLocalPlayer)
         {
             StartLocalClient();
@@ -68,17 +98,48 @@ public class CharacterMovementPrediction : NetworkBehaviour
             inputState = defaultInputState;
         }
 
-        velocity = (toMove.forward * inputState.pressedInput.x + toMove.right * inputState.pressedInput.y).normalized;
-        velocity.y = 0f;
+        if (IsServer)
+        {
+            toMove.rotation = inputState.rotation;
+        }
         
-        toMove.Translate(velocity);
+        // Debug.DrawLine(toMove.position, toMove.position + (toMove.forward * 2));
+        // Debug.DrawLine(toMove.position, toMove.position + (toMove.right * 2));
+
+
+        // if (_controller.isGrounded)
+        // {
+            velocity = (toMove.forward * inputState.pressedInput.x + toMove.right * inputState.pressedInput.y).normalized;
+            velocity.y = 0f;
+            // velocity *= inputState.sprinting ? runSpeed : movementSpeed;
+
+            if (inputState.jumped)
+            {
+                velocity.y = jumpForce;
+            }
+        // }
+
+        // velocity.y -= gravity;
+
+        toMove.Translate(velocity * (IsServer ? NetworkManager.Singleton.ServerTime.FixedDeltaTime : NetworkManager.Singleton.LocalTime.FixedDeltaTime), Space.World);
+        // _controller.Move(velocity);
     }
-    
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(localTransform.position - new Vector3(0, 0.5f, 0), .5f);
+    }
 
     #region Client
 
     void StartLocalClient()
     {
+        // _userController = localTransform.GetComponent<CharacterController>();
+        
+        originalRotation = localTransform.rotation;
+        originalCamRotation = Camera.transform.localRotation;
+        
+        
         localTransform.gameObject.SetActive(true);
 
         distantModel.ForEach((renderer) => { renderer.enabled = false; });
@@ -86,10 +147,20 @@ public class CharacterMovementPrediction : NetworkBehaviour
     
     void UpdateLocalPlayer()
     {
+        rotationX += Input.GetAxis("Mouse X") * sensitivity.x;
+        rotationY += Input.GetAxis("Mouse Y") * sensitivity.y;
+        
+        rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
+            
+        localTransform.rotation = originalRotation * Quaternion.AngleAxis(rotationX, Vector3.up);
+        Camera.transform.localRotation = originalCamRotation * Quaternion.AngleAxis(rotationY, -Vector3.right);
+        
         _inputState = new ClientInputState
         {
             pressedInput = new Vector2(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal")),
+            rotation = localTransform.rotation,
             jumped = Input.GetButton("Jump"),
+            sprinting = Input.GetKey(KeyCode.LeftShift),
             initialized = true
         };
     }
@@ -100,7 +171,6 @@ public class CharacterMovementPrediction : NetworkBehaviour
 
         MovePlayer(localTransform, _inputState);
 
-        Debug.Log("Sending input to server");
         SendInputStateServerRpc(_inputState);
 
         if (serverSimulationState.initialized) Reconciliate();
@@ -191,7 +261,6 @@ public class CharacterMovementPrediction : NetworkBehaviour
     {
         if (!IsServer) return;
 
-        Debug.Log("Server got inputs (adding to queue)");
         serverInputs.Enqueue(inputState);
     }
 
@@ -200,6 +269,11 @@ public class CharacterMovementPrediction : NetworkBehaviour
 
     #region Server
 
+    void StartServer()
+    {
+        // _serverController = distantTransform.GetComponent<CharacterController>();
+    }
+    
     void FixedUpdateServer()
     {
         ClientInputState state;

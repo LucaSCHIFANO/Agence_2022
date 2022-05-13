@@ -7,8 +7,9 @@ using UnityEngine;
 public struct ClientInputState : INetworkSerializable
 {
     public Vector2 pressedInput;
-    // public float rotationX;
+    public Quaternion rotation;
     public bool jumped;
+    public bool sprinting;
     public int simulationFrame;
 
     public bool initialized;
@@ -16,8 +17,9 @@ public struct ClientInputState : INetworkSerializable
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
         serializer.SerializeValue(ref pressedInput);
-        // serializer.SerializeValue(ref rotationX);
+        serializer.SerializeValue(ref rotation);
         serializer.SerializeValue(ref jumped);
+        serializer.SerializeValue(ref sprinting);
         serializer.SerializeValue(ref simulationFrame);
         serializer.SerializeValue(ref initialized);
     }
