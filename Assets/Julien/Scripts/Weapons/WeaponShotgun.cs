@@ -16,8 +16,14 @@ public class WeaponShotgun : WeaponBase
         
         base.Shoot();
         
-        ShootProjectileServerRpc();
-
+        //ShootProjectileServerRpc();
+        ShootBulletServerRpc();
+        for (int i = 0; i < _numberOfBullet; i++)
+        {
+            GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position,
+                _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-_spread, _spread),
+                    Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
+        }
         
         _shootingTimer = 1 / _fireRate;
     }
@@ -35,5 +41,18 @@ public class WeaponShotgun : WeaponBase
                     Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
             bulletGO.GetComponent<NetworkObject>().Spawn();
         }
+    }
+    
+    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    protected override void ShootBulletClientRpc()
+    {
+        if(IsOwner) return;
+        for (int i = 0; i < _numberOfBullet; i++)
+        {
+            GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position,
+                _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-_spread, _spread),
+                    Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
+        }
+        
     }
 }

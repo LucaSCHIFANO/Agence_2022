@@ -255,10 +255,13 @@ MonoBehaviour:
   _shootingPoint: {fileID: 8744097533237432669}
   _bulletPrefab: {fileID: 0}
   _bulletToOverHeat: 1
-  _coolDownPerSecond: 40
+  _coolDownPerSecond: 70
   _timeBeforeCoolDown: 0
   maincolor: {r: 0.2403701, g: 0.8679245, b: 0.19241722, a: 1}
   overHeatColor: {r: 0, g: 0.26415092, b: 0.028847422, a: 1}
+  bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
+    type: 3}
+  possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
   overHeatPourcent: 0

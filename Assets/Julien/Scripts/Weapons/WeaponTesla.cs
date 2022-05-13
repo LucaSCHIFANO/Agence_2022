@@ -13,7 +13,9 @@ public class WeaponTesla : WeaponBase
         
         base.Shoot();
         
-        ShootProjectileServerRpc();
+        //ShootProjectileServerRpc();
+        ShootBulletServerRpc();
+        GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation);
         
         _shootingTimer = 1 / _fireRate;
     }
@@ -24,5 +26,13 @@ public class WeaponTesla : WeaponBase
     {
         GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation);
         bulletGO.GetComponent<NetworkObject>().Spawn();
+    }
+    
+    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    protected override void ShootBulletClientRpc()
+    {
+        if(IsOwner) return;
+        GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation);
+        
     }
 }

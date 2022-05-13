@@ -170,10 +170,13 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
     type: 3}
   _bulletToOverHeat: 1
-  _coolDownPerSecond: 40
+  _coolDownPerSecond: 70
   _timeBeforeCoolDown: 1
   maincolor: {r: 0.8150296, g: 0.8207547, b: 0.15098791, a: 1}
   overHeatColor: {r: 0.5471698, g: 0.4962165, b: 0.18841223, a: 1}
+  bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
+    type: 3}
+  possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
   overHeatPourcent: 0
