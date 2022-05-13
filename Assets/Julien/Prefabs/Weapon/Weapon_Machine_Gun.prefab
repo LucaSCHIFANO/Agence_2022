@@ -387,10 +387,14 @@ MonoBehaviour:
     type: 3}
   _bulletToOverHeat: 100
   _coolDownPerSecond: 10
-  _timeBeforeCoolDown: 2
+  _timeBeforeCoolDown: 1
   maincolor: {r: 1, g: 0.5, b: 0.5, a: 1}
   overHeatColor: {r: 0.5283019, g: 0, b: 0, a: 1}
+  bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
+    type: 3}
+  possessor: {fileID: 0}
   isPossessed: 0
+  canvas: {fileID: 0}
   overHeatPourcent: 0
   _fireType: 1
   _spread: 2

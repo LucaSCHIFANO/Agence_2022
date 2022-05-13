@@ -33,6 +33,8 @@ public abstract class WeaponBase : NetworkBehaviour
     [SerializeField] protected Color maincolor;
     [SerializeField] protected Color overHeatColor;
 
+    [SerializeField] protected GameObject bulletEffect;
+
 
     #endregion
     
@@ -105,5 +107,35 @@ public abstract class WeaponBase : NetworkBehaviour
         canvas.overheatSlider.fillAmount = (overHeatPourcent / 100);
         if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
         else canvas.overheatSlider.color = maincolor;
+    }
+    
+    
+    //creer une particule qd une bullet touche un mur
+    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    protected void BulletEffectClientRpc(Vector3 impactPoint)
+    {
+        if(IsOwner) return;
+        Instantiate(bulletEffect, impactPoint, transform.rotation);
+    }
+    
+    [ServerRpc(Delivery = RpcDelivery.Unreliable)]
+    protected void CreateBulletEffectServerRpc(Vector3 impactPoint)
+    {
+        BulletEffectClientRpc(impactPoint);
+    }
+    
+    
+    
+    //creer la balle override en fct de l'arme
+    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    protected virtual void ShootBulletClientRpc()
+    {
+        if(IsOwner) return;
+    }
+    
+    [ServerRpc(Delivery = RpcDelivery.Unreliable)]
+    protected void ShootBulletServerRpc()
+    {
+        ShootBulletClientRpc();
     }
 }

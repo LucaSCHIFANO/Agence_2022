@@ -42,16 +42,20 @@ public class WeaponBurst : WeaponBase
         {
             RaycastHit hit;
             Vector3 shootingDir = Quaternion.Euler(Random.Range(-_spread, _spread), Random.Range(-_spread, _spread), Random.Range(-_spread, _spread)) * _shootingPoint.forward;
-            Debug.DrawRay(_shootingPoint.position, shootingDir * 1000, Color.red, 10);
+            Debug.DrawRay(_shootingPoint.position, shootingDir * 1000, maincolor, 1);
             if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit))
             {
-                // Toucher un collider
+                CreateBulletEffectServerRpc(hit.point);
+                Instantiate(bulletEffect, hit.point, transform.rotation);
             }
         }
         else if (_fireType == WeaponFireType.Projectile)
         {
             // (Modifier cette ligne si object pooling)
-            ShootProjectileServerRpc();
+            //ShootProjectileServerRpc();
+            ShootBulletServerRpc();
+            GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-_spread, _spread),
+                Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
         }
         shootedRound++;
         _shootingTimer = .1f;
@@ -73,6 +77,16 @@ public class WeaponBurst : WeaponBase
             Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
         
         bulletGO.GetComponent<NetworkObject>().Spawn();
+    }
+    
+    
+    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    protected override void ShootBulletClientRpc()
+    {
+        if(IsOwner) return;
+        GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-_spread, _spread),
+            Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
+        
     }
     
 }

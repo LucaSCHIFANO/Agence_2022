@@ -4,21 +4,21 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class Bullet : NetworkBehaviour
+public class Bullet : MonoBehaviour
 {
     [SerializeField] private float velocity;
     [SerializeField] private float destroyTimer;
 
     private void Start()
     {
-        if (IsServer)
+        //if (IsServer)
             Destroy(gameObject, destroyTimer);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (IsServer)
+        //if (IsServer)
             transform.position += transform.forward * velocity * Time.deltaTime;
     }
 
