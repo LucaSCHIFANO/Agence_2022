@@ -14,6 +14,6 @@ public class WeaponInteraction : Interactable
 
     public override void Interact(PlayerInteraction interactor)
     {
-        GetComponent<PossessableWeapon>().TryPossess(interactor.gameObject);
+        // GetComponent<PossessableWeapon>().TryPossess(interactor.gameObject);
     }
 }
