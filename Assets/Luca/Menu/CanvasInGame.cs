@@ -11,9 +11,7 @@ public class CanvasInGame : MonoBehaviour
 
     [Header("Shop")] 
     public GameObject shopDisplay;
-    
-    
-    
+
     #region Singleton
 
     private static CanvasInGame instance;
