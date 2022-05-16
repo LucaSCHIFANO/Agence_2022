@@ -143,8 +143,6 @@ public class GroundGenerator : MonoBehaviour
     public float scaleY = 1f;
     float prevScaleX, prevScaleY;
 
-    
-
     public ShaderVariables vars;
     public bool isFlat;
 

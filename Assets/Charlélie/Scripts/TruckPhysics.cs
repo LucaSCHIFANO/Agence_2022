@@ -38,8 +38,10 @@ public class TruckPhysics : NetworkBehaviour
     public float tyreLoad = 5000;
     public float driftTurningRatio = 30;
     public float driftAngleRatio = 60;
+    float _driftAngleRatio;
     public float driftAngleSpeed = 10;
-    Vector3 _driftAngleRatio;
+    Vector3 _driftAngleRatioVec;
+    public float driftAccelerationRatio = 5;
     public float wheelRotSped = 10;
     public float inertia = 10;
     public float maxWheelDelta = 30;
@@ -499,8 +501,14 @@ public class TruckPhysics : NetworkBehaviour
     {
         //if (!IsOwner) return;
         //Debug.Log("Fixed Update");
-        Quaternion quat = Quaternion.Euler(0, transform.forward.y - driftAngleRatio, 0);
-        _driftAngleRatio = quat * transform.forward;
+
+
+        if (Input.GetAxis("Horizontal") < 0)
+            _driftAngleRatio = -driftAngleRatio;
+        else
+            _driftAngleRatio = driftAngleRatio;
+        Quaternion quat = Quaternion.Euler(0, transform.forward.y - _driftAngleRatio, 0);
+        _driftAngleRatioVec = quat * transform.forward;
         if (drifting)
         {
             #region driftTemp
@@ -662,7 +670,7 @@ public class TruckPhysics : NetworkBehaviour
             pos = transform.position;
             Vector3 vec = transform.forward * player.GetAxis("Throttle");//Input.GetAxis("Vertical");
             Vector3 dist = pos - prevPos;
-            Debug.Log(dist);
+            //Debug.Log(dist);
             prevPos = pos;
             /*
             velocity = dist + vec / Time.deltaTime;
@@ -720,10 +728,13 @@ public class TruckPhysics : NetworkBehaviour
 
             velocity.y = 0;
 
-            velocity = _driftAngleRatio * driftAngleSpeed;
+            velocity = _driftAngleRatioVec * driftAngleSpeed;
+
+            velocity.x *= (acceleration * driftAccelerationRatio);
+            velocity.z *= (acceleration * driftAccelerationRatio);
 
 
-            Debug.Log("ANGULAR SPEED: " + angVel);
+            //Debug.Log("ANGULAR SPEED: " + angVel);
             prevRot = transform.rotation.eulerAngles;
 
             if (velocity.magnitude > 0)
@@ -906,7 +917,7 @@ public class TruckPhysics : NetworkBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawLine(transform.position, transform.position + transform.forward * 5);
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + _driftAngleRatio * driftAngleSpeed/* * Mathf.Sign(Input.GetAxis("Horizontal"))*/);
+        Gizmos.DrawLine(transform.position, transform.position + driftAngleSpeed * _driftAngleRatioVec);
     }
 
 }
