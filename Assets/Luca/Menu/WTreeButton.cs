@@ -13,7 +13,7 @@ public class WTreeButton : MonoBehaviour
    private TextMeshProUGUI text;
    private bool cannotBeSelected;
    [HideInInspector]public bool canBeUpgrades;
-   [SerializeField] private bool firstWeapon;
+   [SerializeField] public bool firstWeapon;
    [SerializeField] private int price;
 
    public WTreeButton previousUpgrades;

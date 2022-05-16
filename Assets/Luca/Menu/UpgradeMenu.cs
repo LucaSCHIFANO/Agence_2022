@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,15 +36,21 @@ public class UpgradeMenu : NetworkBehaviour
     public List<WTreeButton> listAllButton1 = new List<WTreeButton>();
     private int upgardesLevel = 1;
     [HideInInspector] public WTreeButton lastUpgrade1;
+    [SerializeField] GameObject turret1;
 
     [Header("Weapons2")]
     public List<WTreeButton> listAllButton2 = new List<WTreeButton>();
     private int upgardesLevel2 = 1;
     [HideInInspector] public WTreeButton lastUpgrade2;
+    [SerializeField] GameObject turret2;
 
 
     [Header("Price Upgrade --- GD")] public List<listInt> FPrice = new List<listInt>();
     public List<listInt> CPrice = new List<listInt>();
+
+    public GameObject goPoubelle1;
+    public GameObject goPoubelle2;
+
 
     #region Singleton
 
@@ -176,7 +183,8 @@ public class UpgradeMenu : NetworkBehaviour
                 else if (listAllButton1[i].previousUpgrades.canBeUpgrades) listAllButton1[i].notSelectedYet();
             }
         }
-
+        
+        upgradeWeapon(turret1, buttonTree.id, goPoubelle1);
     }
 
     private void disableAllWeapon1()
@@ -211,6 +219,8 @@ public class UpgradeMenu : NetworkBehaviour
                 else if (listAllButton2[i].previousUpgrades.canBeUpgrades) listAllButton2[i].notSelectedYet();
             }
         }
+        
+        upgradeWeapon(turret2, buttonTree.id, goPoubelle2);
     }
    
     private void disableAllWeapon2()
@@ -296,6 +306,73 @@ public class UpgradeMenu : NetworkBehaviour
     }
 
 
+
+    void CopyComponent(Component original, GameObject destination)
+    {
+        System.Type type = original.GetType();
+        Component copy = destination.AddComponent(type);
+        // Copied fields can be restricted with BindingFlags
+        System.Reflection.FieldInfo[] fields = type.GetFields(); 
+        foreach (System.Reflection.FieldInfo field in fields)
+        {
+            field.SetValue(copy, field.GetValue(original));
+        }
+    }
+
+    void upgradeWeapon(GameObject turret, int id, GameObject exemple)
+    {
+        deactivateScript(turret);
+        
+        switch (id)
+        {
+            case 0 :
+                CopyComponent(exemple.GetComponent<WeaponBasic>(), turret);
+                break;
+            case 1 :
+                CopyComponent(exemple.GetComponent<WeaponBurst>(), turret);
+                break;
+            case 2 : case 3 :
+                CopyComponent(exemple.GetComponent<WeaponMachineGun>(), turret);
+                break;
+            case 4 : case 5 :
+                CopyComponent(exemple.GetComponent<WeaponShotgun>(), turret);
+                break;
+            case 6 :
+                CopyComponent(exemple.GetComponent<WeaponSniper>(), turret);
+                break;
+            case 7 : case 8 :
+                CopyComponent(exemple.GetComponent<WeaponSniper>(), turret);
+                break;
+            case 9 : case 10:
+                CopyComponent(exemple.GetComponent<WeaponSniper>(), turret);
+                break;
+            case 11 : case 12:
+                CopyComponent(exemple.GetComponent<WeaponFlameThrower>(), turret);
+                break;
+            case 13 : case 14 :
+                CopyComponent(exemple.GetComponent<WeaponTesla>(), turret);
+                break;
+        }
+    }
+    
+
+    void deactivateScript(GameObject go)
+    {
+        Destroy(go.GetComponent<WeaponBase>());
+        Destroy(go.GetComponent<WeaponBasic>());
+        Destroy(go.GetComponent<WeaponBurst>());
+        Destroy(go.GetComponent<WeaponMachineGun>());
+        Destroy(go.GetComponent<WeaponShotgun>());
+        Destroy(go.GetComponent<WeaponSniper>());
+        Destroy(go.GetComponent<WeaponFlameThrower>());
+        Destroy(go.GetComponent<WeaponTesla>());
+
+    }
+
+
+    
+    
+    
     public void quitUpgrade()
     {
         gotoScreen(0);

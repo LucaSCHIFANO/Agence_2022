@@ -6,9 +6,9 @@ public class WeaponSniper : WeaponBase
 {
     [Header("Sniper Config")]
     
-    [SerializeField] private WeaponFireType _fireType;
+    [SerializeField] public WeaponFireType _fireType;
 
-    [SerializeField] private float _spread;
+    [SerializeField] public float _spread;
     
     public override void Shoot()
     {

@@ -7,7 +7,7 @@ public class WeaponShotgun : WeaponBase
     [Header("Shotgun config")] [SerializeField]
     private int _numberOfBullet;
 
-    [SerializeField] private float _spread;
+    [SerializeField] public float _spread;
 
     public override void Shoot()
     {

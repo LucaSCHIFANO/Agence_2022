@@ -10,6 +10,7 @@ public class WeaponFlameThrower : WeaponBase
     [Header("Flamethrower Config")] [SerializeField]
     //private ParticleSystem _particleSystem;
     public GameObject particleFire;
+    
     public override void Shoot()
     {
         if (_shootingTimer > 0) return;

@@ -13,27 +13,27 @@ public abstract class WeaponBase : NetworkBehaviour
 
     [Tooltip("The max number of shoot in one second")]
     [SerializeField]
-    protected float _fireRate = 1;
+    public float _fireRate = 1;
 
     [Tooltip("The point from where the bullet / ray is shoot")]
     [SerializeField]
-    protected Transform _shootingPoint;
+    public Transform _shootingPoint;
 
     [Tooltip("The prefab of the bullet to shoot")]
     [SerializeField]
-    protected GameObject _bulletPrefab;
+    public GameObject _bulletPrefab;
 
     
-    [SerializeField] protected float _bulletToOverHeat;
+    [SerializeField] public float _bulletToOverHeat;
     
     [Tooltip("Pourcent of overheat gauge remove per second")]
-    [SerializeField] protected float _coolDownPerSecond;
-    [SerializeField] protected float _timeBeforeCoolDown;
+    [SerializeField] public float _coolDownPerSecond;
+    [SerializeField] public float _timeBeforeCoolDown;
 
-    [SerializeField] protected Color maincolor;
-    [SerializeField] protected Color overHeatColor;
+    [SerializeField] public Color maincolor;
+    [SerializeField] public Color overHeatColor;
 
-    [SerializeField] protected GameObject bulletEffect;
+    [SerializeField] public GameObject bulletEffect;
 
 
     #endregion
@@ -53,7 +53,7 @@ public abstract class WeaponBase : NetworkBehaviour
 
     
     [SerializeField][Range(0, 100)] private float overHeatPourcent;
-
+    
     protected virtual void Start()
     {
         isPossessed = false;
@@ -101,8 +101,6 @@ public abstract class WeaponBase : NetworkBehaviour
         
         
         if (!isPossessed) return;
-        
-        if(!possessor.IsLocalPlayer) return;
 
         canvas.overheatSlider.fillAmount = (overHeatPourcent / 100);
         if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
@@ -123,7 +121,6 @@ public abstract class WeaponBase : NetworkBehaviour
     {
         BulletEffectClientRpc(impactPoint);
     }
-    
     
     
     //creer la balle override en fct de l'arme
