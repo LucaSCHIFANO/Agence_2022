@@ -117,6 +117,8 @@ public class Chunk
                 iY++;
             }
         }
+        iX = 0;
+        iY = 0;
     }
 
     public void DestroyChunk()
@@ -128,10 +130,12 @@ public class Chunk
             iY = 0;
             for (int Y = -Mathf.CeilToInt(size / 2); Y < Mathf.FloorToInt(size / 2); Y++)
             {
-                GameObject.Destroy(chunkGrid[X, Y].thisTile);
+                GameObject.Destroy(chunkGrid[iX, iY].thisTile);
                 iY++;
             }
         }
+        iX = 0;
+        iY = 0;
     }
 
     
@@ -149,7 +153,7 @@ public class GroundGenerator : MonoBehaviour
     public GameObject plane;
     const int size = 7;
     public int spaceSize = 10;
-    const float chunckSpaceSize = 85;
+    const float chunckSpaceSize = 85.75f;
     const float tileScale = 100;
 
     Chunk[,] chuncks = new Chunk[3, 3];
@@ -189,8 +193,8 @@ public class GroundGenerator : MonoBehaviour
 
     void Update()
     {
-        if (!isFlat) return;
-        else if (prevScaleX != scaleX || prevScaleY != scaleY) ChangeMeshes();
+        //if (!isFlat) return;
+        if (prevScaleX != scaleX || prevScaleY != scaleY) ChangeMeshes();
 
         if (transform.position.x > chunckLimits.max.x) offX = 1;
         else if (transform.position.x < chunckLimits.min.x) offX = -1;
@@ -203,7 +207,7 @@ public class GroundGenerator : MonoBehaviour
         {
             chunckLimits = new Bounds(new Vector3(chunckLimits.center.x + size * tileScale, 0, chunckLimits.center.z), ChunkSize); 
             offX = 0;
-            updateSVec(size * tileScale, 0);
+            updateSVec(size * tileScale - 100, 0);
             chuncks[0, 0].DestroyChunk();
             chuncks[1, 0].DestroyChunk();
             chuncks[2, 0].DestroyChunk();
@@ -224,7 +228,7 @@ public class GroundGenerator : MonoBehaviour
         { 
             chunckLimits = new Bounds(new Vector3(chunckLimits.center.x - size * tileScale, 0, chunckLimits.center.z), ChunkSize); 
             offX = 0;
-            updateSVec(-size * tileScale, 0);
+            updateSVec(-size * tileScale + 100, 0);
             chuncks[0, 2].DestroyChunk();
             chuncks[1, 2].DestroyChunk();
             chuncks[2, 2].DestroyChunk();
@@ -246,7 +250,7 @@ public class GroundGenerator : MonoBehaviour
         { 
             chunckLimits = new Bounds(new Vector3(chunckLimits.center.x, 0, chunckLimits.center.z + size * tileScale), ChunkSize); 
             offZ = 0;
-            updateSVec(0, size * tileScale);
+            updateSVec(0, size * tileScale - 100);
             chuncks[2, 0].DestroyChunk();
             chuncks[2, 1].DestroyChunk();
             chuncks[2, 2].DestroyChunk();
@@ -267,14 +271,14 @@ public class GroundGenerator : MonoBehaviour
         { 
             chunckLimits = new Bounds(new Vector3(chunckLimits.center.x, 0, chunckLimits.center.z - size * tileScale), ChunkSize); 
             offZ = 0;
-            updateSVec(0, -size * tileScale);
+            updateSVec(0, -size * tileScale + 100);
             chuncks[0, 0].DestroyChunk();
             chuncks[0, 1].DestroyChunk();
             chuncks[0, 2].DestroyChunk();
 
-            chuncks[0, 0]  = chuncks[1, 0];
-            chuncks[0, 1]  = chuncks[1, 1];
-            chuncks[0, 2]  = chuncks[1, 2];
+            chuncks[0, 0] = chuncks[1, 0];
+            chuncks[0, 1] = chuncks[1, 1];
+            chuncks[0, 2] = chuncks[1, 2];
 
             chuncks[1, 0] = chuncks[2, 0];
             chuncks[1, 1] = chuncks[2, 1];

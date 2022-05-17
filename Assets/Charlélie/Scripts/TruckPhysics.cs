@@ -14,6 +14,7 @@ public struct DebugValues
     public float _WheelDelta;
     public float _GripVal;
     public bool _IsDrift;
+    public bool _IsReverse;
 }
 
 
@@ -69,13 +70,19 @@ public class TruckPhysics : NetworkBehaviour
     public float throttleDeccelSpeed;
     public float accelForce;
     public float maxAccel;
-    public float maxVelocity; //TODO: compute to speed
+    public float maxVelocity;
+    public float breakForce;
+    public float maxBreaking;
 
     public AnimationCurve throttleForce;
 
+
+    bool isReversed;
+    public float timeToReverse;
+    float currTimeReverse;
+
+
     public GameObject remorque;
-
-
 
     public float remorqueTurningSpeed = 10;
     public float remorqueMaxDelta = 20;
@@ -509,6 +516,28 @@ public class TruckPhysics : NetworkBehaviour
             _driftAngleRatio = driftAngleRatio;
         Quaternion quat = Quaternion.Euler(0, transform.forward.y - _driftAngleRatio, 0);
         _driftAngleRatioVec = quat * transform.forward;
+        
+        if (player.GetAxis("Breaking") > 0.5f && velocity.magnitude < 0.5f && !isReversed)
+        {
+            currTimeReverse += Time.deltaTime;
+            if (currTimeReverse >= timeToReverse)
+            {
+                currTimeReverse = timeToReverse;
+                isReversed = true;
+            }
+            vals._IsReverse = true;
+        }
+        else if (player.GetAxis("Throttle") > 0.5f && isReversed)
+        {
+            currTimeReverse -= Time.deltaTime;
+            if (currTimeReverse <= 0)
+            {
+                currTimeReverse = timeToReverse;
+                isReversed = false;
+            }
+            vals._IsReverse = false;
+        }
+
         if (drifting)
         {
             #region driftTemp
@@ -779,11 +808,15 @@ public class TruckPhysics : NetworkBehaviour
         }
         else
         {
-            if (bar < 1) bar += player.GetAxis("Throttle") * (throttleAccelSpeed * Time.deltaTime);
-            if (bar > 1) bar = 1;
-            if (bar > 0 && player.GetAxis("Throttle") < 1) bar -= ((player.GetAxis("Breaking") / 2) * Time.deltaTime) + Time.deltaTime * throttleDeccelSpeed;
-            if (bar < 0) bar = 0;
+            float barVal, antiBarVal;
+            barVal = isReversed ? player.GetAxis("Breaking") : player.GetAxis("Throttle");
+            antiBarVal = isReversed ? player.GetAxis("Throttle") : player.GetAxis("Breaking");
 
+            if (bar < 1) bar += barVal * (throttleAccelSpeed * Time.deltaTime);
+            if (bar > 1) bar = 1;
+            if (bar > 0 && barVal < 0.5f) bar -= ((antiBarVal / 2) * Time.deltaTime) + Time.deltaTime * throttleDeccelSpeed;
+            if (bar < 0) bar = 0;
+            Debug.Log(barVal);
             pos = transform.position;
             Vector3 vec = transform.forward * throttleForce.Evaluate(bar);
             Vector3 dist = pos - prevPos;
@@ -798,8 +831,17 @@ public class TruckPhysics : NetworkBehaviour
 
             float speed = Mathf.Sqrt(velocity.x * velocity.x + velocity.z * velocity.z);
 
-            if (acceleration < maxAccel && player.GetAxis("Throttle") > 0) acceleration += Time.deltaTime * accelForce;
-            else if (acceleration > 0 && player.GetAxis("Throttle") == 0) acceleration -= Time.deltaTime * accelForce;
+            if (isReversed)
+            {
+                //if (acceleration < maxBreaking && barVal > 0) acceleration += Time.deltaTime * breakForce;
+                //else if (acceleration > 0 && barVal == 0) acceleration -= Time.deltaTime * breakForce;
+            }
+            else 
+            {
+                if (acceleration < maxAccel && player.GetAxis("Throttle") > 0) acceleration += Time.deltaTime * accelForce;
+                else if (acceleration > 0 && player.GetAxis("Throttle") == 0) acceleration -= Time.deltaTime * accelForce;
+            }
+            
             vals._Acceleration = acceleration;
 
             float val = Mathf.Sqrt((maxVelocity * maxVelocity) / 2);
@@ -828,25 +870,32 @@ public class TruckPhysics : NetworkBehaviour
 
             velocity.x += (transform.forward.x * acceleration) / Time.deltaTime;
             velocity.z += (transform.forward.z * acceleration) / Time.deltaTime;
-
             velocity += Time.deltaTime * accel;
-            //if (velocity.x > maxVelocity) velocity.x = maxVelocity;
-            //velocity.x = Mathf.Min(velocity.x, maxVelocity);
-            //velocity.x = Mathf.Max(velocity.x, -maxVelocity);
+
             velocity.y = 0;
-            //if (velocity.z > maxVelocity) velocity.z = maxVelocity;
-            //velocity.z = Mathf.Min(velocity.z, maxVelocity);
-            //velocity.z = Mathf.Max(velocity.z, -maxVelocity);
 
             vals._Velocity = velocity;
             vals._Speed = velocity.magnitude;
 
+            if (isReversed)
+            {
+                velocity *= -1;
+                velocity /= 10;
+            }
+
             if (velocity.magnitude > 0.1f)
             {
-                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (transform.rotation.eulerAngles.y + (currWheelDelta / 20) * Mathf.Min(velocity.magnitude, 1)), transform.rotation.eulerAngles.z);
+                if (isReversed)
+                    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (transform.rotation.eulerAngles.y - (currWheelDelta / 20) * Mathf.Min(velocity.magnitude, 1)), transform.rotation.eulerAngles.z);
+                else
+                    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (transform.rotation.eulerAngles.y + (currWheelDelta / 20) * Mathf.Min(velocity.magnitude, 1)), transform.rotation.eulerAngles.z);
                 if (delta < remorqueMaxDelta)
                 {
-                    remorque.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (remorque.transform.rotation.eulerAngles.y - currWheelDelta / 10), transform.rotation.eulerAngles.z);
+                    if (isReversed)
+                        remorque.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (remorque.transform.rotation.eulerAngles.y - currWheelDelta / 10), transform.rotation.eulerAngles.z);
+                    else
+                        remorque.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (remorque.transform.rotation.eulerAngles.y - currWheelDelta / 10), transform.rotation.eulerAngles.z);
+                    
                     if (remorque.transform.rotation.eulerAngles.y != transform.rotation.eulerAngles.y)
                         isRemorqueTurning = true;
                 }
@@ -862,7 +911,7 @@ public class TruckPhysics : NetworkBehaviour
             currWheelDelta += rot;
 
 
-            if (gripCurrForce >= maxGripForce && (rot == 1 || rot == -1)) { drifting = true; vals._IsDrift = true; }
+            if (gripCurrForce >= maxGripForce && (rot == 1 || rot == -1) && !isReversed) { drifting = true; vals._IsDrift = true; }
 
 
             if (currWheelDelta > 30) currWheelDelta = 30;
@@ -911,7 +960,7 @@ public class TruckPhysics : NetworkBehaviour
             isRemorqueTurning = false;
         }
     }
-
+    /*
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
@@ -919,5 +968,5 @@ public class TruckPhysics : NetworkBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + driftAngleSpeed * _driftAngleRatioVec);
     }
-
+    */
 }
