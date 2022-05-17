@@ -6,9 +6,9 @@ public class WeaponSniper : WeaponBase
 {
     [Header("Sniper Config")]
     
-    [SerializeField] public WeaponFireType _fireType;
+    [SerializeField] protected WeaponFireType _fireType;
 
-    [SerializeField] public float _spread;
+    [SerializeField] protected float _spread;
     
     public override void Shoot()
     {
@@ -43,7 +43,7 @@ public class WeaponSniper : WeaponBase
     protected override void ShootBulletClientRpc()
     {
         if(IsOwner) return;
-        GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation);
+        Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation);
         
     }
     

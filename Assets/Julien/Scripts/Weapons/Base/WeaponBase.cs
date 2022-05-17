@@ -13,27 +13,27 @@ public abstract class WeaponBase : NetworkBehaviour
 
     [Tooltip("The max number of shoot in one second")]
     [SerializeField]
-    public float _fireRate = 1;
+    protected float _fireRate = 1;
 
     [Tooltip("The point from where the bullet / ray is shoot")]
     [SerializeField]
-    public Transform _shootingPoint;
+    protected Transform _shootingPoint;
 
     [Tooltip("The prefab of the bullet to shoot")]
     [SerializeField]
-    public GameObject _bulletPrefab;
+    protected GameObject _bulletPrefab;
 
     
-    [SerializeField] public float _bulletToOverHeat;
+    [SerializeField] protected float _bulletToOverHeat;
     
     [Tooltip("Pourcent of overheat gauge remove per second")]
-    [SerializeField] public float _coolDownPerSecond;
-    [SerializeField] public float _timeBeforeCoolDown;
+    [SerializeField] protected float _coolDownPerSecond;
+    [SerializeField] protected float _timeBeforeCoolDown;
 
-    [SerializeField] public Color maincolor;
-    [SerializeField] public Color overHeatColor;
+    [SerializeField] protected Color maincolor;
+    [SerializeField] protected Color overHeatColor;
 
-    [SerializeField] public GameObject bulletEffect;
+    [SerializeField] protected GameObject bulletEffect;
 
 
     #endregion
@@ -52,7 +52,7 @@ public abstract class WeaponBase : NetworkBehaviour
     public CanvasInGame canvas;
 
     
-    [SerializeField][Range(0, 100)] private float overHeatPourcent;
+    [SerializeField][Range(0, 100)] protected float overHeatPourcent;
     
     protected virtual void Start()
     {

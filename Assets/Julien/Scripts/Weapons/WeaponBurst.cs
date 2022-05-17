@@ -10,11 +10,11 @@ public class WeaponBurst : WeaponBase
 {
     [Header("Burst Config")]
     
-    [SerializeField] public WeaponFireType _fireType;
+    [SerializeField] protected WeaponFireType _fireType;
 
-    [SerializeField] public float _spread;
+    [SerializeField] protected float _spread;
     
-    [SerializeField] public int _numberOfShot;
+    [SerializeField] protected int _numberOfShot;
 
 
     private int shootedRound;
@@ -70,21 +70,21 @@ public class WeaponBurst : WeaponBase
     
     
     
-    [ServerRpc]
+    /*[ServerRpc]
     void ShootProjectileServerRpc()
     {
         GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-_spread, _spread),
             Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
         
         bulletGO.GetComponent<NetworkObject>().Spawn();
-    }
+    }*/
     
     
     [ClientRpc(Delivery = RpcDelivery.Unreliable)]
     protected override void ShootBulletClientRpc()
     {
         if(IsOwner) return;
-        GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-_spread, _spread),
+        Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-_spread, _spread),
             Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
         
     }

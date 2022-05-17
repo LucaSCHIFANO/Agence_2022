@@ -301,7 +301,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &123557263
 Transform:
   m_ObjectHideFlags: 0
@@ -340,6 +340,10 @@ MonoBehaviour:
   overHeatColor: {r: 0.5471698, g: 0.4962165, b: 0.18841223, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
+  _shootingTimer: 0
+  _timeCoolDown: 0
+  _isOverHeat: 0
+  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -366,6 +370,10 @@ MonoBehaviour:
   overHeatColor: {r: 0, g: 0.26415092, b: 0.028847422, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
+  _shootingTimer: 0
+  _timeCoolDown: 0
+  _isOverHeat: 0
+  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -395,8 +403,12 @@ MonoBehaviour:
   overHeatColor: {r: 0, g: 0.065508515, b: 0.2924528, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
+  _shootingTimer: 0
+  _timeCoolDown: 0
+  _isOverHeat: 0
+  _isCoolDown: 0
   possessor: {fileID: 0}
-  isPossessed: 1
+  isPossessed: 0
   canvas: {fileID: 0}
   overHeatPourcent: 0
   _numberOfBullet: 20
@@ -423,6 +435,10 @@ MonoBehaviour:
   overHeatColor: {r: 0.4056604, g: 0, b: 0, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
+  _shootingTimer: 0
+  _timeCoolDown: 0
+  _isOverHeat: 0
+  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -452,6 +468,10 @@ MonoBehaviour:
   overHeatColor: {r: 0.5283019, g: 0, b: 0, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
+  _shootingTimer: 0
+  _timeCoolDown: 0
+  _isOverHeat: 0
+  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -481,6 +501,10 @@ MonoBehaviour:
   overHeatColor: {r: 0.4679647, g: 0.36267355, b: 0.4716981, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
+  _shootingTimer: 0
+  _timeCoolDown: 0
+  _isOverHeat: 0
+  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -511,6 +535,10 @@ MonoBehaviour:
   overHeatColor: {r: 0.4666667, g: 0.36078432, b: 0.47058827, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
+  _shootingTimer: 0
+  _timeCoolDown: 0
+  _isOverHeat: 0
+  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -1198,10 +1226,110 @@ PrefabInstance:
       propertyPath: goPoubelle2
       value: 
       objectReference: {fileID: 123557262}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: allWeapon.Array.size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: allWeapon.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 86a131bb159242d448ab463a2ee2300f,
+        type: 2}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: allWeapon.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: c1731a32204b4474e90a548cc2f8ff0e,
+        type: 2}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: allWeapon.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3aed98938cf4d5a4499c274f73989961,
+        type: 2}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: allWeapon.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3aed98938cf4d5a4499c274f73989961,
+        type: 2}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: allWeapon.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 423285e306054a448aa27f518479b814,
+        type: 2}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: allWeapon.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 423285e306054a448aa27f518479b814,
+        type: 2}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: allWeapon.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: f538a39a9ec01f8469096408026bb6c1,
+        type: 2}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: allWeapon.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: f538a39a9ec01f8469096408026bb6c1,
+        type: 2}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: allWeapon.Array.data[8]
+      value: 
+      objectReference: {fileID: 11400000, guid: f538a39a9ec01f8469096408026bb6c1,
+        type: 2}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: allWeapon.Array.data[9]
+      value: 
+      objectReference: {fileID: 11400000, guid: f538a39a9ec01f8469096408026bb6c1,
+        type: 2}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: allWeapon.Array.data[10]
+      value: 
+      objectReference: {fileID: 11400000, guid: f538a39a9ec01f8469096408026bb6c1,
+        type: 2}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: allWeapon.Array.data[11]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2f0e7d320d963fa4b8d3e3e7c425a8c3,
+        type: 2}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: allWeapon.Array.data[12]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2f0e7d320d963fa4b8d3e3e7c425a8c3,
+        type: 2}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: allWeapon.Array.data[13]
+      value: 
+      objectReference: {fileID: 11400000, guid: 769442f1fcbab944eb166eccede7ef8c,
+        type: 2}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: allWeapon.Array.data[14]
+      value: 
+      objectReference: {fileID: 11400000, guid: 769442f1fcbab944eb166eccede7ef8c,
+        type: 2}
     - target: {fileID: 5103211548772673410, guid: 7155ffc9e90adff42be892838432656c,
         type: 3}
       propertyPath: GlobalObjectIdHash
       value: 352779497
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211548772673413, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8202021422794752718, guid: 7155ffc9e90adff42be892838432656c,
         type: 3}
@@ -2475,7 +2603,13 @@ PrefabInstance:
       value: 2029167222
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 6679553429258297241, guid: ebb70dc5fecceca49940f2910c67ecd0, type: 3}
+    - {fileID: 0}
+    - {fileID: -7497691510639346320, guid: ebb70dc5fecceca49940f2910c67ecd0, type: 3}
+    - {fileID: 4332460894668131284, guid: ebb70dc5fecceca49940f2910c67ecd0, type: 3}
+    - {fileID: 966429752749372362, guid: ebb70dc5fecceca49940f2910c67ecd0, type: 3}
+    - {fileID: 8973456027079917647, guid: ebb70dc5fecceca49940f2910c67ecd0, type: 3}
+    - {fileID: 6912880078262263622, guid: ebb70dc5fecceca49940f2910c67ecd0, type: 3}
+    - {fileID: 4415664372749210019, guid: ebb70dc5fecceca49940f2910c67ecd0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ebb70dc5fecceca49940f2910c67ecd0, type: 3}
 --- !u!4 &1445337168 stripped
 Transform:
@@ -3906,6 +4040,10 @@ MonoBehaviour:
   overHeatColor: {r: 0.4056604, g: 0, b: 0, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
+  _shootingTimer: 0
+  _timeCoolDown: 0
+  _isOverHeat: 0
+  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -3935,6 +4073,10 @@ MonoBehaviour:
   overHeatColor: {r: 0.4666667, g: 0.36078432, b: 0.47058827, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
+  _shootingTimer: 0
+  _timeCoolDown: 0
+  _isOverHeat: 0
+  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -3965,6 +4107,10 @@ MonoBehaviour:
   overHeatColor: {r: 0.4679647, g: 0.36267355, b: 0.4716981, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
+  _shootingTimer: 0
+  _timeCoolDown: 0
+  _isOverHeat: 0
+  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -4010,6 +4156,10 @@ MonoBehaviour:
   overHeatColor: {r: 0.5283019, g: 0, b: 0, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
+  _shootingTimer: 0
+  _timeCoolDown: 0
+  _isOverHeat: 0
+  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -4038,7 +4188,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &4415664373680656262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4062,6 +4212,10 @@ MonoBehaviour:
   overHeatColor: {r: 0.5471698, g: 0.4962165, b: 0.18841223, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
+  _shootingTimer: 0
+  _timeCoolDown: 0
+  _isOverHeat: 0
+  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -4088,6 +4242,10 @@ MonoBehaviour:
   overHeatColor: {r: 0, g: 0.26415092, b: 0.028847422, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
+  _shootingTimer: 0
+  _timeCoolDown: 0
+  _isOverHeat: 0
+  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -4117,8 +4275,12 @@ MonoBehaviour:
   overHeatColor: {r: 0, g: 0.065508515, b: 0.2924528, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
+  _shootingTimer: 0
+  _timeCoolDown: 0
+  _isOverHeat: 0
+  _isCoolDown: 0
   possessor: {fileID: 0}
-  isPossessed: 1
+  isPossessed: 0
   canvas: {fileID: 0}
   overHeatPourcent: 0
   _numberOfBullet: 20
