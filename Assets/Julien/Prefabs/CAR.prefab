@@ -360,6 +360,7 @@ MonoBehaviour:
   driftTurningRatio: 50
   driftAngleRatio: 43
   driftAngleSpeed: 30
+  driftAccelerationRatio: 5
   wheelRotSped: 10
   inertia: 10
   maxWheelDelta: 20
@@ -367,10 +368,12 @@ MonoBehaviour:
   airFriction: 20
   bar: 0
   throttleAccelSpeed: 2
-  throttleDeccelSpeed: 0.5
+  throttleDeccelSpeed: 2
   accelForce: 0.1
   maxAccel: 20
   maxVelocity: 20
+  breakForce: 0.01
+  maxBreaking: 5
   throttleForce:
     serializedVersion: 2
     m_Curve:
@@ -395,6 +398,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  timeToReverse: 1
   remorque: {fileID: 7790341083850612970}
   remorqueTurningSpeed: 10
   remorqueMaxDelta: 20
@@ -409,6 +413,7 @@ MonoBehaviour:
     _WheelDelta: 0
     _GripVal: 0
     _IsDrift: 0
+    _IsReverse: 0
 --- !u!114 &312021732072444816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,7 +555,7 @@ MonoBehaviour:
     _VoronoiHeight: 1
     _PerlinSize: 1
     _NoiseType: 0
-  isFlat: 1
+  isFlat: 0
   plane: {fileID: 3980608093165413723, guid: 6d16120cefa188b49b84f05be567e1d7, type: 3}
   spaceSize: 100
 --- !u!114 &1825063954157573252
