@@ -245,48 +245,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 211200478, guid: 2973a11b671c9ac4f8ad4b5c7bed9216, type: 3}
-      propertyPath: m_UseGravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 211200478, guid: 2973a11b671c9ac4f8ad4b5c7bed9216, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 312021732072444816, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 700881242013139351, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1825063954157573252, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2115632138
       objectReference: {fileID: 0}
-    - target: {fileID: 2216819461730630313, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: isFlat
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2216819461730630313, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2216819461730630316, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
       propertyPath: m_Name
       value: CAR
-      objectReference: {fileID: 0}
-    - target: {fileID: 2216819461730630316, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2216819461730630318, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
@@ -346,27 +318,7 @@ PrefabInstance:
     - target: {fileID: 8197020221474899894, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8197020221474899894, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: breakForce
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 8197020221474899894, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: maxBreaking
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8197020221474899894, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: timeToReverse
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8197020221474899894, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: throttleDeccelSpeed
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2973a11b671c9ac4f8ad4b5c7bed9216, type: 3}
