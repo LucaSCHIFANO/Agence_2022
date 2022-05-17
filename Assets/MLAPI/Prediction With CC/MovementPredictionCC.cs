@@ -6,7 +6,7 @@ using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
-public class CharacterMovementPrediction : NetworkBehaviour
+public class MovementPredictionCC : NetworkBehaviour
 {
 
     [SerializeField] private Transform localTransform;
@@ -26,9 +26,6 @@ public class CharacterMovementPrediction : NetworkBehaviour
     [SerializeField] private float runSpeed;
     [SerializeField] private float jumpForce;
     
-    
-    
-
     private Queue<ClientInputState> serverInputs = new Queue<ClientInputState>();
 
     private ClientInputState _inputState = new ClientInputState();
@@ -38,7 +35,7 @@ public class CharacterMovementPrediction : NetworkBehaviour
     private int lastCorrectedFrame;
     private SimulationState serverSimulationState;
     
-    Vector3 velocity = Vector3.zero;
+    public Vector3 velocity = Vector3.zero;
 
     private const int STATE_CACHE_SIZE = 1024;
     private SimulationState[] _simulationStateCache = new SimulationState[STATE_CACHE_SIZE];
@@ -55,9 +52,15 @@ public class CharacterMovementPrediction : NetworkBehaviour
     
     private NetworkVariable<FixedString32Bytes> displayName = new NetworkVariable<FixedString32Bytes>();
     private NetworkVariable<int> selectedMaterial = new NetworkVariable<int>();
-    
+    private bool IsGrounded;
+
+    public CharacterController localCC;
+    public CharacterController serverCC;
+    public bool IsMoving;
+
     void Start()
     {
+        
         if (IsServer)
         {
             StartServer();
@@ -98,50 +101,46 @@ public class CharacterMovementPrediction : NetworkBehaviour
             inputState = defaultInputState;
         }
 
+        IsMoving = inputState.pressedInput != Vector2.zero;
+
         if (IsServer)
         {
             toMove.rotation = inputState.rotation;
         }
         
-        // Debug.DrawLine(toMove.position, toMove.position + (toMove.forward * 2));
-        // Debug.DrawLine(toMove.position, toMove.position + (toMove.right * 2));
-
-
-        // if (_controller.isGrounded)
-        // {
+        CharacterController cc = IsServer ? serverCC : localCC;
+        
+        Debug.Log("Is grounded " + cc.isGrounded);
+        
+        if (cc.isGrounded)
+        {
             velocity = (toMove.forward * inputState.pressedInput.x + toMove.right * inputState.pressedInput.y).normalized;
             velocity.y = 0f;
-            // velocity *= inputState.sprinting ? runSpeed : movementSpeed;
-
+            velocity *= inputState.sprinting ? runSpeed : movementSpeed;
+            
             if (inputState.jumped)
             {
                 velocity.y = jumpForce;
             }
-        // }
+        }
+        else
+        {
+            velocity.y -= gravity;
+        }
 
-        // velocity.y -= gravity;
-
-        toMove.Translate(velocity * (IsServer ? NetworkManager.Singleton.ServerTime.FixedDeltaTime : NetworkManager.Singleton.LocalTime.FixedDeltaTime), Space.World);
-        // _controller.Move(velocity);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawSphere(localTransform.position - new Vector3(0, 0.5f, 0), .5f);
+        cc.Move(velocity);
     }
 
     #region Client
 
     void StartLocalClient()
     {
-        // _userController = localTransform.GetComponent<CharacterController>();
-        
         originalRotation = localTransform.rotation;
         originalCamRotation = Camera.transform.localRotation;
         
         
         localTransform.gameObject.SetActive(true);
-
+        
         distantModel.ForEach((renderer) => { renderer.enabled = false; });
     }
     
@@ -271,7 +270,6 @@ public class CharacterMovementPrediction : NetworkBehaviour
 
     void StartServer()
     {
-        // _serverController = distantTransform.GetComponent<CharacterController>();
     }
     
     void FixedUpdateServer()
