@@ -34,13 +34,11 @@ public class UpgradeMenu : NetworkBehaviour
 
     [Header("Weapons1")] 
     public List<WTreeButton> listAllButton1 = new List<WTreeButton>();
-    private int upgardesLevel = 1;
     [HideInInspector] public WTreeButton lastUpgrade1;
     [SerializeField] GameObject turret1;
 
     [Header("Weapons2")]
     public List<WTreeButton> listAllButton2 = new List<WTreeButton>();
-    private int upgardesLevel2 = 1;
     [HideInInspector] public WTreeButton lastUpgrade2;
     [SerializeField] GameObject turret2;
 
@@ -50,6 +48,10 @@ public class UpgradeMenu : NetworkBehaviour
     
     [Header("Price Upgrade --- GD")] public List<listInt> FPrice = new List<listInt>();
     public List<listInt> CPrice = new List<listInt>();
+
+
+
+    private bool sellMode;
 
     
 
@@ -80,7 +82,7 @@ public class UpgradeMenu : NetworkBehaviour
         upgradesCamionServer = new NetworkList<int>();
         unlockedWeapon1Server = new NetworkList<int>();
         unlockedWeapon2Server = new NetworkList<int>();
-        
+
         for (int i = 0; i < 3; i++)
         {
             upgradesF.Add(0);
@@ -108,9 +110,9 @@ public class UpgradeMenu : NetworkBehaviour
         gotoScreen(2);
         visuC();
         gotoScreen(3);
-        upgradeWeapon1(listAllButton1[0]);
+        upgradeWeapon(listAllButton1[0], listAllButton1[0].firstWeapon);
         gotoScreen(4);
-        upgradeWeapon2(listAllButton2[0]);
+        upgradeWeapon(listAllButton2[0], listAllButton2[0].firstWeapon);
         gotoScreen(0);
         gameObject.SetActive(false);
 
@@ -126,7 +128,9 @@ public class UpgradeMenu : NetworkBehaviour
             upgradesForteresseServer.OnListChanged += UpgradesForteresseServerOnChanged;
             upgradesCamionServer.OnListChanged += UpgradesCamionServerOnChanged;
             unlockedWeapon1Server.OnListChanged += UnlockWeapon1ServerOnChanged;
+            //unlockedWeapon1Server.OnListChanged += SellWeapon1ServerOnChanged;
             unlockedWeapon2Server.OnListChanged += UnlockWeapon2ServerOnChanged;
+            //unlockedWeapon2Server.OnListChanged += SellWeapon2ServerOnChanged;
         }
     }
 
@@ -138,6 +142,14 @@ public class UpgradeMenu : NetworkBehaviour
             if (i == lint) screenList[i].SetActive(true);
             else screenList[i].SetActive(false);
         }
+
+        if (sellMode)
+        {
+            sellMode = false;
+            upgradeWeapon(lastUpgrade1, true);
+            upgradeWeapon(lastUpgrade2, false);
+        }
+        
     }
 
     public void upgradeForteresse(int lint)
@@ -161,31 +173,112 @@ public class UpgradeMenu : NetworkBehaviour
     }
 
 
-    public void upgradeWeapon1(WTreeButton buttonTree)
+    void upgradeWeapon(WTreeButton buttonTree, bool firstWeapon)
     {
-        disableAllWeapon1();
-
-        var currentButtonTree = buttonTree;
-        bool finished = false;
-
-        while (!finished)
+        if (firstWeapon)
         {
-            currentButtonTree.buyed();
-            if (currentButtonTree.previousUpgrades != null) currentButtonTree = currentButtonTree.previousUpgrades;
-            else finished = true;
-        }
+            disableAllWeapon1();
 
+            var currentButtonTree = buttonTree;
+            lastUpgrade1 = buttonTree;
+            bool finished = false;
 
-        for (int i = 0; i < listAllButton1.Count; i++)
-        {
-            if (listAllButton1[i].previousUpgrades != null)
+            if (!sellMode)
             {
-                if (listAllButton1[i].previousUpgrades == buttonTree) listAllButton1[i].turnOn();
-                else if (listAllButton1[i].previousUpgrades.canBeUpgrades) listAllButton1[i].notSelectedYet();
+                while (!finished)
+                {
+                    currentButtonTree.buyed();
+                    if (currentButtonTree.previousUpgrades != null)
+                        currentButtonTree = currentButtonTree.previousUpgrades;
+                    else finished = true;
+                }
+
+
+                for (int i = 0; i < listAllButton1.Count; i++)
+                {
+                    if (listAllButton1[i].previousUpgrades != null)
+                    {
+                        if (listAllButton1[i].previousUpgrades == buttonTree) listAllButton1[i].turnOn();
+                        else if (listAllButton1[i].previousUpgrades.canBeUpgrades) listAllButton1[i].notSelectedYet();
+                    }
+                }
             }
+            else
+            {
+                if (currentButtonTree.previousUpgrades != null)
+                {
+                    currentButtonTree = currentButtonTree.previousUpgrades;
+                    currentButtonTree.sellable();
+                    lastUpgrade1 = currentButtonTree;
+                    if (currentButtonTree.previousUpgrades != null) currentButtonTree = currentButtonTree.previousUpgrades;
+                    else finished = true;
+                    
+                }
+                else finished = true;
+                
+                
+                while (!finished)
+                {
+                    currentButtonTree.notSelectedYet();
+                    if (currentButtonTree.previousUpgrades != null) currentButtonTree = currentButtonTree.previousUpgrades;
+                    else finished = true;
+                }
+            }
+            
+            upgradeWeaponTurret(turret1, lastUpgrade1.id);
+            
         }
-        
-        upgradeWeapon(turret1, buttonTree.id);
+        else
+        {
+            disableAllWeapon2();
+      
+            var currentButtonTree = buttonTree;
+            lastUpgrade2 = currentButtonTree;
+            bool finished = false;
+
+            if (!sellMode)
+            {
+                while (!finished)
+                {
+                    currentButtonTree.buyed();
+                    if (currentButtonTree.previousUpgrades != null)
+                        currentButtonTree = currentButtonTree.previousUpgrades;
+                    else finished = true;
+                }
+
+                for (int i = 0; i < listAllButton2.Count; i++)
+                {
+                    if (listAllButton2[i].previousUpgrades != null)
+                    {
+                        if (listAllButton2[i].previousUpgrades == buttonTree) listAllButton2[i].turnOn();
+                        else if (listAllButton2[i].previousUpgrades.canBeUpgrades) listAllButton2[i].notSelectedYet();
+                    }
+                }
+            }
+            else
+            {
+                if (currentButtonTree.previousUpgrades != null)
+                {
+                    currentButtonTree = currentButtonTree.previousUpgrades;
+                    currentButtonTree.sellable();
+                    lastUpgrade2 = currentButtonTree;
+                    if (currentButtonTree.previousUpgrades != null) currentButtonTree = currentButtonTree.previousUpgrades;
+                    else finished = true;
+                    
+                }
+                else finished = true;
+                
+                
+                while (!finished)
+                {
+                    currentButtonTree.notSelectedYet();
+                    if (currentButtonTree.previousUpgrades != null) currentButtonTree = currentButtonTree.previousUpgrades;
+                    else finished = true;
+                }
+            }
+
+            upgradeWeaponTurret(turret2, buttonTree.id);
+        }
     }
 
     private void disableAllWeapon1()
@@ -196,34 +289,6 @@ public class UpgradeMenu : NetworkBehaviour
         }
     }
 
-
-
-    public void upgradeWeapon2(WTreeButton buttonTree)
-    {
-        disableAllWeapon2();
-      
-        var currentButtonTree = buttonTree;
-        bool finished = false;
-
-        while (!finished)
-        {
-            currentButtonTree.buyed();
-            if (currentButtonTree.previousUpgrades != null) currentButtonTree = currentButtonTree.previousUpgrades;
-            else finished = true;
-        }
-      
-        for (int i = 0; i < listAllButton2.Count; i++)
-        {
-            if (listAllButton1[i].previousUpgrades != null)
-            {
-                if (listAllButton2[i].previousUpgrades == buttonTree) listAllButton2[i].turnOn();
-                else if (listAllButton2[i].previousUpgrades.canBeUpgrades) listAllButton2[i].notSelectedYet();
-            }
-        }
-        
-        upgradeWeapon(turret2, buttonTree.id);
-    }
-   
     private void disableAllWeapon2()
     {
         for (int i = 0; i < listAllButton2.Count; i++)
@@ -307,16 +372,21 @@ public class UpgradeMenu : NetworkBehaviour
     }
     
 
-    void upgradeWeapon(GameObject turret, int id)
+    void upgradeWeaponTurret(GameObject turret, int id)
     {
        
         turret.GetComponent<WeaponUltima>().actuAllStats(allWeapon[id]);
         
         turret.GetComponent<TestControlWeapon>().actuGauge();
     }
-    
-    
-    
+
+
+    public void deactivatedSellMod(bool firstWeapon)
+    {
+        /*sellMode = false;
+        if(firstWeapon) upgradeWeapon(lastUpgrade1, true);
+        else upgradeWeapon(lastUpgrade2, false);*/
+    }
     
     public void quitUpgrade()
     {
@@ -324,6 +394,52 @@ public class UpgradeMenu : NetworkBehaviour
         Shop.Instance.quitShop();
     }
 
+    public void changeSellMode(bool firstweapon)
+    {
+        sellMode = !sellMode;
+        
+        if (firstweapon)
+        {
+            WTreeButton prov = lastUpgrade1;
+            disableAllWeapon1();
+            
+            if (sellMode)
+            {
+                var finished = false;
+                lastUpgrade1.sellable();
+                if (prov.previousUpgrades != null) prov = prov.previousUpgrades;
+                else finished = true;
+
+                while (!finished)
+                {
+                    prov.notSelectedYet();
+                    if (prov.previousUpgrades != null) prov = prov.previousUpgrades;
+                    else finished = true;
+                }
+            }else upgradeWeapon(lastUpgrade1, true);
+        }
+        else
+        {
+            WTreeButton prov = lastUpgrade2;
+            disableAllWeapon2();
+            
+            if (sellMode)
+            {
+                var finished = false;
+                lastUpgrade2.sellable();
+                if (prov.previousUpgrades != null) prov = prov.previousUpgrades;
+                else finished = true;
+
+                while (!finished)
+                {
+                    prov.notSelectedYet();
+                    if (prov.previousUpgrades != null) prov = prov.previousUpgrades;
+                    else finished = true;
+                }
+            }else upgradeWeapon(lastUpgrade2, false);
+        }
+        
+    }
 
     [System.Serializable]
     public class listInt
@@ -352,11 +468,24 @@ public class UpgradeMenu : NetworkBehaviour
     {
         unlockedWeapon1Server.Add(weaponIdToUnlock);
     }
+    
+    [ServerRpc(RequireOwnership = false, Delivery = RpcDelivery.Reliable)]
+    public void SellWeapon1ServerRpc(int weaponIdToUnlock, ServerRpcParams serverRpcParams = default)
+    {
+        unlockedWeapon1Server.Remove(weaponIdToUnlock);
+    }
+
 
     [ServerRpc(RequireOwnership = false, Delivery = RpcDelivery.Reliable)]
     public void UnlockWeapon2ServerRpc(int weaponIdToUnlock, ServerRpcParams serverRpcParams = default)
     {
         unlockedWeapon2Server.Add(weaponIdToUnlock);
+    }
+    
+    [ServerRpc(RequireOwnership = false, Delivery = RpcDelivery.Reliable)]
+    public void SellWeapon2ServerRpc(int weaponIdToUnlock, ServerRpcParams serverRpcParams = default)
+    {
+        unlockedWeapon2Server.Remove(weaponIdToUnlock);
     }
 
     private void UpgradesForteresseServerOnChanged(NetworkListEvent<int> newList)
@@ -381,8 +510,22 @@ public class UpgradeMenu : NetworkBehaviour
         {
             return button.id == newList.Value;
         });
-        
-        upgradeWeapon1(weaponBuyed);
+        Debug.Log(newList.PreviousValue);
+        Debug.Log(newList.Value);
+        upgradeWeapon(weaponBuyed, weaponBuyed.firstWeapon);
+    }
+    
+    
+    private void SellWeapon1ServerOnChanged(NetworkListEvent<int> newList)
+    {
+        Debug.Log("gtfeeguugguug");
+       /* WTreeButton weaponSelled = listAllButton1.Find((button) =>
+        {
+            return button.id == newList.Value;
+        });
+Debug.Log("tes 2");
+        sellMode = true;
+        upgradeWeapon(weaponSelled, weaponSelled.firstWeapon);*/
     }
 
     private void UnlockWeapon2ServerOnChanged(NetworkListEvent<int> newList)
@@ -392,7 +535,19 @@ public class UpgradeMenu : NetworkBehaviour
             return button.id == newList.Value;
         });
         
-        upgradeWeapon2(weaponBuyed);
+        upgradeWeapon(weaponBuyed, weaponBuyed.firstWeapon);
+    }
+    
+    
+    private void SellWeapon2ServerOnChanged(NetworkListEvent<int> newList)
+    {
+        /*WTreeButton weaponSelled = listAllButton2.Find((button) =>
+        {
+            return button.id == newList.Value;
+        });
+
+        sellMode = true;
+        upgradeWeapon(weaponSelled, weaponSelled.firstWeapon);*/
     }
 
     #endregion

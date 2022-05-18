@@ -12,9 +12,11 @@ public class WTreeButton : MonoBehaviour
    private Image image;
    private TextMeshProUGUI text;
    private bool cannotBeSelected;
+   private bool isSellable;
    [HideInInspector]public bool canBeUpgrades;
    [SerializeField] public bool firstWeapon;
    [SerializeField] private int price;
+   [SerializeField] private int sellPricePourcentage;
 
    public WTreeButton previousUpgrades;
 
@@ -25,25 +27,36 @@ public class WTreeButton : MonoBehaviour
       text.text = price.ToString();
    }
 
+   void sellChangePrice(bool lbool)
+   {
+      if(!lbool) text.text = price.ToString();
+      else text.text = ((int)(price * (sellPricePourcentage / 100f))).ToString(); 
+   }
+
    public void selected()
    {
-      if (!cannotBeSelected && ScrapMetal.Instance.scrap >= price)
-      {
-         if (firstWeapon)
+      if ((!isSellable && !cannotBeSelected && ScrapMetal.Instance.scrap >= price) || (isSellable && previousUpgrades != null))
          {
-            UpgradeMenu.Instance.UnlockWeapon1ServerRpc(id);
-            // UpgradeMenu.Instance.upgradeWeapon1(this);
+            
+            if (isSellable) ScrapMetal.Instance.addMoneyServerRpc((int)(price * (sellPricePourcentage / 100f)));
+            else ScrapMetal.Instance.addMoneyServerRpc(-price);
+            
+            
+            if (firstWeapon)
+            {
+               if(!isSellable) UpgradeMenu.Instance.UnlockWeapon1ServerRpc(id);
+               else UpgradeMenu.Instance.SellWeapon1ServerRpc(id);
+               // UpgradeMenu.Instance.upgradeWeapon1(this);
+            }
+            else
+            {
+               if(!isSellable) UpgradeMenu.Instance.UnlockWeapon2ServerRpc(id);
+               else UpgradeMenu.Instance.SellWeapon2ServerRpc(id);
+               // UpgradeMenu.Instance.upgradeWeapon2(this);
+            }
          }
-         else
-         {
-            UpgradeMenu.Instance.UnlockWeapon2ServerRpc(id);
-            // UpgradeMenu.Instance.upgradeWeapon2(this);
-         }
-
-         ScrapMetal.Instance.addMoneyServerRpc(-price);
-      }
-      
    }
+   
 
    public void buyed()
    {
@@ -51,6 +64,7 @@ public class WTreeButton : MonoBehaviour
       cannotBeSelected = true;
       text.gameObject.SetActive(false);
       canBeUpgrades = false;
+      isSellable = false;
    }
 
    public void turnOn()
@@ -59,6 +73,8 @@ public class WTreeButton : MonoBehaviour
       cannotBeSelected = false;
       text.gameObject.SetActive(true);
       canBeUpgrades = true;
+      isSellable = false;
+      sellChangePrice(false);
    }
 
    public void notSelectedYet()
@@ -67,6 +83,7 @@ public class WTreeButton : MonoBehaviour
       cannotBeSelected = true;
       text.gameObject.SetActive(false);
       canBeUpgrades = true;
+      isSellable = false;
    }
    
    public void unselectable()
@@ -75,6 +92,17 @@ public class WTreeButton : MonoBehaviour
       cannotBeSelected = true;
       text.gameObject.SetActive(false);
       canBeUpgrades = false;
+      isSellable = false;
+   }
+   
+   public void sellable()
+   {
+      image.color = new Color(1f, 0.7f ,0.7f, 0.75f);
+      cannotBeSelected = false;
+      text.gameObject.SetActive(true);
+      canBeUpgrades = false;
+      isSellable = true;
+      sellChangePrice(true);
    }
    
 }

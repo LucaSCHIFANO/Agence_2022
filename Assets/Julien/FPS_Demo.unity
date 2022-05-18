@@ -340,10 +340,6 @@ MonoBehaviour:
   overHeatColor: {r: 0.5471698, g: 0.4962165, b: 0.18841223, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
-  _shootingTimer: 0
-  _timeCoolDown: 0
-  _isOverHeat: 0
-  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -370,10 +366,6 @@ MonoBehaviour:
   overHeatColor: {r: 0, g: 0.26415092, b: 0.028847422, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
-  _shootingTimer: 0
-  _timeCoolDown: 0
-  _isOverHeat: 0
-  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -403,10 +395,6 @@ MonoBehaviour:
   overHeatColor: {r: 0, g: 0.065508515, b: 0.2924528, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
-  _shootingTimer: 0
-  _timeCoolDown: 0
-  _isOverHeat: 0
-  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -435,10 +423,6 @@ MonoBehaviour:
   overHeatColor: {r: 0.4056604, g: 0, b: 0, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
-  _shootingTimer: 0
-  _timeCoolDown: 0
-  _isOverHeat: 0
-  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -468,10 +452,6 @@ MonoBehaviour:
   overHeatColor: {r: 0.5283019, g: 0, b: 0, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
-  _shootingTimer: 0
-  _timeCoolDown: 0
-  _isOverHeat: 0
-  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -501,10 +481,6 @@ MonoBehaviour:
   overHeatColor: {r: 0.4679647, g: 0.36267355, b: 0.4716981, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
-  _shootingTimer: 0
-  _timeCoolDown: 0
-  _isOverHeat: 0
-  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -535,10 +511,6 @@ MonoBehaviour:
   overHeatColor: {r: 0.4666667, g: 0.36078432, b: 0.47058827, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
-  _shootingTimer: 0
-  _timeCoolDown: 0
-  _isOverHeat: 0
-  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -1196,6 +1168,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 77997491603404512, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 77997491603404512, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 640475820}
+    - target: {fileID: 77997491603404512, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: changeSellMode
+      objectReference: {fileID: 0}
+    - target: {fileID: 77997491603404512, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1327456157339435375, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1327456157339435375, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 640475820}
+    - target: {fileID: 1327456157339435375, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: changeSellMode
+      objectReference: {fileID: 0}
     - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
         type: 3}
       propertyPath: test
@@ -1331,6 +1338,106 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5103211549361792553, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211549361792553, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211549361792553, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211549361792553, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 640475820}
+    - target: {fileID: 5103211549361792553, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211549361792553, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: deactivatedSellMod
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211549361792553, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: gotoScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211549361792553, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UpgradeMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211549361792553, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211549361792553, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211549361792553, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211550294567477, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211550294567477, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211550294567477, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211550294567477, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 640475820}
+    - target: {fileID: 5103211550294567477, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211550294567477, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: deactivatedSellMod
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211550294567477, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: gotoScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211550294567477, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UpgradeMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211550294567477, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8202021422794752718, guid: 7155ffc9e90adff42be892838432656c,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1443,6 +1550,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7155ffc9e90adff42be892838432656c, type: 3}
+--- !u!114 &640475820 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+    type: 3}
+  m_PrefabInstance: {fileID: 640475819}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f561b5154ffdc50449ed5dada16d47dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &642539391
 GameObject:
   m_ObjectHideFlags: 0
@@ -4040,10 +4159,6 @@ MonoBehaviour:
   overHeatColor: {r: 0.4056604, g: 0, b: 0, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
-  _shootingTimer: 0
-  _timeCoolDown: 0
-  _isOverHeat: 0
-  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -4073,10 +4188,6 @@ MonoBehaviour:
   overHeatColor: {r: 0.4666667, g: 0.36078432, b: 0.47058827, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
-  _shootingTimer: 0
-  _timeCoolDown: 0
-  _isOverHeat: 0
-  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -4107,10 +4218,6 @@ MonoBehaviour:
   overHeatColor: {r: 0.4679647, g: 0.36267355, b: 0.4716981, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
-  _shootingTimer: 0
-  _timeCoolDown: 0
-  _isOverHeat: 0
-  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -4156,10 +4263,6 @@ MonoBehaviour:
   overHeatColor: {r: 0.5283019, g: 0, b: 0, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
-  _shootingTimer: 0
-  _timeCoolDown: 0
-  _isOverHeat: 0
-  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -4212,10 +4315,6 @@ MonoBehaviour:
   overHeatColor: {r: 0.5471698, g: 0.4962165, b: 0.18841223, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
-  _shootingTimer: 0
-  _timeCoolDown: 0
-  _isOverHeat: 0
-  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -4242,10 +4341,6 @@ MonoBehaviour:
   overHeatColor: {r: 0, g: 0.26415092, b: 0.028847422, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
-  _shootingTimer: 0
-  _timeCoolDown: 0
-  _isOverHeat: 0
-  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -4275,10 +4370,6 @@ MonoBehaviour:
   overHeatColor: {r: 0, g: 0.065508515, b: 0.2924528, a: 1}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
-  _shootingTimer: 0
-  _timeCoolDown: 0
-  _isOverHeat: 0
-  _isCoolDown: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
