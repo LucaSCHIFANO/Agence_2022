@@ -58,6 +58,8 @@ public class MovementPredictionCC : NetworkBehaviour
     public CharacterController serverCC;
     public bool IsMoving;
 
+    public CamionCarryCC CamionCarryCc;
+
     void Start()
     {
         
@@ -110,7 +112,6 @@ public class MovementPredictionCC : NetworkBehaviour
         
         CharacterController cc = IsServer ? serverCC : localCC;
         
-        Debug.Log("Is grounded " + cc.isGrounded);
         
         if (cc.isGrounded)
         {
@@ -128,6 +129,10 @@ public class MovementPredictionCC : NetworkBehaviour
             velocity.y -= gravity;
         }
 
+        if (CamionCarryCc != null)
+            Debug.Log(CamionCarryCc.CurrentVelocity);
+        
+        velocity += CamionCarryCc != null ? CamionCarryCc.CurrentVelocity : Vector3.zero;
         cc.Move(velocity);
     }
 
@@ -186,6 +191,9 @@ public class MovementPredictionCC : NetworkBehaviour
     void Reconciliate()
     {
 
+        Debug.Log(serverSimulationState.simulationFrame);
+        Debug.Log(lastCorrectedFrame);
+        
         if (serverSimulationState.simulationFrame <= lastCorrectedFrame) return;
         
         int cacheIndex = serverSimulationState.simulationFrame % STATE_CACHE_SIZE;
@@ -207,8 +215,12 @@ public class MovementPredictionCC : NetworkBehaviour
         float differenceY = Mathf.Abs(cachedSimulationState.position.y - serverSimulationState.position.y);
         float differenceZ = Mathf.Abs(cachedSimulationState.position.z - serverSimulationState.position.z);
 
-        float tolerance = 0.0000001F;
+        float tolerance = 1F;
 
+        // Debug.Log("Diff X " + differenceX);
+        // Debug.Log( "Diff Y " + differenceY);
+        // Debug.Log("Diff Z " + differenceZ);
+        
         if (differenceX > tolerance || differenceY > tolerance || differenceZ > tolerance)
         {
             localTransform.position = serverSimulationState.position;
@@ -229,6 +241,7 @@ public class MovementPredictionCC : NetworkBehaviour
                     continue;
                 }
 
+                Debug.Log("Reconcillation");
                 MovePlayer(localTransform, rewindCachedInputState);
 
                 SimulationState rewoundSimulationState =

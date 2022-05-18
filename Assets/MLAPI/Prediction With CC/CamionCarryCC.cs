@@ -11,6 +11,8 @@ public class CamionCarryCC : NetworkBehaviour
     public Vector3 lastPosition;
     private Transform _transform;
 
+    public Vector3 CurrentVelocity { get; private set; }
+
     void Start()
     {
         _transform = transform;
@@ -19,17 +21,19 @@ public class CamionCarryCC : NetworkBehaviour
 
     void FixedUpdate()
     {
-        if (characterMovement.Count > 0)
+        Vector3 velocity = (_transform.position - lastPosition);
+        CurrentVelocity = velocity;
+        
+        /*if (characterMovement.Count > 0)
         {
             for (int i = 0; i < characterMovement.Count; i++)
             {
                 MovementPredictionCC character = characterMovement[i];
-                Vector3 velocity = (_transform.position - lastPosition);
-                Debug.Log(character.IsMoving);
+                
                 if (!character.IsMoving)
                     character.transform.Translate(velocity, _transform);
             }
-        }
+        }*/
 
         lastPosition = _transform.position;
     }
@@ -38,13 +42,15 @@ public class CamionCarryCC : NetworkBehaviour
     {
         if (IsServer)
         {
-            Debug.Log(other);
             if (other.TryGetComponent(out CharacterController rigidbody))
             {
-                Debug.Log(rigidbody);
+                Debug.Log("IN");
                 if (rigidbody.transform.parent.TryGetComponent(out MovementPredictionCC prediction))
+                {
+                    prediction.CamionCarryCc = this;
                     if (!characterMovement.Contains(prediction))
                         characterMovement.Add(prediction);
+                }
             }
         }
     }
@@ -53,13 +59,16 @@ public class CamionCarryCC : NetworkBehaviour
     {
         if (IsServer)
         {
-            Debug.Log(other);
             if (other.TryGetComponent(out CharacterController rigidbody))
             {
-                Debug.Log(rigidbody);
+                Debug.Log("OUT");
                 if (rigidbody.transform.parent.TryGetComponent(out MovementPredictionCC prediction))
+                {
+                    prediction.CamionCarryCc = null;
+                    Debug.Log(prediction);
                     if (characterMovement.Contains(prediction))
                         characterMovement.Remove(prediction);
+                }
             }
         }
     }

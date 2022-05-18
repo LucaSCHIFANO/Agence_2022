@@ -13,6 +13,8 @@ public class CharacterMovementHandler : NetworkBehaviour
 
     private float cameraRotationX;
 
+    public bool IsMoving;
+
     private void Awake()
     {
         _networkCharacterControllerPrototypeCustom = GetComponent<NetworkCharacterControllerPrototypeCustom>();
@@ -43,6 +45,8 @@ public class CharacterMovementHandler : NetworkBehaviour
             Vector3 moveDirection = transform.forward * networkInputData.movementInput.y +
                                     transform.right * networkInputData.movementInput.x;
             moveDirection.Normalize();
+
+            IsMoving = moveDirection != Vector3.zero;
             
             _networkCharacterControllerPrototypeCustom.Move(moveDirection);
             
