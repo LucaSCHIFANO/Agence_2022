@@ -6,7 +6,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using Unity.Netcode;
 
-public class WeaponBurst : WeaponBase
+public class WeaponBasic : WeaponBase
 {
     [Header("Burst Config")]
     
@@ -26,6 +26,7 @@ public class WeaponBurst : WeaponBase
 
         if (isShooting)
         {
+            Debug.Log("debug log log");
             Shoot();
         }
     }

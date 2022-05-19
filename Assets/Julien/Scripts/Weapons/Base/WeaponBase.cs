@@ -52,8 +52,8 @@ public abstract class WeaponBase : NetworkBehaviour
     public CanvasInGame canvas;
 
     
-    [SerializeField][Range(0, 100)] private float overHeatPourcent;
-
+    [SerializeField][Range(0, 100)] protected float overHeatPourcent;
+    
     protected virtual void Start()
     {
         isPossessed = false;
@@ -101,8 +101,6 @@ public abstract class WeaponBase : NetworkBehaviour
         
         
         if (!isPossessed) return;
-        
-        if(!possessor.IsLocalPlayer) return;
 
         canvas.overheatSlider.fillAmount = (overHeatPourcent / 100);
         if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
@@ -123,7 +121,6 @@ public abstract class WeaponBase : NetworkBehaviour
     {
         BulletEffectClientRpc(impactPoint);
     }
-    
     
     
     //creer la balle override en fct de l'arme

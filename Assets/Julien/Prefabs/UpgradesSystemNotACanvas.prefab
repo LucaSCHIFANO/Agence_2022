@@ -767,6 +767,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704942575877143}
 --- !u!1 &5723704941096559191
 GameObject:
@@ -919,6 +920,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704941313655603}
 --- !u!1 &5723704941110045912
 GameObject:
@@ -1071,6 +1073,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704941236792948}
 --- !u!1 &5723704941115366270
 GameObject:
@@ -1434,6 +1437,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704942389095618}
 --- !u!1 &5723704941153278211
 GameObject:
@@ -1856,6 +1860,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704941504634608}
 --- !u!1 &5723704941180468948
 GameObject:
@@ -2008,6 +2013,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704942236234337}
 --- !u!1 &5723704941208234126
 GameObject:
@@ -2295,6 +2301,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704941096559189}
 --- !u!1 &5723704941216135879
 GameObject:
@@ -2447,6 +2454,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704941504634608}
 --- !u!1 &5723704941223339821
 GameObject:
@@ -2869,6 +2877,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704941180468944}
 --- !u!1 &5723704941252332464
 GameObject:
@@ -3156,6 +3165,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704943068017548}
 --- !u!1 &5723704941278590181
 GameObject:
@@ -3578,6 +3588,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 0}
 --- !u!1 &5723704941319920796
 GameObject:
@@ -4497,6 +4508,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704942513713227}
 --- !u!1 &5723704941436646245
 GameObject:
@@ -5253,6 +5265,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704941313655603}
 --- !u!1 &5723704941521459047
 GameObject:
@@ -5557,6 +5570,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704942989842505}
 --- !u!1 &5723704941537343746
 GameObject:
@@ -8824,6 +8838,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704942251405832}
 --- !u!1 &5723704942055649999
 GameObject:
@@ -8946,6 +8961,7 @@ MonoBehaviour:
   - {fileID: 5723704943128085092}
   - {fileID: 5723704942516296630}
   lastUpgrade1: {fileID: 0}
+  turret1: {fileID: 0}
   listAllButton2:
   - {fileID: 5723704941313655603}
   - {fileID: 5723704941504634608}
@@ -8963,6 +8979,8 @@ MonoBehaviour:
   - {fileID: 5723704942513713227}
   - {fileID: 5723704941411517746}
   lastUpgrade2: {fileID: 0}
+  turret2: {fileID: 0}
+  allWeapon: []
   FPrice:
   - newName: Fort1
     intList: 01000000020000000300000004000000
@@ -10415,6 +10433,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704942382969142}
 --- !u!1 &5723704942175962386
 GameObject:
@@ -10871,6 +10890,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 0}
 --- !u!1 &5723704942243960817
 GameObject:
@@ -11158,6 +11178,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704942236234337}
 --- !u!1 &5723704942254069306
 GameObject:
@@ -11714,6 +11735,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704941216135877}
 --- !u!1 &5723704942357671741
 GameObject:
@@ -12198,6 +12220,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704942251405832}
 --- !u!1 &5723704942389095622
 GameObject:
@@ -12350,6 +12373,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704941180468944}
 --- !u!1 &5723704942391962636
 GameObject:
@@ -13140,6 +13164,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704941313655603}
 --- !u!1 &5723704942516296634
 GameObject:
@@ -13292,6 +13317,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704943128085092}
 --- !u!1 &5723704942551109001
 GameObject:
@@ -13777,6 +13803,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704942236234337}
 --- !u!1 &5723704942592044366
 GameObject:
@@ -14545,6 +14572,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704942021502060}
 --- !u!1 &5723704942720157282
 GameObject:
@@ -15178,6 +15206,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704941313655603}
 --- !u!1 &5723704942818504246
 GameObject:
@@ -15465,6 +15494,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704941174340060}
 --- !u!1 &5723704942842124840
 GameObject:
@@ -16652,6 +16682,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704942802084660}
 --- !u!1 &5723704942993162600
 GameObject:
@@ -17543,6 +17574,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704942802084660}
 --- !u!1 &5723704943078769802
 GameObject:
@@ -18176,6 +18208,7 @@ MonoBehaviour:
   canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 75
   previousUpgrades: {fileID: 5723704942236234337}
 --- !u!1 &7906280945340862774
 GameObject:
