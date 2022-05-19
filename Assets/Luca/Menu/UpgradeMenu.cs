@@ -70,7 +70,9 @@ public class UpgradeMenu : NetworkBehaviour
     private NetworkList<int> upgradesForteresseServer;
     private NetworkList<int> upgradesCamionServer;
     private NetworkList<int> unlockedWeapon1Server;
+    private int sizeWeapon1;
     private NetworkList<int> unlockedWeapon2Server;
+    private int sizeWeapon2;
 
     private void Awake()
     {
@@ -128,9 +130,7 @@ public class UpgradeMenu : NetworkBehaviour
             upgradesForteresseServer.OnListChanged += UpgradesForteresseServerOnChanged;
             upgradesCamionServer.OnListChanged += UpgradesCamionServerOnChanged;
             unlockedWeapon1Server.OnListChanged += UnlockWeapon1ServerOnChanged;
-            //unlockedWeapon1Server.OnListChanged += SellWeapon1ServerOnChanged;
             unlockedWeapon2Server.OnListChanged += UnlockWeapon2ServerOnChanged;
-            //unlockedWeapon2Server.OnListChanged += SellWeapon2ServerOnChanged;
         }
     }
 
@@ -380,13 +380,6 @@ public class UpgradeMenu : NetworkBehaviour
         turret.GetComponent<TestControlWeapon>().actuGauge();
     }
 
-
-    public void deactivatedSellMod(bool firstWeapon)
-    {
-        /*sellMode = false;
-        if(firstWeapon) upgradeWeapon(lastUpgrade1, true);
-        else upgradeWeapon(lastUpgrade2, false);*/
-    }
     
     public void quitUpgrade()
     {
@@ -510,24 +503,13 @@ public class UpgradeMenu : NetworkBehaviour
         {
             return button.id == newList.Value;
         });
-        Debug.Log(newList.PreviousValue);
-        Debug.Log(newList.Value);
+        
+        sellMode = unlockedWeapon1Server.Count < sizeWeapon1;
         upgradeWeapon(weaponBuyed, weaponBuyed.firstWeapon);
+        sizeWeapon1 = unlockedWeapon1Server.Count;
     }
     
     
-    private void SellWeapon1ServerOnChanged(NetworkListEvent<int> newList)
-    {
-        Debug.Log("gtfeeguugguug");
-       /* WTreeButton weaponSelled = listAllButton1.Find((button) =>
-        {
-            return button.id == newList.Value;
-        });
-Debug.Log("tes 2");
-        sellMode = true;
-        upgradeWeapon(weaponSelled, weaponSelled.firstWeapon);*/
-    }
-
     private void UnlockWeapon2ServerOnChanged(NetworkListEvent<int> newList)
     {
         WTreeButton weaponBuyed = listAllButton2.Find((button) =>
@@ -535,20 +517,11 @@ Debug.Log("tes 2");
             return button.id == newList.Value;
         });
         
+        sellMode = unlockedWeapon2Server.Count < sizeWeapon2;
         upgradeWeapon(weaponBuyed, weaponBuyed.firstWeapon);
+        sizeWeapon2 = unlockedWeapon2Server.Count;
     }
     
     
-    private void SellWeapon2ServerOnChanged(NetworkListEvent<int> newList)
-    {
-        /*WTreeButton weaponSelled = listAllButton2.Find((button) =>
-        {
-            return button.id == newList.Value;
-        });
-
-        sellMode = true;
-        upgradeWeapon(weaponSelled, weaponSelled.firstWeapon);*/
-    }
-
     #endregion
 }
