@@ -11,8 +11,7 @@ namespace Enemies
         protected Asker asker;
 
         protected GameObject target;
-
-        // TEMP
+        
         protected Vector3 targetLastPosition;
 
         protected float speed;
@@ -21,9 +20,18 @@ namespace Enemies
         protected int actualHealth;
 
         protected WeaponBase[] weapons; // WeaponSO type
+        [SerializeField] protected EnemySO enemySo; // TEMP
 
         [SerializeField] protected Transform[] weaponsPosition;
-        
+
+        private void Start()
+        {
+            if (asker == null)
+            {
+                Initialization(enemySo);
+            }
+        }
+
         public virtual void Initialization(EnemySO _enemySo)
         {
             asker = GetComponent<Asker>();
