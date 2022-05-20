@@ -6,9 +6,9 @@ public class WeaponMachineGun : WeaponBase
 {
     [Header("Machine Gun Config")]
     
-    [SerializeField] private WeaponFireType _fireType;
+    [SerializeField] public WeaponFireType _fireType;
 
-    [SerializeField] private float _spread;
+    [SerializeField] public float _spread;
     
 
     public override void Shoot()
@@ -41,20 +41,20 @@ public class WeaponMachineGun : WeaponBase
     
     
 
-    [ServerRpc]
+    /*[ServerRpc]
     void ShootProjectileServerRpc()
     {
         GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-_spread, _spread),
             Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
         bulletGO.GetComponent<NetworkObject>().Spawn();
-    }
+    }*/
     
     
     [ClientRpc(Delivery = RpcDelivery.Unreliable)]
     protected override void ShootBulletClientRpc()
     {
         if(IsOwner) return;
-        GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-_spread, _spread),
+        Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-_spread, _spread),
             Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
         
     }

@@ -7,7 +7,7 @@ public class WeaponShotgun : WeaponBase
     [Header("Shotgun config")] [SerializeField]
     private int _numberOfBullet;
 
-    [SerializeField] private float _spread;
+    [SerializeField] protected float _spread;
 
     public override void Shoot()
     {
@@ -30,7 +30,7 @@ public class WeaponShotgun : WeaponBase
     
     
     
-    [ServerRpc]
+    /*[ServerRpc]
     void ShootProjectileServerRpc()
     {
         // (Modifier cette ligne si object pooling)
@@ -41,7 +41,7 @@ public class WeaponShotgun : WeaponBase
                     Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
             bulletGO.GetComponent<NetworkObject>().Spawn();
         }
-    }
+    }*/
     
     [ClientRpc(Delivery = RpcDelivery.Unreliable)]
     protected override void ShootBulletClientRpc()
@@ -49,7 +49,7 @@ public class WeaponShotgun : WeaponBase
         if(IsOwner) return;
         for (int i = 0; i < _numberOfBullet; i++)
         {
-            GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position,
+            Instantiate(_bulletPrefab, _shootingPoint.position,
                 _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-_spread, _spread),
                     Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
         }

@@ -231,7 +231,6 @@ GameObject:
   - component: {fileID: 2616102455232856126}
   - component: {fileID: 2616102455232856257}
   - component: {fileID: 2616102455232856256}
-  - component: {fileID: 4363234069886935415}
   - component: {fileID: 7926488033872761810}
   - component: {fileID: 1333379650}
   - component: {fileID: 5949546406629983895}
@@ -261,6 +260,7 @@ Transform:
   - {fileID: 683472513150798570}
   - {fileID: 2629278266888089065}
   - {fileID: 1715308932722295805}
+  - {fileID: 5928121272587448106}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -328,23 +328,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4363234069886935415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2616102455232856259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f6a0f81243e79b4a8174ea1c6a076a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactionDistance: 2
-  interactionKeyCode: 101
-  canvas: {fileID: 6344695836395902828}
-  interactionText: {fileID: 8619697632508118805}
-  cam: {fileID: 2871867715561878747}
 --- !u!114 &7926488033872761810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,6 +397,10 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f858ba68752b6464fb426fd47fb1fc3f, type: 2}
   - {fileID: 2100000, guid: b6b95799395bcf94bb9080d22ed607e9, type: 2}
   anim: {fileID: 8258825958479968147}
+  maxHP: 100
+  hpPourcent: 100
+  timeBeforeRecov: 2
+  recovPerSecond: 5
 --- !u!114 &-2123784371073674154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,7 +439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25307306c7e0f014590013f4d0766c89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionDistance: 3
+  interactionDistance: 2.5
   interactionKeyCode: 101
   canvas: {fileID: 937656300936914906}
   interactionText: {fileID: 6647994914999094612}
@@ -1025,7 +1012,7 @@ RectTransform:
   m_Children:
   - {fileID: 182945406240748553}
   m_Father: {fileID: 2616102455232856127}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
