@@ -468,41 +468,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &1059970214 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7790341083850612970, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-    type: 3}
-  m_PrefabInstance: {fileID: 1422664578}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1059970215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1059970214}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab6f1a7a66d8fb748bc2d42448e378a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currVertice: 5
-  sphereSize: 0.8
-  resolution: 10
---- !u!64 &1059970219
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1059970214}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 123650526}
 --- !u!1 &1229447025
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,23 +590,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 211200478, guid: 2973a11b671c9ac4f8ad4b5c7bed9216, type: 3}
-      propertyPath: m_UseGravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 211200478, guid: 2973a11b671c9ac4f8ad4b5c7bed9216, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 1059970219, guid: 2973a11b671c9ac4f8ad4b5c7bed9216, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 123650526}
     - target: {fileID: 312021732072444816, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 700881242013139351, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1825063954157573252, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
@@ -651,7 +612,7 @@ PrefabInstance:
     - target: {fileID: 2216819461730630313, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2216819461730630316, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
@@ -713,108 +674,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2216819462565004287, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3533900374186449682, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 123650526}
-    - target: {fileID: 7790341083850612970, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: m_TagString
-      value: Remorque
-      objectReference: {fileID: 0}
     - target: {fileID: 8197020221474899894, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8197020221474899894, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-        type: 3}
-      propertyPath: driftAngleSpeed
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2973a11b671c9ac4f8ad4b5c7bed9216, type: 3}
---- !u!1 &1422664579 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2216819461730630316, guid: 2973a11b671c9ac4f8ad4b5c7bed9216,
-    type: 3}
-  m_PrefabInstance: {fileID: 1422664578}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1422664580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1422664579}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba1a7f0b8dfb4204185a66cdcd4512ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  constantDamageType:
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  currentDamagesApplied: []
 --- !u!1 &1624584465
 GameObject:
   m_ObjectHideFlags: 0
