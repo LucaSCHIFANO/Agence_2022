@@ -11,6 +11,9 @@ public class CanvasInGame : MonoBehaviour
 
     [Header("Shop")] 
     public GameObject shopDisplay;
+    
+    [Header("Generator")] 
+    public GameObject genDisplay;
 
     #region Singleton
 
@@ -38,5 +41,10 @@ public class CanvasInGame : MonoBehaviour
     public void showShop(bool boul)
     {
         shopDisplay.SetActive(boul);
+    }
+    
+    public void showGen(bool boul)
+    {
+        genDisplay.SetActive(boul);
     }
 }
