@@ -329,6 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d56fe143667fa46b1f4348da75c66d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 1
   _shootingPoint: {fileID: 105719652}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
@@ -356,6 +357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a49d2b2a1e3594386bd5240d6579ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 1
   _shootingPoint: {fileID: 105719652}
   _bulletPrefab: {fileID: 0}
@@ -384,6 +386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca13fee6f7a50664d9d949cd1b4611c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 1
   _shootingPoint: {fileID: 105719652}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
@@ -413,6 +416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c37d1a8e282c4543a95da6d427b38fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 1
   _shootingPoint: {fileID: 105719652}
   _bulletPrefab: {fileID: 0}
@@ -441,6 +445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5699421c6917a8e43baf3ac8c23cf4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 30
   _shootingPoint: {fileID: 105719652}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
@@ -470,6 +475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f69241ac77d3c7a468894f3af2ecf4df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 2
   _shootingPoint: {fileID: 105719652}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
@@ -500,6 +506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7f32c8763fedf34b9c84712d7fdba78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 5
   _shootingPoint: {fileID: 105719652}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
@@ -1600,7 +1607,7 @@ Terrain:
   m_GameObject: {fileID: 642539391}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: 828a465d2d58cb64e9a9ea3da5bd8693, type: 2}
+  m_TerrainData: {fileID: 0}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
@@ -2233,6 +2240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b93df543b9f5c44be75d593662100b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   interactionType: 0
   requiredHoldTime: 0
 --- !u!1 &1143492966
@@ -4002,6 +4010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef46af3a165e53428f1b2720eabece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   truckArea: {fileID: 1477449117}
 --- !u!114 &2114134475
 MonoBehaviour:
@@ -4031,6 +4040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b0617b478cac2e43ac751a83f06697f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   interactionType: 0
   requiredHoldTime: 0
 --- !u!1001 &2125437484
@@ -4135,6 +4145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b93df543b9f5c44be75d593662100b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   interactionType: 0
   requiredHoldTime: 0
 --- !u!114 &966429752086457839
@@ -4149,6 +4160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c37d1a8e282c4543a95da6d427b38fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 1
   _shootingPoint: {fileID: 1821862361}
   _bulletPrefab: {fileID: 0}
@@ -4177,6 +4189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7f32c8763fedf34b9c84712d7fdba78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 5
   _shootingPoint: {fileID: 1821862361}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
@@ -4207,6 +4220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f69241ac77d3c7a468894f3af2ecf4df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 2
   _shootingPoint: {fileID: 1821862361}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
@@ -4252,6 +4266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5699421c6917a8e43baf3ac8c23cf4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 30
   _shootingPoint: {fileID: 1821862361}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
@@ -4304,6 +4319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d56fe143667fa46b1f4348da75c66d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 1
   _shootingPoint: {fileID: 1821862361}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
@@ -4331,6 +4347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a49d2b2a1e3594386bd5240d6579ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 1
   _shootingPoint: {fileID: 1821862361}
   _bulletPrefab: {fileID: 0}
@@ -4359,6 +4376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca13fee6f7a50664d9d949cd1b4611c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 1
   _shootingPoint: {fileID: 1821862361}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,

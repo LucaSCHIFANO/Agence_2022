@@ -1,38 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
+using Fusion;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PossessableWeapon : NetworkBehaviour
 {
-    private NetworkVariable<bool> isPossessed = new NetworkVariable<bool>(false);
-    private PlayerController _playerController;
+    [Networked] private bool isPossessed { get; set; }
+    private NetworkedPlayer _playerController;
     [SerializeField] private Vector2 weaponSensibility;
     [SerializeField] private GameObject camera;
+    [SerializeField] private Transform exitPoint;
 
     private float timer;
     
     public void TryPossess(GameObject futurPossessor)
     {
-        if (isPossessed.Value) return;
+        AskForPossessionServerRpc(Runner.LocalPlayer);
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    private void AskForPossessionServerRpc(PlayerRef playerRef)
+    {
+        if (isPossessed) return;
         
-        ChangeOwnerServerRpc();
-        _playerController = futurPossessor.GetComponent<PlayerController>();
-        _playerController.Possess(gameObject);
+        isPossessed = true;
+        Object.AssignInputAuthority(playerRef);
+        _playerController = Runner.GetPlayerObject(playerRef).gameObject.GetComponent<NetworkedPlayer>();
+        _playerController.Possess(transform);
+        // _playerController.transform.SetParent(transform);
+        // _playerController.transform.localPosition = Vector3.zero;
+        // _playerController.transform.localRotation = Quaternion.identity;
         camera.SetActive(true);
         GetComponent<WeaponBase>().isPossessed = true;
-        CanvasInGame.Instance.showOverheat(true);
+        // CanvasInGame.Instance.showOverheat(true);
         timer = 0.2f;
     }
     
     private void Update()
     {
-        if (IsOwner && IsClient)
+        if (Object == null) return;
+        
+        if (Object.HasInputAuthority)
         {
 
             // activated = Input.GetKeyDown(activateDeactivate) ? !activated : activated;
 
-            if (!isPossessed.Value) return;
+            if (!isPossessed) return;
 
             if (timer <= 0)
             {
@@ -44,9 +58,6 @@ public class PossessableWeapon : NetworkBehaviour
 
                 Vector3 eulerRotation = transform.rotation.eulerAngles;
                 transform.rotation = Quaternion.Euler(eulerRotation.x, eulerRotation.y, 0);
-
-
-
 
                 if (Input.GetMouseButton(0))
                 {
@@ -61,13 +72,13 @@ public class PossessableWeapon : NetworkBehaviour
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     Debug.Log("Get Out");
-                    _playerController.enabled = true;
                     camera.SetActive(false);
-                    _playerController.Unpossess();
+                    // _playerController.transform.SetParent(null);
+                    _playerController.Unpossess(exitPoint);
                     _playerController = null;
                     Invoke(nameof(ResetOwner), .2f);
                     GetComponent<WeaponBase>().isPossessed = false;
-                    CanvasInGame.Instance.showOverheat(false);
+                    // CanvasInGame.Instance.showOverheat(false);
                 }
             }
             
@@ -82,25 +93,25 @@ public class PossessableWeapon : NetworkBehaviour
         RemoveOwnershipServerRpc();
     }
     
-    [ServerRpc(RequireOwnership = false)]
-    void ChangeOwnerServerRpc(ServerRpcParams rpcParams = default)
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    void ChangeOwnerServerRpc(RpcInfo rpcInfo = default)
     {
-        if (!isPossessed.Value)
+        if (!isPossessed)
         {
-            isPossessed.Value = true;
-            NetworkManager.Singleton.ConnectedClients[rpcParams.Receive.SenderClientId].PlayerObject.transform.SetParent(transform);
-            GetComponent<NetworkObject>().ChangeOwnership(rpcParams.Receive.SenderClientId);
+            isPossessed = true;
+            App.Instance.GetPlayer(rpcInfo.Source).transform.SetParent(transform);
+            Object.AssignInputAuthority(rpcInfo.Source);
         }
     }
 
-    [ServerRpc]
-    void RemoveOwnershipServerRpc(ServerRpcParams rpcParams = default)
+    [Rpc]
+    void RemoveOwnershipServerRpc(RpcInfo rpcInfo = default)
     {
-        if (isPossessed.Value)
+        if (isPossessed)
         {
-            isPossessed.Value = false;
-            NetworkManager.Singleton.ConnectedClients[rpcParams.Receive.SenderClientId].PlayerObject.transform.SetParent(null);
-            GetComponent<NetworkObject>().RemoveOwnership();
+            isPossessed = false;
+            App.Instance.GetPlayer(rpcInfo.Source).transform.SetParent(null);
+            Object.RemoveInputAuthority();
         }
     }
 }

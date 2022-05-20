@@ -41,6 +41,7 @@ public class Map : SimulationBehaviour, ISpawned
 			// For example, with 4 spawnpoints and a 5 player limit, the first player will get index 4 (max-1) and the second will get index 0, and both will then use the first spawn point.
 			Transform t = _spawnPoints[((int)player.Object.InputAuthority) % _spawnPoints.Length];
 			NetworkedPlayer character = Runner.Spawn(player.CharacterPrefab, t.position, t.rotation, player.Object.InputAuthority);
+			Runner.SetPlayerObject(player.Object.InputAuthority, character.Object);
 			_playerCharacters[player] = character;
 			player.InputEnabled = lateJoiner;
 		}

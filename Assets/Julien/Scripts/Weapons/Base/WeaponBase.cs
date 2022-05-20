@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
-using Unity.Netcode;
+using Fusion;
+using Game;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,7 +64,7 @@ public abstract class WeaponBase : NetworkBehaviour
 
     private void delayStart()
     {
-        canvas = CanvasInGame.Instance;
+        // canvas = CanvasInGame.Instance;
     }
 
     protected virtual void FixedUpdate()
@@ -102,21 +103,21 @@ public abstract class WeaponBase : NetworkBehaviour
         
         if (!isPossessed) return;
 
-        canvas.overheatSlider.fillAmount = (overHeatPourcent / 100);
-        if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
-        else canvas.overheatSlider.color = maincolor;
+        // canvas.overheatSlider.fillAmount = (overHeatPourcent / 100);
+        // if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
+        // else canvas.overheatSlider.color = maincolor;
     }
     
     
     //creer une particule qd une bullet touche un mur
-    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     protected void BulletEffectClientRpc(Vector3 impactPoint)
     {
-        if(IsOwner) return;
+        // if(IsOwner) return;
         Instantiate(bulletEffect, impactPoint, transform.rotation);
     }
     
-    [ServerRpc(Delivery = RpcDelivery.Unreliable)]
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     protected void CreateBulletEffectServerRpc(Vector3 impactPoint)
     {
         BulletEffectClientRpc(impactPoint);
@@ -124,13 +125,13 @@ public abstract class WeaponBase : NetworkBehaviour
     
     
     //creer la balle override en fct de l'arme
-    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     protected virtual void ShootBulletClientRpc()
     {
-        if(IsOwner) return;
+        // if(IsOwner) return;
     }
     
-    [ServerRpc(Delivery = RpcDelivery.Unreliable)]
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     protected void ShootBulletServerRpc()
     {
         ShootBulletClientRpc();

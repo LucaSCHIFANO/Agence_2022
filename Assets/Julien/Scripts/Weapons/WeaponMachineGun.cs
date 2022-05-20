@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Unity.Netcode;
+using Fusion;
 using UnityEngine;
 
 public class WeaponMachineGun : WeaponBase
@@ -50,10 +50,9 @@ public class WeaponMachineGun : WeaponBase
     }*/
     
     
-    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     protected override void ShootBulletClientRpc()
     {
-        if(IsOwner) return;
         Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-_spread, _spread),
             Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
         

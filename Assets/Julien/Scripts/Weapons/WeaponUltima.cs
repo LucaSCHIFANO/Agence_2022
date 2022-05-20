@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
-using Unity.Netcode;
 
 public class WeaponUltima : WeaponBase
 {
@@ -112,10 +112,10 @@ public class WeaponUltima : WeaponBase
     
     
     
-    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     protected override void ShootBulletClientRpc()
     {
-        if(IsOwner) return;
+        // if(IsOwner) return;
         
         if(fireType == WeaponFireType.Projectile) shootWeaponBullet();
         
