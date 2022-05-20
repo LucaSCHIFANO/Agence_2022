@@ -262,15 +262,17 @@ public class PlayerController : NetworkBehaviour
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
         hpPourcent = currentHP / maxHP;
         
+        CanvasInGame.Instance.actuBlood(Mathf.Abs(hpPourcent - 1));
+        
     }
 
     public void ReceiveDamage(float damage)
     {
         currentHP -= damage;
         currentTimeRecov = timeBeforeRecov;
-        Debug.Log(currentHP);
     }
 
+    
     [ServerRpc]
     void MakePlayerAnimServerRpc(bool isWalking)
     {
