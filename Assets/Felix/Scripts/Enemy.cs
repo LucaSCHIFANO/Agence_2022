@@ -24,7 +24,7 @@ namespace Enemies
 
         [SerializeField] protected Transform[] weaponsPosition;
 
-        private void Start()
+        protected void Start()
         {
             if (asker == null)
             {
