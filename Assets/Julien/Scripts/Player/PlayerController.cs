@@ -4,7 +4,6 @@ using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
 using Unity.Netcode.Components;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
