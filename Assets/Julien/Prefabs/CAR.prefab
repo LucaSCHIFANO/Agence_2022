@@ -110,7 +110,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2927991719342637025
 Transform:
   m_ObjectHideFlags: 0
@@ -307,6 +307,7 @@ GameObject:
   - component: {fileID: 69341504895247121}
   - component: {fileID: 3875887000089824931}
   - component: {fileID: 211200478}
+  - component: {fileID: 1422664580}
   m_Layer: 0
   m_Name: CAR
   m_TagString: Untagged
@@ -343,7 +344,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2216819461730630316}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ebdb40bb8ea6ba48adea062a68954be, type: 3}
   m_Name: 
@@ -359,7 +360,7 @@ MonoBehaviour:
   tyreLoad: 5000
   driftTurningRatio: 50
   driftAngleRatio: 43
-  driftAngleSpeed: 30
+  driftAngleSpeed: 20
   driftAccelerationRatio: 5
   wheelRotSped: 10
   inertia: 10
@@ -421,7 +422,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2216819461730630316}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da95ca421aeb5fe4c80b2ea21dd348e1, type: 3}
   m_Name: 
@@ -542,7 +543,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2216819461730630316}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2c1a8b518cc97140b2e2b89134c5695, type: 3}
   m_Name: 
@@ -645,10 +646,79 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1422664580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2216819461730630316}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba1a7f0b8dfb4204185a66cdcd4512ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constantDamageType:
+  - damageName: 
+    damagePercentagePerSecond: 0
+    isPersistant: 0
+    duration: 0
+    currTime: 0
+  - damageName: 
+    damagePercentagePerSecond: 0
+    isPersistant: 0
+    duration: 0
+    currTime: 0
+  - damageName: 
+    damagePercentagePerSecond: 0
+    isPersistant: 0
+    duration: 0
+    currTime: 0
+  - damageName: 
+    damagePercentagePerSecond: 0
+    isPersistant: 0
+    duration: 0
+    currTime: 0
+  - damageName: 
+    damagePercentagePerSecond: 0
+    isPersistant: 0
+    duration: 0
+    currTime: 0
+  - damageName: 
+    damagePercentagePerSecond: 0
+    isPersistant: 0
+    duration: 0
+    currTime: 0
+  - damageName: 
+    damagePercentagePerSecond: 0
+    isPersistant: 0
+    duration: 0
+    currTime: 0
+  - damageName: 
+    damagePercentagePerSecond: 0
+    isPersistant: 0
+    duration: 0
+    currTime: 0
+  - damageName: 
+    damagePercentagePerSecond: 0
+    isPersistant: 0
+    duration: 0
+    currTime: 0
+  - damageName: 
+    damagePercentagePerSecond: 0
+    isPersistant: 0
+    duration: 0
+    currTime: 0
+  - damageName: 
+    damagePercentagePerSecond: 0
+    isPersistant: 0
+    duration: 0
+    currTime: 0
+  currentDamagesApplied: []
 --- !u!1 &2216819461954796469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1808,9 +1878,11 @@ GameObject:
   - component: {fileID: 4005788610774588132}
   - component: {fileID: 3533900374186449682}
   - component: {fileID: 694408832363300531}
+  - component: {fileID: 1059970219}
+  - component: {fileID: 1059970215}
   m_Layer: 0
   m_Name: Remorque
-  m_TagString: Untagged
+  m_TagString: Remorque
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1837,7 +1909,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7790341083850612970}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 0}
 --- !u!23 &694408832363300531
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1880,3 +1952,32 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1059970219
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7790341083850612970}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
+--- !u!114 &1059970215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7790341083850612970}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab6f1a7a66d8fb748bc2d42448e378a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currVertice: 5
+  sphereSize: 0.8
+  resolution: 10
