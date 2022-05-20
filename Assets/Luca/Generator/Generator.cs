@@ -26,14 +26,13 @@ public class Generator : MonoBehaviour
             myLines[i].transform.position = upgradePoint.transform.position;
             
             float distTop = Vector3.Distance(upgradePoint.transform.position, listSommets[i].position);
-            var vectorTop = new Vector3(listSommets[i].position.x - upgradePoint.transform.position.x,
-                listSommets[i].position.y - upgradePoint.transform.position.y);
+            var vectorTop = listSommets[i].position - upgradePoint.transform.position;
             
             int numberOfPoint = (int) (distTop / lineThinkness);
             myLines[i].LineThickness = lineThinkness;
 
             var pointlist = new List<Vector2>();
-            for (int j = 1; j < numberOfPoint; j++)
+            for (int j = 1; j <= numberOfPoint; j++)
             {
                 pointlist.Add(new Vector2((vectorTop.x / numberOfPoint) * j, (vectorTop.y / numberOfPoint) * j));
             }
@@ -43,10 +42,6 @@ public class Generator : MonoBehaviour
             if(distTop < colorDistance[0]) myLines[i].color = Color.green;
             else if(distTop < colorDistance[1]) myLines[i].color = new Color(0.9f, 0.5f, 0.04f);
             else myLines[i].color = Color.red;
-            
-            // 730 max
-            //530 les autres
-            
             
         }
     }
