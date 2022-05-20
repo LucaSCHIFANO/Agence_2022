@@ -816,7 +816,7 @@ public class TruckPhysics : NetworkBehaviour
             if (bar > 1) bar = 1;
             if (bar > 0 && barVal < 0.5f) bar -= ((antiBarVal / 2) * Time.deltaTime) + Time.deltaTime * throttleDeccelSpeed;
             if (bar < 0) bar = 0;
-            Debug.Log(barVal);
+            //Debug.Log(barVal);
             pos = transform.position;
             Vector3 vec = transform.forward * throttleForce.Evaluate(bar);
             Vector3 dist = pos - prevPos;
@@ -911,8 +911,8 @@ public class TruckPhysics : NetworkBehaviour
             currWheelDelta += rot;
 
 
-            if (gripCurrForce >= maxGripForce && (rot == 1 || rot == -1) && !isReversed) { drifting = true; vals._IsDrift = true; }
-
+            if (gripCurrForce >= maxGripForce && (rot <= -0.9f || rot >= 0.9f) && !isReversed) { drifting = true; vals._IsDrift = true; }
+            Debug.Log(rot);
 
             if (currWheelDelta > 30) currWheelDelta = 30;
             else if (currWheelDelta < -30) currWheelDelta = -30;
