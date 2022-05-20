@@ -397,6 +397,10 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f858ba68752b6464fb426fd47fb1fc3f, type: 2}
   - {fileID: 2100000, guid: b6b95799395bcf94bb9080d22ed607e9, type: 2}
   anim: {fileID: 8258825958479968147}
+  maxHP: 100
+  hpPourcent: 100
+  timeBeforeRecov: 2
+  recovPerSecond: 5
 --- !u!114 &-2123784371073674154
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
 using Unity.Netcode.Components;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
@@ -45,6 +46,16 @@ public class PlayerController : NetworkBehaviour
 
     [SerializeField] protected Animator anim;
 
+    [Header("Health")]
+    [SerializeField] protected float maxHP;
+    protected float currentHP;
+    
+    [SerializeField][Range(0, 1)] protected float hpPourcent;
+    
+    [SerializeField] protected float timeBeforeRecov;
+    protected float currentTimeRecov;
+    [SerializeField] protected float recovPerSecond;
+
     private void Start()
     {
         _controller = GetComponent<CharacterController>();
@@ -59,6 +70,8 @@ public class PlayerController : NetworkBehaviour
             
             Camera.SetActive(true);
         }
+
+        currentHP = maxHP;
     }
 
     private void Update()
@@ -91,11 +104,14 @@ public class PlayerController : NetworkBehaviour
             // anim.gameObject.GetComponent<NetworkAnimator>().SetTrigger(0, true);
             // anim.gameObject.GetComponent<NetworkAnimator>().SetTrigger(1, true);
             
+            
+            HP();
         }
         
         //if(IsClient) anim.SetBool("isWalking", (moveDirection.x != 0 || moveDirection.z != 0));
+
         
-       
+
     }
 
     private void FixedUpdate()
@@ -231,6 +247,28 @@ public class PlayerController : NetworkBehaviour
         {
             renderer.material = skinColor[newColorSkin];
         }
+    }
+
+    void HP()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            ReceiveDamage(10f);
+        }
+
+        if (currentTimeRecov <= 0) currentHP += Time.deltaTime * recovPerSecond;
+        else currentTimeRecov -= Time.deltaTime;
+
+        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+        hpPourcent = currentHP / maxHP;
+        
+    }
+
+    public void ReceiveDamage(float damage)
+    {
+        currentHP -= damage;
+        currentTimeRecov = timeBeforeRecov;
+        Debug.Log(currentHP);
     }
 
     [ServerRpc]
