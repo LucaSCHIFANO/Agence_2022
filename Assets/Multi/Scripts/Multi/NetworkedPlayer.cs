@@ -8,7 +8,7 @@ public class NetworkedPlayer : NetworkBehaviour/*, IPlayerLeft*/
     [SerializeField] private GameObject Camera;
     public static NetworkedPlayer Local { get; set; }
 
-    private CharacterInputHandler _inputHandler;
+    [SerializeField] private CharacterInputHandler _inputHandler;
 
     public override void Spawned()
     {
@@ -17,7 +17,6 @@ public class NetworkedPlayer : NetworkBehaviour/*, IPlayerLeft*/
             Local = this;
             Debug.Log("Spawned Local Player");
             Camera.SetActive(true);
-            _inputHandler = GetComponent<CharacterInputHandler>();
         }
         else
         {
@@ -33,23 +32,28 @@ public class NetworkedPlayer : NetworkBehaviour/*, IPlayerLeft*/
     
     public void Unpossess(Transform exitPoint)
     {
-        Camera.SetActive(true);
+        if (Object.HasInputAuthority)
+            Camera.SetActive(true);
         
         transform.position = exitPoint.position;
         transform.rotation = exitPoint.rotation;
         
-        GetComponent<Collider>().enabled = true;
-        _inputHandler.enabled = true;
+        GetComponent<CharacterController>().enabled = true;
+        // _inputHandler.enabled = true;
     }
 
     public void Possess(Transform seat)
     {
-        GetComponent<Collider>().enabled = false;
-        _inputHandler.enabled = false;
-        
-        transform.position = seat.position;
-        transform.rotation = seat.rotation;
-        
-        Camera.SetActive(false);
+        GetComponent<CharacterController>().enabled = false;
+        // _inputHandler.enabled = false;
+
+        if (Runner.IsServer)
+        {
+            transform.position = seat.position;
+            transform.rotation = seat.rotation;
+        }
+
+        if (Object.HasInputAuthority)
+            Camera.SetActive(false);
     }
 }

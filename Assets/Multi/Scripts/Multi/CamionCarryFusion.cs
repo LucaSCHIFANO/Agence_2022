@@ -31,6 +31,11 @@ public class CamionCarryFusion : SimulationBehaviour
                 for (int i = 0; i < networkPlayer.Count; i++)
                 {
                     NetworkedPlayer character = networkPlayer[i];
+                    if (character == null)
+                    {
+                        networkPlayer.RemoveAt(i);
+                        continue;
+                    }
                     // character.transform.Translate(velocity, _transform);
                     if (!character.GetComponent<CharacterMovementHandler>().IsMoving)
                         character.GetComponent<NetworkCharacterControllerPrototypeCustom>().Move(velocity);

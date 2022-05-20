@@ -39,7 +39,8 @@ public class CharacterInputHandler : MonoBehaviour
     {
         NetworkInputData inputData = new NetworkInputData();
 
-        inputData.rotationInput = viewInputVector.x;
+        inputData.rotationXInput = viewInputVector.x;
+        inputData.rotationYInput = viewInputVector.y;
 
         inputData.movementInput = moveInputVector;
 

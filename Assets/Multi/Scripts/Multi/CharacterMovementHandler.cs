@@ -40,13 +40,13 @@ public class CharacterMovementHandler : NetworkBehaviour
     {
         if (GetInput(out NetworkInputData networkInputData))
         {
-            _networkCharacterControllerPrototypeCustom.Rotate(networkInputData.rotationInput);
+            _networkCharacterControllerPrototypeCustom.Rotate(networkInputData.rotationXInput);
             
             Vector3 moveDirection = transform.forward * networkInputData.movementInput.y +
                                     transform.right * networkInputData.movementInput.x;
             moveDirection.Normalize();
 
-            IsMoving = moveDirection != Vector3.zero;
+            IsMoving = moveDirection != Vector3.zero || networkInputData.isJumpPressed;
             
             _networkCharacterControllerPrototypeCustom.Move(moveDirection);
             
