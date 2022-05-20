@@ -10,13 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc64d25eec6914a4e958bb3c7c21d427, type: 3}
-  m_Name: Enemy
+  m_Name: Kamikaze
   m_EditorClassIdentifier: 
-  health: 0
-  speed: 0
-  weapons:
-  - {fileID: 2480919359237374329, guid: f3d5a3340ae57144d93106b4fd9e9bb8, type: 3}
-  - {fileID: 6729040531094961833, guid: 67af557452b53504fbf250ea0a113bda, type: 3}
-  isKamikaze: 0
-  enemyPrefab: {fileID: 6506913731331482615, guid: 6a50765a32aeb034b8208425d3fbcec7,
+  health: 50
+  speed: 15
+  range: 1
+  weapons: []
+  enemyPrefab: {fileID: 6506913731331482615, guid: 1c50dbbd474775b4e90949f560c96fdb,
     type: 3}

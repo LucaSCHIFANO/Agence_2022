@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Enemies;
 using UnityEngine;
 
 public class EnemySpawnDebug : MonoBehaviour
@@ -11,7 +12,7 @@ public class EnemySpawnDebug : MonoBehaviour
     {
         if (enemy != null)
         {
-            GameObject enemyGo = Instantiate(enemy.enemyPrefab, Vector3.zero, Quaternion.identity);
+            GameObject enemyGo = Instantiate(enemy.enemyPrefab, transform.position, Quaternion.identity);
             enemyGo.GetComponent<Enemy>().Initialization(enemy);
         }
     }

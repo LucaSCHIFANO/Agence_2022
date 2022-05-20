@@ -7,35 +7,28 @@ using Grid = Pathfinding.Grid;
 
 public class Asker : MonoBehaviour
 {
-    // TEMP
-    private Grid gridTemp;
-    
-    private Node[] objectNodes;
-    
+    private Grid grid;
+
     private Vector3[] path;
     private int targetIndex;
+
+    private float speed;
     
-    public Transform target;
-
-    public float speed;
-
     private void Start()
-    {
-        //PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
-
-        gridTemp = FindObjectOfType<Grid>();
-        objectNodes = gridTemp.OptimizedNodesFromTransform(transform.position, transform);
+    { 
+        grid = FindObjectOfType<Grid>();
     }
 
-    private void Update()
+    public void AskNewPath(Transform _target, float _speed)
     {
-        if (Input.GetKeyDown(KeyCode.Return))
-            objectNodes = gridTemp.OptimizedNodesFromTransform(transform.position, transform);
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            PathRequestManager.RequestPath(transform.position, transform, target.position, OnPathFound);
-        }
+        speed = _speed;
+        PathRequestManager.RequestPath(transform.position, transform, _target.position, OnPathFound);
+    }
+    
+    public void AskNewPath(Vector3 _targetPosition, float _speed)
+    {
+        speed = _speed;
+        PathRequestManager.RequestPath(transform.position, transform, _targetPosition, OnPathFound);
     }
 
     public void OnPathFound(Vector3[] _newPath, bool _pathSuccess)
@@ -79,7 +72,7 @@ public class Asker : MonoBehaviour
         {
             for (int i = targetIndex; i < path.Length; i++)
             {
-                Gizmos.color = Color.green;
+                Gizmos.color = Color.black;
                 Gizmos.DrawCube(path[i], Vector3.one);
 
                 if (i == targetIndex)
@@ -90,15 +83,6 @@ public class Asker : MonoBehaviour
                 {
                     Gizmos.DrawLine(path[i-1], path[i]);
                 }
-            }
-        }
-
-        if (objectNodes != null)
-        {
-            for (int i = 0; i < objectNodes.Length; i++)
-            {
-                Gizmos.color = Color.cyan;
-                Gizmos.DrawCube(objectNodes[i].position, Vector3.one);
             }
         }
     }

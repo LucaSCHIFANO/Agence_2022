@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 6506913731331482612}
   - component: {fileID: 6506913731331482613}
   - component: {fileID: 6506913731331482614}
-  - component: {fileID: 3895929794604284497}
+  - component: {fileID: 3129758770250805087}
+  - component: {fileID: -1291067177727544176}
   m_Layer: 0
-  m_Name: E
+  m_Name: Sniper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,7 +101,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3895929794604284497
+--- !u!114 &3129758770250805087
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,11 +110,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 6506913731331482615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49465a29f14237c45a31285e67df5091, type: 3}
+  m_Script: {fileID: 11500000, guid: 20e52f4d8b2cc7e438dbf490450dbb24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponsPosition:
-  - {fileID: 7099923427349109451}
+--- !u!114 &-1291067177727544176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6506913731331482615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8236b3be3020d5547961f52f7618ec39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 40
+  weaponsPosition: []
   shootObject: {fileID: 0}
 --- !u!1 &6977535430288246130
 GameObject:

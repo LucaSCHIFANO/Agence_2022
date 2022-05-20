@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.Diagnostics;
 
 namespace Pathfinding
 {
@@ -9,7 +11,7 @@ namespace Pathfinding
     {
         private Grid grid;
         private PathRequestManager pathRequestManager;
-        
+
         private void Awake()
         {
             grid = GetComponent<Grid>();
@@ -23,6 +25,8 @@ namespace Pathfinding
         
         private IEnumerator FindPath(Vector3 _startPosition, Transform _startTransform, Vector3 _targetPosition)
         {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            
             Vector3[] wayPoints = new Vector3[0];
             bool pathSuccess = false;
             
@@ -31,9 +35,10 @@ namespace Pathfinding
             // front nodes in first, ect...
             
             Node startNode = grid.NodeFromPoint(_startPosition);
-            Node targetNode = grid.NodeFromPoint(_targetPosition);
+            //Node targetNode = grid.NodeFromPoint(_targetPosition);
+            Node targetNode = grid.WalkableNodeFromPoint(_targetPosition);
 
-            Node[] optiNodes = grid.OptimizedNodesFromTransform(targetNode.position, _startTransform);
+            /*Node[] optiNodes = grid.OptimizedNodesFromTransform(targetNode.position, _startTransform);
 
             bool isTargetNodeObstructed = false;
             
@@ -44,9 +49,9 @@ namespace Pathfinding
                     isTargetNodeObstructed = true;
                     break;
                 }
-            }
+            }*/
             
-            if (!startNode.isObstructed && !targetNode.isObstructed && !isTargetNodeObstructed)
+            if (!startNode.isObstructed && !targetNode.isObstructed/* && !isTargetNodeObstructed*/)
             {
                 Heap<Node> openSet = new Heap<Node>(grid.MaxSize);
                 HashSet<Node> closeSet = new HashSet<Node>();
@@ -67,10 +72,10 @@ namespace Pathfinding
 
                     foreach (Node neighbour in grid.GetNeighbourNodes(currentNode))
                     {
-                        if (neighbour.isObstructed || closeSet.Contains(neighbour))
+                        if (neighbour.isObstructed || !neighbour.isWalkable || closeSet.Contains(neighbour))
                             continue;
 
-                        optiNodes = grid.OptimizedNodesFromTransform(neighbour.position, _startTransform);
+                        /*optiNodes = grid.OptimizedNodesFromTransform(neighbour.position, _startTransform);
 
                         bool isNodeObstructed = false;
                         
@@ -84,7 +89,7 @@ namespace Pathfinding
                         }
                         
                         if (isNodeObstructed)
-                            continue;
+                            continue;*/
                         
                         int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
 
@@ -111,8 +116,10 @@ namespace Pathfinding
                 wayPoints = RetracePath(startNode, targetNode);
             }
 
-            pathRequestManager.FinishedProcessingPath(wayPoints, pathSuccess);
+            stopwatch.Stop();
+            print(stopwatch.ElapsedMilliseconds);
             
+            pathRequestManager.FinishedProcessingPath(wayPoints, pathSuccess);
         }
 
         private Vector3[] RetracePath(Node _startNode, Node _targetNode)
@@ -137,11 +144,11 @@ namespace Pathfinding
         {
             List<Vector3> waypoints = new List<Vector3>();
             
-            Vector2 oldDirection = Vector2.zero;
+            Vector3 oldDirection = Vector3.zero;
 
             for (int i = 1; i < _path.Count; i++)
             {
-                Vector2 newDirection = new Vector2(_path[i - 1].gridX - _path[i].gridX, _path[i - 1].gridY - _path[i].gridY);
+                Vector3 newDirection = new Vector3(_path[i - 1].gridX - _path[i].gridX, _path[i - 1].gridY - _path[i].gridY, _path[i - 1].gridZ - _path[i].gridZ);
 
                 if (newDirection != oldDirection)
                 {
@@ -158,15 +165,40 @@ namespace Pathfinding
         {
             int distX = Mathf.Abs(_a.gridX - _b.gridX);
             int distY = Mathf.Abs(_a.gridY - _b.gridY);
+            int distZ = Mathf.Abs(_a.gridZ - _b.gridZ);
 
-            if (distX > distY)
+            if (distZ > distX && distZ > distY)
+                return distZ / 2 + distY + distX;
+            else if (distY > distX && distY > distZ)
+                return distY / 2 + distZ + distX;
+            else if (distX > distY && distY > distZ)
+                return distX / 2 + distZ + distY;
+            
+            
+            return distY + distZ + distX;
+
+            /*if (distX > distZ)
             {
-                return 14 * distY + 10 * (distX - distY);
+                if (distY > distX)
+                {
+                    return 14 * distZ + 14 * distX + 10 * (distY - distZ - distX);
+                }
+                else
+                {
+                    return 14 * distZ + 14 * distY + 10 * (distX - distY - distZ);
+                }
             }
             else
             {
-                return 14 * distX + 10 * (distY - distX);
-            }
+                if (distY > distZ)
+                {
+                    return 14 * distX + 14 * distZ + 10 * (distY - distZ - distX);
+                }
+                else
+                {
+                    return 14 * distX + 14 * distY + 10 * (distZ - distY - distZ);
+                }
+            }*/
         }
     }
 }
