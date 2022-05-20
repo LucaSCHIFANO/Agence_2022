@@ -912,7 +912,7 @@ public class TruckPhysics : NetworkBehaviour
 
 
             if (gripCurrForce >= maxGripForce && (rot <= -0.9f || rot >= 0.9f) && !isReversed) { drifting = true; vals._IsDrift = true; }
-            Debug.Log(rot);
+            //Debug.Log(rot);
 
             if (currWheelDelta > 30) currWheelDelta = 30;
             else if (currWheelDelta < -30) currWheelDelta = -30;
