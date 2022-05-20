@@ -1,23 +1,14 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
-using Grid = Pathfinding.Grid;
+using Unity.Netcode;
 
 public class Asker : MonoBehaviour
 {
-    private Grid grid;
-
     private Vector3[] path;
     private int targetIndex;
 
     private float speed;
-    
-    private void Start()
-    { 
-        grid = FindObjectOfType<Grid>();
-    }
 
     public void AskNewPath(Transform _target, float _speed)
     {

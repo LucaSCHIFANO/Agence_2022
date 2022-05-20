@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Enemies
@@ -22,9 +23,7 @@ namespace Enemies
         protected WeaponBase[] weapons; // WeaponSO type
 
         [SerializeField] protected Transform[] weaponsPosition;
-
-        [SerializeField] protected Transform shootObject; // DEBUG
-
+        
         public virtual void Initialization(EnemySO _enemySo)
         {
             asker = GetComponent<Asker>();
@@ -35,7 +34,6 @@ namespace Enemies
 
             if (_enemySo.weapons.Length != 0)
             {
-                // TEMP
                 GameObject[] weaponsObject;
 
                 if (_enemySo.weapons.Length >= weaponsPosition.Length)
@@ -57,21 +55,22 @@ namespace Enemies
                     }
                 }
 
-                if (weaponsObject != null)
+                weapons = new WeaponBase[weaponsObject.Length];
+
+                for (int i = 0; i < weaponsObject.Length; i++)
                 {
-                    weapons = new WeaponBase[weaponsObject.Length];
-
-                    for (int i = 0; i < weaponsObject.Length; i++)
-                    {
-                        GameObject nWeapon = Instantiate(weaponsObject[i], weaponsPosition[i].position,
-                            weaponsPosition[i].rotation);
-                        nWeapon.transform.parent = weaponsPosition[i];
-                        weapons[i] = nWeapon.GetComponent<WeaponBase>();
-                    }
-                }
-                // TEMP
+                    GameObject nWeapon = Instantiate(weaponsObject[i], weaponsPosition[i]);
+                    weapons[i] = nWeapon.GetComponent<WeaponBase>();
+                } 
             }
+        }
 
+        protected virtual void FixedUpdate()
+        {
+            foreach (WeaponBase weapon in weapons)
+            {
+                weapon.transform.LookAt(target.transform);
+            }
         }
 
         public virtual void TakeDamage(int _damages)

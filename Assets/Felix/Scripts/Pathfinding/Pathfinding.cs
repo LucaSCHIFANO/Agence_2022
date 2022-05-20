@@ -30,12 +30,7 @@ namespace Pathfinding
             Vector3[] wayPoints = new Vector3[0];
             bool pathSuccess = false;
             
-            // TO OPTIMIZE
-            // the order we test the nodes
-            // front nodes in first, ect...
-            
             Node startNode = grid.NodeFromPoint(_startPosition);
-            //Node targetNode = grid.NodeFromPoint(_targetPosition);
             Node targetNode = grid.WalkableNodeFromPoint(_targetPosition);
 
             /*Node[] optiNodes = grid.OptimizedNodesFromTransform(targetNode.position, _startTransform);

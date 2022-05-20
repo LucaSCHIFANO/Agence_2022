@@ -19,8 +19,10 @@ namespace Enemies
             targetLastPosition = target.transform.position;
         }
 
-        private void FixedUpdate()
+        protected override void FixedUpdate()
         {
+            base.FixedUpdate();
+            
             if (Physics.CheckBox(transform.position, transform.localScale + Vector3.one * range, transform.rotation,
                 playersLayerMask))
             {

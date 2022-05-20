@@ -18,36 +18,35 @@ namespace Enemies
             targetLastPosition = target.transform.position;
         }
         
-        private void FixedUpdate()
+        protected override void FixedUpdate()
         {
+            base.FixedUpdate();
+            
             float distance = Vector3.Distance(transform.position, target.transform.position);
             
             if (distance <= range)
             {
-                RaycastHit hit;
-
-                if (Physics.Raycast(transform.position, (transform.position - target.transform.position).normalized, out hit))
+                foreach (WeaponBase weapon in weapons)
                 {
-                    if (hit.collider.CompareTag("Player"))
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(weapon.transform.position, weapon.transform.forward, out hit))
                     {
-                        Shoot(hit);
+                        if (hit.collider.CompareTag("Player"))
+                        {
+                            weapon.Shoot();
+                        }
                     }
                 }
             }
 
-            if (distance <= range - 5 || distance > range)
+            if (Vector3.Distance(targetLastPosition, target.transform.position) > 5 && (distance <= range - 5 || distance > range))
             {
                 Vector3 nPos = (transform.position - target.transform.position).normalized * (range - 5) + target.transform.position;
                 
                 asker.AskNewPath(nPos, speed);
                 targetLastPosition = target.transform.position;
             }
-        }
-
-        private void Shoot(RaycastHit _hit)
-        {
-            // weapon shoot
-            Debug.Log("Sniper shoot", _hit.collider.gameObject);
         }
     }
 }
