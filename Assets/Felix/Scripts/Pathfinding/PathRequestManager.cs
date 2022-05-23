@@ -42,7 +42,8 @@ namespace Pathfinding
 
         public void FinishedProcessingPath(Vector3[] _path, bool _success)
         {
-            currentPathRequest.callback(_path, _success);
+            if (currentPathRequest.callback != null && currentPathRequest.startTransform != null)
+                currentPathRequest.callback(_path, _success);
             isProcessingPath = false;
             TryProcessNext();
         }
