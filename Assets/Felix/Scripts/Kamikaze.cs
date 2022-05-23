@@ -21,7 +21,7 @@ namespace Enemies
 
         protected override void FixedUpdate()
         {
-            base.FixedUpdate();
+            //base.FixedUpdate(); // No weapons so don't need to call it
             
             if (Physics.CheckBox(transform.position, transform.localScale + Vector3.one * range, transform.rotation,
                 playersLayerMask))

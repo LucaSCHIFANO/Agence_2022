@@ -43,6 +43,12 @@ public class Generator : NetworkBehaviour
             myLines[i].transform.position = upgradePoint.transform.position;
             
             float distTop = Vector3.Distance(upgradePoint.transform.position, listSommets[i].position);
+            if (distTop < 10)
+            {
+                myLines[i].gameObject.SetActive(false);
+                return;
+            }
+            
             var vectorTop = listSommets[i].position - upgradePoint.transform.position;
             
             int numberOfPoint = (int) (distTop / lineThinkness);
