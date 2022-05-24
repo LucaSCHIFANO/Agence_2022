@@ -11,7 +11,10 @@ public class WeaponUltima : WeaponBase
 
     [SerializeField] public float spread;
     [SerializeField] public int numberOfShot;
+    [SerializeField] public float damage;
+    
     [SerializeField] public GameObject particleFire;
+    
     
         public enum weapon
     {
@@ -53,6 +56,7 @@ public class WeaponUltima : WeaponBase
         fireType = SObject.fType;
         spread = SObject.spread;
         numberOfShot = SObject.numberOfShots;
+        damage = SObject.damage;
 
         _isOverHeat = false;
         _isCoolDown = false;
@@ -81,6 +85,8 @@ public class WeaponUltima : WeaponBase
             {
                 CreateBulletEffectServerRpc(hit.point);
                 Instantiate(bulletEffect, hit.point, transform.rotation);
+                
+                if (hit.collider.gameObject.GetComponent<HP>()) hit.collider.gameObject.GetComponent<HP>().reduceHP(damage);
             }
             
         }

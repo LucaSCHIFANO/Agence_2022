@@ -22,8 +22,29 @@ public class Generator : NetworkBehaviour
     [SerializeField] private float maximumDist = 850; // ~840 au plus pret du sommet
     [SerializeField] private float overclokePourcent; // ~840 au plus pret du sommet
     [SerializeField] private float overclokePourcentOther; // ~840 au plus pret du sommet
-    
-    
+
+    public List<float> pourcentageList = new List<float>();
+
+
+    #region Singleton
+
+    private static Generator instance;
+
+    public static Generator Instance
+    {
+        get => instance;
+        set => instance = value;
+    }
+
+    #endregion
+
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+
+    }
 
     private void Start()
     {
@@ -66,6 +87,7 @@ public class Generator : NetworkBehaviour
             else if(distTop < colorDistance[1]) myLines[i].color = new Color(0.9f, 0.5f, 0.04f);
             else myLines[i].color = Color.red;
 
+            pourcentageList[i] = ((maximumDist - distTop) / maximumDist)*100;
             var pourcent = (((maximumDist - distTop) / maximumDist)*100).ToString("F2");  // max distance 800 min distance 0
             switch (i)
             {

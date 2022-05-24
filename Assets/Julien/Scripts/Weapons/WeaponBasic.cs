@@ -26,7 +26,6 @@ public class WeaponBasic : WeaponBase
 
         if (isShooting)
         {
-            Debug.Log("debug log log");
             Shoot();
         }
     }
