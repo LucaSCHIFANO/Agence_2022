@@ -35,6 +35,9 @@ public abstract class WeaponBase : NetworkBehaviour
 
     [SerializeField] protected GameObject bulletEffect;
 
+    [SerializeField] protected ParticleSystem overHParticle;
+    [SerializeField] protected float OHParticleOverTime;
+
 
     #endregion
     
@@ -88,6 +91,14 @@ public abstract class WeaponBase : NetworkBehaviour
         _isOverHeat = true;
     }
 
+    public void DisableWeapon()
+    {
+        _isOverHeat = true;
+        _coolDownPerSecond = 0;
+        overHeatPourcent = 100f;
+        _isCoolDown = false;
+    }
+
     private void Update()
     {
         if (_isCoolDown || _isOverHeat) overHeatPourcent -= _coolDownPerSecond * Time.deltaTime;
@@ -95,7 +106,15 @@ public abstract class WeaponBase : NetworkBehaviour
 
         if (_timeCoolDown <= 0) _isCoolDown = true;
         else _isCoolDown = false;
+        
         if (overHeatPourcent <= 0) _isOverHeat = false;
+
+        var em = overHParticle.emission;
+        em.enabled = true;
+        
+        if(_isOverHeat)em.rateOverTime = OHParticleOverTime;
+        else em.rateOverTime = 0f;
+    
 
         overHeatPourcent = Mathf.Clamp(overHeatPourcent, 0, 100);
         
