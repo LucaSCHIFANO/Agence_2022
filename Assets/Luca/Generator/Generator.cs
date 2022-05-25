@@ -54,6 +54,7 @@ public class Generator : NetworkBehaviour
         }
         
         onClickTriangle(false);
+        gameObject.SetActive(false);
     }
 
     public void onClickTriangle(bool boul)
