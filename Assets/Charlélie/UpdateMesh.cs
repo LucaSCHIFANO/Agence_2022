@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+[ExecuteAlways]
 public class UpdateMesh : MonoBehaviour
 {
     public float noiseScaleX = 1f;
@@ -83,6 +84,7 @@ public class UpdateMesh : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        return;
         if (!calcul) return;
         var mesh = GetComponent<MeshFilter>().mesh;
         
