@@ -110,7 +110,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2927991719342637025
 Transform:
   m_ObjectHideFlags: 0
@@ -306,7 +306,9 @@ GameObject:
   - component: {fileID: 393288030046556132}
   - component: {fileID: 69341504895247121}
   - component: {fileID: 3875887000089824931}
-  - component: {fileID: 1422664580}
+  - component: {fileID: 962213598}
+  - component: {fileID: 962213599}
+  - component: {fileID: 962213608}
   m_Layer: 0
   m_Name: CAR
   m_TagString: Untagged
@@ -421,7 +423,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2216819461730630316}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da95ca421aeb5fe4c80b2ea21dd348e1, type: 3}
   m_Name: 
@@ -632,75 +634,57 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.0374646, y: 1, z: 3.1786942}
   m_Center: {x: -0.011971235, y: 0, z: -0.19343537}
---- !u!114 &1422664580
+--- !u!54 &962213598
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2216819461730630316}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &962213599
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2216819461730630316}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba1a7f0b8dfb4204185a66cdcd4512ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   constantDamageType:
-  - damageName: 
-    damagePercentagePerSecond: 0
+  - damageName: test
+    damagePercentagePerSecond: 10
     isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
-    currTime: 0
-  - damageName: 
-    damagePercentagePerSecond: 0
-    isPersistant: 0
-    duration: 0
+    duration: 5
     currTime: 0
   currentDamagesApplied: []
+  maxLife: 100
+  currLife: 100
+--- !u!114 &962213608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2216819461730630316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a3381941f1f2441b413438f710ac6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxFuel: 100
+  currFuel: 0
 --- !u!1 &2216819461954796469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1891,7 +1875,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7790341083850612970}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 0}
 --- !u!23 &694408832363300531
 MeshRenderer:
   m_ObjectHideFlags: 0

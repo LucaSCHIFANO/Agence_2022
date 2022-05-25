@@ -18,7 +18,7 @@ public struct DebugValues
 }
 
 
-public class TruckPhysics : NetworkBehaviour
+public class TruckPhysics : TruckBase
 {
 
     [Header("Front wheels")]
@@ -30,6 +30,7 @@ public class TruckPhysics : NetworkBehaviour
 
     [Space(10)]
     [Header("Physics variables")]
+    public bool canDrift;
     public float cdrag = 0.5f;
     public float crr = 0.5f;
     public float cbreak = 5;
@@ -103,9 +104,11 @@ public class TruckPhysics : NetworkBehaviour
 
     void Start()
     {
-        //if (!IsOwner) return;
 
-        Debug.Log("Test get rewired");
+    }
+
+    public override void Init()
+    {
         player = Rewired.ReInput.players.GetPlayer(0);
     }
 
@@ -911,7 +914,7 @@ public class TruckPhysics : NetworkBehaviour
             currWheelDelta += rot;
 
 
-            if (gripCurrForce >= maxGripForce && (rot <= -0.9f || rot >= 0.9f) && !isReversed) { drifting = true; vals._IsDrift = true; }
+            if (gripCurrForce >= maxGripForce && (rot <= -0.9f || rot >= 0.9f) && !isReversed && canDrift) { drifting = true; vals._IsDrift = true; }
             //Debug.Log(rot);
 
             if (currWheelDelta > 30) currWheelDelta = 30;
