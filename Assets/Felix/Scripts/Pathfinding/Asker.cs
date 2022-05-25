@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Pathfinding;
 using UnityEngine;
@@ -7,19 +8,23 @@ public class Asker : MonoBehaviour
 {
     private Path path;
 
+    private Action<Vector3[]> callback;
+
     private float speed;
     [SerializeField] private float turnDistance;
     [SerializeField] private float turnSpeed;
 
-    public void AskNewPath(Transform _target, float _speed)
+    public void AskNewPath(Transform _target, float _speed, Action<Vector3[]> _callback)
     {
         speed = _speed;
+        callback = _callback;
         PathRequestManager.RequestPath(transform.position, transform, _target.position, OnPathFound);
     }
     
-    public void AskNewPath(Vector3 _targetPosition, float _speed)
+    public void AskNewPath(Vector3 _targetPosition, float _speed, Action<Vector3[]> _callback)
     {
         speed = _speed;
+        callback = _callback;
         PathRequestManager.RequestPath(transform.position, transform, _targetPosition, OnPathFound);
     }
 
@@ -30,6 +35,8 @@ public class Asker : MonoBehaviour
             path = new Path(_newPath, transform.position, turnDistance);
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
+
+            callback?.Invoke(_newPath);
         }
     }
 

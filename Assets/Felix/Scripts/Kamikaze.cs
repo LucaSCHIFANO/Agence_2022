@@ -15,7 +15,7 @@ namespace Enemies
 
             target = GameObject.FindWithTag("Player");
 
-            asker.AskNewPath(target.transform, speed);
+            asker.AskNewPath(target.transform, speed, null);
             targetLastPosition = target.transform.position;
         }
 
@@ -31,7 +31,7 @@ namespace Enemies
 
             if (Vector3.Distance(targetLastPosition, target.transform.position) >= range)
             {
-                asker.AskNewPath(target.transform, speed);
+                asker.AskNewPath(target.transform, speed, null);
                 targetLastPosition = target.transform.position;
             }
         }
