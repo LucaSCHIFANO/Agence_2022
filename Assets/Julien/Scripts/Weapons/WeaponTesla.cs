@@ -32,7 +32,7 @@ public class WeaponTesla : WeaponBase
     protected override void ShootBulletClientRpc()
     {
         if(IsOwner) return;
-        GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation);
+        Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation);
         
     }
 }

@@ -19,6 +19,8 @@ public class TestControlWeapon : NetworkBehaviour
 
     [SerializeField] private float clampRotation;
     [SerializeField] private Vector2 weaponSensibility;
+
+    private bool mustRelease;
     
 
     private void Update()
@@ -91,6 +93,20 @@ public class TestControlWeapon : NetworkBehaviour
             }
         }
     }
+
+
+    public void actuGauge()
+    {
+        if (!isPossessed.Value) return;
+        if(GetComponent<WeaponBase>().possessor == null) return;
+        
+        ChangeOwnerServerRpc();
+        camera.SetActive(true);
+        CanvasInGame.Instance.showOverheat(false);
+        CanvasInGame.Instance.showOverheat(true);
+        
+    }
+    
 
     [ServerRpc(RequireOwnership = false)]
     void ChangeOwnerServerRpc(ServerRpcParams rpcParams = default)

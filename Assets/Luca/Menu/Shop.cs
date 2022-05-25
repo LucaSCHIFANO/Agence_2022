@@ -9,7 +9,7 @@ public class Shop : NetworkBehaviour
     private PlayerController _playerController;
     private NetworkVariable<bool> isPossessed = new NetworkVariable<bool>(false);
     [SerializeField] protected TruckArea truckArea;
-    
+
 
     #region Singleton
 
