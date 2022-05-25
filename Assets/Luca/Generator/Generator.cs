@@ -14,7 +14,6 @@ public class Generator : NetworkBehaviour
     [SerializeField] private List<Transform> listSommets = new List<Transform>();
     [SerializeField] private List<UILineRenderer> myLines = new List<UILineRenderer>();
     [SerializeField] private float lineThinkness;
-    [SerializeField] private float numberOfPoint;
     [SerializeField] private List<float> colorDistance = new List<float>(); // green then orange then red
     [SerializeField] private List<TextMeshProUGUI> textList = new List<TextMeshProUGUI>(); // att def spd
     [SerializeField] private List<GameObject> textButtonOverCloke = new List<GameObject>(); // att def spd
@@ -85,12 +84,10 @@ public class Generator : NetworkBehaviour
             myLines[i].LineThickness = lineThinkness;
 
             var pointlist = new List<Vector2>();
-            for (int j = 1; j <= numberOfPoint; j++)
-            {
-                pointlist.Add(Vector2.zero);
-            }
+            
+            pointlist.Add(Vector2.zero);
 
-            pointlist[pointlist.Count - 1] = new Vector2(vectorTop.x, vectorTop.y);
+            pointlist.Add(-listSommets[i].transform.InverseTransformPoint(upgradePoint.transform.position));
 
             myLines[i].Points = pointlist.ToArray();
             
