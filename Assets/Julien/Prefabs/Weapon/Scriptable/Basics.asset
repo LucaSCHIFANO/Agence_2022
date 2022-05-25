@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 5
   bulletToOverheat: 50
-  coolDownPerSecond: 2
+  coolDownPerSecond: 50
   timeBeforeCoolDown: 1
   mainColor: {r: 1, g: 0.6666667, b: 0.9960785, a: 1}
   overHeatColor: {r: 0.4666667, g: 0.36078432, b: 0.47058827, a: 1}
@@ -22,4 +22,4 @@ MonoBehaviour:
   fType: 0
   spread: 1
   numberOfShots: 1
-  ParticleFire: {fileID: 0}
+  damage: 10

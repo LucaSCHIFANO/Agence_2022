@@ -22,11 +22,37 @@ public class Generator : NetworkBehaviour
     [SerializeField] private float maximumDist = 850; // ~840 au plus pret du sommet
     [SerializeField] private float overclokePourcent; // ~840 au plus pret du sommet
     [SerializeField] private float overclokePourcentOther; // ~840 au plus pret du sommet
-    
-    
+
+    [HideInInspector] public List<float> pourcentageList = new List<float>(); // 0 atk 1 def 2 spd
+
+
+    #region Singleton
+
+    private static Generator instance;
+
+    public static Generator Instance
+    {
+        get => instance;
+        set => instance = value;
+    }
+
+    #endregion
+
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+
+    }
 
     private void Start()
     {
+        for (int i = 0; i < 3; i++)
+        {
+            pourcentageList.Add(0);    
+        }
+        
         onClickTriangle(false);
     }
 
@@ -43,6 +69,12 @@ public class Generator : NetworkBehaviour
             myLines[i].transform.position = upgradePoint.transform.position;
             
             float distTop = Vector3.Distance(upgradePoint.transform.position, listSommets[i].position);
+            if (distTop < 10)
+            {
+                myLines[i].gameObject.SetActive(false);
+                return;
+            }
+            
             var vectorTop = listSommets[i].position - upgradePoint.transform.position;
             
             int numberOfPoint = (int) (distTop / lineThinkness);
@@ -59,17 +91,20 @@ public class Generator : NetworkBehaviour
             if(distTop < colorDistance[0]) myLines[i].color = Color.green;
             else if(distTop < colorDistance[1]) myLines[i].color = new Color(0.9f, 0.5f, 0.04f);
             else myLines[i].color = Color.red;
-
+            
             var pourcent = (((maximumDist - distTop) / maximumDist)*100).ToString("F2");  // max distance 800 min distance 0
             switch (i)
             {
                 case 0:
                     textList[0].text = "Att : " + pourcent + "%";
+                    pourcentageList[0] = ((maximumDist - distTop) / maximumDist)*100;
                     break;
                 case 1:
                     textList[1].text = "Def : " + pourcent + "%";
+                    pourcentageList[1] = ((maximumDist - distTop) / maximumDist)*100;
                     break;
                 case 2:textList[2].text = "Spd : " + pourcent + "%";
+                    pourcentageList[2] = ((maximumDist - distTop) / maximumDist)*100;
                     break;
             }
 
