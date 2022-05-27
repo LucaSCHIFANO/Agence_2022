@@ -155,6 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20e52f4d8b2cc7e438dbf490450dbb24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turnDistance: 0
+  turnSpeed: 0
 --- !u!136 &93444375
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -265,6 +267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20e52f4d8b2cc7e438dbf490450dbb24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turnDistance: 0
+  turnSpeed: 0
 --- !u!23 &243054565
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -692,7 +696,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 785533219}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -52.13, y: 2.1, z: 3.84}
+  m_LocalPosition: {x: -52.5, y: 2.1, z: -37.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -828,6 +832,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20e52f4d8b2cc7e438dbf490450dbb24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turnDistance: 0
+  turnSpeed: 0
 --- !u!136 &840874314
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1584,6 +1590,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20e52f4d8b2cc7e438dbf490450dbb24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turnDistance: 0
+  turnSpeed: 0
 --- !u!136 &1632168415
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2065,6 +2073,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20e52f4d8b2cc7e438dbf490450dbb24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turnDistance: 0
+  turnSpeed: 0
 --- !u!1 &2009565575
 GameObject:
   m_ObjectHideFlags: 0
@@ -2094,7 +2104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3323332ef870ea746b8c0604d8ef2509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 11400000, guid: 0eb7a22ef67bb764483a503d443ef97e, type: 2}
+  enemy: {fileID: 11400000, guid: 6905c950451cdfa4486769d1e84dc8f7, type: 2}
 --- !u!4 &2009565577
 Transform:
   m_ObjectHideFlags: 0
