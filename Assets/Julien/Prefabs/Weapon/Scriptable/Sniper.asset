@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fe74749fed9de84b847ce6488762201, type: 3}
   m_Name: Sniper
   m_EditorClassIdentifier: 
+  turretName: Sniper
   fireRate: 1
   bulletToOverheat: 1
   coolDownPerSecond: 70
@@ -22,4 +23,4 @@ MonoBehaviour:
   fType: 0
   spread: 0
   numberOfShots: 0
-  ParticleFire: {fileID: 0}
+  damage: 10

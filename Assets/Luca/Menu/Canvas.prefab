@@ -1108,7 +1108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7701819045584245869
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1152,11 +1152,12 @@ MonoBehaviour:
   - {fileID: 4687450860344326654}
   - {fileID: 2899759323969497414}
   - {fileID: 7388457507155048136}
+  - {fileID: 0}
   myLines:
   - {fileID: 4141162677475741089}
   - {fileID: 6467725269364860953}
   - {fileID: 2378012991016526644}
-  lineThinkness: 25
+  lineThinkness: 6
   colorDistance:
   - 400
   - 600
@@ -1168,10 +1169,9 @@ MonoBehaviour:
   - {fileID: 1780717131953843799}
   - {fileID: 4304235971524839374}
   - {fileID: 8999252992053039502}
-  minimumDist: 0
-  maximumDist: 850
-  overclokePourcent: 0
+  overclokePourcent: 150
   overclokePourcentOther: 0
+  pourcentageList: []
 --- !u!1 &1924243472854003020
 GameObject:
   m_ObjectHideFlags: 0
@@ -2485,7 +2485,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!114 &8202021422794752752
 MonoBehaviour:

@@ -115,8 +115,8 @@ public class TruckPhysics : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Space)) drifting = !drifting;
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            if (accelForce == sand) accelForce = road;
-            else if (accelForce == road) accelForce = sand;
+            if (accelForce == sand) accelForce = road * (Generator.Instance.pourcentageList[2] / 100);
+            else if (accelForce == road) accelForce = sand * (Generator.Instance.pourcentageList[2] / 100);;
         }
     }
 
@@ -838,8 +838,8 @@ public class TruckPhysics : NetworkBehaviour
             }
             else 
             {
-                if (acceleration < maxAccel && player.GetAxis("Throttle") > 0) acceleration += Time.deltaTime * accelForce;
-                else if (acceleration > 0 && player.GetAxis("Throttle") == 0) acceleration -= Time.deltaTime * accelForce;
+                if (acceleration < (maxAccel * (Generator.Instance.pourcentageList[2] / 100)) && player.GetAxis("Throttle") > 0) acceleration += Time.deltaTime * (accelForce * (Generator.Instance.pourcentageList[2] / 100));
+                else if (acceleration > 0 && player.GetAxis("Throttle") == 0) acceleration -= Time.deltaTime * (accelForce * (Generator.Instance.pourcentageList[2] / 100));
             }
             
             vals._Acceleration = acceleration;
