@@ -6,6 +6,8 @@ namespace Enemies
 {
     public class Sniper : Enemy
     {
+        [SerializeField] private LayerMask obstaclesLayerMask;
+        
         public override void Initialization(EnemySO _enemySo)
         {
             base.Initialization(_enemySo);
@@ -53,7 +55,7 @@ namespace Enemies
             
             Vector3 direction = target.transform.position - _points[^1];
 
-            if (Physics.Raycast(_points[^1], direction.normalized, out RaycastHit hit))
+            if (Physics.Raycast(_points[^1], direction.normalized, out RaycastHit hit, range, obstaclesLayerMask))
             {
                 if (hit.collider.CompareTag("Player"))
                 {
@@ -74,8 +76,8 @@ namespace Enemies
 
                 Vector3 nVector = new Vector3(x2, 0, z2) * range;
                 nVector.y = target.transform.position.y;
-                
-                if (Physics.Raycast(nVector, (target.transform.position - nVector).normalized, out RaycastHit hit2))
+
+                if (Physics.Raycast(nVector, (target.transform.position - nVector).normalized, out RaycastHit hit2, range, obstaclesLayerMask))
                 {
                     if (hit2.collider.CompareTag("Player"))
                     {

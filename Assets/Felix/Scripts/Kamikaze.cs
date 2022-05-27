@@ -29,7 +29,7 @@ namespace Enemies
                 Explode();
             }
 
-            if (Vector3.Distance(targetLastPosition, target.transform.position) >= range)
+            if (Vector3.Distance(targetLastPosition, target.transform.position) >= range * speed / 2)
             {
                 asker.AskNewPath(target.transform, speed, null);
                 targetLastPosition = target.transform.position;
