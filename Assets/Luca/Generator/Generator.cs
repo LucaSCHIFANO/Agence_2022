@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
+
 
 public class Generator : NetworkBehaviour
 {
-    [Header("Triangle Panel")]
+    [SerializeField] protected OnClickTriangle triangleButton;
+
     [SerializeField] protected GameObject upgradePoint;
     [SerializeField] private List<Transform> listSommets = new List<Transform>();
     [SerializeField] private List<UILineRenderer> myLines = new List<UILineRenderer>();
@@ -18,8 +20,7 @@ public class Generator : NetworkBehaviour
     [SerializeField] private List<TextMeshProUGUI> textList = new List<TextMeshProUGUI>(); // att def spd
     [SerializeField] private List<GameObject> textButtonOverCloke = new List<GameObject>(); // att def spd
 
-    [Header("Pourcentage")]
-    private float minimumDist = 0; // 0 au plus pret du sommet
+    [Header("Pourcentage")] private float minimumDist = 0; // 0 au plus pret du sommet
     private float maximumDist = 850; // ~840 au plus loin du sommet
     [SerializeField] private float overclokePourcent; // pourcent en overcloke
     [SerializeField] private float overclokePourcentOther; // pourcent quand autre en overcloke
@@ -53,17 +54,23 @@ public class Generator : NetworkBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            pourcentageList.Add(0);    
+            pourcentageList.Add(0);
         }
-        
+
         onClickTriangle(false);
         gameObject.SetActive(false);
     }
 
+
+    private void Update()
+    {
+        if(triangleButton.canMove) onClickTriangle(true);
+    }
+
     public void onClickTriangle(bool boul)
     {
-        if(boul) upgradePoint.transform.position = Input.mousePosition;
-        
+        if (boul) upgradePoint.transform.position = Input.mousePosition;
+
         for (int i = 0; i < myLines.Count; i++)
         {
             myLines[i].gameObject.SetActive(true);
@@ -72,7 +79,7 @@ public class Generator : NetworkBehaviour
         for (int i = 0; i < listSommets.Count; i++)
         {
             myLines[i].transform.position = upgradePoint.transform.position;
-            
+
             float distTop = Vector3.Distance(upgradePoint.transform.position, listSommets[i].position);
             Vector3 vectorTop = listSommets[i].position - upgradePoint.transform.position;
 
@@ -80,46 +87,56 @@ public class Generator : NetworkBehaviour
             {
                 myLines[i].gameObject.SetActive(false);
             }
-            
+
             myLines[i].LineThickness = lineThinkness;
 
             var pointlist = new List<Vector2>();
-            
+
             pointlist.Add(Vector2.zero);
 
             pointlist.Add(-listSommets[i].transform.InverseTransformPoint(upgradePoint.transform.position));
 
             myLines[i].Points = pointlist.ToArray();
+
+            Debug.Log((distTop / maximumDist) * 100 );
             
-            if(distTop < colorDistance[0]) myLines[i].color = Color.green;
-            else if(distTop < colorDistance[1]) myLines[i].color = new Color(0.9f, 0.5f, 0.04f);
-            else myLines[i].color = Color.red;
+            if ((distTop / maximumDist) * 100 < colorDistance[0]) 
+                myLines[i].color = Color.Lerp(Color.green, new Color(0.7f, 0.49f, 0.11f), distTop / ((maximumDist * colorDistance[0]) * 0.01f ));
             
-            var pourcent = (((maximumDist - distTop) / maximumDist)*100).ToString("F2");  // max distance 800 min distance 0
+            else if ((distTop / maximumDist) * 100 < colorDistance[1])
+            
+                myLines[i].color = Color.Lerp(new Color(0.7f, 0.49f, 0.11f), new Color(0.36f, 0.02f, 0f),
+                    (distTop - ((maximumDist * colorDistance[0]) * 0.01f )) / (((maximumDist * colorDistance[1]) * 0.01f) - ((maximumDist * colorDistance[0]) * 0.01f )) );
+            
+            else myLines[i].color = new Color(0.36f, 0.02f, 0f);
+
+            
+            
+            var pourcent =
+                (((maximumDist - distTop) / maximumDist) * 100).ToString("F2"); // max distance 800 min distance 0
             switch (i)
             {
                 case 0:
                     textList[0].text = "Att : " + pourcent + "%";
-                    pourcentageList[0] = ((maximumDist - distTop) / maximumDist)*100;
+                    pourcentageList[0] = ((maximumDist - distTop) / maximumDist) * 100;
                     break;
                 case 1:
                     textList[1].text = "Def : " + pourcent + "%";
-                    pourcentageList[1] = ((maximumDist - distTop) / maximumDist)*100;
+                    pourcentageList[1] = ((maximumDist - distTop) / maximumDist) * 100;
                     break;
-                case 2:textList[2].text = "Spd : " + pourcent + "%";
-                    pourcentageList[2] = ((maximumDist - distTop) / maximumDist)*100;
+                case 2:
+                    textList[2].text = "Spd : " + pourcent + "%";
+                    pourcentageList[2] = ((maximumDist - distTop) / maximumDist) * 100;
                     break;
             }
-
-            
-            Debug.Log(distTop);
         }
     }
+
 
     public void overcloking(int position)
     {
         upgradePoint.transform.position = textButtonOverCloke[position].transform.position;
-        
+
         for (int i = 0; i < myLines.Count; i++)
         {
             myLines[i].gameObject.SetActive(false);
@@ -139,11 +156,10 @@ public class Generator : NetworkBehaviour
                 case 1:
                     textList[1].text = "Def : " + pourcentProv + "%";
                     break;
-                case 2:textList[2].text = "Spd : " + pourcentProv + "%";
+                case 2:
+                    textList[2].text = "Spd : " + pourcentProv + "%";
                     break;
             }
         }
     }
-    
-    
 }

@@ -1486,6 +1486,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7231231060109375451, guid: 7155ffc9e90adff42be892838432656c,
         type: 3}
+      propertyPath: triangleButton
+      value: 
+      objectReference: {fileID: 640475820}
+    - target: {fileID: 7231231060109375451, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
       propertyPath: overclokePourcent
       value: 150
       objectReference: {fileID: 0}
@@ -1609,8 +1614,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3883078397052689357, guid: 7155ffc9e90adff42be892838432656c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7155ffc9e90adff42be892838432656c, type: 3}
+--- !u!114 &640475820 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 86890331791862832, guid: 7155ffc9e90adff42be892838432656c,
+    type: 3}
+  m_PrefabInstance: {fileID: 640475819}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 432432ce9ebd7334a9acb116650d630c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &642539391
 GameObject:
   m_ObjectHideFlags: 0
