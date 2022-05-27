@@ -33,7 +33,7 @@ public class WeaponUltima : WeaponBase
         
         if (actualWeapon == weapon.BASIC || actualWeapon == weapon.BURST)
         {
-            if (isShooting)
+            if (isShooting && isPossessed)
             {
                 Shoot();
             }

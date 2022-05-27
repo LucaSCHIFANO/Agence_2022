@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
-public class CamionCarryFusion : SimulationBehaviour
+public class CamionCarryFusion : SimulationBehaviour, IPlayerLeft
 {
     public List<NetworkedPlayer> networkPlayer = new List<NetworkedPlayer>();
 
@@ -56,5 +56,10 @@ public class CamionCarryFusion : SimulationBehaviour
     {
         if (networkPlayer.Contains(player))
             networkPlayer.Remove(player);
+    }
+
+    public void PlayerLeft(PlayerRef player)
+    {
+        RemovePlayer(App.Instance.GetPlayer(player).CharacterPrefab);
     }
 }

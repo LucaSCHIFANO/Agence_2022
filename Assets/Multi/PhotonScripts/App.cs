@@ -45,7 +45,7 @@ public class App : MonoBehaviour, INetworkRunnerCallbacks
 	private string _lobbyId;
 
 	private static App _instance;
-	private CharacterInputHandler _characterInputHandler;
+	// private CharacterInputHandler _characterInputHandler;
 
 	public static App Instance
 	{
@@ -292,12 +292,27 @@ public class App : MonoBehaviour, INetworkRunnerCallbacks
 	
 	public void OnInput(NetworkRunner runner, NetworkInput input)
 	{
-		if (_characterInputHandler == null && NetworkedPlayer.Local != null)
-			_characterInputHandler = NetworkedPlayer.Local.GetComponent<CharacterInputHandler>();
+		// if (_characterInputHandler == null && NetworkedPlayer.Local != null)
+			// _characterInputHandler = NetworkedPlayer.Local.GetComponent<CharacterInputHandler>();
         
-		if (_characterInputHandler != null) input.Set(_characterInputHandler.GetNetworkInput());
-		
-		
+		// if (_characterInputHandler != null) input.Set(_characterInputHandler.GetNetworkInput());
+
+		if (NetworkedPlayer.Local == null) return;
+
+		switch (NetworkedPlayer.Local.PossessingType)
+		{
+			case PossessingType.CHARACTER:
+				input.Set(NetworkedPlayer.Local.CharacterInputHandler.GetNetworkInput());
+				break;
+			case PossessingType.WEAPON:
+				input.Set(NetworkedPlayer.Local.WeaponInputHandler.GetNetworkInput());
+				break;
+			default:
+				Debug.LogError("PossessingType not handled !! In App.cs");
+				break;
+		}
+
+
 		/*// Persistent button flags like GetKey should be read when needed so they always have the actual state for this tick
 		_data.ButtonFlags |= Input.GetKey( KeyCode.W ) ? ButtonFlag.FORWARD : 0;
 		_data.ButtonFlags |= Input.GetKey( KeyCode.A ) ? ButtonFlag.LEFT : 0;

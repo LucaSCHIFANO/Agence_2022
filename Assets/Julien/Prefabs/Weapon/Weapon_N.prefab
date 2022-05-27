@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 7501467468423486841}
   - component: {fileID: 8550547389110051173}
   - component: {fileID: 6492181983474241644}
+  - component: {fileID: 6349105960748980618}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -217,6 +218,32 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0000001, y: 1, z: 1.0000001}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6349105960748980618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3792562472392821806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 3
+  InterpolationSpace: 0
+  InterpolationTarget: {fileID: 3278601415520943898}
+  InterpolateErrorCorrection: 1
+  InterpolatedErrorCorrectionSettings:
+    MinRate: 3.3
+    MaxRate: 10
+    PosBlendStart: 0.25
+    PosBlendEnd: 1
+    PosMinCorrection: 0.025
+    PosTeleportDistance: 2
+    RotBlendStart: 0.1
+    RotBlendEnd: 0.5
+    RotTeleportRadians: 1.5
 --- !u!1 &4332460894528546847
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,6 +292,7 @@ GameObject:
   - component: {fileID: 7448797164932388766}
   - component: {fileID: 8822671153596592581}
   - component: {fileID: 8079274123542673255}
+  - component: {fileID: 6935165382737472116}
   m_Layer: 0
   m_Name: Weapon_N
   m_TagString: Untagged
@@ -285,7 +313,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3278601415520943898}
-  - {fileID: 7821550926114189240}
+  - {fileID: 8743449443401351034}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 146.468, z: 0}
@@ -364,6 +392,7 @@ MonoBehaviour:
   - {fileID: 7448797164932388766}
   - {fileID: 8822671153596592581}
   - {fileID: 8079274123542673255}
+  - {fileID: 6349105960748980618}
   SimulationBehaviours: []
 --- !u!114 &3579213555381976242
 MonoBehaviour:
@@ -422,7 +451,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   weaponSensibility: {x: 15, y: 15}
   camera: {fileID: 1782784352447674027}
-  exitPoint: {fileID: 7821550926114189240}
+  exitPoint: {fileID: 8743449443401351034}
 --- !u!114 &8079274123542673255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,7 +465,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  visual: {fileID: 3278601415520943898}
+--- !u!114 &6935165382737472116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4332460894668131283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2450e52f68f115e428c065828110ff4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4332460895376048094
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,7 +607,7 @@ Transform:
   m_Father: {fileID: 4332460895376048095}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!1 &6677236222851066251
+--- !u!1 &8792944163989228888
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -575,7 +615,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7821550926114189240}
+  - component: {fileID: 8743449443401351034}
   m_Layer: 0
   m_Name: Exit
   m_TagString: Untagged
@@ -583,15 +623,15 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7821550926114189240
+--- !u!4 &8743449443401351034
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6677236222851066251}
+  m_GameObject: {fileID: 8792944163989228888}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 1, z: -3.29}
+  m_LocalPosition: {x: 0, y: 0.83, z: -2.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

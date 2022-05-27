@@ -1,17 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using Fusion;
+using TMPro;
 using UnityEngine;
 
-public class NetworkedPlayer : NetworkBehaviour/*, IPlayerLeft*/
-{
-    [SerializeField] private GameObject Camera;
+public class NetworkedPlayer : NetworkBehaviour
+{ 
+    public GameObject Camera;
+    [SerializeField] private MeshRenderer _mesh;
+    [SerializeField] private TextMeshProUGUI _name;
+    
     public static NetworkedPlayer Local { get; set; }
+    public PossessingType PossessingType = PossessingType.CHARACTER;
+    
 
-    [SerializeField] private CharacterInputHandler _inputHandler;
+    public CharacterInputHandler CharacterInputHandler;
+    public WeaponInputHandler WeaponInputHandler;
+    // public CharacterInputHandler CarInputHandler;
+    
+    private Player _player;
 
     public override void Spawned()
     {
+        _player = App.Instance.GetPlayer(Object.InputAuthority);
+        _name.text = _player.Name;
+        _mesh.material.color = _player.Color;
+        CharacterInputHandler = GetComponent<CharacterInputHandler>();
+        
         if (Object.HasInputAuthority)
         {
             Local = this;
@@ -23,12 +38,6 @@ public class NetworkedPlayer : NetworkBehaviour/*, IPlayerLeft*/
             Debug.Log("Spawned Remote Player");
         }
     }
-
-    /*public void PlayerLeft(PlayerRef player)
-    {
-        if (player == Object.InputAuthority) Runner.Despawn(Object);
-    }*/
-    
     
     public void Unpossess(Transform exitPoint)
     {
@@ -37,23 +46,45 @@ public class NetworkedPlayer : NetworkBehaviour/*, IPlayerLeft*/
         
         transform.position = exitPoint.position;
         transform.rotation = exitPoint.rotation;
-        
+
         GetComponent<CharacterController>().enabled = true;
-        // _inputHandler.enabled = true;
     }
 
     public void Possess(Transform seat)
     {
         GetComponent<CharacterController>().enabled = false;
-        // _inputHandler.enabled = false;
 
         if (Runner.IsServer)
         {
             transform.position = seat.position;
             transform.rotation = seat.rotation;
         }
-
+        
         if (Object.HasInputAuthority)
             Camera.SetActive(false);
     }
+
+    public void ChangeInputHandler(PossessingType possessingType, GameObject handler)
+    {
+        PossessingType = possessingType;
+        if (possessingType == PossessingType.WEAPON)
+        {
+            WeaponInputHandler = handler.GetComponent<WeaponInputHandler>();
+        }
+        else if (possessingType == PossessingType.CAR)
+        {
+            // handler.GetComponent<CarInputHandler>();
+        }
+        else
+        {
+            WeaponInputHandler = null;
+        }
+    }
+}
+
+public enum PossessingType
+{
+    CHARACTER,
+    CAR,
+    WEAPON
 }

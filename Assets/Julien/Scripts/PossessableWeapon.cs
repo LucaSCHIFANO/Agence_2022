@@ -19,6 +19,11 @@ public class PossessableWeapon : NetworkBehaviour
         AskForPossessionServerRpc(Runner.LocalPlayer);
     }
 
+    public void TryUnpossess()
+    {
+        AskForGetOutServerRpc();
+    }
+
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     private void AskForPossessionServerRpc(PlayerRef playerRef)
     {
@@ -42,6 +47,7 @@ public class PossessableWeapon : NetworkBehaviour
         camera.SetActive(true);
         _playerController = Runner.GetPlayerObject(Object.InputAuthority).gameObject.GetComponent<NetworkedPlayer>();
         _playerController.gameObject.GetComponent<CharacterMovementHandler>().enabled = false;
+        _playerController.ChangeInputHandler(PossessingType.WEAPON, gameObject);
         // _playerController.gameObject.SetActive(false);
     }
 
@@ -56,6 +62,7 @@ public class PossessableWeapon : NetworkBehaviour
     private void AskForGetOutServerRpc(RpcInfo rpcInfo = default)
     {
         if (!isPossessed) return;
+        if (timer > 0) return;
         
         isPossessed = false;
         Object.RemoveInputAuthority();
@@ -70,12 +77,12 @@ public class PossessableWeapon : NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void ConfirmGetOutClientRpc([RpcTarget] PlayerRef playerRef)
     {
-        Debug.Log(playerRef);
         camera.SetActive(false);
         _playerController = Runner.GetPlayerObject(playerRef).gameObject.GetComponent<NetworkedPlayer>();
         _playerController.gameObject.GetComponent<CharacterMovementHandler>().enabled = true;
         _playerController.gameObject.SetActive(true);
         _playerController.transform.SetParent(null);
+        _playerController.ChangeInputHandler(PossessingType.CHARACTER, gameObject);
         _playerController = null;
         // CanvasInGame.Instance.showOverheat(false);
     }
@@ -84,15 +91,15 @@ public class PossessableWeapon : NetworkBehaviour
     {
         if (Object == null) return;
         
-        if (Object.HasInputAuthority)
+        if (Object.HasStateAuthority)
         {
 
             // activated = Input.GetKeyDown(activateDeactivate) ? !activated : activated;
 
-            if (!isPossessed) return;
+            // if (!isPossessed) return;
 
-            if (timer <= 0)
-            {
+            // if (timer <= 0)
+            // {
                 /*
                 float leftRight = Input.GetAxis("Mouse X") * weaponSensibility.x;
                 float upDown = Input.GetAxis("Mouse Y") * weaponSensibility.y;
@@ -103,22 +110,22 @@ public class PossessableWeapon : NetworkBehaviour
                 Vector3 eulerRotation = transform.rotation.eulerAngles;
                 transform.rotation = Quaternion.Euler(eulerRotation.x, eulerRotation.y, 0);
 */
-                if (Input.GetMouseButton(0))
-                {
-                    GetComponent<WeaponBase>().Shoot();
-                }
+                // if (Input.GetMouseButton(0))
+                // {
+                    // GetComponent<WeaponBase>().Shoot();
+                // }
 
                 /*if (Input.GetKeyDown(KeyCode.R))
                 {
                     GetComponent<WeaponBase>().Reload();
                 }*/
 
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    Debug.Log("Get Out");
-                    AskForGetOutServerRpc();
-                }
-            }
+                // if (Input.GetKeyDown(KeyCode.E))
+                // {
+                    // Debug.Log("Get Out");
+                    // AskForGetOutServerRpc();
+                // }
+            // }
             
 
             if (timer > 0)
