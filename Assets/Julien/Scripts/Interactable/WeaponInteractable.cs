@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class WeaponInteraction : Interactable
+public class WeaponInteractable : Interactable
 {
-    [SerializeField] private string weaponName;
+    public string weaponName;
 
     public override string GetDescription()
     {
@@ -14,6 +14,6 @@ public class WeaponInteraction : Interactable
 
     public override void Interact(PlayerInteraction interactor)
     {
-        // GetComponent<PossessableWeapon>().TryPossess(interactor.gameObject);
+        GetComponent<TestControlWeapon>().Interact(interactor.GetComponent<PlayerController>());
     }
 }

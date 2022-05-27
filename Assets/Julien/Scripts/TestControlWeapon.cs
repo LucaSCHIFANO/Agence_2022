@@ -74,24 +74,20 @@ public class TestControlWeapon : NetworkBehaviour
         RemoveOwnershipServerRpc();
     }
 
-    private void OnTriggerStay(Collider other)
+    public void Interact(PlayerController other)
     {
         if (isPossessed.Value) return;
-        
-        PlayerController playerController;
-        if (other.gameObject.TryGetComponent(out playerController))
-        {
-            if (Input.GetKey(KeyCode.E))
-            {
-                ChangeOwnerServerRpc();
-                playerController.Possess(gameObject);
-                _playerController = playerController;
-                camera.SetActive(true);
-                GetComponent<WeaponBase>().isPossessed = true;
-                GetComponent<WeaponBase>().possessor = playerController;
-                CanvasInGame.Instance.showOverheat(true);
-            }
-        }
+
+
+        ChangeOwnerServerRpc();
+        other.Possess(gameObject);
+        _playerController = other;
+        camera.SetActive(true);
+        GetComponent<WeaponBase>().isPossessed = true;
+        GetComponent<WeaponBase>().possessor = other;
+        CanvasInGame.Instance.showOverheat(true);
+
+
     }
 
 

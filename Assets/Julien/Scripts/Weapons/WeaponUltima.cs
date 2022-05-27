@@ -46,6 +46,7 @@ public class WeaponUltima : WeaponBase
 
     public void actuAllStats(WScriptable SObject)
     {
+        GetComponent<WeaponInteractable>().weaponName = SObject.turretName;
         _fireRate = SObject.fireRate;
         _bulletToOverHeat = SObject.bulletToOverheat;
         _coolDownPerSecond = SObject.coolDownPerSecond;

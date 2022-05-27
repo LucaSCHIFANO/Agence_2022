@@ -13,8 +13,6 @@ public class ShopInteractable : Interactable
 
     public override void Interact(PlayerInteraction interactor)
     {
-        // _playerController = interactor.GetComponent<PlayerController>();
-        // CanvasInGame.Instance.showShop(true);
-        // _playerController.enabled = false;
+        GetComponent<Shop>().Interact(interactor.GetComponent<PlayerController>());
     }
 }

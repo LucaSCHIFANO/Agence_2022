@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Weapon", menuName = "ScriptableObjects/SpawnNewWeapon")]
 public class WScriptable : ScriptableObject
 {
+    public string turretName;
+    
     public float fireRate;
     public float bulletToOverheat;
     public float coolDownPerSecond;

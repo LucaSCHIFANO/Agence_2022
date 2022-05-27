@@ -13,6 +13,7 @@ public class PlayerInteraction : NetworkBehaviour
 
     [SerializeField] private TextMeshProUGUI interactionText;
     [SerializeField] private Camera cam;
+    [SerializeField] private LayerMask interactable;
 
     private void Start()
     {
@@ -27,7 +28,7 @@ public class PlayerInteraction : NetworkBehaviour
 
         bool didHit = false;
         
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, interactionDistance))
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, interactionDistance, interactable))
         {
             if (raycastHit.collider.TryGetComponent(out Interactable interactable))
             {
