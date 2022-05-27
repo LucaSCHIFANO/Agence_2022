@@ -273,7 +273,7 @@ public class UpgradeMenu : NetworkBehaviour
                 }
             }
 
-            upgradeWeaponTurret(turret2, buttonTree.id);
+            upgradeWeaponTurret(turret2, lastUpgrade2.id);
         }
     }
 

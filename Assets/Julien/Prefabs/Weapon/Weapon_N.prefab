@@ -354,6 +354,8 @@ MonoBehaviour:
   overHeatColor: {r: 0, g: 0, b: 0, a: 0}
   bulletEffect: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
     type: 3}
+  overHParticle: {fileID: 3069991359978290245}
+  OHParticleOverTime: 2
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -362,6 +364,7 @@ MonoBehaviour:
   fireType: 0
   spread: 0
   numberOfShot: 0
+  damage: 0
   particleFire: {fileID: 8190907002144595235, guid: d9a2258dcb99b294ab170540231cd31f,
     type: 3}
   isShooting: 0
@@ -603,7 +606,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4121404140969236649}
   m_Father: {fileID: 4332460895376048095}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
