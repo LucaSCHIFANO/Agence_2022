@@ -5,6 +5,10 @@ using Unity.Netcode;
 
 public class TruckBase : NetworkBehaviour
 {
+    private void Start()
+    {
+        Init();
+    }
 
     public virtual void Init()
     {

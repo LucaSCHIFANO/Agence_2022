@@ -1,975 +1,1085 @@
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
-using UnityEngine;
+using UnityEngine.UI;
 
-
-[System.Serializable]
-public struct DebugValues
-{
-    public Vector3 _Velocity;
-    public Vector3 _AngularVelocity;
-    public float _Acceleration;
-    public float _Speed;
-    public float _WheelDelta;
-    public float _GripVal;
-    public bool _IsDrift;
-    public bool _IsReverse;
-}
+public enum ControlMode { simple = 1, touch = 2 }
 
 
 public class TruckPhysics : TruckBase
 {
+    #region Settings
 
-    [Header("Front wheels")]
-    public GameObject leftFrontWheel;
-    public GameObject rightFrontWheel;
+    [HideInInspector]
+    public ControlMode controlMode = ControlMode.simple;
 
-    float currWheelDelta;
-    Vector3 pos, prevPos;
+    public bool activeControl = false;
 
-    [Space(10)]
-    [Header("Physics variables")]
-    public bool canDrift;
-    public float cdrag = 0.5f;
-    public float crr = 0.5f;
-    public float cbreak = 5;
-    public float weight = 1;
-    public float cornerStiff = 20;
-    public float enginePower = 50;
-    public float tyreLoad = 5000;
-    public float driftTurningRatio = 30;
-    public float driftAngleRatio = 60;
-    float _driftAngleRatio;
-    public float driftAngleSpeed = 10;
-    Vector3 _driftAngleRatioVec;
-    public float driftAccelerationRatio = 5;
-    public float wheelRotSped = 10;
-    public float inertia = 10;
-    public float maxWheelDelta = 30;
-    public float maxGripForce = 150;
-
-    
-    Vector3 prevRot;
-    float wheelRadius = 0.1f;
-    Vector3 angVel;
-    float radius;
-    bool drifting = false;
     private Rewired.Player player;
-
-    Vector3 velocity, prevVel;
-
-    float acceleration;
-
-    public float airFriction;
-
-    [Space(20)]
-    [Header("Throttle")]
-    [Range(0.0f, 1.0f)]
-    public float bar;
-    public float throttleAccelSpeed;
-    public float throttleDeccelSpeed;
-    public float accelForce;
-    public float maxAccel;
-    public float maxVelocity;
-    public float breakForce;
-    public float maxBreaking;
-
-    public AnimationCurve throttleForce;
+    public Rewired.InputAction action;
 
 
-    bool isReversed;
-    public float timeToReverse;
-    float currTimeReverse;
+    // Wheels Setting /////////////////////////////////
+
+    public CarWheels carWheels;
+
+    [System.Serializable]
+    public class CarWheels
+    {
+        public ConnectWheel wheels;
+        public WheelSetting setting;
+    }
 
 
-    public GameObject remorque;
+    [System.Serializable]
+    public class ConnectWheel
+    {
+        public bool frontWheelDrive = true;
+        public Transform frontRight;
+        public Transform frontLeft;
 
-    public float remorqueTurningSpeed = 10;
-    public float remorqueMaxDelta = 20;
-    public float wheelRotSpeed;
-    bool isRemorqueTurning = false;
+        public bool backWheelDrive = true;
+        public Transform backRight;
+        public Transform backLeft;
+    }
 
-    float gripCurrForce, gripPrevForce;
+    [System.Serializable]
+    public class WheelSetting
+    {
+        public float Radius = 0.4f;
+        public float Weight = 1000.0f;
+        public float Distance = 0.2f;
+    }
 
-    float delta;
 
-    [Space(10)]
-    [Header("Experimental")]
-    public float sand = 5000;
-    public float road = 10;
+    // Lights Setting ////////////////////////////////
 
-    [Space(20)]
-    public DebugValues vals;
+    [HideInInspector] public CarLights carLights;
 
-    void Start()
+    [System.Serializable]
+    public class CarLights
+    {
+        [HideInInspector] public Light[] brakeLights;
+        [HideInInspector] public Light[] reverseLights;
+    }
+
+    // Car sounds /////////////////////////////////
+
+    [HideInInspector] public CarSounds carSounds;
+
+    [System.Serializable]
+    public class CarSounds
+    {
+        public AudioSource IdleEngine, LowEngine, HighEngine;
+
+        public AudioSource nitro;
+        public AudioSource switchGear;
+    }
+
+    // Car Particle /////////////////////////////////
+
+    [HideInInspector] public CarParticles carParticles;
+
+    [System.Serializable]
+    public class CarParticles
+    {
+        public GameObject brakeParticlePerfab;
+        public ParticleSystem shiftParticle1, shiftParticle2;
+        private GameObject[] wheelParticle = new GameObject[4];
+    }
+
+    // Car Engine Setting /////////////////////////////////
+
+    public CarSetting carSetting;
+
+    [System.Serializable]
+    public class CarSetting
     {
 
+        public bool showNormalGizmos = false;
+        public Transform carSteer;
+        [HideInInspector] public HitGround[] hitGround;
+
+        [HideInInspector] public List<Transform> cameraSwitchView;
+
+        public float springs = 25000.0f;
+        public float dampers = 1500.0f;
+
+        public float carPower = 120f;
+        public float shiftPower = 150f;
+        public float brakePower = 8000f;
+
+        public Vector3 shiftCentre = new Vector3(0.0f, -0.8f, 0.0f);
+
+        public float maxSteerAngle = 25.0f;
+
+        public float shiftDownRPM = 1500.0f;
+        public float shiftUpRPM = 2500.0f;
+        public float idleRPM = 500.0f;
+
+        public float stiffness = 2.0f;
+
+        public bool automaticGear = true;
+
+        public float[] gears = { -10f, 9f, 6f, 4.5f, 3f, 2.5f };
+
+
+        public float LimitBackwardSpeed = 60.0f;
+        public float LimitForwardSpeed = 220.0f;
+
     }
+
+    
+
+
+    [System.Serializable]
+    public class HitGround
+    {
+       
+        public string tag = "street";
+        public bool grounded = false;
+        public AudioClip brakeSound;
+        public AudioClip groundSound;
+        public Color brakeColor;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private float steer = 0;
+    private float accel = 0.0f;
+    [HideInInspector]
+    public bool brake;
+
+    private bool shifmotor;
+
+    [HideInInspector]
+    public float curTorque = 100f;
+    [HideInInspector]
+    public float powerShift = 100;
+    [HideInInspector]
+    public bool shift;
+
+    private float torque = 100f;
+
+    [HideInInspector]
+    public float speed = 0.0f;
+
+    private float lastSpeed = -10.0f;
+
+
+    private bool shifting = false;
+
+
+    float[] efficiencyTable = { 0.6f, 0.65f, 0.7f, 0.75f, 0.8f, 0.85f, 0.9f, 1.0f, 1.0f, 0.95f, 0.80f, 0.70f, 0.60f, 0.5f, 0.45f, 0.40f, 0.36f, 0.33f, 0.30f, 0.20f, 0.10f, 0.05f };
+
+
+    float efficiencyTableStep = 250.0f;
+
+
+
+    private float Pitch;
+    private float PitchDelay;
+
+    private float shiftTime = 0.0f;
+
+    private float shiftDelay = 0.0f;
+
+
+    [HideInInspector]
+    public int currentGear = 0;
+    [HideInInspector]
+    public bool NeutralGear = true;
+
+    [HideInInspector]
+    public float motorRPM = 0.0f;
+
+    [HideInInspector]
+    public bool Backward = false;
+
+    ////////////////////////////////////////////// TouchMode (Control) ////////////////////////////////////////////////////////////////////
+
+
+    [HideInInspector]
+    public float accelFwd = 0.0f;
+    [HideInInspector]
+    public float accelBack = 0.0f;
+    [HideInInspector]
+    public float steerAmount = 0.0f;
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+    private float wantedRPM = 0.0f;
+    private float w_rotate;
+    private float slip, slip2 = 0.0f;
+
+
+    private GameObject[] Particle = new GameObject[4];
+
+    private Vector3 steerCurAngle;
+
+    private Rigidbody myRigidbody;
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    private WheelComponent[] wheels;
+
+    private bool shiftUp, shiftDown, braking;
+    private float turn, throttle;
+
+
+    private class WheelComponent
+    {
+
+        public Transform wheel;
+        public WheelCollider collider;
+        public Vector3 startPos;
+        public float rotation = 0.0f;
+        public float rotation2 = 0.0f;
+        public float maxSteer;
+        public bool drive;
+        public float pos_y = 0.0f;
+    }
+
+    #endregion
+
+    #region Initialization
 
     public override void Init()
     {
+        base.Init();
         player = Rewired.ReInput.players.GetPlayer(0);
     }
 
-    void Update()
+    private WheelComponent SetWheelComponent(Transform wheel, float maxSteer, bool drive, float pos_y)
     {
-        //if (!IsOwner) return;
-        if (Input.GetKeyDown(KeyCode.Space)) drifting = !drifting;
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            if (accelForce == sand) accelForce = road;
-            else if (accelForce == road) accelForce = sand;
-        }
+
+
+        WheelComponent result = new WheelComponent();
+        GameObject wheelCol = new GameObject(wheel.name + "WheelCollider");
+
+        wheelCol.transform.parent = transform;
+        wheelCol.transform.position = wheel.position;
+        wheelCol.transform.eulerAngles = transform.eulerAngles;
+        pos_y = wheelCol.transform.localPosition.y;
+
+        WheelCollider col = (WheelCollider)wheelCol.AddComponent(typeof(WheelCollider));
+
+        result.wheel = wheel;
+        result.collider = wheelCol.GetComponent<WheelCollider>();
+        result.drive = drive;
+        result.pos_y = pos_y;
+        result.maxSteer = maxSteer;
+        result.startPos = wheelCol.transform.localPosition;
+
+        return result;
+
+    }
+
+    private void SetInputs()
+    {
+        shiftUp = Input.GetKeyDown("page up");
+        shiftDown = Input.GetKeyDown("page down");
+        braking = player.GetButton("Breaking");
+        turn = player.GetAxis("Turn");
+        throttle = player.GetAxis("Throttle");
+        shift = Input.GetKey(KeyCode.LeftShift) | Input.GetKey(KeyCode.RightShift);
     }
 
 
-    #region BigTmp
-    /*
-    private void FixedUpdate()
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    
+
+    void Awake()
     {
-        //if (!IsOwner) return;
-        //Debug.Log("Fixed Update");
 
-        if (drifting)
+        if (carSetting.automaticGear) NeutralGear = false;
+
+        myRigidbody = transform.GetComponent<Rigidbody>();
+
+        wheels = new WheelComponent[4];
+
+        wheels[0] = SetWheelComponent(carWheels.wheels.frontRight, carSetting.maxSteerAngle, carWheels.wheels.frontWheelDrive, carWheels.wheels.frontRight.position.y);
+        wheels[1] = SetWheelComponent(carWheels.wheels.frontLeft, carSetting.maxSteerAngle, carWheels.wheels.frontWheelDrive, carWheels.wheels.frontLeft.position.y);
+
+        wheels[2] = SetWheelComponent(carWheels.wheels.backRight, 0, carWheels.wheels.backWheelDrive, carWheels.wheels.backRight.position.y);
+        wheels[3] = SetWheelComponent(carWheels.wheels.backLeft, 0, carWheels.wheels.backWheelDrive, carWheels.wheels.backLeft.position.y);
+
+        if (carSetting.carSteer)
+        steerCurAngle = carSetting.carSteer.localEulerAngles;
+
+        foreach (WheelComponent w in wheels)
         {
-            #region driftTemp
-            Vector3 vec = transform.forward * player.GetAxis("Throttle");// Input.GetAxis("Vertical");
-
-            //Debug.Log(vec);
-
-            float rot = Input.GetAxis("Horizontal");
-
-            //transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y + rot, 0));
 
 
+            WheelCollider col = w.collider;
+            col.suspensionDistance = carWheels.setting.Distance;
+            JointSpring js = col.suspensionSpring;
 
-            currWheelDelta += rot * wheelRotSped * Time.deltaTime;
-            if (currWheelDelta > maxWheelDelta) currWheelDelta = maxWheelDelta;
-            else if (currWheelDelta < -maxWheelDelta) currWheelDelta = -maxWheelDelta;
-            //leftFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            //rightFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            radius = 1 / Mathf.Sin(currWheelDelta);
-
-            //Debug.Log(pos + "   " + prevPos);
-            pos = transform.position;
-            Vector3 distance = pos - prevPos;
-            prevPos = pos;
+            js.spring = carSetting.springs;
+            js.damper = carSetting.dampers;
+            col.suspensionSpring = js;
 
 
-            velocity = vec + distance / Time.deltaTime;
+            col.radius = carWheels.setting.Radius;
+
+            col.mass = carWheels.setting.Weight;
 
 
-            angVel = (transform.rotation.eulerAngles - prevRot) / Time.deltaTime;
+            WheelFrictionCurve fc = col.forwardFriction;
+
+            fc.asymptoteValue = 5000.0f;
+            fc.extremumSlip = 2.0f;
+            fc.asymptoteSlip = 20.0f;
+            fc.stiffness = carSetting.stiffness;
+            col.forwardFriction = fc;
+            fc = col.sidewaysFriction;
+            fc.asymptoteValue = 7500.0f;
+            fc.asymptoteSlip = 2.0f;
+            fc.stiffness = carSetting.stiffness;
+            col.sidewaysFriction = fc;
 
 
-            //Debug.Log("ANGULAR SPEED: " + angVel);
-            prevRot = transform.rotation.eulerAngles;
+        }
 
-            Vector3 frr = -crr * velocity;
 
-            float speed = Mathf.Sqrt(velocity.x * velocity.x + velocity.z * velocity.z);
+    }
 
-            float wheelRotRate = speed / wheelRadius;
-            
-            //if (rot != 1)
-            //{
-            //    if (currWheelDelta < 0) currWheelDelta += (wheelRotRate / 10) * Time.deltaTime;
-            //    else if (currWheelDelta > 0) currWheelDelta -= (wheelRotRate / 10) * Time.deltaTime;
-            //    //if (currWheelDelta < 0) currWheelDelta = 0;
-            //    leftFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            //    rightFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            //    radius = 1 / Mathf.Sin(currWheelDelta);
-            //}
-            
+    #endregion
 
-            if (rot == 0)
+    #region Shifting
+    public void ShiftUp()
+    {
+        float now = Time.timeSinceLevelLoad;
+
+        if (now < shiftDelay) return;
+
+        if (currentGear < carSetting.gears.Length - 1)
+        {
+
+           // if (!carSounds.switchGear.isPlaying)
+                //carSounds.switchGear.GetComponent<AudioSource>().Play();
+
+
+                if (!carSetting.automaticGear)
             {
-                if (currWheelDelta < 0)
+                if (currentGear == 0)
                 {
-                    currWheelDelta += (wheelRotRate / 10) * Time.deltaTime;
-                    if (currWheelDelta > 0) currWheelDelta = 0;
+                    if (NeutralGear){currentGear++;NeutralGear = false;}
+                    else
+                    { NeutralGear = true;}
                 }
-                else if (currWheelDelta > 0)
+                else
                 {
-                    currWheelDelta -= (wheelRotRate / 10) * Time.deltaTime;
-                    if (currWheelDelta < 0) currWheelDelta = 0;
+                    currentGear++;
                 }
-            }
-
-
-            if (rot == 0 && (angVel.y > -maxGripForce || angVel.y < maxGripForce)) drifting = false;
-
-            if (Input.GetKeyDown(KeyCode.E)) currWheelDelta = 0;
-            leftFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            rightFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            radius = 1 / Mathf.Sin(currWheelDelta);
-
-            float angularSpeed = speed / radius;//(transform.rotation.eulerAngles.y - prevRot) / Time.deltaTime;
-
-            float longVel = Vector3.Magnitude(Mathf.Cos(currWheelDelta) * velocity);
-            float latVel = Vector3.Magnitude(Mathf.Sin(currWheelDelta) * velocity);
-
-            float slipAngleFront = Mathf.Atan((latVel + angularSpeed * 0.2f) / longVel) - Mathf.Sign(longVel);
-            float slipAngleRear = Mathf.Atan((latVel - angularSpeed * 0.2f) / longVel);
-
-
-            float fLatFront = cornerStiff * slipAngleFront;
-            float fLatRear = cornerStiff * slipAngleRear;
-
-            //Debug.Log(fLatFront + "  " + fLatRear);
-
-            fLatFront = Mathf.Min(fLatFront, 5);
-            fLatRear = Mathf.Min(fLatRear, 5);
-
-            fLatFront *= tyreLoad;
-            fLatRear *= tyreLoad;
-
-            float torque = Mathf.Cos(currWheelDelta) * fLatFront * 0.2f - fLatRear * 0.2f;
-
-            float angAccel = torque / inertia;
-
-            angularSpeed += angAccel * Time.deltaTime;
-
-            Vector3 fdrag;// = -cdrag * velocity * Vector3.Magnitude(velocity);
-            fdrag.x = -cdrag * velocity.x * speed;
-            fdrag.y = 0;//-cdrag * velocity.y * speed;
-            fdrag.z = -cdrag * velocity.z * speed;
-
-
-
-
-            Vector3 fres = frr + fdrag;
-
-            Vector3 ftraction = transform.forward * enginePower;
-
-
-            Vector3 flong;
-
-            if (Input.GetKey(KeyCode.Space))
-            {
-                Debug.Log("---BREAKING---");
-                Vector3 fbrake = -transform.forward * cbreak;
-                flong = fbrake + fdrag + frr;
-                if (speed < 0.1f) flong = Vector3.zero;
             }
             else
             {
-                flong = ftraction + fdrag + frr;
+                currentGear++;
             }
 
 
-            Vector3 accel = flong / weight;
-
-
-            velocity += Time.deltaTime * accel;
-
-            velocity.y = 0;
-            //velocity = leftFrontWheel.transform.forward * 5;
-
-            if (Input.GetKeyDown(KeyCode.Space)) velocity = Vector3.zero;
-
-            Vector3 finalPos = transform.position + Time.deltaTime * velocity;
-
-            transform.position = finalPos;
-            if (velocity.magnitude < 0.01f || speed < 0.1f) velocity = Vector3.zero;
-            //Debug.Log(velocity.magnitude);
-
-            float fRot = Mathf.Min(transform.rotation.eulerAngles.y + leftFrontWheel.transform.rotation.eulerAngles.y / 20, transform.rotation.eulerAngles.y + 5);
-            //Debug.Log(transform.rotation.eulerAngles.y + leftFrontWheel.transform.rotation.eulerAngles.y / 20);
-            //transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, fRot, transform.rotation.eulerAngles.z);
-            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y - angularSpeed * Time.deltaTime, transform.rotation.eulerAngles.z);
-            #endregion
-            #region temp
-            
-            //pos = transform.position;
-            //Vector3 vec = transform.forward * player.GetAxis("Throttle");//Input.GetAxis("Vertical");
-            //Vector3 dist = pos - prevPos;
-            //Debug.Log(dist);
-            //prevPos = pos;
-            //
-            //velocity = dist + vec / Time.deltaTime;
-            //prevPos = pos;
-            //
-            //if (velocity.x > 30) velocity.x = 30;
-            //velocity.y = 0;
-            //if (velocity.z > 30) velocity.z = 30;
-            //
-            //
-            //float speed = Mathf.Sqrt(velocity.x * velocity.x + velocity.z * velocity.z);
-            //
-            //float wheelRotRate = speed / wheelRadius;
-            //
-            //angVel = (transform.rotation.eulerAngles - prevRot) / Time.deltaTime;
-            //
-            //
-            //Debug.Log("ANGULAR SPEED: " + angVel);
-            //prevRot = transform.rotation.eulerAngles;
-            //
-            //if (velocity.magnitude > 0)
-            //    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (transform.rotation.eulerAngles.y + currWheelDelta / 10), transform.rotation.eulerAngles.z);
-            //Vector3 finalPos = transform.position + velocity * Time.deltaTime;
-            ////Debug.Log(20 - (Mathf.Min(Mathf.Abs(currWheelDelta), 20)));
-            //
-            //
-            //
-            //
-            //velocity = vec + dist / Time.deltaTime;
-            //
-            //Vector3 frr = -crr * velocity;
-            //
-            //float speed = Mathf.Sqrt(velocity.x * velocity.x + velocity.z * velocity.z);
-            //float wheelRotRate = speed / wheelRadius;
-            //
-            //
-            //Vector3 fdrag;// = -cdrag * velocity * Vector3.Magnitude(velocity);
-            //fdrag.x = -cdrag * velocity.x * speed;
-            //fdrag.y = 0;//-cdrag * velocity.y * speed;
-            //fdrag.z = -cdrag * velocity.z * speed;
-            //
-            //
-            //Vector3 ftraction = transform.forward * enginePower;
-            //
-            //
-            //Vector3 flong;
-            //
-            //flong = ftraction + fdrag + frr;
-            //
-            //
-            //Vector3 accel = flong / weight;
-            //
-            //
-            //velocity += Time.deltaTime * accel;
-            //
-            //velocity.y = 0;
-            //
-            //
-            //Debug.Log("ANGULAR SPEED: " + angVel);
-            //prevRot = transform.rotation.eulerAngles;
-            //
-            //if (velocity.magnitude > 0)
-            //    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (transform.rotation.eulerAngles.y + currWheelDelta / 10), transform.rotation.eulerAngles.z);
-            //
-            //Vector3 finalPos = transform.position + Time.deltaTime * velocity;
-            //
-            //transform.position = finalPos;
-            //
-            ////Debug.Log(velocity);
-            //
-            //
-            //float rot = Input.GetAxis("Horizontal");
-            //
-            //currWheelDelta += rot;
-            //
-            ////if (angVel.y <= -maxGripForce || angVel.y >= maxGripForce) drifting = true;
-            //
-            //
-            //if (currWheelDelta > 30) currWheelDelta = 30;
-            //else if (currWheelDelta < -30) currWheelDelta = -30;
-            //
-            //if (rot == 0)
-            //{
-            //    if (currWheelDelta < 0)
-            //    {
-            //        currWheelDelta += (wheelRotRate / 10) * Time.deltaTime;
-            //        if (currWheelDelta > 0) currWheelDelta = 0;
-            //    }
-            //    else if (currWheelDelta > 0)
-            //    {
-            //        currWheelDelta -= (wheelRotRate / 10) * Time.deltaTime;
-            //        if (currWheelDelta < 0) currWheelDelta = 0;
-            //    }
-            //}
-            //
-            //leftFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            //rightFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            //
-            #endregion
+           shiftDelay = now + 1.0f;
+           shiftTime = 1.5f;
         }
-        else
-        {
-            if (bar < 1) bar += player.GetAxis("Throttle") * (throttleAccelSpeed * Time.deltaTime);
-            if (bar > 1) bar = 1;
-            if (bar > 0 && player.GetAxis("Throttle") < 1) bar -= ((player.GetAxis("Breaking") / 2) * Time.deltaTime) + Time.deltaTime * throttleDeccelSpeed;
-            if (bar < 0) bar = 0;
-
-            pos = transform.position;
-            Vector3 vec = transform.forward * throttleForce.Evaluate(bar);
-            Vector3 dist = pos - prevPos;
-
-            
-            
-            prevPos = pos;
-
-            velocity = dist + vec / Time.deltaTime;
-
-
-            float speed = Mathf.Sqrt(velocity.x * velocity.x + velocity.z * velocity.z);
-
-            if (acceleration < maxAccel && player.GetAxis("Throttle") > 0) acceleration += Time.deltaTime * accelForce;
-            else if (acceleration > 0 && player.GetAxis("Throttle") == 0) acceleration -= Time.deltaTime * accelForce;
-
-
-            float val = Mathf.Sqrt((maxSpeed * maxSpeed) / 2);
-
-            float wheelRotRate = speed / wheelRadius;
-
-            angVel = (transform.rotation.eulerAngles - prevRot) / Time.deltaTime;
-
-
-            prevRot = transform.rotation.eulerAngles;
-
-            Vector3 frr = -airFriction * velocity * speed;
-            Vector3 breaking = player.GetAxis("Breaking") * -transform.forward * 10000;
-
-            Vector3 fTot = frr + breaking;
-
-            Vector3 accel = fTot / 1000;
-
-            velocity.x += (transform.forward.x * acceleration) / Time.deltaTime;
-            velocity.z += (transform.forward.z * acceleration) / Time.deltaTime;
-
-
-            velocity += Time.deltaTime * accel;
-            velocity.y = 0;
-
-            if (velocity.magnitude > 0.1f)
-            {
-                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + (currWheelDelta / 20), transform.rotation.eulerAngles.z);
-                if (delta < remorqueMaxDelta) 
-                { 
-                    remorque.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (remorque.transform.rotation.eulerAngles.y - currWheelDelta / 10), transform.rotation.eulerAngles.z);
-                    if (remorque.transform.rotation.eulerAngles.y != transform.rotation.eulerAngles.y)
-                        isRemorqueTurning = true;
-                }
-
-            }
-            Vector3 finalPos = transform.position + velocity * Time.deltaTime;
-
-
-            transform.position = finalPos;
-
-            prevVel = velocity;
-
-            float rot = Input.GetAxis("Horizontal");
-
-            currWheelDelta += rot;
-            
-
-            if (angVel.y <= -maxGripForce || angVel.y >= maxGripForce) drifting = true;
-
-
-            if (currWheelDelta > 30) currWheelDelta = 30;
-            else if (currWheelDelta < -30) currWheelDelta = -30;
-
-            if (rot == 0)
-            {
-                if (currWheelDelta < 0)
-                {
-                    currWheelDelta += (wheelRotRate * wheelRotSpeed) * Time.deltaTime;
-                    if (currWheelDelta > 0) currWheelDelta = 0;
-                }
-                else if (currWheelDelta > 0)
-                {
-                    currWheelDelta -= (wheelRotRate * wheelRotSpeed) * Time.deltaTime;
-                    if (currWheelDelta < 0) currWheelDelta = 0;
-                }
-            }
-
-            leftFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            rightFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-        }
-        UpdateRemorque();
     }
 
-    void UpdateRemorque()
+
+
+
+    public void ShiftDown()
     {
-        float dotSpeed = Vector3.Dot(remorque.transform.forward, transform.forward);
-        delta = Mathf.Acos(dotSpeed / (remorque.transform.forward.magnitude * transform.forward.magnitude)) * 100;
+        float now = Time.timeSinceLevelLoad;
 
-        if (!isRemorqueTurning) return;
-        if (remorque.transform.rotation.eulerAngles.y != transform.rotation.eulerAngles.y && velocity.magnitude > 0.0f && (Input.GetAxis("Horizontal") > -0.5f && Input.GetAxis("Horizontal") < 0.5f))
-        {
-            if (remorque.transform.rotation.eulerAngles.y > transform.rotation.eulerAngles.y)
-                remorque.transform.rotation = Quaternion.Euler(remorque.transform.rotation.eulerAngles.x, remorque.transform.rotation.eulerAngles.y - Time.deltaTime * remorqueTurningSpeed, remorque.transform.rotation.eulerAngles.z);
+       if (now < shiftDelay) return;
 
-            else if (remorque.transform.rotation.eulerAngles.y < transform.rotation.eulerAngles.y)
-                remorque.transform.rotation = Quaternion.Euler(remorque.transform.rotation.eulerAngles.x, remorque.transform.rotation.eulerAngles.y + Time.deltaTime * remorqueTurningSpeed, remorque.transform.rotation.eulerAngles.z);
-        }
-        
-        
-        if (dotSpeed > 0.9999f && isRemorqueTurning)
+        if (currentGear > 0 || NeutralGear)
         {
-            remorque.transform.rotation = transform.rotation;
-            isRemorqueTurning = false;
+
+           //w if (!carSounds.switchGear.isPlaying)
+                //carSounds.switchGear.GetComponent<AudioSource>().Play();
+
+                if (!carSetting.automaticGear)
+            {
+
+                if (currentGear == 1)
+                {
+                    if (!NeutralGear){currentGear--;NeutralGear = true;}
+                }
+                else if (currentGear == 0){NeutralGear = false;}else{currentGear--;}
+            }
+            else
+            {
+                currentGear--;
+            }
+
+
+            shiftDelay = now + 0.1f;
+            shiftTime = 2.0f;
         }
     }
-*/
+
     #endregion
 
-    private void FixedUpdate()
+    #region Collision
+
+    void OnCollisionEnter(Collision collision)
     {
-        //if (!IsOwner) return;
-        //Debug.Log("Fixed Update");
+
+        if (collision.transform.root.GetComponent<TruckPhysics>())
+        {
+
+            collision.transform.root.GetComponent<TruckPhysics>().slip2 = Mathf.Clamp(collision.relativeVelocity.magnitude, 0.0f, 10.0f);
+
+            myRigidbody.angularVelocity = new Vector3(-myRigidbody.angularVelocity.x * 0.5f, myRigidbody.angularVelocity.y * 0.5f, -myRigidbody.angularVelocity.z * 0.5f);
+            myRigidbody.velocity = new Vector3(myRigidbody.velocity.x, myRigidbody.velocity.y * 0.5f, myRigidbody.velocity.z);
 
 
-        if (Input.GetAxis("Horizontal") < 0)
-            _driftAngleRatio = -driftAngleRatio;
-        else
-            _driftAngleRatio = driftAngleRatio;
-        Quaternion quat = Quaternion.Euler(0, transform.forward.y - _driftAngleRatio, 0);
-        _driftAngleRatioVec = quat * transform.forward;
-        
-        if (player.GetAxis("Breaking") > 0.5f && velocity.magnitude < 0.5f && !isReversed)
-        {
-            currTimeReverse += Time.deltaTime;
-            if (currTimeReverse >= timeToReverse)
-            {
-                currTimeReverse = timeToReverse;
-                isReversed = true;
-            }
-            vals._IsReverse = true;
-        }
-        else if (player.GetAxis("Throttle") > 0.5f && isReversed)
-        {
-            currTimeReverse -= Time.deltaTime;
-            if (currTimeReverse <= 0)
-            {
-                currTimeReverse = timeToReverse;
-                isReversed = false;
-            }
-            vals._IsReverse = false;
         }
 
-        if (drifting)
+    }
+
+
+
+
+    void OnCollisionStay(Collision collision)
+    {
+
+       if (collision.transform.root.GetComponent<TruckPhysics>())
+            collision.transform.root.GetComponent<TruckPhysics>().slip2 = 5.0f;
+
+    }
+
+
+
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    #endregion
+
+
+    #region Updates
+    void Update()
+    {
+        SetInputs();
+
+        if (!carSetting.automaticGear && activeControl)
         {
-            #region driftTemp
-            //Vector3 vec = transform.forward * player.GetAxis("Throttle");// Input.GetAxis("Vertical");
-
-            ////Debug.Log(vec);
-
-            //float rot = Input.GetAxis("Horizontal");
-
-            ////transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y + rot, 0));
+            if (shiftUp)
+            {
+                ShiftUp();
 
 
+            }
+            if (shiftDown)
+            {
+                ShiftDown();
 
-            //currWheelDelta += rot * wheelRotSped * Time.deltaTime;
-            //if (currWheelDelta > maxWheelDelta) currWheelDelta = maxWheelDelta;
-            //else if (currWheelDelta < -maxWheelDelta) currWheelDelta = -maxWheelDelta;
-            ////leftFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            ////rightFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            //radius = 1 / Mathf.Sin(currWheelDelta);
+            }
+        }
 
-            ////Debug.Log(pos + "   " + prevPos);
-            //pos = transform.position;
-            //Vector3 distance = pos - prevPos;
-            //prevPos = pos;
-
-
-            //velocity = vec + distance / Time.deltaTime;
-
-
-            //angVel = (transform.rotation.eulerAngles - prevRot) / Time.deltaTime;
-
-
-            ////Debug.Log("ANGULAR SPEED: " + angVel);
-            //prevRot = transform.rotation.eulerAngles;
-
-            //Vector3 frr = -crr * velocity;
-
-            //float speed = Mathf.Sqrt(velocity.x * velocity.x + velocity.z * velocity.z);
-
-            //float wheelRotRate = speed / wheelRadius;
-            ///*
-            //if (rot != 1)
-            //{
-            //    if (currWheelDelta < 0) currWheelDelta += (wheelRotRate / 10) * Time.deltaTime;
-            //    else if (currWheelDelta > 0) currWheelDelta -= (wheelRotRate / 10) * Time.deltaTime;
-            //    //if (currWheelDelta < 0) currWheelDelta = 0;
-            //    leftFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            //    rightFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            //    radius = 1 / Mathf.Sin(currWheelDelta);
-            //}
-            //*/
-
-            //if (rot == 0)
-            //{
-            //    if (currWheelDelta < 0)
-            //    {
-            //        currWheelDelta += (wheelRotRate / 10) * Time.deltaTime;
-            //        if (currWheelDelta > 0) currWheelDelta = 0;
-            //    }
-            //    else if (currWheelDelta > 0)
-            //    {
-            //        currWheelDelta -= (wheelRotRate / 10) * Time.deltaTime;
-            //        if (currWheelDelta < 0) currWheelDelta = 0;
-            //    }
-            //}
-
-
-            //if (rot == 0 && (angVel.y > -maxGripForce || angVel.y < maxGripForce)) { drifting = false; vals._IsDrift = false; }
-
-            //if (Input.GetKeyDown(KeyCode.E)) currWheelDelta = 0;
-            //leftFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            //rightFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            //radius = 1 / Mathf.Sin(currWheelDelta);
-
-            //float angularSpeed = speed / radius;//(transform.rotation.eulerAngles.y - prevRot) / Time.deltaTime;
-
-            //float longVel = Vector3.Magnitude(Mathf.Cos(currWheelDelta) * velocity);
-            //float latVel = Vector3.Magnitude(Mathf.Sin(currWheelDelta) * velocity);
-
-            //float slipAngleFront = Mathf.Atan((latVel + angularSpeed * 0.2f) / longVel) - Mathf.Sign(longVel);
-            //float slipAngleRear = Mathf.Atan((latVel - angularSpeed * 0.2f) / longVel);
-
-
-            //float fLatFront = cornerStiff * slipAngleFront;
-            //float fLatRear = cornerStiff * slipAngleRear;
-
-            ////Debug.Log(fLatFront + "  " + fLatRear);
-
-            //fLatFront = Mathf.Min(fLatFront, 5);
-            //fLatRear = Mathf.Min(fLatRear, 5);
-
-            //fLatFront *= tyreLoad;
-            //fLatRear *= tyreLoad;
-
-            //float torque = Mathf.Cos(currWheelDelta) * fLatFront * 0.2f - fLatRear * 0.2f;
-
-            //float angAccel = torque / inertia;
-
-            //angularSpeed += angAccel * Time.deltaTime;
-            //Debug.Log(angularSpeed);
-
-            //Vector3 fdrag;// = -cdrag * velocity * Vector3.Magnitude(velocity);
-            //fdrag.x = -cdrag * velocity.x * speed;
-            //fdrag.y = 0;//-cdrag * velocity.y * speed;
-            //fdrag.z = -cdrag * velocity.z * speed;
+    }
 
 
 
 
-            //Vector3 fres = frr + fdrag;
-
-            //Vector3 ftraction = transform.forward * enginePower;
-
-
-            //Vector3 flong;
-
-            //if (Input.GetKey(KeyCode.Space))
-            //{
-            //    Debug.Log("---BREAKING---");
-            //    Vector3 fbrake = -transform.forward * cbreak;
-            //    flong = fbrake + fdrag + frr;
-            //    if (speed < 0.1f) flong = Vector3.zero;
-            //}
-            //else
-            //{
-            //    flong = ftraction + fdrag + frr;
-            //}
+    void FixedUpdate()
+    {
 
 
-            //Vector3 accel = flong / weight;
+        // speed of car
+        speed = myRigidbody.velocity.magnitude * 2.7f;
 
 
-            //velocity += Time.deltaTime * accel;
 
-            ////velocity.x = Mathf.Min(velocity.x, maxVelocity);
-            ////velocity.x = Mathf.Max(velocity.x, -maxVelocity);
-            //velocity.y = 0;
-            ////velocity.z = Mathf.Min(velocity.z, maxVelocity);
-            ////velocity.z = Mathf.Max(velocity.z, -maxVelocity);
-            ////velocity = leftFrontWheel.transform.forward * 5;
+        if (speed < lastSpeed - 10 && slip < 10)
+        {
+            slip = lastSpeed / 15;
+        }
 
-            //if (Input.GetKeyDown(KeyCode.Space)) velocity = Vector3.zero;
+        lastSpeed = speed;
 
-            //Vector3 finalPos = transform.position + Time.deltaTime * velocity;
 
-            //transform.position = finalPos;
-            //if (velocity.magnitude < 0.01f || speed < 0.1f) velocity = Vector3.zero;
-            //Debug.Log(velocity);
 
-            //float fRot = Mathf.Min(transform.rotation.eulerAngles.y + leftFrontWheel.transform.rotation.eulerAngles.y / 20, transform.rotation.eulerAngles.y + 5);
-            ////Debug.Log(transform.rotation.eulerAngles.y + leftFrontWheel.transform.rotation.eulerAngles.y / 20);
-            ////transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, fRot, transform.rotation.eulerAngles.z);
-            //transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y - angularSpeed * Time.deltaTime, transform.rotation.eulerAngles.z);
-            #endregion
-            #region temp
 
-            //_driftAngleRatio = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + angVel.y, transform.rotation.eulerAngles.z).eulerAngles;
+        if (slip2 != 0.0f)
+            slip2 = Mathf.MoveTowards(slip2, 0.0f, 0.1f);
 
-            pos = transform.position;
-            Vector3 vec = transform.forward * player.GetAxis("Throttle");//Input.GetAxis("Vertical");
-            Vector3 dist = pos - prevPos;
-            //Debug.Log(dist);
-            prevPos = pos;
+
+
+        myRigidbody.centerOfMass = carSetting.shiftCentre;
+
+
+
+
+        if (activeControl)
+        {
+
+            if (controlMode == ControlMode.simple)
+            {
+
+
+                accel = 0;
+                brake = false;
+                shift = false;
+
+                if (carWheels.wheels.frontWheelDrive || carWheels.wheels.backWheelDrive)
+                {
+                    steer = Mathf.MoveTowards(steer, turn, 0.2f);
+                    accel = throttle;
+                    brake = braking;
+                }
+
+            }
             /*
-            velocity = dist + vec / Time.deltaTime;
-            prevPos = pos;
-            
-            if (velocity.x > 30) velocity.x = 30;
-            velocity.y = 0;
-            if (velocity.z > 30) velocity.z = 30;
-            
-            
-            float speed = Mathf.Sqrt(velocity.x * velocity.x + velocity.z * velocity.z);
-            
-            float wheelRotRate = speed / wheelRadius;
-            
-            angVel = (transform.rotation.eulerAngles - prevRot) / Time.deltaTime;
-            
-            
-            Debug.Log("ANGULAR SPEED: " + angVel);
-            prevRot = transform.rotation.eulerAngles;
-            
-            if (velocity.magnitude > 0)
-                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (transform.rotation.eulerAngles.y + currWheelDelta / 10), transform.rotation.eulerAngles.z);
-            Vector3 finalPos = transform.position + velocity * Time.deltaTime;
-            //Debug.Log(20 - (Mathf.Min(Mathf.Abs(currWheelDelta), 20)));
-            */
-
-
-
-            velocity = vec + dist / Time.deltaTime;
-
-            Vector3 frr = -crr * velocity;
-
-            float speed = Mathf.Sqrt(velocity.x * velocity.x + velocity.z * velocity.z);
-            float wheelRotRate = speed / wheelRadius;
-
-
-            Vector3 fdrag;// = -cdrag * velocity * Vector3.Magnitude(velocity);
-            fdrag.x = -cdrag * velocity.x * speed;
-            fdrag.y = 0;//-cdrag * velocity.y * speed;
-            fdrag.z = -cdrag * velocity.z * speed;
-
-
-            Vector3 ftraction = transform.forward * enginePower;
-
-
-            Vector3 flong;
-
-            flong = ftraction + fdrag + frr;
-
-
-            Vector3 accel = flong / weight;
-
-
-            velocity += Time.deltaTime * accel;
-
-            velocity.y = 0;
-
-            velocity = _driftAngleRatioVec * driftAngleSpeed;
-
-            velocity.x *= (acceleration * driftAccelerationRatio);
-            velocity.z *= (acceleration * driftAccelerationRatio);
-
-
-            //Debug.Log("ANGULAR SPEED: " + angVel);
-            prevRot = transform.rotation.eulerAngles;
-
-            if (velocity.magnitude > 0)
-                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (transform.rotation.eulerAngles.y + currWheelDelta / driftTurningRatio), transform.rotation.eulerAngles.z);
-
-            Vector3 finalPos = transform.position + Time.deltaTime * velocity;
-
-            transform.position = finalPos;
-
-            //Debug.Log(velocity);
-
-
-            float rot = Input.GetAxis("Horizontal");
-
-            if (rot == 0) { drifting = false; vals._IsDrift = false; }
-
-            currWheelDelta += rot;
-            //if (angVel.y <= -maxGripForce || angVel.y >= maxGripForce) drifting = true;
-
-
-            if (currWheelDelta > 30) currWheelDelta = 30;
-            else if (currWheelDelta < -30) currWheelDelta = -30;
-
-            if (rot == 0)
+            else if (controlMode == ControlMode.touch)
             {
-                if (currWheelDelta < 0)
-                {
-                    currWheelDelta += (wheelRotRate / 10) * Time.deltaTime;
-                    if (currWheelDelta > 0) currWheelDelta = 0;
-                }
-                else if (currWheelDelta > 0)
-                {
-                    currWheelDelta -= (wheelRotRate / 10) * Time.deltaTime;
-                    if (currWheelDelta < 0) currWheelDelta = 0;
-                }
+
+                if (accelFwd != 0) { accel = accelFwd; } else { accel = accelBack; }
+                steer = Mathf.MoveTowards(steer, steerAmount, 0.07f);
+
             }
-
-            leftFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            rightFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-
-            #endregion
+            */
         }
         else
         {
-            float barVal, antiBarVal;
-            barVal = isReversed ? player.GetAxis("Breaking") : player.GetAxis("Throttle");
-            antiBarVal = isReversed ? player.GetAxis("Throttle") : player.GetAxis("Breaking");
-
-            if (bar < 1) bar += barVal * (throttleAccelSpeed * Time.deltaTime);
-            if (bar > 1) bar = 1;
-            if (bar > 0 && barVal < 0.5f) bar -= ((antiBarVal / 2) * Time.deltaTime) + Time.deltaTime * throttleDeccelSpeed;
-            if (bar < 0) bar = 0;
-            //Debug.Log(barVal);
-            pos = transform.position;
-            Vector3 vec = transform.forward * throttleForce.Evaluate(bar);
-            Vector3 dist = pos - prevPos;
+            accel = 0.0f;
+            steer = 0.0f;
+            brake = false;
+            shift = false;
+        }
 
 
-            float rot = Input.GetAxis("Horizontal");
 
-            prevPos = pos;
-
-            velocity = dist + vec / Time.deltaTime;
+        if (!carWheels.wheels.frontWheelDrive && !carWheels.wheels.backWheelDrive)
+            accel = 0.0f;
 
 
-            float speed = Mathf.Sqrt(velocity.x * velocity.x + velocity.z * velocity.z);
 
-            if (isReversed)
+        if (carSetting.carSteer)
+            carSetting.carSteer.localEulerAngles = new Vector3(steerCurAngle.x, steerCurAngle.y, steerCurAngle.z + (steer * -120.0f));
+
+
+
+        if (carSetting.automaticGear && (currentGear == 1) && (accel < 0.0f))
+        {
+            if (speed < 5.0f)
+                ShiftDown();
+
+
+        }
+        else if (carSetting.automaticGear && (currentGear == 0) && (accel > 0.0f))
+        {
+            if (speed < 5.0f)
+                ShiftUp();
+
+        }
+        else if (carSetting.automaticGear && (motorRPM > carSetting.shiftUpRPM) && (accel > 0.0f) && speed > 10.0f && !brake)
+        {
+
+            ShiftUp();
+
+        }
+        else if (carSetting.automaticGear && (motorRPM < carSetting.shiftDownRPM) && (currentGear > 1))
+        {
+            ShiftDown();
+        }
+
+
+
+        if (speed < 1.0f) Backward = true;
+
+
+
+        if (currentGear == 0 && Backward == true)
+        {
+          //  carSetting.shiftCentre.z = -accel / -5;
+            if (speed < carSetting.gears[0] * -10)
+                accel = -accel;
+        }
+        else
+        {
+            Backward = false;
+         //   if (currentGear > 0)
+         //   carSetting.shiftCentre.z = -(accel / currentGear) / -5;
+        }
+
+
+
+
+      //  carSetting.shiftCentre.x = -Mathf.Clamp(steer * (speed / 100), -0.03f, 0.03f);
+
+
+
+        // Brake Lights
+
+        foreach (Light brakeLight in carLights.brakeLights)
+        {
+            if (brake || accel < 0 || speed < 1.0f)
             {
-                //if (acceleration < maxBreaking && barVal > 0) acceleration += Time.deltaTime * breakForce;
-                //else if (acceleration > 0 && barVal == 0) acceleration -= Time.deltaTime * breakForce;
+                //brakeLight.intensity = Mathf.MoveTowards(brakeLight.intensity, 8, 0.5f);
             }
-            else 
+            else
             {
-                if (acceleration < maxAccel && player.GetAxis("Throttle") > 0) acceleration += Time.deltaTime * accelForce;
-                else if (acceleration > 0 && player.GetAxis("Throttle") == 0) acceleration -= Time.deltaTime * accelForce;
-            }
-            
-            vals._Acceleration = acceleration;
+                //brakeLight.intensity = Mathf.MoveTowards(brakeLight.intensity, 0, 0.5f);
 
-            float val = Mathf.Sqrt((maxVelocity * maxVelocity) / 2);
-
-            float wheelRotRate = speed / wheelRadius;
-
-            angVel = (transform.rotation.eulerAngles - prevRot) / Time.deltaTime;
-
-            gripCurrForce += Mathf.Abs(rot) * velocity.magnitude * Time.deltaTime;//= (Mathf.Abs(transform.rotation.y) - gripPrevForce) / Time.deltaTime;
-            gripPrevForce = Mathf.Abs(transform.rotation.y);
-
-            vals._AngularVelocity = angVel;
-            if (rot == 0)
-                gripCurrForce = 0;
-
-            vals._GripVal = gripCurrForce;//Mathf.Abs(angVel.y) * Time.deltaTime;
-
-            prevRot = transform.rotation.eulerAngles;
-
-            Vector3 frr = -airFriction * velocity * speed;
-            Vector3 breaking = player.GetAxis("Breaking") * -transform.forward * 10000;
-
-            Vector3 fTot = frr + breaking;
-
-            Vector3 accel = fTot / 1000;
-
-            velocity.x += (transform.forward.x * acceleration) / Time.deltaTime;
-            velocity.z += (transform.forward.z * acceleration) / Time.deltaTime;
-            velocity += Time.deltaTime * accel;
-
-            velocity.y = 0;
-
-            vals._Velocity = velocity;
-            vals._Speed = velocity.magnitude;
-
-            if (isReversed)
-            {
-                velocity *= -1;
-                velocity /= 10;
             }
 
-            if (velocity.magnitude > 0.1f)
+            //brakeLight.enabled = brakeLight.intensity == 0 ? false : true;
+        }
+
+
+        // Reverse Lights
+
+        foreach (Light WLight in carLights.reverseLights)
+        {
+            if (speed > 2.0f && currentGear == 0)
             {
-                if (isReversed)
-                    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (transform.rotation.eulerAngles.y - (currWheelDelta / 20) * Mathf.Min(velocity.magnitude, 1)), transform.rotation.eulerAngles.z);
-                else
-                    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (transform.rotation.eulerAngles.y + (currWheelDelta / 20) * Mathf.Min(velocity.magnitude, 1)), transform.rotation.eulerAngles.z);
-                if (delta < remorqueMaxDelta)
+                //WLight.intensity = Mathf.MoveTowards(WLight.intensity, 8, 0.5f);
+            }
+            else
+            {
+                //WLight.intensity = Mathf.MoveTowards(WLight.intensity, 0, 0.5f);
+            }
+            //WLight.enabled = WLight.intensity == 0 ? false : true;
+        }
+
+
+
+
+
+
+        wantedRPM = (5500.0f * accel) * 0.1f + wantedRPM * 0.9f;
+
+        float rpm = 0.0f;
+        int motorizedWheels = 0;
+        bool floorContact = false;
+        int currentWheel = 0;
+
+
+
+
+
+        foreach (WheelComponent w in wheels)
+        {
+            WheelHit hit;
+            WheelCollider col = w.collider;
+
+            if (w.drive)
+            {
+                if (!NeutralGear && brake && currentGear < 2)
                 {
-                    if (isReversed)
-                        remorque.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (remorque.transform.rotation.eulerAngles.y - currWheelDelta / 10), transform.rotation.eulerAngles.z);
+                    rpm += accel * carSetting.idleRPM;
+
+                    /*
+                    if (rpm > 1)
+                    {
+                        carSetting.shiftCentre.z = Mathf.PingPong(Time.time * (accel * 10), 2.0f) - 1.0f;
+                    }
                     else
-                        remorque.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, (remorque.transform.rotation.eulerAngles.y - currWheelDelta / 10), transform.rotation.eulerAngles.z);
-                    
-                    if (remorque.transform.rotation.eulerAngles.y != transform.rotation.eulerAngles.y)
-                        isRemorqueTurning = true;
+                    {
+                        carSetting.shiftCentre.z = 0.0f;
+                    }
+                    */
+
+                }
+                else
+                {
+                    if (!NeutralGear)
+                    {
+                        rpm += col.rpm;
+                    }else{
+                        rpm += (carSetting.idleRPM*accel);
+                    }
                 }
 
+
+                motorizedWheels++;
             }
-            Vector3 finalPos = transform.position + velocity * Time.deltaTime;
-
-            transform.position = finalPos;
-
-            prevVel = velocity;
 
 
-            currWheelDelta += rot;
 
 
-            if (gripCurrForce >= maxGripForce && (rot <= -0.9f || rot >= 0.9f) && !isReversed && canDrift) { drifting = true; vals._IsDrift = true; }
-            //Debug.Log(rot);
-
-            if (currWheelDelta > 30) currWheelDelta = 30;
-            else if (currWheelDelta < -30) currWheelDelta = -30;
-
-            if (rot == 0)
+            if (brake || accel < 0.0f)
             {
-                if (currWheelDelta < 0)
+
+                if ((accel < 0.0f) || (brake && (w == wheels[2] || w == wheels[3])))
                 {
-                    currWheelDelta += (wheelRotRate * wheelRotSpeed) * Time.deltaTime;
-                    if (currWheelDelta > 0) currWheelDelta = 0;
-                }
-                else if (currWheelDelta > 0)
-                {
-                    currWheelDelta -= (wheelRotRate * wheelRotSpeed) * Time.deltaTime;
-                    if (currWheelDelta < 0) currWheelDelta = 0;
+
+                    if (brake && (accel > 0.0f))
+                    {
+                        slip = Mathf.Lerp(slip, 5.0f, accel * 0.01f);
+                    }
+                    else if (speed > 1.0f)
+                    {
+                        slip = Mathf.Lerp(slip, 1.0f, 0.002f);
+                    }
+                    else
+                    {
+                        slip = Mathf.Lerp(slip, 1.0f, 0.02f);
+                    }
+
+
+                    wantedRPM = 0.0f;
+                    col.brakeTorque = carSetting.brakePower;
+                    w.rotation = w_rotate;
+
                 }
             }
-            vals._WheelDelta = currWheelDelta;
+            else
+            {
 
-            leftFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
-            rightFrontWheel.transform.localRotation = Quaternion.Euler(new Vector3(0, currWheelDelta, 0));
+
+                col.brakeTorque = accel == 0 || NeutralGear ? col.brakeTorque = 1000 : col.brakeTorque = 0;
+
+
+                slip = speed > 0.0f ?
+    (speed > 100 ? slip = Mathf.Lerp(slip, 1.0f + Mathf.Abs(steer), 0.02f) : slip = Mathf.Lerp(slip, 1.5f, 0.02f))
+    : slip = Mathf.Lerp(slip, 0.01f, 0.02f);
+
+
+                w_rotate = w.rotation;
+
+            }
+
+
+
+            WheelFrictionCurve fc = col.forwardFriction;
+
+
+
+            fc.asymptoteValue = 5000.0f;
+            fc.extremumSlip = 2.0f;
+            fc.asymptoteSlip = 20.0f;
+            fc.stiffness = carSetting.stiffness / (slip + slip2);
+            col.forwardFriction = fc;
+            fc = col.sidewaysFriction;
+            fc.stiffness = carSetting.stiffness / (slip + slip2);
+
+
+            fc.extremumSlip = 0.2f + Mathf.Abs(steer);
+
+            col.sidewaysFriction = fc;
+
+
+
+
+            if (shift && (currentGear > 1 && speed > 50.0f) && shifmotor && Mathf.Abs(steer) < 0.2f)
+            {
+
+                if (powerShift == 0) { shifmotor = false; }
+
+                powerShift = Mathf.MoveTowards(powerShift, 0.0f, Time.deltaTime * 10.0f);
+
+                //carSounds.nitro.volume = Mathf.Lerp(carSounds.nitro.volume, 1.0f, Time.deltaTime * 10.0f);
+
+                //if (!carSounds.nitro.isPlaying)
+                {
+                    //carSounds.nitro.GetComponent<AudioSource>().Play();
+
+                }
+
+
+                curTorque = powerShift > 0 ? carSetting.shiftPower : carSetting.carPower;
+                //carParticles.shiftParticle1.emissionRate = Mathf.Lerp(carParticles.shiftParticle1.emissionRate, powerShift > 0 ? 50 : 0, Time.deltaTime * 10.0f);
+                //carParticles.shiftParticle2.emissionRate = Mathf.Lerp(carParticles.shiftParticle2.emissionRate, powerShift > 0 ? 50 : 0, Time.deltaTime * 10.0f);
+            }
+            else
+            {
+
+                if (powerShift > 20)
+                {
+                    shifmotor = true;
+                }
+
+                //carSounds.nitro.volume = Mathf.MoveTowards(carSounds.nitro.volume, 0.0f, Time.deltaTime * 2.0f);
+
+                //if (carSounds.nitro.volume == 0)
+                //carSounds.nitro.Stop();
+
+                powerShift = Mathf.MoveTowards(powerShift, 100.0f, Time.deltaTime * 5.0f);
+                curTorque = carSetting.carPower;
+                //carParticles.shiftParticle1.emissionRate = Mathf.Lerp(carParticles.shiftParticle1.emissionRate, 0, Time.deltaTime * 10.0f);
+                //carParticles.shiftParticle2.emissionRate = Mathf.Lerp(carParticles.shiftParticle2.emissionRate, 0, Time.deltaTime * 10.0f);
+            }
+
+
+            w.rotation = Mathf.Repeat(w.rotation + Time.deltaTime * col.rpm * 360.0f / 60.0f, 360.0f);
+            w.rotation2 = Mathf.Lerp(w.rotation2,col.steerAngle,0.1f);
+            w.wheel.localRotation = Quaternion.Euler(w.rotation,w.rotation2, 0.0f);
+
+
+
+            Vector3 lp = w.wheel.localPosition;
+
+
+            if (col.GetGroundHit(out hit))
+            {
+
+
+                if (carParticles.brakeParticlePerfab)
+                {
+                    /*
+                    if (Particle[currentWheel] == null)
+                    {
+                        Particle[currentWheel] = Instantiate(carParticles.brakeParticlePerfab, w.wheel.position, Quaternion.identity) as GameObject;
+                        Particle[currentWheel].name = "WheelParticle";
+                        Particle[currentWheel].transform.parent = transform;
+                        Particle[currentWheel].AddComponent<AudioSource>();
+                        Particle[currentWheel].GetComponent<AudioSource>().maxDistance = 50;
+                        Particle[currentWheel].GetComponent<AudioSource>().spatialBlend = 1;
+                        Particle[currentWheel].GetComponent<AudioSource>().dopplerLevel = 5;
+                        Particle[currentWheel].GetComponent<AudioSource>().rolloffMode = AudioRolloffMode.Custom;
+                    }
+                    */
+
+                    //var pc = Particle[currentWheel].GetComponent<ParticleSystem>();
+                    bool WGrounded = false;
+
+
+                    for (int i = 0; i < carSetting.hitGround.Length; i++)
+                    {
+
+                        if (hit.collider.CompareTag(carSetting.hitGround[i].tag))
+                        {
+                            WGrounded = carSetting.hitGround[i].grounded;
+
+                            //if ((brake || Mathf.Abs(hit.sidewaysSlip) > 0.5f) && speed > 1)
+                            {
+                                //Particle[currentWheel].GetComponent<AudioSource>().clip = carSetting.hitGround[i].brakeSound;
+                            }
+                            //else if (Particle[currentWheel].GetComponent<AudioSource>().clip != carSetting.hitGround[i].groundSound && !Particle[currentWheel].GetComponent<AudioSource>().isPlaying)
+                            {
+
+                                //Particle[currentWheel].GetComponent<AudioSource>().clip = carSetting.hitGround[i].groundSound;
+                            }
+
+                            //Particle[currentWheel].GetComponent<ParticleSystem>().startColor = carSetting.hitGround[i].brakeColor;
+
+                        }
+
+
+                    }
+
+
+
+
+                    if (WGrounded && speed > 5 && !brake)
+                    {
+
+                        //pc.enableEmission = true;
+
+                        //Particle[currentWheel].GetComponent<AudioSource>().volume = 0.5f;
+
+                        //if (!Particle[currentWheel].GetComponent<AudioSource>().isPlaying)
+                        //Particle[currentWheel].GetComponent<AudioSource>().Play();
+
+                    }
+                    else if ((brake || Mathf.Abs(hit.sidewaysSlip) > 0.6f) && speed > 1)
+                    {
+
+                        if ((accel < 0.0f) || ((brake || Mathf.Abs(hit.sidewaysSlip) > 0.6f) && (w == wheels[2] || w == wheels[3])))
+                        {
+
+                            //if (!Particle[currentWheel].GetComponent<AudioSource>().isPlaying)
+                            //Particle[currentWheel].GetComponent<AudioSource>().Play();
+                            //pc.enableEmission = true;
+                            //Particle[currentWheel].GetComponent<AudioSource>().volume = 10;
+
+                        }
+
+                    }
+                    else
+                    {
+
+                        //pc.enableEmission = false;
+                        //Particle[currentWheel].GetComponent<AudioSource>().volume = Mathf.Lerp(Particle[currentWheel].GetComponent<AudioSource>().volume, 0, Time.deltaTime * 10.0f);
+                    }
+
+                }
+
+
+                lp.y -= Vector3.Dot(w.wheel.position - hit.point, transform.TransformDirection(0, 1, 0) / transform.lossyScale.x) - (col.radius);
+                lp.y = Mathf.Clamp(lp.y, -10.0f, w.pos_y);
+                floorContact = floorContact || (w.drive);
+
+
+            }
+            else
+            {
+
+                if (Particle[currentWheel] != null)
+                {
+                    var pc = Particle[currentWheel].GetComponent<ParticleSystem>();
+                    //pc.enableEmission = false;
+                }
+
+
+
+                lp.y = w.startPos.y - carWheels.setting.Distance;
+
+                myRigidbody.AddForce(Vector3.down * 5000);
+
+            }
+
+            currentWheel++;
+            w.wheel.localPosition = lp;
+
+
         }
-        UpdateRemorque();
-    }
 
-    void UpdateRemorque()
-    {
-        float dotSpeed = Vector3.Dot(remorque.transform.forward, transform.forward);
-        delta = Mathf.Acos(dotSpeed / (remorque.transform.forward.magnitude * transform.forward.magnitude)) * 100;
-
-        if (!isRemorqueTurning) return;
-        if (remorque.transform.rotation.eulerAngles.y != transform.rotation.eulerAngles.y && velocity.magnitude > 0.0f && (Input.GetAxis("Horizontal") > -0.5f && Input.GetAxis("Horizontal") < 0.5f))
+        if (motorizedWheels > 1)
         {
-            if (remorque.transform.rotation.eulerAngles.y > transform.rotation.eulerAngles.y)
-                remorque.transform.rotation = Quaternion.Euler(remorque.transform.rotation.eulerAngles.x, remorque.transform.rotation.eulerAngles.y - Time.deltaTime * remorqueTurningSpeed, remorque.transform.rotation.eulerAngles.z);
-
-            else if (remorque.transform.rotation.eulerAngles.y < transform.rotation.eulerAngles.y)
-                remorque.transform.rotation = Quaternion.Euler(remorque.transform.rotation.eulerAngles.x, remorque.transform.rotation.eulerAngles.y + Time.deltaTime * remorqueTurningSpeed, remorque.transform.rotation.eulerAngles.z);
+            rpm = rpm / motorizedWheels;
         }
 
 
-        if (dotSpeed > 0.9999f && isRemorqueTurning)
+        motorRPM = 0.95f * motorRPM + 0.05f * Mathf.Abs(rpm * carSetting.gears[currentGear]);
+        if (motorRPM > 5500.0f) motorRPM = 5200.0f;
+
+
+        int index = (int)(motorRPM / efficiencyTableStep);
+        if (index >= efficiencyTable.Length) index = efficiencyTable.Length - 1;
+        if (index < 0) index = 0;
+
+
+
+        float newTorque = curTorque * carSetting.gears[currentGear] * efficiencyTable[index];
+
+        foreach (WheelComponent w in wheels)
         {
-            remorque.transform.rotation = transform.rotation;
-            isRemorqueTurning = false;
+            WheelCollider col = w.collider;
+
+            if (w.drive)
+            {
+
+                if (Mathf.Abs(col.rpm) > Mathf.Abs(wantedRPM))
+                {
+
+                    col.motorTorque = 0;
+                }
+                else
+                {
+                    // 
+                    float curTorqueCol = col.motorTorque;
+
+                    if (!brake && accel != 0 && NeutralGear == false)
+                    {
+                        if ((speed < carSetting.LimitForwardSpeed && currentGear > 0) ||
+                            (speed < carSetting.LimitBackwardSpeed && currentGear == 0))
+                        {
+
+                            col.motorTorque = curTorqueCol * 0.9f + newTorque * 1.0f;
+                        }
+                        else
+                        {
+                            col.motorTorque = 0;
+                            col.brakeTorque = 2000;
+                        }
+
+
+                    }
+                    else
+                    {
+                        col.motorTorque = 0;
+
+                    }
+                }
+
+            }
+
+
+
+
+
+            if (brake || slip2 > 2.0f)
+            {
+                col.steerAngle = Mathf.Lerp(col.steerAngle, steer * w.maxSteer, 0.02f);
+            }
+            else
+            {
+
+                float SteerAngle = Mathf.Clamp(speed / carSetting.maxSteerAngle, 1.0f, carSetting.maxSteerAngle);
+                col.steerAngle = steer * (w.maxSteer / SteerAngle);
+
+
+            }
+
         }
+
+
+
+
+        // calculate pitch (keep it within reasonable bounds)
+        Pitch = Mathf.Clamp(1.2f + ((motorRPM - carSetting.idleRPM) / (carSetting.shiftUpRPM - carSetting.idleRPM)), 1.0f, 10.0f);
+
+        shiftTime = Mathf.MoveTowards(shiftTime, 0.0f, 0.1f);
+
+        if (Pitch == 1)
+        {
+            //carSounds.IdleEngine.volume = Mathf.Lerp(carSounds.IdleEngine.volume, 1.0f, 0.1f);
+            //carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.5f, 0.1f);
+            //carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 0.0f, 0.1f);
+
+        }
+        else
+        {
+
+            //carSounds.IdleEngine.volume = Mathf.Lerp(carSounds.IdleEngine.volume, 1.8f - Pitch, 0.1f);
+
+
+            if ((Pitch > PitchDelay || accel > 0) && shiftTime == 0.0f)
+            {
+                //carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.0f, 0.2f);
+                ////carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 1.0f, 0.1f);
+            }
+            else
+            {
+                //carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.5f, 0.1f);
+                //carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 0.0f, 0.2f);
+            }
+
+
+
+
+            //carSounds.HighEngine.pitch = Pitch;
+            //carSounds.LowEngine.pitch = Pitch;
+
+            PitchDelay = Pitch;
+        }
+
     }
-    /*
-    private void OnDrawGizmos()
+
+    #endregion
+
+    #region Gizmos
+
+    /////////////// Show Normal Gizmos ////////////////////////////
+
+    void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position, transform.position + transform.forward * 5);
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + driftAngleSpeed * _driftAngleRatioVec);
+
+        if (!carSetting.showNormalGizmos || Application.isPlaying) return;
+
+        Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
+
+        Gizmos.matrix = rotationMatrix;
+        Gizmos.color = new Color(1, 0, 0, 0.5f);
+
+        Gizmos.DrawCube(Vector3.up/1.5f, new Vector3(2.5f, 2.0f, 6));
+        Gizmos.DrawSphere(carSetting.shiftCentre / transform.lossyScale.x, 0.2f);
+
     }
-    */
+
+    #endregion
+
+
 }
