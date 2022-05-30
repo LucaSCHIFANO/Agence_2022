@@ -367,7 +367,6 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 6812161584030117157}
   - {fileID: 69341504895247121}
-  - {fileID: 8197020221474899894}
   - {fileID: 8205713867953084824}
   - {fileID: 7581075411385464442}
   - {fileID: 7047547232804231512}
@@ -427,76 +426,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2216819461730630316}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fbc7ac43daf026499bfda271989b50d, type: 3}
+  m_Script: {fileID: 11500000, guid: cd1d10755724ed44bb14a7215b35ef33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  leftFrontWheel: {fileID: 2216819461975651914}
-  rightFrontWheel: {fileID: 2216819463144456837}
-  cdrag: 0.5
-  crr: 0.5
-  cbreak: 5
-  weight: 1000
-  cornerStiff: 20
-  enginePower: 50
-  tyreLoad: 5000
-  driftTurningRatio: 50
-  driftAngleRatio: 43
-  driftAngleSpeed: 30
-  driftAccelerationRatio: 5
-  wheelRotSped: 10
-  inertia: 10
-  maxWheelDelta: 20
-  maxGripForce: 50
-  airFriction: 20
-  bar: 0
-  throttleAccelSpeed: 2
-  throttleDeccelSpeed: 2
-  accelForce: 0.1
-  maxAccel: 20
-  maxVelocity: 20
-  breakForce: 0.01
-  maxBreaking: 5
-  throttleForce:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  timeToReverse: 1
-  remorque: {fileID: 7790341083850612970}
-  remorqueTurningSpeed: 10
-  remorqueMaxDelta: 20
-  wheelRotSpeed: 0.5
-  sand: 5000
-  road: 10
-  vals:
-    _Velocity: {x: 0, y: 0, z: 0}
-    _AngularVelocity: {x: 0, y: 0, z: 0}
-    _Acceleration: 0
-    _Speed: 0
-    _WheelDelta: 0
-    _GripVal: 0
-    _IsDrift: 0
-    _IsReverse: 0
+  bullet: {fileID: 0}
 --- !u!114 &8205713867953084824
 MonoBehaviour:
   m_ObjectHideFlags: 0

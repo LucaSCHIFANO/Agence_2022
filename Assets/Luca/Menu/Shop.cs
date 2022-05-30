@@ -47,7 +47,7 @@ public class Shop : NetworkBehaviour
 
     public void Interact(PlayerController other)
     {
-        if (isPossessed.Value) return;
+        if (isPossessed) return;
 
 
 
@@ -65,14 +65,14 @@ public class Shop : NetworkBehaviour
 
         CanvasInGame.Instance.showShop(true);
 
-        if (other.IsLocalPlayer)
+        if (other.Object.HasInputAuthority)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
             _playerController = other;
             other.enabled = false;
-            isPossessed.Value = true;
+            isPossessed = true;
         }
 
 

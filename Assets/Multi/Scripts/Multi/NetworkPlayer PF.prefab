@@ -297,7 +297,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5656810035027240378}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -780,6 +780,10 @@ MonoBehaviour:
   Camera: {fileID: 7128113546547911272}
   _mesh: {fileID: 7128113546351468516}
   _name: {fileID: 1831990981866921811}
+  maxHP: 0
+  hpPourcent: 0
+  timeBeforeRecov: 0
+  recovPerSecond: 0
   PossessingType: 0
   CharacterInputHandler: {fileID: 849729528955979180}
   WeaponInputHandler: {fileID: 0}
@@ -891,6 +895,9 @@ MonoBehaviour:
   canvas: {fileID: 8636776342020994156}
   interactionText: {fileID: 2165840080881523298}
   cam: {fileID: 7128113546547911268}
+  interactable:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &1495026243276412985
 MonoBehaviour:
   m_ObjectHideFlags: 0

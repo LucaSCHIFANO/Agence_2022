@@ -3741,7 +3741,7 @@ namespace Fusion.Editor {
 
 #region Assets/Photon/Fusion/Scripts/Editor/CustomTypes/ToggleLeftAttributeDrawer.cs
 
-﻿namespace Fusion.Editor {
+ namespace Fusion.Editor {
 
   using UnityEditor;
   using UnityEngine;

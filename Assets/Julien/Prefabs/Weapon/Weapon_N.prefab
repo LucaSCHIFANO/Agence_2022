@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3470512467452764577}
   - component: {fileID: 2211924856742404073}
   - component: {fileID: 5790775685870050079}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 8550547389110051173}
   - component: {fileID: 6492181983474241644}
   - component: {fileID: 6349105960748980618}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,7 +254,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4332460894528546832}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CanonBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 8822671153596592581}
   - component: {fileID: 8079274123542673255}
   - component: {fileID: 6935165382737472116}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Weapon_N
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -493,7 +493,7 @@ GameObject:
   - component: {fileID: 4332460895376048082}
   - component: {fileID: 4332460895376048081}
   - component: {fileID: 4332460895376048080}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Canon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -589,7 +589,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4332460895618547162}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CanonEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -620,7 +620,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8743449443401351034}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -653,6 +653,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: OverheatP
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204138189989464471, guid: 72b124084b83133499e9ec3b41db5210,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7360598498018640114, guid: 72b124084b83133499e9ec3b41db5210,
         type: 3}

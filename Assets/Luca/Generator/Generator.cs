@@ -60,7 +60,19 @@ public class Generator : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void quitShop()
+    {
+        CanvasInGame.Instance.showGen(false);
 
+        NetworkedPlayer _playerController = App.Instance.Session.Runner
+            .GetPlayerObject(App.Instance.Session.Runner.LocalPlayer).GetComponent<NetworkedPlayer>();
+                
+        if (_playerController.Object.HasInputAuthority)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
     private void Update()
     {
         if(triangleButton.canMove) onClickTriangle(true);

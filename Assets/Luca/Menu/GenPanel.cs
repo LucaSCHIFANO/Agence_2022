@@ -48,21 +48,21 @@ public class GenPanel : NetworkBehaviour
 
 
 
-    public void Interact(PlayerController other)
+    public void Interact(NetworkedPlayer other)
     {
-        if (isPossessed.Value) return;
+        if (isPossessed) return;
 
 
         CanvasInGame.Instance.showGen(true);
 
-        if (other.IsLocalPlayer)
+        if (other.Object.HasInputAuthority)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
             _playerController = other;
             other.enabled = false;
-            isPossessed.Value = true;
+            isPossessed = true;
         }
 
 
