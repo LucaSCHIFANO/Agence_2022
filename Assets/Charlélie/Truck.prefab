@@ -839,7 +839,8 @@ GameObject:
   - component: {fileID: 4534356275946884010}
   - component: {fileID: 4534356275946884011}
   - component: {fileID: 4534356275946884012}
-  m_Layer: 1
+  - component: {fileID: 7769124118613775509}
+  m_Layer: 8
   m_Name: Truck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1229,6 +1230,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxLife: 0
   currLife: 0
+--- !u!65 &7769124118613775509
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8740809374433383271}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9721699, y: 1.5037618, z: 4.243514}
+  m_Center: {x: 0.026514053, y: 0.9235623, z: -0.013257265}
 --- !u!1 &8740809374433384251
 GameObject:
   m_ObjectHideFlags: 0
