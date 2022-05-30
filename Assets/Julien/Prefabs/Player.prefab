@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 7926488033872761810}
   - component: {fileID: 1333379650}
   - component: {fileID: 5949546406629983895}
+  - component: {fileID: 3744769311024658667}
   - component: {fileID: -2123784371073674154}
   - component: {fileID: 2211731241892615362}
   m_Layer: 7
@@ -415,9 +416,22 @@ MonoBehaviour:
   - {fileID: 2100000, guid: b6b95799395bcf94bb9080d22ed607e9, type: 2}
   anim: {fileID: 8258825958479968147}
   maxHP: 100
-  hpPourcent: 100
+--- !u!114 &3744769311024658667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2616102455232856259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78e30ee463bd61459ad58f2d6e1381d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 100
+  hpPourcent: 0.469
   timeBeforeRecov: 2
-  recovPerSecond: 5
+  recovPerSecond: 100
 --- !u!114 &-2123784371073674154
 MonoBehaviour:
   m_ObjectHideFlags: 0
