@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class HPEnemy : HP
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject impactEffect;
+    
+    public override void reduceHP(float damage)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        currentHP -= damage;
+        Instantiate(impactEffect, transform.position, transform.rotation);
+        if (currentHP <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

@@ -87,7 +87,11 @@ public class WeaponUltima : WeaponBase
                 CreateBulletEffectServerRpc(hit.point);
                 Instantiate(bulletEffect, hit.point, transform.rotation);
                 
-                if (hit.collider.gameObject.GetComponent<HP>()) hit.collider.gameObject.GetComponent<HP>().reduceHP(damage * (Generator.Instance.pourcentageList[0] / 100));
+                if (hit.collider.gameObject.GetComponent<HP>())
+                {
+                    Debug.Log("hiiit");
+                    hit.collider.gameObject.GetComponent<HP>().reduceHP(damage * (Generator.Instance.pourcentageList[0] / 100));
+                }
             }
             
         }
