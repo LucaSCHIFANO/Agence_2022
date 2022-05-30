@@ -45,42 +45,36 @@ public class Shop : NetworkBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    public void Interact(PlayerController other)
     {
-        if (isPossessed) return;
-        
-        PlayerController playerController;
-        
-        if (other.gameObject.TryGetComponent(out playerController))
+        if (isPossessed.Value) return;
+
+
+
+        var okay = false;
+        foreach (var VARIABLE in truckArea.objectInAreaTruck)
         {
-            var player = other.gameObject.GetComponent<PlayerController>();
-            
-            if (Input.GetKey(KeyCode.E))
+            if (VARIABLE.gameObject.tag == "Car")
             {
-                var okay = false;
-                foreach (var VARIABLE in truckArea.objectInAreaTruck)
-                {
-                    if (VARIABLE.gameObject.tag == "Car")
-                    {
-                        okay = true;
-                        break;
-                    }
-                }
-                
-                if(!okay) return;
-
-                CanvasInGame.Instance.showShop(true);
-                
-                if (player.Object.HasInputAuthority)
-                {
-                    Cursor.lockState = CursorLockMode.None;
-                    Cursor.visible = true;
-
-                    _playerController = player;
-                    player.enabled = false;
-                    isPossessed = true;
-                }
+                okay = true;
+                break;
             }
         }
+
+        if (!okay) return;
+
+        CanvasInGame.Instance.showShop(true);
+
+        if (other.IsLocalPlayer)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            _playerController = other;
+            other.enabled = false;
+            isPossessed.Value = true;
+        }
+
+
     }
 }

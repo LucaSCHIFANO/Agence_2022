@@ -13,8 +13,6 @@ public class GeneratorInteractable : Interactable
 
     public override void Interact(PlayerInteraction interactor)
     {
-        // _playerController = interactor.GetComponent<PlayerController>();
-        // CanvasInGame.Instance.showShop(true);
-        // _playerController.enabled = false;
+        GetComponent<GenPanel>().Interact(interactor.GetComponent<PlayerController>());
     }
 }

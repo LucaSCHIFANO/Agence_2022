@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 2871867715561878747}
   - component: {fileID: 3872158179956462435}
   - component: {fileID: 9101947391748668277}
+  - component: {fileID: 3101327475440066248}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -219,6 +220,22 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &3101327475440066248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599223613011503216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56666c5a40171f54783dd416a44f42bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1 &2616102455232856259
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,6 +251,7 @@ GameObject:
   - component: {fileID: 7926488033872761810}
   - component: {fileID: 1333379650}
   - component: {fileID: 5949546406629983895}
+  - component: {fileID: 3744769311024658667}
   - component: {fileID: -2123784371073674154}
   - component: {fileID: 2211731241892615362}
   m_Layer: 7
@@ -398,9 +416,22 @@ MonoBehaviour:
   - {fileID: 2100000, guid: b6b95799395bcf94bb9080d22ed607e9, type: 2}
   anim: {fileID: 8258825958479968147}
   maxHP: 100
-  hpPourcent: 100
+--- !u!114 &3744769311024658667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2616102455232856259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78e30ee463bd61459ad58f2d6e1381d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 100
+  hpPourcent: 0.469
   timeBeforeRecov: 2
-  recovPerSecond: 5
+  recovPerSecond: 100
 --- !u!114 &-2123784371073674154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,11 +470,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25307306c7e0f014590013f4d0766c89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionDistance: 2.5
+  interactionDistance: 4
   interactionKeyCode: 101
   canvas: {fileID: 937656300936914906}
   interactionText: {fileID: 6647994914999094612}
   cam: {fileID: 2871867715561878747}
+  interactable:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &2616102457180966129
 GameObject:
   m_ObjectHideFlags: 0

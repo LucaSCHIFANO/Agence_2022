@@ -45,33 +45,26 @@ public class GenPanel : NetworkBehaviour
             isPossessed = false;
         }
     }
-    
-    
-    
-    private void OnTriggerStay(Collider other)
-    {
-        if (isPossessed) return;
-        
-        NetworkedPlayer playerController;
-        
-        if (other.gameObject.TryGetComponent(out playerController))
-        {
-            var player = other.gameObject.GetComponent<NetworkedPlayer>();
-            
-            if (Input.GetKey(KeyCode.E))
-            {
-                CanvasInGame.Instance.showGen(true);
-                
-                if (player.Object.HasInputAuthority)
-                {
-                    Cursor.lockState = CursorLockMode.None;
-                    Cursor.visible = true;
 
-                    _playerController = player;
-                    player.enabled = false;
-                    isPossessed = true;
-                }
-            }
+
+
+    public void Interact(PlayerController other)
+    {
+        if (isPossessed.Value) return;
+
+
+        CanvasInGame.Instance.showGen(true);
+
+        if (other.IsLocalPlayer)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            _playerController = other;
+            other.enabled = false;
+            isPossessed.Value = true;
         }
+
+
     }
 }
