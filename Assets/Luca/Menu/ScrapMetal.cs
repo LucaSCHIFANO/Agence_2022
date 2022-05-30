@@ -10,7 +10,8 @@ public class ScrapMetal : NetworkBehaviour
 {
     public int scrap;
     public TextMeshProUGUI textSmetals;
-
+    
+    // (OnChanged = nameof(OnScrapChanged))
     [Networked] private int scrapLeft { get; set; }
 
     #region Singleton
@@ -22,22 +23,23 @@ public class ScrapMetal : NetworkBehaviour
     {
         if (Instance == null)
             Instance = this;
-
-        scrapLeft = scrap;
     }
 
-    private void OnScrapChanged(int previousvalue, int newvalue)
+    public override void Spawned()
+    {
+        base.Spawned();
+        scrapLeft = scrap;
+        
+        actuText();
+    }
+
+    private void OnScrapChanged(ScrapMetal changed)
     {
         actuText();
-        scrap = newvalue;
+        scrap = changed.scrapLeft;
         Debug.Log($"Scrap : {scrap} | Server Scrap : {scrapLeft}");
     }
 
-
-    private void Start()
-    {
-        actuText();
-    }
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void addMoneyServerRpc(int lint)

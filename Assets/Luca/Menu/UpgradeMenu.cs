@@ -67,10 +67,10 @@ public class UpgradeMenu : NetworkBehaviour
 
     #endregion
 
-    [Networked/*(OnChanged = nameof(UpgradesForteresseServerOnChanged))*/] private NetworkLinkedList<int> upgradesForteresseServer => default;
-    [Networked/*(OnChanged = nameof(UpgradesCamionServerOnChanged))*/] private NetworkLinkedList<int> upgradesCamionServer => default;
-    [Networked/*(OnChanged = nameof(UnlockWeapon1ServerOnChanged))*/] private NetworkLinkedList<int> unlockedWeapon1Server => default;
-    [Networked/*(OnChanged = nameof(UnlockWeapon2ServerOnChanged))*/] private NetworkLinkedList<int> unlockedWeapon2Server => default;
+    [Networked/*(OnChanged = nameof(UpgradesForteresseServerOnChanged))*/, Capacity(3)] private NetworkLinkedList<int> upgradesForteresseServer => default;
+    [Networked/*(OnChanged = nameof(UpgradesCamionServerOnChanged))*/, Capacity(3)] private NetworkLinkedList<int> upgradesCamionServer => default;
+    [Networked/*(OnChanged = nameof(UnlockWeapon1ServerOnChanged))*/, Capacity(5)] private NetworkLinkedList<int> unlockedWeapon1Server => default;
+    [Networked/*(OnChanged = nameof(UnlockWeapon2ServerOnChanged))*/, Capacity(5)] private NetworkLinkedList<int> unlockedWeapon2Server => default;
     
     private int sizeWeapon1;
     private int sizeWeapon2;
@@ -90,14 +90,14 @@ public class UpgradeMenu : NetworkBehaviour
     }
 
 
-    private void Start()
+    public override void Spawned()
     {
         if (Runner.IsServer)
         {
             for (int i = 0; i < 3; i++)
             {
-                upgradesForteresseServer.Set(i, 0);
-                upgradesCamionServer.Set(i, 0);
+                upgradesForteresseServer.Add(0);
+                upgradesCamionServer.Add(0);
             }
         }
 

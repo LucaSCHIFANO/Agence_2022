@@ -14,10 +14,10 @@ public class CanBePossessed : NetworkBehaviour
 
     [Networked] private bool isPossessed { get; set; }
 
-    private PlayerController _playerNear;
-    private PlayerController _playerController;
+    private NetworkedPlayer _playerNear;
+    private NetworkedPlayer _playerController;
 
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
         if (Object.HasInputAuthority)
         {
@@ -27,8 +27,8 @@ public class CanBePossessed : NetworkBehaviour
                 {
                     gameObjectsToActivate.ForEach((o) => { o.SetActive(false); });
                     scriptToActivate.ForEach((o) => { o.enabled = false; });
-                    _playerController.enabled = true;
-                    // _playerController.Unpossess(exitPoint);
+                    // _playerController.enabled = true;
+                    _playerController.Unpossess(exitPoint);
                     _playerController = null;
                     _playerNear = null;
                     Invoke(nameof(ResetOwner), .2f);
@@ -43,7 +43,7 @@ public class CanBePossessed : NetworkBehaviour
                 if (Input.GetKey(KeyCode.E))
                 {
                     _playerController = _playerNear;
-                    // _playerController.Possess(mainSeat);
+                    _playerController.Possess(mainSeat);
                     ChangeOwnerServerRpc();
                     gameObjectsToActivate.ForEach((o) => { o.SetActive(true); });
                     scriptToActivate.ForEach((o) => { o.enabled = true; });
@@ -55,7 +55,7 @@ public class CanBePossessed : NetworkBehaviour
     private void OnTriggerExit(Collider other)
     {
         
-        if (other.gameObject.TryGetComponent(out PlayerController playerController))
+        if (other.gameObject.TryGetComponent(out NetworkedPlayer playerController))
         {
             _playerNear = null;
         }
@@ -66,7 +66,7 @@ public class CanBePossessed : NetworkBehaviour
         if (isPossessed) return;
         
         
-        if (other.gameObject.TryGetComponent(out PlayerController playerController))
+        if (other.gameObject.TryGetComponent(out NetworkedPlayer playerController))
         {
             _playerNear = playerController;
         }
@@ -77,24 +77,24 @@ public class CanBePossessed : NetworkBehaviour
         RemoveOwnershipServerRpc();
     }
     
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     void ChangeOwnerServerRpc(RpcInfo rpcInfo = default)
     {
         if (!isPossessed)
         {
             isPossessed = true;
-            App.Instance.GetPlayer(rpcInfo.Source).transform.SetParent(transform);
+            Runner.GetPlayerObject(rpcInfo.Source).transform.SetParent(transform);
             Object.AssignInputAuthority(rpcInfo.Source);
         }
     }
 
-    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     void RemoveOwnershipServerRpc(RpcInfo rpcInfo = default)
     {
         if (isPossessed)
         {
             isPossessed = false;
-            App.Instance.GetPlayer(rpcInfo.Source).transform.SetParent(null);
+            Runner.GetPlayerObject(rpcInfo.Source).transform.SetParent(null);
             Object.RemoveInputAuthority();
         }
     }

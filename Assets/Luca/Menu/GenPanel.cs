@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
+using Fusion;
 using UnityEngine;
 
 public class GenPanel : NetworkBehaviour
 {
     
     [Header("Interact")]
-    private PlayerController _playerController;
-    private NetworkVariable<bool> isPossessed = new NetworkVariable<bool>(false);
+    private NetworkedPlayer _playerController;
+    [Networked] private bool isPossessed { get; set; }
     
     
     
@@ -36,13 +36,13 @@ public class GenPanel : NetworkBehaviour
     {
         CanvasInGame.Instance.showGen(false);
                 
-        if (_playerController.IsLocalPlayer)
+        if (_playerController.Object.HasInputAuthority)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             
             _playerController.enabled = true;
-            isPossessed.Value = false;
+            isPossessed = false;
         }
     }
     
@@ -50,26 +50,26 @@ public class GenPanel : NetworkBehaviour
     
     private void OnTriggerStay(Collider other)
     {
-        if (isPossessed.Value) return;
+        if (isPossessed) return;
         
-        PlayerController playerController;
+        NetworkedPlayer playerController;
         
         if (other.gameObject.TryGetComponent(out playerController))
         {
-            var player = other.gameObject.GetComponent<PlayerController>();
+            var player = other.gameObject.GetComponent<NetworkedPlayer>();
             
             if (Input.GetKey(KeyCode.E))
             {
                 CanvasInGame.Instance.showGen(true);
                 
-                if (player.IsLocalPlayer)
+                if (player.Object.HasInputAuthority)
                 {
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
 
                     _playerController = player;
                     player.enabled = false;
-                    isPossessed.Value = true;
+                    isPossessed = true;
                 }
             }
         }

@@ -16,7 +16,7 @@ public class WeaponUltima : WeaponBase
     [SerializeField] public GameObject particleFire;
     
     
-        public enum weapon
+    public enum weapon
     {
         BASIC,
         BURST,

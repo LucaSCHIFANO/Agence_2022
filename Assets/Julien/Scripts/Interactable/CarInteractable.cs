@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Fusion;
@@ -9,6 +10,10 @@ public class CarInteractable : Interactable
     [SerializeField] private Transform seat;
     [SerializeField] private Transform exit;
     
+    [Networked] private bool isPossessed { get; set; }
+
+    private float timer;
+    
     public override string GetDescription()
     {
         return "Press <color=green>[E]</color> to drive the vehicule";
@@ -16,17 +21,32 @@ public class CarInteractable : Interactable
 
     public override void Interact(PlayerInteraction interactor)
     {
-        // AskForOwnershipServerRpc();
+        AskForOwnershipServerRpc();
     }
 
-    /*[Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
+    private void Update()
+    {
+        if (isPossessed && Object.HasInputAuthority)
+        {
+            if (timer <= 0)
+            {
+                if (Input.GetKey(KeyCode.E))
+                {
+                    AskForExitServerRpc();
+                }
+            }
+        }
+
+        if (timer > 0) timer -= Time.deltaTime;
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     void AskForOwnershipServerRpc(RpcInfo info = default)
     {
-        Movement camion = GetComponent<Movement>();
-        if (camion.isPossessed) return;
+        if (isPossessed) return;
         
-        camion.Object.AssignInputAuthority(info.Source);
-        camion.isPossessed = true;
+        Object.AssignInputAuthority(info.Source);
+        isPossessed = true;
         GameObject playerObject = Runner.GetPlayerObject(info.Source).gameObject;
         playerObject.transform.SetParent(transform);
         playerObject.transform.position = seat.position;
@@ -39,17 +59,16 @@ public class CarInteractable : Interactable
     {
         camera.SetActive(true);
         Runner.GetPlayerObject(Runner.LocalPlayer).GetComponent<NetworkedPlayer>().Possess(seat);
-        GetComponent<Movement>().timer = .5f;
+        timer = .2f;
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     public void AskForExitServerRpc(RpcInfo info = default)
     {
-        Movement camion = GetComponent<Movement>();
-        if (!camion.isPossessed) return;
+        if (!isPossessed) return;
         
-        camion.Object.RemoveInputAuthority();
-        camion.isPossessed = false;
+        Object.RemoveInputAuthority();
+        isPossessed = false;
         GameObject playerObject = Runner.GetPlayerObject(info.Source).gameObject;
         playerObject.transform.SetParent(null);
         playerObject.transform.position = exit.position;
@@ -62,5 +81,5 @@ public class CarInteractable : Interactable
     {
         camera.SetActive(false);
         Runner.GetPlayerObject(Runner.LocalPlayer).GetComponent<NetworkedPlayer>().Unpossess(exit);
-    }*/
+    }
 }

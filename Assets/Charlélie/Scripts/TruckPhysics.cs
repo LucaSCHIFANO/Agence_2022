@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
+using Fusion;
 using UnityEngine;
 
 
@@ -508,6 +508,7 @@ public class TruckPhysics : NetworkBehaviour
     {
         //if (!IsOwner) return;
         //Debug.Log("Fixed Update");
+        if (!Object.HasInputAuthority) return;
 
 
         if (Input.GetAxis("Horizontal") < 0)
