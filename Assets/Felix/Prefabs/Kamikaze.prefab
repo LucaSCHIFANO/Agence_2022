@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6506913731331482612}
   - component: {fileID: 6506913731331482613}
   - component: {fileID: 6506913731331482614}
-  - component: {fileID: -346101147439010268}
   - component: {fileID: 3129758770250805087}
+  - component: {fileID: -346101147439010268}
   m_Layer: 0
   m_Name: Kamikaze
   m_TagString: Untagged
@@ -101,6 +101,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3129758770250805087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6506913731331482615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20e52f4d8b2cc7e438dbf490450dbb24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnDistance: 1
+  turnSpeed: 5
 --- !u!114 &-346101147439010268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,18 +133,6 @@ MonoBehaviour:
   playersLayerMask:
     serializedVersion: 2
     m_Bits: 128
---- !u!114 &3129758770250805087
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6506913731331482615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20e52f4d8b2cc7e438dbf490450dbb24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6977535430288246130
 GameObject:
   m_ObjectHideFlags: 0
