@@ -2915,16 +2915,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RewTest
       objectReference: {fileID: 0}
-    - target: {fileID: 8748736824380086705, guid: f2a5d2199769f2742bebc31efb95be6f,
-        type: 3}
-      propertyPath: _userData.actions.Array.data[3]._type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8748736824380086705, guid: f2a5d2199769f2742bebc31efb95be6f,
-        type: 3}
-      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[13]._actionId
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2a5d2199769f2742bebc31efb95be6f, type: 3}
 --- !u!1001 &8740809375230118119
@@ -2949,15 +2939,40 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 123650526}
-    - target: {fileID: 8740809374427933077, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: carSetting.carSteer
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 8740809374433383271, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
         type: 3}
       propertyPath: m_Name
       value: Truck
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740809374433383271, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740809374433384251, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740809374433448575, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740809374433450645, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740809374433453523, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740809374433472561, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8740809374433683003, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
         type: 3}
