@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8137616363936706006}
   - component: {fileID: 8740809373688739790}
   - component: {fileID: 8740809373688739778}
+  - component: {fileID: 8346696831895128416}
   m_Layer: 0
   m_Name: Remorque
   m_TagString: Untagged
@@ -114,6 +115,19 @@ MonoBehaviour:
   currVertice: 5
   sphereSize: 0.8
   resolution: 10
+--- !u!65 &8346696831895128416
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536094848887475087}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9999998, y: 1.0000001, z: 0.9999998}
+  m_Center: {x: 0, y: 0, z: 0.00000008940697}
 --- !u!1 &2522938134277217383
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,6 +168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6697057236117570467}
+  - component: {fileID: 5996505794774673049}
   m_Layer: 0
   m_Name: RemorqueHolder
   m_TagString: Untagged
@@ -177,6 +192,22 @@ Transform:
   m_Father: {fileID: 905454566581124419}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &5996505794774673049
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2898693527536045675}
+  serializedVersion: 2
+  m_Mass: 1250
+  m_Drag: 0
+  m_AngularDrag: 10
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 64
+  m_CollisionDetection: 0
 --- !u!1 &3790770700814925929
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,6 +912,7 @@ GameObject:
   - component: {fileID: 449606268499441804}
   - component: {fileID: 5016947994726621657}
   - component: {fileID: 2236904055248020529}
+  - component: {fileID: 790152885449411326}
   m_Layer: 1
   m_Name: Truck
   m_TagString: Untagged
@@ -1000,6 +1032,7 @@ MonoBehaviour:
     carPower: 120
     shiftPower: 150
     brakePower: 12000
+    reverseTime: 0.5
     shiftCentre: {x: 0, y: -0.05, z: 0}
     maxSteerAngle: 30
     shiftDownRPM: 2000
@@ -1296,6 +1329,42 @@ MonoBehaviour:
     RotBlendStart: 0.1
     RotBlendEnd: 0.5
     RotTeleportRadians: 1.5
+--- !u!59 &790152885449411326
+HingeJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8740809374433383271}
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0.12, z: -2.37}
+  m_Axis: {x: 0, y: 1, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 0.00000023841858, y: -0.71000004, z: -0.03999901}
+  m_UseSpring: 0
+  m_Spring:
+    spring: 0
+    damper: 0
+    targetPosition: 0
+  m_UseMotor: 0
+  m_Motor:
+    targetVelocity: 0
+    force: 0
+    freeSpin: 0
+  m_UseLimits: 1
+  m_Limits:
+    min: -35
+    max: 35
+    bounciness: 0
+    bounceMinVelocity: 0.2
+    contactDistance: 0
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &8740809374433384251
 GameObject:
   m_ObjectHideFlags: 0
@@ -1307,7 +1376,7 @@ GameObject:
   - component: {fileID: 8740809374433703907}
   - component: {fileID: 8740809374436606863}
   - component: {fileID: 8740809374435663615}
-  m_Layer: 1
+  m_Layer: 0
   m_Name: BR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1391,7 +1460,7 @@ GameObject:
   - component: {fileID: 8740809374433721019}
   - component: {fileID: 8740809374436565251}
   - component: {fileID: 8740809374435693105}
-  m_Layer: 1
+  m_Layer: 0
   m_Name: FL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1475,7 +1544,7 @@ GameObject:
   - component: {fileID: 8740809374433718615}
   - component: {fileID: 8740809374436568789}
   - component: {fileID: 8740809374435658561}
-  m_Layer: 1
+  m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1559,7 +1628,7 @@ GameObject:
   - component: {fileID: 8740809374433740191}
   - component: {fileID: 8740809374436641839}
   - component: {fileID: 8740809374435575045}
-  m_Layer: 1
+  m_Layer: 0
   m_Name: FR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1741,7 +1810,7 @@ GameObject:
   - component: {fileID: 8740809374433715127}
   - component: {fileID: 8740809374436650301}
   - component: {fileID: 8740809374435642687}
-  m_Layer: 1
+  m_Layer: 0
   m_Name: BL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
