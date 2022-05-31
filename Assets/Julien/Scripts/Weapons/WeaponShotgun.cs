@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
+using Fusion;
 using UnityEngine;
-using Unity.Netcode;
 
 public class WeaponShotgun : WeaponBase
 {
@@ -43,10 +43,9 @@ public class WeaponShotgun : WeaponBase
         }
     }*/
     
-    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     protected override void ShootBulletClientRpc()
     {
-        if(IsOwner) return;
         for (int i = 0; i < _numberOfBullet; i++)
         {
             Instantiate(_bulletPrefab, _shootingPoint.position,

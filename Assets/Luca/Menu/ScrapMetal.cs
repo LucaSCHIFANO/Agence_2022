@@ -1,17 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.Netcode;
 
 public class ScrapMetal : NetworkBehaviour
 {
     public int scrap;
     public TextMeshProUGUI textSmetals;
-
-    private NetworkVariable<int> scrapLeft = new NetworkVariable<int>();
+    
+    // (OnChanged = nameof(OnScrapChanged))
+    [Networked] private int scrapLeft { get; set; }
 
     #region Singleton
     private static ScrapMetal instance;
@@ -22,42 +23,32 @@ public class ScrapMetal : NetworkBehaviour
     {
         if (Instance == null)
             Instance = this;
-
-        scrapLeft.Value = scrap;
     }
 
-    public override void OnNetworkSpawn()
+    public override void Spawned()
     {
-        base.OnNetworkSpawn();
-
-        if (IsClient)
-        {
-            scrapLeft.OnValueChanged += OnScrapChanged;
-        }
+        base.Spawned();
+        scrapLeft = scrap;
         
-    }
-
-    private void OnScrapChanged(int previousvalue, int newvalue)
-    {
-        actuText();
-        scrap = newvalue;
-        Debug.Log($"Scrap : {scrap} | Server Scrap : {scrapLeft.Value}");
-    }
-
-
-    private void Start()
-    {
         actuText();
     }
 
-    [ServerRpc(Delivery = RpcDelivery.Reliable, RequireOwnership = false)]
+    private void OnScrapChanged(ScrapMetal changed)
+    {
+        actuText();
+        scrap = changed.scrapLeft;
+        Debug.Log($"Scrap : {scrap} | Server Scrap : {scrapLeft}");
+    }
+
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void addMoneyServerRpc(int lint)
     {
-        scrapLeft.Value += lint;
+        scrapLeft += lint;
     }
 
     public void actuText()
     {
-        textSmetals.text = "Metals : " + scrapLeft.Value.ToString();
+        textSmetals.text = "Metals : " + scrapLeft;
     }
 }

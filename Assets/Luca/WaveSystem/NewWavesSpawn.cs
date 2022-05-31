@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Enemies;
 using UnityEngine;
 using UnityEngine.SubsystemsImplementation;
 using Random = UnityEngine.Random;
@@ -30,6 +31,8 @@ public class NewWavesSpawn : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Keypad9)) spawn = true;
+        
         if (spawn || Input.GetKeyDown((KeyCode.Return)))
         {
             spawn = false;
@@ -78,16 +81,16 @@ public class NewWavesSpawn : MonoBehaviour
 
         for (int i = 0; i < lenemy.Count; i++)
         {
-            Vector3 spawnDistance = RandomCircle(transform.position, lenemy[i].distanceSpawn);
+            Vector3 spawnDistance = RandomCircle(transform.position, listSphere[0]);
 
             while (Vector3.Distance(spawnDistance, player.position) < minDistance)
             {
-                spawnDistance = RandomCircle(transform.position, lenemy[i].distanceSpawn);
+                spawnDistance = RandomCircle(transform.position, listSphere[0]);
             }
 
-            var enemyObject = Instantiate(lenemy[i].gameObject, spawnDistance,
+            var enemyObject = Instantiate(lenemy[i].enemyPrefab, spawnDistance,
                 transform.rotation);
-            enemyObject.GetComponent<NewTestEnemy>().target = target;
+            //enemyObject.GetComponent<Enemy>().target = target;
 
             
         }
@@ -131,6 +134,6 @@ public class NewWavesSpawn : MonoBehaviour
     [System.Serializable]
     public class enemyList
     {
-        public List<NewTestEnemy> enemy = new List<NewTestEnemy>();
+        public List<EnemySO> enemy = new List<EnemySO>();
     }
 }

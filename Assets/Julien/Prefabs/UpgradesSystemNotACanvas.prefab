@@ -8851,7 +8851,7 @@ GameObject:
   - component: {fileID: 5723704942055649995}
   - component: {fileID: 5723704942055649994}
   - component: {fileID: 5723704942055649993}
-  - component: {fileID: 5723704942055649992}
+  - component: {fileID: 4523258346133077208}
   m_Layer: 5
   m_Name: UpgradesSystemNotACanvas
   m_TagString: Untagged
@@ -8896,6 +8896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f561b5154ffdc50449ed5dada16d47dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   screenList:
   - {fileID: 5723704942127341192}
   - {fileID: 5723704941944094248}
@@ -9007,9 +9008,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b429587a72a02e24e86998d0363c5e0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   scrap: 100
   textSmetals: {fileID: 5723704941300886091}
---- !u!114 &5723704942055649992
+--- !u!114 &4523258346133077208
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9018,13 +9020,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 5723704942055649999}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 951099334
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
+  ObjectInterest: 0
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 0
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: c2f9fad8581f66746916343fb97d60dd
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 5723704942055649994}
+  - {fileID: 5723704942055649993}
+  SimulationBehaviours: []
 --- !u!1 &5723704942066016503
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using Unity.Jobs;
-using Unity.Netcode;
 using UnityEngine;
 
 public class Shop : NetworkBehaviour
 {
     private PlayerController _playerController;
-    private NetworkVariable<bool> isPossessed = new NetworkVariable<bool>(false);
+    [Networked] private bool isPossessed { get; set; }
     [SerializeField] protected TruckArea truckArea;
 
 
@@ -35,19 +35,19 @@ public class Shop : NetworkBehaviour
     {
         CanvasInGame.Instance.showShop(false);
                 
-        if (_playerController.IsLocalPlayer)
+        if (_playerController.Object.HasInputAuthority)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             
             _playerController.enabled = true;
-            isPossessed.Value = false;
+            isPossessed = false;
         }
     }
 
     public void Interact(PlayerController other)
     {
-        if (isPossessed.Value) return;
+        if (isPossessed) return;
 
 
 
@@ -65,14 +65,14 @@ public class Shop : NetworkBehaviour
 
         CanvasInGame.Instance.showShop(true);
 
-        if (other.IsLocalPlayer)
+        if (other.Object.HasInputAuthority)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
             _playerController = other;
             other.enabled = false;
-            isPossessed.Value = true;
+            isPossessed = true;
         }
 
 
