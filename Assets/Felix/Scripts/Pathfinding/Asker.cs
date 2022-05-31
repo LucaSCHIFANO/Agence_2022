@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using Pathfinding;
 using UnityEngine;
-using Unity.Netcode;
 
 public class Asker : MonoBehaviour
 {

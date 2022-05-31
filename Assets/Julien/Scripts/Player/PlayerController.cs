@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Fusion;
 using TMPro;
 using Unity.Collections;
-using Unity.Netcode;
-using Unity.Netcode.Components;
 using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
 {
-    
+    /*
     [SerializeField] private GameObject Camera;
 
     [SerializeField] private float movementSpeed;
@@ -40,8 +39,8 @@ public class PlayerController : NetworkBehaviour
     private Quaternion possessRotation;
     private Quaternion cameraPossessRotation;
     
-    private NetworkVariable<FixedString32Bytes> displayName = new NetworkVariable<FixedString32Bytes>();
-    private NetworkVariable<int> selectedMaterial = new NetworkVariable<int>();
+    [Networked] private string displayName { get; set; }
+    [Networked] private int selectedMaterial { get; set; }
 
     [SerializeField] protected Animator anim;
 
@@ -56,7 +55,7 @@ public class PlayerController : NetworkBehaviour
         originalRotation = transform.rotation;
         originalCamRotation = Camera.transform.localRotation;
 
-        if (IsLocalPlayer)
+        if (Object.HasInputAuthority)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -69,7 +68,7 @@ public class PlayerController : NetworkBehaviour
 
     private void Update()
     {
-        if (IsLocalPlayer)
+        if (Object.HasInputAuthority)
         {
             // Debug.Log("Client Update");
 
@@ -196,11 +195,11 @@ public class PlayerController : NetworkBehaviour
     private void Awake()
     {
         Debug.Log("Enable Player Controller");
-        displayName.OnValueChanged += HandleDisplayNameChanged;
-        selectedMaterial.OnValueChanged += HandleSkinChanged;
+        // displayName.OnValueChanged += HandleDisplayNameChanged;
+        // selectedMaterial.OnValueChanged += HandleSkinChanged;
     }
 
-    public override void OnNetworkSpawn()
+    /*public override void OnNetworkSpawn()
     {
         if (!IsServer) return;
 
@@ -243,7 +242,7 @@ public class PlayerController : NetworkBehaviour
     [ServerRpc]
     void MakePlayerAnimServerRpc(bool isWalking)
     {
-        if (IsOwner && IsClient) return;
+        // if (IsOwner && IsClient) return;
         
         anim.SetBool("isWalking", isWalking);
     }
@@ -342,4 +341,5 @@ public class PlayerController : NetworkBehaviour
         
         _controller.Move(moveDirection * Time.deltaTime);
     }*/
+
 }

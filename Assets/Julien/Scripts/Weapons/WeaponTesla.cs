@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Fusion;
 using UnityEngine;
-using Unity.Netcode;
 
 public class WeaponTesla : WeaponBase
 {
@@ -21,18 +21,14 @@ public class WeaponTesla : WeaponBase
     }
     
     
-    [ServerRpc]
+    [Rpc]
     void ShootProjectileServerRpc()
     {
-        GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation);
-        bulletGO.GetComponent<NetworkObject>().Spawn();
     }
     
-    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     protected override void ShootBulletClientRpc()
     {
-        if(IsOwner) return;
         Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation);
-        
     }
 }

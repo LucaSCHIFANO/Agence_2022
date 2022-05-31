@@ -493,6 +493,7 @@ public class TruckPhysics : TruckBase
 
     void FixedUpdate()
     {
+        if (!Object.HasInputAuthority) return; 
 
 
         // speed of car

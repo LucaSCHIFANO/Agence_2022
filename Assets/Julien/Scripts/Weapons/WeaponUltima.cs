@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
-using Unity.Netcode;
 
 public class WeaponUltima : WeaponBase
 {
@@ -16,7 +16,7 @@ public class WeaponUltima : WeaponBase
     [SerializeField] public GameObject particleFire;
     
     
-        public enum weapon
+    public enum weapon
     {
         BASIC,
         BURST,
@@ -36,7 +36,7 @@ public class WeaponUltima : WeaponBase
         
         if (actualWeapon == weapon.BASIC || actualWeapon == weapon.BURST)
         {
-            if (isShooting)
+            if (isShooting && isPossessed)
             {
                 Shoot();
             }
@@ -123,10 +123,10 @@ public class WeaponUltima : WeaponBase
     
     
     
-    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     protected override void ShootBulletClientRpc()
     {
-        if(IsOwner) return;
+        // if(IsOwner) return;
         
         if(fireType == WeaponFireType.Projectile) shootWeaponBullet();
         

@@ -283,8 +283,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491878951644790
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,8 +571,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 6
+  canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491878962796576
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,8 +859,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491878990334934
 GameObject:
   m_ObjectHideFlags: 0
@@ -2124,8 +2133,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 8
+  canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491879121723624
 GameObject:
   m_ObjectHideFlags: 0
@@ -2847,8 +2859,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491879195877333
 GameObject:
   m_ObjectHideFlags: 0
@@ -3073,8 +3088,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 14
+  canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491879232042437
 GameObject:
   m_ObjectHideFlags: 0
@@ -3480,8 +3498,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 11
+  canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491879276157530
 GameObject:
   m_ObjectHideFlags: 0
@@ -4114,8 +4135,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491879355061386
 GameObject:
   m_ObjectHideFlags: 0
@@ -4264,8 +4288,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 2
+  canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491879357961280
 GameObject:
   m_ObjectHideFlags: 0
@@ -5112,8 +5139,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491879503615610
 GameObject:
   m_ObjectHideFlags: 0
@@ -5397,8 +5427,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491879531829608
 GameObject:
   m_ObjectHideFlags: 0
@@ -6661,8 +6694,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 10
+  canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491879669399086
 GameObject:
   m_ObjectHideFlags: 0
@@ -7156,8 +7192,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491879760090005
 GameObject:
   m_ObjectHideFlags: 0
@@ -7909,8 +7948,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 13
+  canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491879871704559
 GameObject:
   m_ObjectHideFlags: 0
@@ -8520,8 +8562,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491879962355531
 GameObject:
   m_ObjectHideFlags: 0
@@ -9364,8 +9409,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 3
+  canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491880006926738
 GameObject:
   m_ObjectHideFlags: 0
@@ -9514,8 +9562,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491880012847409
 GameObject:
   m_ObjectHideFlags: 0
@@ -9799,8 +9850,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 1
+  canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491880040665282
 GameObject:
   m_ObjectHideFlags: 0
@@ -10219,8 +10273,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491880065347764
 GameObject:
   m_ObjectHideFlags: 0
@@ -10369,8 +10426,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491880069256756
 GameObject:
   m_ObjectHideFlags: 0
@@ -10519,8 +10579,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 4
+  canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491880077869845
 GameObject:
   m_ObjectHideFlags: 0
@@ -10939,8 +11002,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491880126172454
 GameObject:
   m_ObjectHideFlags: 0
@@ -11629,8 +11695,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 12
+  canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491880199341098
 GameObject:
   m_ObjectHideFlags: 0
@@ -11855,8 +11924,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491880227722388
 GameObject:
   m_ObjectHideFlags: 0
@@ -12005,8 +12077,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 5
+  canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491880233149234
 GameObject:
   m_ObjectHideFlags: 0
@@ -12894,8 +12969,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491880354033451
 GameObject:
   m_ObjectHideFlags: 0
@@ -13272,8 +13350,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491880382382414
 GameObject:
   m_ObjectHideFlags: 0
@@ -13844,8 +13925,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491880441130377
 GameObject:
   m_ObjectHideFlags: 0
@@ -14415,8 +14499,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  canBeUpgrades: 0
   firstWeapon: 0
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491880512146273
 GameObject:
   m_ObjectHideFlags: 0
@@ -16783,8 +16870,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 9
+  canBeUpgrades: 0
   firstWeapon: 1
   price: 10
+  sellPricePourcentage: 0
+  previousUpgrades: {fileID: 0}
 --- !u!1 &1187491880894421179
 GameObject:
   m_ObjectHideFlags: 0
@@ -16934,7 +17024,7 @@ GameObject:
   - component: {fileID: 1187491880904854146}
   - component: {fileID: 1187491880904854150}
   - component: {fileID: 1187491880904854149}
-  - component: {fileID: 1187491880904854148}
+  - component: {fileID: 6631053626345526672}
   m_Layer: 5
   m_Name: UpgradesSystem
   m_TagString: Untagged
@@ -17039,6 +17129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f561b5154ffdc50449ed5dada16d47dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   screenList:
   - {fileID: 1187491879076538052}
   - {fileID: 1187491881040791140}
@@ -17087,66 +17178,13 @@ MonoBehaviour:
   - {fileID: 1187491879092190825}
   - {fileID: 1187491880937605190}
   - {fileID: 1187491878962796581}
-  UpgradeW1Button:
-  - buttons:
-    - {fileID: 1187491878933760557}
-    - {fileID: 1187491880025507484}
-    - {fileID: 1187491879355061390}
-    - {fileID: 1187491879997492288}
-  - buttons:
-    - {fileID: 1187491878933760557}
-    - {fileID: 1187491880025507484}
-    - {fileID: 1187491880069256760}
-    - {fileID: 1187491880227722392}
-  - buttons:
-    - {fileID: 1187491878933760557}
-    - {fileID: 1187491878953257540}
-    - {fileID: 1187491879332284794}
-    - {fileID: 1187491879116105140}
-  - buttons:
-    - {fileID: 1187491878933760557}
-    - {fileID: 1187491878953257540}
-    - {fileID: 1187491880870845472}
-    - {fileID: 1187491879668042799}
-  - buttons:
-    - {fileID: 1187491878933760557}
-    - {fileID: 1187491879273399387}
-    - {fileID: 1187491880196513712}
-  - buttons:
-    - {fileID: 1187491878933760557}
-    - {fileID: 1187491879829994024}
-    - {fileID: 1187491879201383418}
+  listAllButton1: []
   lastUpgrade1: {fileID: 0}
-  UpgradeW2Button:
-  - buttons:
-    - {fileID: 1187491880427289471}
-    - {fileID: 1187491880337237692}
-    - {fileID: 1187491880065335945}
-    - {fileID: 1187491878988651841}
-  - buttons:
-    - {fileID: 1187491880427289471}
-    - {fileID: 1187491880337237692}
-    - {fileID: 1187491880006926736}
-    - {fileID: 1187491879519137747}
-  - buttons:
-    - {fileID: 1187491880427289471}
-    - {fileID: 1187491879487069048}
-    - {fileID: 1187491879960174597}
-    - {fileID: 1187491880382160651}
-  - buttons:
-    - {fileID: 1187491880427289471}
-    - {fileID: 1187491879487069048}
-    - {fileID: 1187491879748766656}
-    - {fileID: 1187491880107764755}
-  - buttons:
-    - {fileID: 1187491880427289471}
-    - {fileID: 1187491880210012697}
-    - {fileID: 1187491880065347770}
-  - buttons:
-    - {fileID: 1187491880427289471}
-    - {fileID: 1187491879194462215}
-    - {fileID: 1187491880508210558}
+  turret1: {fileID: 0}
+  listAllButton2: []
   lastUpgrade2: {fileID: 0}
+  turret2: {fileID: 0}
+  allWeapon: []
   FPrice:
   - newName: Fort1
     intList: 01000000020000000300000004000000
@@ -17173,9 +17211,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b429587a72a02e24e86998d0363c5e0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   scrap: 100
   textSmetals: {fileID: 1187491880414368263}
---- !u!114 &1187491880904854148
+--- !u!114 &6631053626345526672
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17184,13 +17223,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1187491880904854147}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 951099334
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
+  ObjectInterest: 0
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 0
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: e229470716bf9784b82b26581ee95485
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 1187491880904854150}
+  - {fileID: 1187491880904854149}
+  SimulationBehaviours: []
 --- !u!1 &1187491880923719305
 GameObject:
   m_ObjectHideFlags: 0

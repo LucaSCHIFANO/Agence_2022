@@ -2,13 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 
-
-public class Generator : NetworkBehaviour
+public class Generator : MonoBehaviour
 {
     [SerializeField] protected OnClickTriangle triangleButton;
 
@@ -18,7 +17,7 @@ public class Generator : NetworkBehaviour
     [SerializeField] private float lineThinkness;
     [SerializeField] private List<float> colorDistance = new List<float>(); // green then orange then red
     [SerializeField] private List<TextMeshProUGUI> textList = new List<TextMeshProUGUI>(); // att def spd
-    [SerializeField] private List<GameObject> textButtonOverCloke = new List<GameObject>(); // att def spd
+    [SerializeField] private List<GameObject> textButtonOverCloke = new List<GameObject>(); // att def spds
 
     [Header("Pourcentage")] private float minimumDist = 0; // 0 au plus pret du sommet
     private float maximumDist = 850; // ~840 au plus loin du sommet
@@ -48,7 +47,7 @@ public class Generator : NetworkBehaviour
 
     }
 
-    private void Start()
+    void Start()
     {
         maximumDist = Vector2.Distance(listSommets[1].position, listSommets[2].position);
 
@@ -61,7 +60,19 @@ public class Generator : NetworkBehaviour
         gameObject.SetActive(false);
     }
 
+    public void quitShop()
+    {
+        CanvasInGame.Instance.showGen(false);
 
+        NetworkedPlayer _playerController = App.Instance.Session.Runner
+            .GetPlayerObject(App.Instance.Session.Runner.LocalPlayer).GetComponent<NetworkedPlayer>();
+                
+        if (_playerController.Object.HasInputAuthority)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
     private void Update()
     {
         if(triangleButton.canMove) onClickTriangle(true);

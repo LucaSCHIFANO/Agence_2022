@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using TMPro;
-using Unity.Netcode;
 using UnityEngine;
 
 public class PlayerInteraction : NetworkBehaviour
@@ -17,12 +17,12 @@ public class PlayerInteraction : NetworkBehaviour
 
     private void Start()
     {
-        if (IsLocalPlayer) canvas.SetActive(true);
+        if (Object.HasInputAuthority) canvas.SetActive(true);
     }
 
     void Update()
     {
-        if (!IsLocalPlayer) return;
+        if (!Object.HasInputAuthority) return;
         
         Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));
 
