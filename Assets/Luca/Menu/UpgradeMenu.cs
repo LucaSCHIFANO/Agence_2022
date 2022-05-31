@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Fusion;
 using TMPro;
 using Unity.Collections;
@@ -67,8 +68,8 @@ public class UpgradeMenu : NetworkBehaviour
 
     #endregion
 
-    [Networked/*(OnChanged = nameof(UpgradesForteresseServerOnChanged))*/, Capacity(3)] private NetworkLinkedList<int> upgradesForteresseServer => default;
-    [Networked/*(OnChanged = nameof(UpgradesCamionServerOnChanged))*/, Capacity(3)] private NetworkLinkedList<int> upgradesCamionServer => default;
+    [Networked(OnChanged = nameof(UpgradesForteresseServerOnChanged)), Capacity(3)] private NetworkArray<int> upgradesForteresseServer => default;
+    [Networked(OnChanged = nameof(UpgradesCamionServerOnChanged)), Capacity(3)] private NetworkArray<int> upgradesCamionServer => default;
     [Networked/*(OnChanged = nameof(UnlockWeapon1ServerOnChanged))*/, Capacity(5)] private NetworkLinkedList<int> unlockedWeapon1Server => default;
     [Networked/*(OnChanged = nameof(UnlockWeapon2ServerOnChanged))*/, Capacity(5)] private NetworkLinkedList<int> unlockedWeapon2Server => default;
     
@@ -96,8 +97,8 @@ public class UpgradeMenu : NetworkBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                upgradesForteresseServer.Add(0);
-                upgradesCamionServer.Add(0);
+                upgradesForteresseServer.Set(i, 0);
+                upgradesCamionServer.Set(i,0);
             }
         }
 
@@ -480,21 +481,28 @@ public class UpgradeMenu : NetworkBehaviour
         unlockedWeapon2Server.Remove(weaponIdToUnlock);
     }
 
-    private void UpgradesForteresseServerOnChanged()
+    public static void UpgradesForteresseServerOnChanged(Changed<UpgradeMenu> changed)
     {
-        // Debug.Log($"upgradesF[{newList.Index}] = {newList.Value}");
-
-        // upgradesF[newList.Index] = newList.Value;
-        // visuF();
+        changed.Behaviour.ForteresseChange();
     }
 
-    private void UpgradesCamionServerOnChanged()
+    private void ForteresseChange()
     {
-        // Debug.Log($"upgradesC[{newList.Index}] = {newList.Value}");
-
-        // upgradesC[newList.Index] = newList.Value;
-        // visuC();
+        upgradesF = upgradesForteresseServer.ToList();
+        visuF();
     }
+
+    public static void UpgradesCamionServerOnChanged(Changed<UpgradeMenu> changed)
+    {
+        changed.Behaviour.CamionChange();
+    }
+    
+    private void CamionChange()
+    {
+        upgradesC = upgradesCamionServer.ToList();
+        visuC();
+    }
+    
 
     private void UnlockWeapon1ServerOnChanged()
     {

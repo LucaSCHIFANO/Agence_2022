@@ -2,7 +2,7 @@
 
 #region Assets/Photon/FusionCodeGen/AssemblyInfo.cs
 
-﻿[assembly: Fusion.NetworkAssemblyIgnore]
+ [assembly: Fusion.NetworkAssemblyIgnore]
 
 #endregion
 
