@@ -1561,7 +1561,6 @@ GameObject:
   - component: {fileID: 367504424}
   - component: {fileID: 367504423}
   - component: {fileID: 367504422}
-  - component: {fileID: 367504429}
   m_Layer: 8
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -1630,7 +1629,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 367504421}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -1696,23 +1695,11 @@ Transform:
   m_LocalPosition: {x: -21.648, y: 1.063, z: -1.75}
   m_LocalScale: {x: 2.0451, y: 2.0451, z: 2.0451}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 383371174}
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &367504429
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 367504421}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.49, y: 2.05, z: 2.01}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &372553207 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6349105960748980618, guid: ebb70dc5fecceca49940f2910c67ecd0,
@@ -1964,6 +1951,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebb70dc5fecceca49940f2910c67ecd0, type: 3}
+--- !u!1 &383371173
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 383371174}
+  - component: {fileID: 383371175}
+  m_Layer: 0
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &383371174
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383371173}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 367504428}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &383371175
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383371173}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2, y: 1, z: 1.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &404591796
 GameObject:
   m_ObjectHideFlags: 0
@@ -2824,8 +2856,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6274724183888813008, guid: 4e5e83d8757e7e841a0479d2f2da3546,
         type: 3}
+      propertyPath: _autoSession.RoomName
+      value: Storm
+      objectReference: {fileID: 0}
+    - target: {fileID: 6274724183888813008, guid: 4e5e83d8757e7e841a0479d2f2da3546,
+        type: 3}
       propertyPath: _autoSession.StartMap
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6274724183888813008, guid: 4e5e83d8757e7e841a0479d2f2da3546,
+        type: 3}
+      propertyPath: _autoSession.LobbyName
+      value: Storm
       objectReference: {fileID: 0}
     - target: {fileID: 6274724183888813008, guid: 4e5e83d8757e7e841a0479d2f2da3546,
         type: 3}
@@ -3453,6 +3495,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1882036487621557397, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3997304261142571410, guid: 7155ffc9e90adff42be892838432656c,
         type: 3}
       propertyPath: Flags
@@ -3533,6 +3580,16 @@ PrefabInstance:
       propertyPath: turret2
       value: 
       objectReference: {fileID: 528692271}
+    - target: {fileID: 5103211548772673409, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211548772673413, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7231231060109375451, guid: 7155ffc9e90adff42be892838432656c,
         type: 3}
       propertyPath: triangleButton
@@ -3542,6 +3599,11 @@ PrefabInstance:
         type: 3}
       propertyPath: listSommets.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7701819045584245869, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8202021422794752718, guid: 7155ffc9e90adff42be892838432656c,
         type: 3}
@@ -3652,6 +3714,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8202021424046620102, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8202021424046620102, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8202021424046620102, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8202021424046620102, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8636088884017725952, guid: 7155ffc9e90adff42be892838432656c,
         type: 3}

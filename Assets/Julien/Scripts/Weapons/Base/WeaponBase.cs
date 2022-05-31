@@ -49,7 +49,7 @@ public abstract class WeaponBase : NetworkBehaviour
     protected bool _isOverHeat;
     protected bool _isCoolDown;
 
-    [HideInInspector] public PlayerController possessor;
+    [HideInInspector] public NetworkedPlayer possessor;
 
     [HideInInspector] public bool isPossessed;
     

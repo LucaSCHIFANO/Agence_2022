@@ -51,8 +51,7 @@ public class GenPanel : NetworkBehaviour
     public void Interact(NetworkedPlayer other)
     {
         if (isPossessed) return;
-
-
+        
         CanvasInGame.Instance.showGen(true);
 
         if (other.Object.HasInputAuthority)

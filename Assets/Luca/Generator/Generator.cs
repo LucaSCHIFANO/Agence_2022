@@ -108,8 +108,6 @@ public class Generator : MonoBehaviour
             pointlist.Add(-listSommets[i].transform.InverseTransformPoint(upgradePoint.transform.position));
 
             myLines[i].Points = pointlist.ToArray();
-
-            Debug.Log((distTop / maximumDist) * 100 );
             
             if ((distTop / maximumDist) * 100 < colorDistance[0]) 
                 myLines[i].color = Color.Lerp(Color.green, new Color(0.7f, 0.49f, 0.11f), distTop / ((maximumDist * colorDistance[0]) * 0.01f ));
