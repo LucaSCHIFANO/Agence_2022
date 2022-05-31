@@ -18,6 +18,14 @@ class EditorScrips : EditorWindow
         EditorApplication.OpenScene("Assets/Multi/Scene/GamePlay/Server Authority Fusion.unity");
     }
     
+    [MenuItem("Scene Change/Go to Luca scene")]
+    public static void GoToLucaScene()
+    {
+        EditorApplication.OpenScene("Assets/Multi/Scene/GamePlay/L_Server Authority Fusion.unity");
+    }
+    
+    
+    
     [MenuItem("Scene Change/StartFromMenu------------------Old")]
     public static void RunMainScene()
     {

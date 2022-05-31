@@ -35,7 +35,7 @@ public class GenPanel : NetworkBehaviour
     public void quitPanel()
     {
         CanvasInGame.Instance.showGen(false);
-                
+        
         if (_playerController.Object.HasInputAuthority)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -44,6 +44,7 @@ public class GenPanel : NetworkBehaviour
             _playerController.enabled = true;
             isPossessed = false;
         }
+
     }
 
 

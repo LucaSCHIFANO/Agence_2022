@@ -41,10 +41,11 @@ public class ScrapMetal : NetworkBehaviour
     }
 
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     public void addMoneyServerRpc(int lint)
     {
         scrapLeft += lint;
+        actuText();
     }
 
     public void actuText()

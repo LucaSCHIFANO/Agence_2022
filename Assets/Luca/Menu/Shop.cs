@@ -33,6 +33,7 @@ public class Shop : NetworkBehaviour
 
     public void quitShop()
     {
+        UpgradeMenu.Instance.gotoScreen(0);
         CanvasInGame.Instance.showShop(false);
                 
         if (_playerController.Object.HasInputAuthority)

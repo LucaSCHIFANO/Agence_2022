@@ -377,11 +377,11 @@ public class UpgradeMenu : NetworkBehaviour
     }
 
     
-    public void quitUpgrade()
+    /*public void quitUpgrade()
     {
         gotoScreen(0);
         Shop.Instance.quitShop();
-    }
+    }*/
 
     public void changeSellMode(bool firstweapon)
     {
@@ -438,41 +438,43 @@ public class UpgradeMenu : NetworkBehaviour
     }
 
 
+    
+    
     #region Online
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     public void UpgradeForteresseServerRpc(int upgradeIndex)
     {
         upgradesForteresseServer.Set(upgradeIndex, upgradesForteresseServer[upgradeIndex]+1);
     }
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     public void UpgradeCamionServerRpc(int upgradeIndex)
     {
         upgradesCamionServer.Set(upgradeIndex, upgradesCamionServer[upgradeIndex]+1);
     }
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void UnlockWeapon1ServerRpc(int weaponIdToUnlock)
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
+    public void UnlockWeapon1ServerRpc(int weaponIdToUnlock, RpcInfo info = default)
     {
         unlockedWeapon1Server.Add(weaponIdToUnlock);
     }
     
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void SellWeapon1ServerRpc(int weaponIdToUnlock)
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
+    public void SellWeapon1ServerRpc(int weaponIdToUnlock, RpcInfo info = default)
     {
         unlockedWeapon1Server.Remove(weaponIdToUnlock);
     }
 
 
     
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     public void UnlockWeapon2ServerRpc(int weaponIdToUnlock)
     {
         unlockedWeapon2Server.Add(weaponIdToUnlock);
     }
     
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     public void SellWeapon2ServerRpc(int weaponIdToUnlock)
     {
         unlockedWeapon2Server.Remove(weaponIdToUnlock);
@@ -522,3 +524,4 @@ public class UpgradeMenu : NetworkBehaviour
     
     #endregion
 }
+

@@ -60,7 +60,7 @@ public class Generator : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void quitShop()
+    /*public void quitShop()
     {
         CanvasInGame.Instance.showGen(false);
 
@@ -72,7 +72,7 @@ public class Generator : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-    }
+    }*/
     private void Update()
     {
         if(triangleButton.canMove) onClickTriangle(true);
