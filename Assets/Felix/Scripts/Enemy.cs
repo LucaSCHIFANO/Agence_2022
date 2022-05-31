@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 
 namespace Enemies
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : NetworkBehaviour
     {
+        protected HPEnemy hp;
         protected Asker asker;
 
         protected GameObject target;
@@ -23,8 +25,10 @@ namespace Enemies
 
         [SerializeField] protected Transform[] weaponsPosition;
 
-        protected void Start()
+        protected void Awake()
         {
+            hp = GetComponent<HPEnemy>();
+            
             if (asker == null)
             {
                 Initialization(enemySo);
@@ -87,10 +91,7 @@ namespace Enemies
             if (_damages < 0)
                 _damages = Mathf.Abs(_damages);
 
-            actualHealth -= _damages;
-
-            if (actualHealth <= 0)
-                Die();
+            hp.reduceHP(_damages);
         }
 
         public virtual void TakeDamage(int _damages, Vector3 _collisionPoint, Vector3 _collisionDirection)
