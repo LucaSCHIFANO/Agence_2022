@@ -26,7 +26,7 @@ public class PlayerCamera
 {
     //EXPERIMENTAL
     [HideInInspector]
-    public Player player;
+    public PlayerCameraHandler player;
 
     public AnimationCurve moveSpeed;
 
@@ -35,10 +35,14 @@ public class PlayerCamera
     public PlayerActionType startAction;
 
     public bool tpsCamFollowCar;
+    public bool tpsCamInvertX;
+    public bool tpsCamInvertY;
+    int camInvertX, camInvertY;
     public float cameraAngularVelocity = 60f;
     float cameraDistance;
     public float cameraAngleY = 0;
     public float cameraAngleX = 0;
+    public float maxNegAngleX = 0;
 
     [HideInInspector]
     public Action currAction;
@@ -74,6 +78,8 @@ public class PlayerCamera
         cam.transform.position = currAction._currCam.camTransform.position;
         cam.transform.rotation = currAction._currCam.camTransform.rotation;
         cameraAngleX = 20f; //FIXME
+        camInvertX = tpsCamInvertX ? -1 : 1;
+        camInvertY = tpsCamInvertY ? 1 : -1;
     }
 
 
@@ -121,16 +127,15 @@ public class PlayerCamera
     
     public void UpdateCamera()
     {
-        //Debug.Log(cameraAngleX + "  " + cameraAngleY);
         if (tpsCamFollowCar || currAction._currCam.camView == CameraViewType.FPS) return;
 
         float angleDelta = cameraAngularVelocity * Time.deltaTime;
 
-        cameraAngleX += rPlayer.GetAxis("MoveCamY") * angleDelta;
-        cameraAngleY += rPlayer.GetAxis("MoveCamX") * angleDelta;
+        cameraAngleX += rPlayer.GetAxis("MoveCamY") * angleDelta * camInvertX;
+        cameraAngleY += rPlayer.GetAxis("MoveCamX") * angleDelta * camInvertY;
 
         //Protections
-        cameraAngleX = Mathf.Clamp(cameraAngleX, -90f, 90f);
+        cameraAngleX = Mathf.Clamp(cameraAngleX, maxNegAngleX, 90f);
         cameraAngleY = Mathf.Repeat(cameraAngleY, 360f);
 
         Quaternion cameraRotation =

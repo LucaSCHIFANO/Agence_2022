@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
 using UnityEngine;
+using Fusion;
 
 public class TestControlWeapon : NetworkBehaviour
 {
-
+    /*
     [SerializeField] private KeyCode activateDeactivate;
 
     [SerializeField] bool activated;
@@ -19,6 +19,8 @@ public class TestControlWeapon : NetworkBehaviour
 
     [SerializeField] private float clampRotation;
     [SerializeField] private Vector2 weaponSensibility;
+
+    private bool mustRelease;
     
 
     private void Update()
@@ -52,7 +54,7 @@ public class TestControlWeapon : NetworkBehaviour
                 GetComponent<WeaponBase>().Reload();
             }*/
 
-            if (Input.GetKeyDown(KeyCode.E))
+            /*if (Input.GetKeyDown(KeyCode.E))
             {
                 Debug.Log("Get Out");
                 _playerController.enabled = true;
@@ -61,6 +63,7 @@ public class TestControlWeapon : NetworkBehaviour
                 _playerController = null;
                 Invoke(nameof(ResetOwner), .2f);
                 GetComponent<WeaponBase>().isPossessed = false;
+                GetComponent<WeaponBase>().possessor = null;
                 CanvasInGame.Instance.showOverheat(false);
             }
         }
@@ -71,24 +74,35 @@ public class TestControlWeapon : NetworkBehaviour
         RemoveOwnershipServerRpc();
     }
 
-    private void OnTriggerStay(Collider other)
+    public void Interact(PlayerController other)
     {
         if (isPossessed.Value) return;
-        
-        PlayerController playerController;
-        if (other.gameObject.TryGetComponent(out playerController))
-        {
-            if (Input.GetKey(KeyCode.E))
-            {
-                ChangeOwnerServerRpc();
-                playerController.Possess(gameObject);
-                _playerController = playerController;
-                camera.SetActive(true);
-                GetComponent<WeaponBase>().isPossessed = true;
-                CanvasInGame.Instance.showOverheat(true);
-            }
-        }
+
+
+        ChangeOwnerServerRpc();
+        other.Possess(gameObject);
+        _playerController = other;
+        camera.SetActive(true);
+        GetComponent<WeaponBase>().isPossessed = true;
+        GetComponent<WeaponBase>().possessor = other;
+        CanvasInGame.Instance.showOverheat(true);
+
+
     }
+
+
+    public void actuGauge()
+    {
+        if (!isPossessed.Value) return;
+        if(GetComponent<WeaponBase>().possessor == null) return;
+        
+        ChangeOwnerServerRpc();
+        camera.SetActive(true);
+        CanvasInGame.Instance.showOverheat(false);
+        CanvasInGame.Instance.showOverheat(true);
+        
+    }
+    
 
     [ServerRpc(RequireOwnership = false)]
     void ChangeOwnerServerRpc(ServerRpcParams rpcParams = default)
@@ -110,5 +124,5 @@ public class TestControlWeapon : NetworkBehaviour
             NetworkManager.Singleton.ConnectedClients[rpcParams.Receive.SenderClientId].PlayerObject.transform.SetParent(null);
             GetComponent<NetworkObject>().RemoveOwnership();
         }
-    }
+    }*/
 }

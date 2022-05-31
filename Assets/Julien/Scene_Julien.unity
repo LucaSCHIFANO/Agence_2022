@@ -158,6 +158,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activateDeactivate: 286
   activated: 0
+  camera: {fileID: 0}
+  clampRotation: 0
+  weaponSensibility: {x: 0, y: 0}
 --- !u!65 &93387908
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -253,8 +256,14 @@ MonoBehaviour:
   _shootingPoint: {fileID: 592835566}
   _bulletPrefab: {fileID: 4070602960041094689, guid: 9ef7b318d638c19488399abdbdfbeb4a,
     type: 3}
-  magazineSize: 5
-  reloadTime: 2
+  _bulletToOverHeat: 0
+  _coolDownPerSecond: 0
+  _timeBeforeCoolDown: 0
+  maincolor: {r: 0, g: 0, b: 0, a: 0}
+  overHeatColor: {r: 0, g: 0, b: 0, a: 0}
+  isPossessed: 0
+  canvas: {fileID: 0}
+  overHeatPourcent: 0
 --- !u!1 &259897294
 GameObject:
   m_ObjectHideFlags: 0
@@ -5327,6 +5336,7 @@ GameObject:
   - component: {fileID: 494059486}
   - component: {fileID: 494059491}
   - component: {fileID: 494059492}
+  - component: {fileID: 494059493}
   m_Layer: 0
   m_Name: Weapon_Sniper
   m_TagString: Untagged
@@ -5427,6 +5437,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activateDeactivate: 282
   activated: 0
+  camera: {fileID: 0}
+  clampRotation: 0
+  weaponSensibility: {x: 0, y: 0}
 --- !u!114 &494059492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5443,10 +5456,32 @@ MonoBehaviour:
   _shootingPoint: {fileID: 892029261}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
     type: 3}
-  magazineSize: 0
-  reloadTime: 0
+  _bulletToOverHeat: 0
+  _coolDownPerSecond: 0
+  _timeBeforeCoolDown: 0
+  maincolor: {r: 0, g: 0, b: 0, a: 0}
+  overHeatColor: {r: 0, g: 0, b: 0, a: 0}
+  isPossessed: 0
+  canvas: {fileID: 0}
+  overHeatPourcent: 0
   _fireType: 0
   _spread: 0
+--- !u!114 &494059493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494059485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 710263122
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &592835563
 GameObject:
   m_ObjectHideFlags: 0
@@ -6001,6 +6036,7 @@ GameObject:
   - component: {fileID: 1098558740}
   - component: {fileID: 1098558739}
   - component: {fileID: 1098558745}
+  - component: {fileID: 1098558746}
   m_Layer: 0
   m_Name: Weapon_Shotgun
   m_TagString: Untagged
@@ -6024,8 +6060,14 @@ MonoBehaviour:
   _shootingPoint: {fileID: 1303933044}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
     type: 3}
-  magazineSize: 0
-  reloadTime: 0
+  _bulletToOverHeat: 0
+  _coolDownPerSecond: 0
+  _timeBeforeCoolDown: 0
+  maincolor: {r: 0, g: 0, b: 0, a: 0}
+  overHeatColor: {r: 0, g: 0, b: 0, a: 0}
+  isPossessed: 0
+  canvas: {fileID: 0}
+  overHeatPourcent: 0
   _numberOfBullet: 10
   _spread: 20
 --- !u!114 &1098558740
@@ -6042,6 +6084,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activateDeactivate: 284
   activated: 0
+  camera: {fileID: 0}
+  clampRotation: 0
+  weaponSensibility: {x: 0, y: 0}
 --- !u!65 &1098558741
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6133,6 +6178,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8374b065814149847a722e4fe0d2db30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1098558746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098558738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2699971837
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &1212728788
 GameObject:
   m_ObjectHideFlags: 0
@@ -6428,8 +6489,14 @@ MonoBehaviour:
   _shootingPoint: {fileID: 826819694}
   _bulletPrefab: {fileID: 6481916419612443908, guid: 1ab5470fb2b6eca44af7290398d33ce5,
     type: 3}
-  magazineSize: 5
-  reloadTime: 2
+  _bulletToOverHeat: 0
+  _coolDownPerSecond: 0
+  _timeBeforeCoolDown: 0
+  maincolor: {r: 0, g: 0, b: 0, a: 0}
+  overHeatColor: {r: 0, g: 0, b: 0, a: 0}
+  isPossessed: 0
+  canvas: {fileID: 0}
+  overHeatPourcent: 0
 --- !u!114 &1689854608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6444,6 +6511,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activateDeactivate: 288
   activated: 0
+  camera: {fileID: 0}
+  clampRotation: 0
+  weaponSensibility: {x: 0, y: 0}
 --- !u!65 &1689854609
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6537,6 +6607,7 @@ GameObject:
   - component: {fileID: 1727759280}
   - component: {fileID: 1727759279}
   - component: {fileID: 1727759278}
+  - component: {fileID: 1727759284}
   m_Layer: 0
   m_Name: Weapon_Burst
   m_TagString: Untagged
@@ -6560,8 +6631,14 @@ MonoBehaviour:
   _shootingPoint: {fileID: 687760314}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
     type: 3}
-  magazineSize: 0
-  reloadTime: 0
+  _bulletToOverHeat: 0
+  _coolDownPerSecond: 0
+  _timeBeforeCoolDown: 0
+  maincolor: {r: 0, g: 0, b: 0, a: 0}
+  overHeatColor: {r: 0, g: 0, b: 0, a: 0}
+  isPossessed: 0
+  canvas: {fileID: 0}
+  overHeatPourcent: 0
   _fireType: 1
   _spread: 10
   _numberOfShot: 3
@@ -6579,6 +6656,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activateDeactivate: 287
   activated: 0
+  camera: {fileID: 0}
+  clampRotation: 0
+  weaponSensibility: {x: 0, y: 0}
 --- !u!65 &1727759280
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6658,6 +6738,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 146.468, z: 0}
+--- !u!114 &1727759284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727759277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2875907553
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &2064821204
 GameObject:
   m_ObjectHideFlags: 0
@@ -6771,6 +6867,7 @@ GameObject:
   - component: {fileID: 2114343911}
   - component: {fileID: 2114343910}
   - component: {fileID: 2114343915}
+  - component: {fileID: 2114343916}
   m_Layer: 0
   m_Name: Weapon_Flamethrower
   m_TagString: Untagged
@@ -6792,6 +6889,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activateDeactivate: 285
   activated: 0
+  camera: {fileID: 0}
+  clampRotation: 0
+  weaponSensibility: {x: 0, y: 0}
 --- !u!65 &2114343911
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6886,9 +6986,31 @@ MonoBehaviour:
   _fireRate: 1
   _shootingPoint: {fileID: 0}
   _bulletPrefab: {fileID: 0}
-  magazineSize: 0
-  reloadTime: 0
+  _bulletToOverHeat: 0
+  _coolDownPerSecond: 0
+  _timeBeforeCoolDown: 0
+  maincolor: {r: 0, g: 0, b: 0, a: 0}
+  overHeatColor: {r: 0, g: 0, b: 0, a: 0}
+  isPossessed: 0
+  canvas: {fileID: 0}
+  overHeatPourcent: 0
   _particleSystem: {fileID: 259897296}
+--- !u!114 &2114343916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114343908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1061093234
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &2118626266
 GameObject:
   m_ObjectHideFlags: 0

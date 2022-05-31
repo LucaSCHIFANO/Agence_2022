@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Fusion;
 using UnityEngine;
 
 public class WeaponTesla : WeaponBase
@@ -12,8 +13,22 @@ public class WeaponTesla : WeaponBase
         
         base.Shoot();
         
+        //ShootProjectileServerRpc();
+        ShootBulletServerRpc();
         GameObject bulletGO = Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation);
         
         _shootingTimer = 1 / _fireRate;
+    }
+    
+    
+    [Rpc]
+    void ShootProjectileServerRpc()
+    {
+    }
+    
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    protected override void ShootBulletClientRpc()
+    {
+        Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation);
     }
 }

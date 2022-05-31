@@ -113,9 +113,9 @@ GameObject:
   - component: {fileID: 7085991690676403620}
   - component: {fileID: 3514908915911031153}
   - component: {fileID: 58743315377138608}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerSave
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -270,6 +270,11 @@ MonoBehaviour:
   - {fileID: 2100000, guid: ca9b85255916539499e3715857dbafd1, type: 2}
   - {fileID: 2100000, guid: f858ba68752b6464fb426fd47fb1fc3f, type: 2}
   - {fileID: 2100000, guid: b6b95799395bcf94bb9080d22ed607e9, type: 2}
+  anim: {fileID: 0}
+  maxHP: 0
+  hpPourcent: 0
+  timeBeforeRecov: 0
+  recovPerSecond: 0
 --- !u!114 &58743315377138608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -754,7 +759,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 7000
   field of view: 60
   orthographic: 0
   orthographic size: 5

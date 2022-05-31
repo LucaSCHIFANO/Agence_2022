@@ -1,0 +1,25 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CamionCarrySensor : MonoBehaviour
+{
+    [SerializeField] private CamionCarryFusion _camionCarryFusion;
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out NetworkedPlayer player))
+        {
+            _camionCarryFusion.AddPlayer(player);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out NetworkedPlayer player))
+        {
+            _camionCarryFusion.RemovePlayer(player);
+        }
+    }
+}
