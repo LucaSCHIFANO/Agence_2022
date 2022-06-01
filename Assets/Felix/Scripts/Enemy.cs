@@ -28,6 +28,11 @@ namespace Enemies
         protected void Awake()
         {
             hp = GetComponent<HPEnemy>();
+        }
+
+        public override void Spawned()
+        {
+            base.Spawned();
             
             if (asker == null)
             {
@@ -78,6 +83,9 @@ namespace Enemies
 
         protected virtual void FixedUpdate()
         {
+            if (target == null)
+                return;
+            
             foreach (WeaponBase weapon in weapons)
             {
                 weapon.transform.LookAt(target.transform);

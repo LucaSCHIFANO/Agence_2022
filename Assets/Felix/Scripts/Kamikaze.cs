@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
 namespace Enemies
@@ -15,13 +16,19 @@ namespace Enemies
 
             target = GameObject.FindWithTag("Player");
 
-            asker.AskNewPath(target.transform, speed, null);
-            targetLastPosition = target.transform.position;
+            if (Runner.IsServer)
+            {
+                asker.AskNewPath(target.transform, speed, null);
+                targetLastPosition = target.transform.position;
+            }
         }
 
-        protected override void FixedUpdate()
+        public override void FixedUpdateNetwork()
         {
-            //base.FixedUpdate(); // No weapons so don't need to call it
+            base.FixedUpdateNetwork();
+            
+            if (!Runner.IsServer)
+                return;
             
             if (Physics.CheckBox(transform.position, transform.localScale + Vector3.one * range, transform.rotation,
                 playersLayerMask))
@@ -36,6 +43,7 @@ namespace Enemies
             }
         }
 
+        [Rpc(RpcSources.All, RpcTargets.All)]
         private void Explode()
         {
             Debug.Log("Boom");

@@ -14,16 +14,34 @@ namespace Enemies
             
             target = GameObject.FindWithTag("Player");
 
-            Vector3 nPos = (transform.position - target.transform.position).normalized * (range - 5) + target.transform.position;
-            
-            asker.AskNewPath(nPos, speed, OnPathFound);
-            targetLastPosition = target.transform.position;
+            if (Runner.IsServer && target != null)
+            {
+                Vector3 nPos = (transform.position - target.transform.position).normalized * (range - 5) +
+                               target.transform.position;
+
+                asker.AskNewPath(nPos, speed, OnPathFound);
+                targetLastPosition = target.transform.position;
+            }
         }
 
         public override void FixedUpdateNetwork()
         {
             base.FixedUpdateNetwork();
 
+            if (target == null)
+            {
+                target = GameObject.FindWithTag("Player");
+                
+                if (target == null)
+                    return;
+                
+                Vector3 nPos = (transform.position - target.transform.position).normalized * (range - 5) +
+                               target.transform.position;
+                
+                asker.AskNewPath(nPos, speed, OnPathFound);
+                targetLastPosition = target.transform.position;
+            }
+            
             if (!Runner.IsServer)
                 return;
             
@@ -37,7 +55,7 @@ namespace Enemies
                     {
                         if (hit.collider.CompareTag("Player"))
                         {
-                            Runner.SendRpc(weapon.Shoot());
+                            weapon.Shoot();
                         }
                     }
                 }
