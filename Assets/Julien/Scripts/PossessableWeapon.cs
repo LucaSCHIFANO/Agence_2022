@@ -37,7 +37,7 @@ public class PossessableWeapon : NetworkBehaviour
         GetComponent<WeaponBase>().isPossessed = true;
         ConfirmPossessionClientRpc();
         SetParentingClientRpc();
-        // CanvasInGame.Instance.showOverheat(true);
+        CanvasInGame.Instance.showOverheat(true);
         timer = 0.2f;
     }
 
@@ -70,7 +70,7 @@ public class PossessableWeapon : NetworkBehaviour
         _playerController.Unpossess(exitPoint);
         _playerController = null;
         GetComponent<WeaponBase>().isPossessed = false;
-        // CanvasInGame.Instance.showOverheat(false);
+        CanvasInGame.Instance.showOverheat(false);
         ConfirmGetOutClientRpc(rpcInfo.Source);
     }
 

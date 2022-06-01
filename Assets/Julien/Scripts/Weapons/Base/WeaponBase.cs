@@ -122,9 +122,9 @@ public abstract class WeaponBase : NetworkBehaviour
         
         if (!isPossessed) return;
 
-        // canvas.overheatSlider.fillAmount = (overHeatPourcent / 100);
-        // if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
-        // else canvas.overheatSlider.color = maincolor;
+        canvas.overheatSlider.fillAmount = (overHeatPourcent / 100);
+        if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
+        else canvas.overheatSlider.color = maincolor;
     }
     
     
