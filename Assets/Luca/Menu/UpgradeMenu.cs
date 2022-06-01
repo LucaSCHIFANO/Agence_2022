@@ -151,7 +151,8 @@ public class UpgradeMenu : NetworkBehaviour
 
     public void upgradeForteresse(int lint)
     {
-        if (FPrice[lint].intList[upgradesF[lint]] <= ScrapMetal.Instance.scrap)
+        
+        if (FPrice[lint].intList[upgradesF[lint]] <= ScrapMetal.Instance.scrapLeft)
         {
             ScrapMetal.Instance.addMoneyServerRpc(-FPrice[lint].intList[upgradesF[lint]]);
 
@@ -161,7 +162,7 @@ public class UpgradeMenu : NetworkBehaviour
 
     public void upgradeCamion(int lint)
     {
-        if (CPrice[lint].intList[upgradesC[lint]] <= ScrapMetal.Instance.scrap)
+        if (CPrice[lint].intList[upgradesC[lint]] <= ScrapMetal.Instance.scrapLeft)
         {
             ScrapMetal.Instance.addMoneyServerRpc(-CPrice[lint].intList[upgradesC[lint]]);
 

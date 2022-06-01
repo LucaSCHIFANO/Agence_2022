@@ -8,7 +8,7 @@ public class Shop : NetworkBehaviour
 {
     private NetworkedPlayer _playerController;
     [Networked] private bool isPossessed { get; set; }
-    [SerializeField] protected TruckArea truckArea;
+    public TruckArea truckArea;
 
 
     #region Singleton

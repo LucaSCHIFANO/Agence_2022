@@ -11,7 +11,19 @@ public class ShopInteractable : Interactable
     
     public override string GetDescription()
     {
-        return "Press <color=green>[E]</color> to open the shop";
+        bool okay = false;
+        
+        foreach (var VARIABLE in Shop.Instance.truckArea.objectInAreaTruck)
+        {
+            if (VARIABLE.gameObject.tag == "Car")
+            {
+                okay = true;
+                break;
+            }
+        }
+        
+        if(okay) return "Press <color=green>[E]</color> to open the shop";
+        else return "Please park your <color=green>truck</color> in the <color=yellow>yellow</color> area.";
     }
 
     public override void Interact(PlayerInteraction interactor)

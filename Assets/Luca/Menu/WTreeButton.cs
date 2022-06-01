@@ -35,7 +35,7 @@ public class WTreeButton : MonoBehaviour
 
    public void selected()
    {
-      if ((!isSellable && !cannotBeSelected && ScrapMetal.Instance.scrap >= price) || (isSellable && previousUpgrades != null))
+      if ((!isSellable && !cannotBeSelected && ScrapMetal.Instance.scrapLeft >= price) || (isSellable && previousUpgrades != null))
          {
             if (isSellable) ScrapMetal.Instance.addMoneyServerRpc((int)(price * (sellPricePourcentage / 100f)));
             else ScrapMetal.Instance.addMoneyServerRpc(-price);
