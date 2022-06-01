@@ -109,6 +109,9 @@ public class TruckPhysics : TruckBase
         public float shiftPower = 150f;
         public float brakePower = 8000f;
 
+        public float reverseTime = 0.5f;
+        private float currTime;
+
         public Vector3 shiftCentre = new Vector3(0.0f, -0.8f, 0.0f);
 
         public float maxSteerAngle = 25.0f;
@@ -283,9 +286,9 @@ public class TruckPhysics : TruckBase
     {
         shiftUp = Input.GetKeyDown("page up");
         shiftDown = Input.GetKeyDown("page down");
-        braking = player.GetButton("Breaking");
+        braking = Backward ? (player.GetAxis("Throttle") > 0) : player.GetButton("Breaking");
         turn = player.GetAxis("Turn");
-        throttle = player.GetAxis("Throttle");
+        throttle = Backward ? (player.GetButton("Breaking") ? 1 : 0) : player.GetAxis("Throttle");
         shift = Input.GetKey(KeyCode.LeftShift) | Input.GetKey(KeyCode.RightShift);
     }
 
@@ -493,7 +496,7 @@ public class TruckPhysics : TruckBase
 
     void FixedUpdate()
     {
-        if (!Object.HasInputAuthority) return; 
+        //if (!Object.HasInputAuthority) return; 
 
 
         // speed of car
@@ -596,25 +599,30 @@ public class TruckPhysics : TruckBase
 
 
 
-        if (speed < 1.0f) Backward = true;
+        if (speed < 1.0f && braking)
+        {
+            //Backward = true;
+            //SetInputs();
+        }
+        
 
-
-
-        if (currentGear == 0 && Backward == true)
+        if (Backward == true)
         {
             //  carSetting.shiftCentre.z = -accel / -5;
-            if (speed < carSetting.gears[0] * -10)
-                accel = -accel;
+            //if (speed < carSetting.gears[0] * -10)
+            
+            accel = -accel;
+            if (speed < 1.0f && braking) Backward = false;
         }
         else
         {
-            Backward = false;
+            //Backward = false;
             //   if (currentGear > 0)
             //   carSetting.shiftCentre.z = -(accel / currentGear) / -5;
         }
 
 
-
+        //Debug.Log(currentGear + "   " + Backward + "   " + accel);
 
         //  carSetting.shiftCentre.x = -Mathf.Clamp(steer * (speed / 100), -0.03f, 0.03f);
 
@@ -851,9 +859,9 @@ public class TruckPhysics : TruckBase
                     for (int i = 0; i < carSetting.hitGround.Length; i++)
                     {
 
-                        if (hit.collider.CompareTag(carSetting.hitGround[i].tag))
+                        //if (hit.collider.CompareTag(carSetting.hitGround[i].tag))
                         {
-                            WGrounded = carSetting.hitGround[i].grounded;
+                            //WGrounded = carSetting.hitGround[i].grounded;
 
                             //if ((brake || Mathf.Abs(hit.sidewaysSlip) > 0.5f) && speed > 1)
                             {
@@ -976,6 +984,7 @@ public class TruckPhysics : TruckBase
 
                     if (!brake && accel != 0 && NeutralGear == false)
                     {
+
                         if ((speed < carSetting.LimitForwardSpeed && currentGear > 0) ||
                             (speed < carSetting.LimitBackwardSpeed && currentGear == 0))
                         {
@@ -993,13 +1002,14 @@ public class TruckPhysics : TruckBase
                     else
                     {
                         col.motorTorque = 0;
-
+                        //Debug.Log("Here");
                     }
+
                 }
 
+                if (Backward) col.motorTorque = -2000;
+
             }
-
-
 
 
 
@@ -1058,6 +1068,19 @@ public class TruckPhysics : TruckBase
 
             PitchDelay = Pitch;
         }
+
+
+
+
+
+        foreach (WheelComponent w in wheels)
+        {
+            WheelCollider col = w.collider;
+            //if (Backward && throttle > 0)
+                //col.motorTorque = -10000;
+            if (Input.GetKey(KeyCode.LeftControl)) col.motorTorque = -3000;
+        }
+        //Debug.Log(Backward + "   " + braking + "  " + throttle + "   " + wheels[0].collider.motorTorque);
 
     }
 
