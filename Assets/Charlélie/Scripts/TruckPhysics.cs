@@ -601,8 +601,8 @@ public class TruckPhysics : TruckBase
 
         if (speed < 1.0f && braking)
         {
-            Backward = true;
-            SetInputs();
+            //Backward = true;
+            //SetInputs();
         }
         
 
@@ -1076,10 +1076,11 @@ public class TruckPhysics : TruckBase
         foreach (WheelComponent w in wheels)
         {
             WheelCollider col = w.collider;
-            //col.motorTorque = -10000;
-            //Debug.Log(Backward + "   " + braking + "  " + throttle + "   " + col.motorTorque);
-
+            //if (Backward && throttle > 0)
+                //col.motorTorque = -10000;
+            if (Input.GetKey(KeyCode.LeftControl)) col.motorTorque = -3000;
         }
+        //Debug.Log(Backward + "   " + braking + "  " + throttle + "   " + wheels[0].collider.motorTorque);
 
     }
 
