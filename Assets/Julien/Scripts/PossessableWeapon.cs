@@ -14,7 +14,7 @@ public class PossessableWeapon : NetworkBehaviour
 
     private float timer;
     
-    public void TryPossess(GameObject futurPossessor)
+    public void TryPossess(NetworkedPlayer other)
     {
         AskForPossessionServerRpc(Runner.LocalPlayer);
     }
@@ -37,8 +37,10 @@ public class PossessableWeapon : NetworkBehaviour
         GetComponent<WeaponBase>().isPossessed = true;
         ConfirmPossessionClientRpc();
         SetParentingClientRpc();
-        CanvasInGame.Instance.showOverheat(true);
         timer = 0.2f;
+        
+        if(_playerController != Runner.GetPlayerObject(Runner.LocalPlayer).gameObject.GetComponent<NetworkedPlayer>()) return;
+        CanvasInGame.Instance.showOverheat(true);
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
@@ -68,10 +70,14 @@ public class PossessableWeapon : NetworkBehaviour
         Object.RemoveInputAuthority();
         _playerController.transform.SetParent(null);
         _playerController.Unpossess(exitPoint);
-        _playerController = null;
+        
         GetComponent<WeaponBase>().isPossessed = false;
-        CanvasInGame.Instance.showOverheat(false);
         ConfirmGetOutClientRpc(rpcInfo.Source);
+        
+        if(_playerController != Runner.GetPlayerObject(Runner.LocalPlayer).gameObject.GetComponent<NetworkedPlayer>()) return;
+        _playerController = null;
+        CanvasInGame.Instance.showOverheat(false);
+        
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
