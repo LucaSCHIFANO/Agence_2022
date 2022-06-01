@@ -70,8 +70,8 @@ public class UpgradeMenu : NetworkBehaviour
 
     [Networked(OnChanged = nameof(UpgradesForteresseServerOnChanged)), Capacity(3)] private NetworkArray<int> upgradesForteresseServer => default;
     [Networked(OnChanged = nameof(UpgradesCamionServerOnChanged)), Capacity(3)] private NetworkArray<int> upgradesCamionServer => default;
-    [Networked/*(OnChanged = nameof(UnlockWeapon1ServerOnChanged))*/, Capacity(5)] private NetworkLinkedList<int> unlockedWeapon1Server => default;
-    [Networked/*(OnChanged = nameof(UnlockWeapon2ServerOnChanged))*/, Capacity(5)] private NetworkLinkedList<int> unlockedWeapon2Server => default;
+    [Networked(OnChanged = nameof(UnlockWeapon1ServerOnChanged)), Capacity(5)] private NetworkLinkedList<int> unlockedWeapon1Server => default;
+    [Networked(OnChanged = nameof(UnlockWeapon2ServerOnChanged)), Capacity(5)] private NetworkLinkedList<int> unlockedWeapon2Server => default;
     
     private int sizeWeapon1;
     private int sizeWeapon2;
@@ -100,6 +100,9 @@ public class UpgradeMenu : NetworkBehaviour
                 upgradesForteresseServer.Set(i, 0);
                 upgradesCamionServer.Set(i,0);
             }
+            
+            unlockedWeapon1Server.Add(0);
+            unlockedWeapon2Server.Add(0);
         }
 
         #region pour tout set et que ca bug pas
@@ -460,6 +463,7 @@ public class UpgradeMenu : NetworkBehaviour
     public void UnlockWeapon1ServerRpc(int weaponIdToUnlock, RpcInfo info = default)
     {
         unlockedWeapon1Server.Add(weaponIdToUnlock);
+        
     }
     
     [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
@@ -505,31 +509,36 @@ public class UpgradeMenu : NetworkBehaviour
     }
     
 
-    private void UnlockWeapon1ServerOnChanged()
+    public static void UnlockWeapon1ServerOnChanged(Changed<UpgradeMenu> changed)
     {
-        // WTreeButton weaponBuyed = listAllButton1.Find((button) =>
-        // {
-            // return button.id == newList.Value;
-        // });
+        changed.Behaviour.weapon1Change();
+    }
+
+    private void weapon1Change()
+    {
         
-        // sellMode = unlockedWeapon1Server.Count < sizeWeapon1;
-        // upgradeWeapon(weaponBuyed, weaponBuyed.firstWeapon);
-        // sizeWeapon1 = unlockedWeapon1Server.Count;
+        WTreeButton weaponBuyed = listAllButton1[unlockedWeapon1Server.Last()];
+        
+        sellMode = unlockedWeapon1Server.Count < sizeWeapon1;
+        upgradeWeapon(weaponBuyed, weaponBuyed.firstWeapon);
+        sizeWeapon1 = unlockedWeapon1Server.Count;
     }
     
     
-    private void UnlockWeapon2ServerOnChanged()
+    public static void UnlockWeapon2ServerOnChanged(Changed<UpgradeMenu> changed)
     {
-        // WTreeButton weaponBuyed = listAllButton2.Find((button) =>
-        // {
-            // return button.id == newList.Value;
-        // });
-        
-        // sellMode = unlockedWeapon2Server.Count < sizeWeapon2;
-        // upgradeWeapon(weaponBuyed, weaponBuyed.firstWeapon);
-        // sizeWeapon2 = unlockedWeapon2Server.Count;
+        changed.Behaviour.weapon2Change();
     }
     
+    private void weapon2Change()
+    {
+        
+        WTreeButton weaponBuyed = listAllButton2[unlockedWeapon2Server.Last()];
+        
+        sellMode = unlockedWeapon2Server.Count < sizeWeapon2;
+        upgradeWeapon(weaponBuyed, weaponBuyed.firstWeapon);
+        sizeWeapon1 = unlockedWeapon2Server.Count;
+    }
     
     #endregion
 }

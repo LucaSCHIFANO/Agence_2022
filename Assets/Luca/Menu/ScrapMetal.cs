@@ -37,7 +37,6 @@ public class ScrapMetal : NetworkBehaviour
 
     public static void OnScrapChanged(Changed<ScrapMetal> changed)
     {
-        Debug.Log("test");
         changed.Behaviour.ChangeScrapt();
     }
 
