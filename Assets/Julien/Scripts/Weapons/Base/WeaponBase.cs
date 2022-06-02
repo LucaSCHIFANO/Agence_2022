@@ -55,30 +55,39 @@ public abstract class WeaponBase : NetworkBehaviour
     
     public CanvasInGame canvas;
 
-    
-    [SerializeField][Range(0, 100)] protected float overHeatPourcent;
-    
-    protected virtual void Start()
+
+    public float overHeatPourcent;
+    [Networked(OnChanged = nameof(OnOverHChanged))] protected float overHeatPourcentOnline{ get; set; }
+
+    public override void Spawned()
     {
+        base.Spawned();
+        overHeatPourcentOnline = 0;
         isPossessed = false;
-        overHeatPourcent = 0;
-        Invoke("delayStart", 2);
     }
-
-    private void delayStart()
-    {
-        // canvas = CanvasInGame.Instance;
-    }
-
-    protected virtual void FixedUpdate()
+    
+    public override void FixedUpdateNetwork()
     {
         if (_shootingTimer >= 0) _shootingTimer -= Time.deltaTime;
     }
 
+    public static void OnOverHChanged(Changed<WeaponBase> changed)
+    {
+        changed.Behaviour.ChangeOverHeat();
+    }
+    
+    private void ChangeOverHeat()
+    {
+        overHeatPourcent = overHeatPourcentOnline;
+        if (overHeatPourcent >= 100) _isOverHeat = true;
+
+    }
 
     public virtual void Shoot()
     {
         overHeatPourcent += (100 / _bulletToOverHeat);
+        overHeatPourcentOnline = overHeatPourcent;
+        
         if (overHeatPourcent >= 100) _isOverHeat = true;
         _timeCoolDown = _timeBeforeCoolDown;
         
@@ -96,7 +105,7 @@ public abstract class WeaponBase : NetworkBehaviour
     {
         _isOverHeat = true;
         _coolDownPerSecond = 0;
-        overHeatPourcent = 100f;
+        overHeatPourcentOnline = 100f;
         _isCoolDown = false;
     }
 
@@ -112,17 +121,22 @@ public abstract class WeaponBase : NetworkBehaviour
 
         var em = overHParticle.emission;
         em.enabled = true;
-        
-        if(_isOverHeat)em.rateOverTime = OHParticleOverTime;
+
+        if (_isOverHeat) em.rateOverTime = OHParticleOverTime;
         else em.rateOverTime = 0f;
     
 
         overHeatPourcent = Mathf.Clamp(overHeatPourcent, 0, 100);
-        
-        
-        if (!isPossessed) return;
 
-        canvas.overheatSlider.fillAmount = (overHeatPourcent / 100);
+
+
+
+
+        if (Object != null) overHeatPourcentOnline = overHeatPourcent;
+        
+
+        Debug.Log(canvas.name+ "  " + canvas.overheatSlider.name + " " + overHeatPourcent);
+        canvas.overheatSlider.fillAmount = (overHeatPourcent / 100f);
         if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
         else canvas.overheatSlider.color = maincolor;
     }

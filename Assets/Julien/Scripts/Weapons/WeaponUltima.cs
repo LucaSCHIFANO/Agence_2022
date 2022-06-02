@@ -30,9 +30,9 @@ public class WeaponUltima : WeaponBase
     private int shootedRound;
     public bool isShooting;
     
-    protected override void FixedUpdate()
+    public override void FixedUpdateNetwork()
     {
-        base.FixedUpdate();
+        base.FixedUpdateNetwork();
         
         if (actualWeapon == weapon.BASIC || actualWeapon == weapon.BURST)
         {
@@ -62,7 +62,7 @@ public class WeaponUltima : WeaponBase
         _isOverHeat = false;
         _isCoolDown = false;
         isShooting = false;
-        overHeatPourcent = 0;
+        overHeatPourcentOnline = 0;
         _shootingTimer = 0;
         _timeCoolDown = 0;
     }

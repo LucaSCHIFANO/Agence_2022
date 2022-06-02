@@ -35,17 +35,16 @@ public class PossessableWeapon : NetworkBehaviour
         _playerController.transform.SetParent(transform);
         _playerController.Possess(transform);
         GetComponent<WeaponBase>().isPossessed = true;
+        GetComponent<WeaponBase>().possessor = _playerController;
         ConfirmPossessionClientRpc();
         SetParentingClientRpc();
         timer = 0.2f;
-        
-        if(_playerController != Runner.GetPlayerObject(Runner.LocalPlayer).gameObject.GetComponent<NetworkedPlayer>()) return;
-        CanvasInGame.Instance.showOverheat(true);
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
     private void ConfirmPossessionClientRpc()
     {
+        CanvasInGame.Instance.showOverheat(true);
         camera.SetActive(true);
         _playerController = Runner.GetPlayerObject(Object.InputAuthority).gameObject.GetComponent<NetworkedPlayer>();
         _playerController.gameObject.GetComponent<CharacterMovementHandler>().enabled = false;
@@ -70,19 +69,17 @@ public class PossessableWeapon : NetworkBehaviour
         Object.RemoveInputAuthority();
         _playerController.transform.SetParent(null);
         _playerController.Unpossess(exitPoint);
-        
         GetComponent<WeaponBase>().isPossessed = false;
+        GetComponent<WeaponBase>().possessor = null;
         ConfirmGetOutClientRpc(rpcInfo.Source);
-        
-        if(_playerController != Runner.GetPlayerObject(Runner.LocalPlayer).gameObject.GetComponent<NetworkedPlayer>()) return;
         _playerController = null;
-        CanvasInGame.Instance.showOverheat(false);
-        
+
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void ConfirmGetOutClientRpc([RpcTarget] PlayerRef playerRef)
     {
+        CanvasInGame.Instance.showOverheat(false);
         camera.SetActive(false);
         _playerController = Runner.GetPlayerObject(playerRef).gameObject.GetComponent<NetworkedPlayer>();
         _playerController.gameObject.GetComponent<CharacterMovementHandler>().enabled = true;
