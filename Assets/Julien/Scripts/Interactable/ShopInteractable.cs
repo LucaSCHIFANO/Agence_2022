@@ -13,6 +13,6 @@ public class ShopInteractable : Interactable
 
     public override void Interact(PlayerInteraction interactor)
     {
-        GetComponent<Shop>().Interact(interactor.GetComponent<PlayerController>());
+        GetComponent<Shop>().Interact(interactor.GetComponent<NetworkedPlayer>());
     }
 }

@@ -1439,7 +1439,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 2000
+  far clip plane: 1000000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -1711,6 +1711,7 @@ GameObject:
   - component: {fileID: 5016947994726621657}
   - component: {fileID: 2236904055248020529}
   - component: {fileID: 790152885449411326}
+  - component: {fileID: 6294227356469682149}
   m_Layer: 0
   m_Name: Truck
   m_TagString: Untagged
@@ -1763,6 +1764,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  honking: {fileID: 0}
+  _exhaust: {fileID: 0}
+  teleport: []
   controlMode: 1
   activeControl: 1
   action:
@@ -2044,6 +2048,7 @@ MonoBehaviour:
   - {fileID: 4534356275946884012}
   - {fileID: 5016947994726621657}
   - {fileID: 2236904055248020529}
+  - {fileID: 6294227356469682149}
   SimulationBehaviours: []
 --- !u!114 &5016947994726621657
 MonoBehaviour:
@@ -2123,6 +2128,25 @@ HingeJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &6294227356469682149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8740809374433383271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6b93df543b9f5c44be75d593662100b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  interactionType: 0
+  requiredHoldTime: 0
+  camera: {fileID: 8140133275740891890}
+  seat: {fileID: 8740809374294305101}
+  exit: {fileID: 8740809375148648886}
+  _isPossessed: 0
 --- !u!1 &8740809374433384251
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class CharacterInputHandler : MonoBehaviour
     Vector2 moveInputVector = Vector2.zero;
     Vector2 viewInputVector = Vector2.zero;
     private bool isJumpButtonPressed;
+    private bool isRequestingToSpawn;
 
     private CharacterMovementHandler _characterMovementHandler;
 
@@ -33,6 +34,7 @@ public class CharacterInputHandler : MonoBehaviour
         moveInputVector.y = Input.GetAxis("Vertical");
 
         isJumpButtonPressed = Input.GetButton("Jump");
+        isRequestingToSpawn = Input.GetKeyDown(KeyCode.P);
     }
 
     public NetworkInputData GetNetworkInput()
@@ -45,6 +47,7 @@ public class CharacterInputHandler : MonoBehaviour
         inputData.movementInput = moveInputVector;
 
         inputData.isJumpPressed = isJumpButtonPressed;
+        inputData.isRequestingToSpawn = isRequestingToSpawn;
 
         return inputData;
     }

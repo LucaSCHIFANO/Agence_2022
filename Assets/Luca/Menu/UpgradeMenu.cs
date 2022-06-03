@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Fusion;
 using TMPro;
 using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class UpgradeMenu : NetworkBehaviour
 {
@@ -50,10 +53,7 @@ public class UpgradeMenu : NetworkBehaviour
     public List<listInt> CPrice = new List<listInt>();
 
 
-
     private bool sellMode;
-
-    
 
     #region Singleton
 
@@ -67,7 +67,7 @@ public class UpgradeMenu : NetworkBehaviour
 
     #endregion
 
-    [Networked/*(OnChanged = nameof(UpgradesForteresseServerOnChanged))*/, Capacity(3)] private NetworkLinkedList<int> upgradesForteresseServer => default;
+    [Networked(OnChanged = nameof(UpgradesForteresseServerOnChanged)), Capacity(3)] private NetworkArray<int> upgradesForteresseServer => default;
     [Networked/*(OnChanged = nameof(UpgradesCamionServerOnChanged))*/, Capacity(3)] private NetworkLinkedList<int> upgradesCamionServer => default;
     [Networked/*(OnChanged = nameof(UnlockWeapon1ServerOnChanged))*/, Capacity(5)] private NetworkLinkedList<int> unlockedWeapon1Server => default;
     [Networked/*(OnChanged = nameof(UnlockWeapon2ServerOnChanged))*/, Capacity(5)] private NetworkLinkedList<int> unlockedWeapon2Server => default;
@@ -96,7 +96,7 @@ public class UpgradeMenu : NetworkBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                upgradesForteresseServer.Add(0);
+                upgradesForteresseServer.Set(i, 0);
                 upgradesCamionServer.Add(0);
             }
         }
@@ -115,6 +115,7 @@ public class UpgradeMenu : NetworkBehaviour
         gameObject.SetActive(false);
 
         #endregion
+
     }
 
     /*public override void OnNetworkSpawn()
@@ -129,7 +130,6 @@ public class UpgradeMenu : NetworkBehaviour
             unlockedWeapon2Server.OnListChanged += UnlockWeapon2ServerOnChanged;
         }
     }*/
-
 
     public void gotoScreen(int lint)
     {
@@ -478,12 +478,15 @@ public class UpgradeMenu : NetworkBehaviour
         unlockedWeapon2Server.Remove(weaponIdToUnlock);
     }
 
-    private void UpgradesForteresseServerOnChanged()
+    public static void UpgradesForteresseServerOnChanged(Changed<UpgradeMenu> changed)
     {
-        // Debug.Log($"upgradesF[{newList.Index}] = {newList.Value}");
+        changed.Behaviour.ForteresseChange();
+    }
 
-        // upgradesF[newList.Index] = newList.Value;
-        // visuF();
+    private void ForteresseChange()
+    {
+        upgradesF = upgradesForteresseServer.ToList();
+        visuF();
     }
 
     private void UpgradesCamionServerOnChanged()

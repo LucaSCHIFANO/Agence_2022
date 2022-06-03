@@ -51,6 +51,8 @@ public class CharacterMovementHandler : NetworkBehaviour
             _networkCharacterControllerPrototypeCustom.Move(moveDirection);
             
             if (networkInputData.isJumpPressed) _networkCharacterControllerPrototypeCustom.Jump();
+            
+            if (networkInputData.isRequestingToSpawn) SpawnerVehicule.instance.SpawnCar();
         }
     }
 
