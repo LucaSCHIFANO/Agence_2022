@@ -10,9 +10,10 @@ public class CarInteractable : Interactable
     [SerializeField] private Transform seat;
     [SerializeField] private Transform exit;
     
-    [Networked] private bool isPossessed { get; set; }
+    [Networked] public bool isPossessed { get; set; }
 
     private float timer;
+    private NetworkedPlayer _playerController;
     
     public override string GetDescription()
     {
@@ -26,53 +27,55 @@ public class CarInteractable : Interactable
 
     private void Update()
     {
-        if (isPossessed && Object.HasInputAuthority)
+        if (Object == null) return;
+        
+        if (Object.HasStateAuthority)
         {
-            if (timer <= 0)
-            {
-                if (Input.GetKey(KeyCode.E))
-                {
-                    AskForExitServerRpc();
-                }
-            }
+            if (timer > 0) timer -= Time.deltaTime;
         }
-
-        if (timer > 0) timer -= Time.deltaTime;
     }
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     void AskForOwnershipServerRpc(RpcInfo info = default)
     {
         if (isPossessed) return;
-        
-        Object.AssignInputAuthority(info.Source);
+
         isPossessed = true;
-        GameObject playerObject = Runner.GetPlayerObject(info.Source).gameObject;
-        playerObject.transform.SetParent(transform);
-        playerObject.transform.position = seat.position;
-        playerObject.transform.rotation = seat.rotation;
+        Object.AssignInputAuthority(info.Source);
+        _playerController = Runner.GetPlayerObject(info.Source).gameObject.GetComponent<NetworkedPlayer>();
+        _playerController.transform.SetParent(transform);
+        _playerController.Possess(transform);
         ConfirmPossessionClientRpc();
+        SetParentingClientRpc();
+        timer = .2f;
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
     void ConfirmPossessionClientRpc()
     {
         camera.SetActive(true);
-        Runner.GetPlayerObject(Runner.LocalPlayer).GetComponent<NetworkedPlayer>().Possess(seat);
-        timer = .2f;
+        NetworkedPlayer player = Runner.GetPlayerObject(Runner.LocalPlayer).GetComponent<NetworkedPlayer>();
+        player.ChangeInputHandler(PossessingType.CAR, gameObject);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void SetParentingClientRpc()
+    {
+        Transform _playerTransform = Runner.GetPlayerObject(Object.InputAuthority).transform;
+        _playerTransform.SetParent(transform);
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     public void AskForExitServerRpc(RpcInfo info = default)
     {
         if (!isPossessed) return;
-        
-        Object.RemoveInputAuthority();
+        if (timer > 0) return;
+
         isPossessed = false;
-        GameObject playerObject = Runner.GetPlayerObject(info.Source).gameObject;
-        playerObject.transform.SetParent(null);
-        playerObject.transform.position = exit.position;
-        playerObject.transform.rotation = exit.rotation;
+        Object.RemoveInputAuthority();
+        _playerController.transform.SetParent(null);
+        _playerController.Unpossess(exit);
+        _playerController = null;
         ConfirmExitClientRpc(info.Source);
     }
 
@@ -80,6 +83,10 @@ public class CarInteractable : Interactable
     void ConfirmExitClientRpc([RpcTarget] PlayerRef target)
     {
         camera.SetActive(false);
-        Runner.GetPlayerObject(Runner.LocalPlayer).GetComponent<NetworkedPlayer>().Unpossess(exit);
+        _playerController = Runner.GetPlayerObject(target).gameObject.GetComponent<NetworkedPlayer>();
+        _playerController.gameObject.SetActive(true);
+        _playerController.transform.SetParent(null);
+        _playerController.ChangeInputHandler(PossessingType.CHARACTER, gameObject);
+        _playerController = null;
     }
 }

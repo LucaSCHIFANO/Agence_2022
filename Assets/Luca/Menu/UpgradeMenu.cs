@@ -8,6 +8,7 @@ using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class UpgradeMenu : NetworkBehaviour
 {
@@ -51,10 +52,7 @@ public class UpgradeMenu : NetworkBehaviour
     public List<listInt> CPrice = new List<listInt>();
 
 
-
     private bool sellMode;
-
-    
 
     #region Singleton
 
@@ -119,6 +117,7 @@ public class UpgradeMenu : NetworkBehaviour
         gameObject.SetActive(false);
 
         #endregion
+
     }
 
     /*public override void OnNetworkSpawn()
@@ -133,7 +132,6 @@ public class UpgradeMenu : NetworkBehaviour
             unlockedWeapon2Server.OnListChanged += UnlockWeapon2ServerOnChanged;
         }
     }*/
-
 
     public void gotoScreen(int lint)
     {

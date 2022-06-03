@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine.UI;
 
 public enum ControlMode { simple = 1, touch = 2 }
@@ -8,6 +9,12 @@ public enum ControlMode { simple = 1, touch = 2 }
 
 public class TruckPhysics : TruckBase
 {
+    [SerializeField] private AudioClip honking;
+    [SerializeField] private ParticleSystem _exhaust;
+
+    [SerializeField] public List<Transform> teleport;
+    private AudioSource _audioSource;
+    
     #region Settings
 
     [HideInInspector]
@@ -161,6 +168,7 @@ public class TruckPhysics : TruckBase
     public float powerShift = 100;
     [HideInInspector]
     public bool shift;
+    bool leftControl;
 
     private float torque = 100f;
 
@@ -282,34 +290,6 @@ public class TruckPhysics : TruckBase
 
     }
 
-    private void SetInputs()
-    {
-        Debug.Log("BCK: " + Backward);
-        shiftUp = Input.GetKeyDown("page up");
-        shiftDown = Input.GetKeyDown("page down");
-        if (Backward)
-        {
-            braking = player.GetAxis("Throttle") > 0;
-            if (player.GetButton("Breaking"))
-            {
-                throttle = 1;
-            }
-            else
-                throttle = 0;
-            //throttle = player.GetButton("Breaking") ? 1 : 0;
-        } else
-        {
-            braking = player.GetButton("Breaking");
-            throttle = player.GetAxis("Throttle");
-        }
-        //braking = Backward ? (player.GetAxis("Throttle") > 0) : player.GetButton("Breaking");
-        //throttle = Backward ? (player.GetButton("Breaking") ? 1 : 0) : player.GetAxis("Throttle");
-        turn = player.GetAxis("Turn");
-        shift = Input.GetKey(KeyCode.LeftShift) | Input.GetKey(KeyCode.RightShift);
-    }
-
-
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -366,7 +346,7 @@ public class TruckPhysics : TruckBase
 
         }
 
-
+        _audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     #endregion
@@ -488,8 +468,6 @@ public class TruckPhysics : TruckBase
     #region Updates
     void Update()
     {
-        SetInputs();
-
         if (!carSetting.automaticGear && activeControl)
         {
             if (shiftUp)
@@ -508,11 +486,44 @@ public class TruckPhysics : TruckBase
     }
 
 
-
-
-    void FixedUpdate()
+    public override void FixedUpdateNetwork()
     {
-        //if (!Object.HasInputAuthority) return; 
+        base.FixedUpdateNetwork();
+        if (GetInput(out VehiculeInputData input))
+        {
+            shiftUp = input.shiftUp;
+            shiftDown = input.shiftDown;
+            braking = input.breaking;
+            turn = input.movement.x;
+            throttle = input.movement.y;
+            shift = input.shift;
+            leftControl = input.leftControl;
+
+            if (input.isExiting)
+            {
+                GetComponent<CarInteractable>().AskForExitServerRpc();
+            }
+
+            if (input.isHonking)
+            {
+                HonkeRPC();
+            }
+
+            if (throttle > 0 && !leftControl)
+            {
+                PlayParticle();
+            }
+            else
+            {
+                StopParticle();
+            }
+
+            if (input.teleportToSpawn) { TeleportTo(0); }
+            if (input.teleportToBigDrop) { TeleportTo(1); }
+            if (input.teleportToBigDrop2) { TeleportTo(2); }
+            if (input.teleportToBigDrop3) { TeleportTo(3); }
+            if (input.teleportToBigDrop4) { TeleportTo(4); }
+        }
 
 
         // speed of car
@@ -1089,6 +1100,19 @@ public class TruckPhysics : TruckBase
         }
        
 
+
+
+
+
+        foreach (WheelComponent w in wheels)
+        {
+            WheelCollider col = w.collider;
+            //if (Backward && throttle > 0)
+                //col.motorTorque = -10000;
+            if (leftControl) col.motorTorque = -3000;
+        }
+        //Debug.Log(Backward + "   " + braking + "  " + throttle + "   " + wheels[0].collider.motorTorque);
+
     }
 
     #endregion
@@ -1114,5 +1138,31 @@ public class TruckPhysics : TruckBase
 
     #endregion
 
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+    public void HonkeRPC()
+    {
+        _audioSource.clip = honking;
+        _audioSource.Play();
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+    public void PlayParticle()
+    {
+        _exhaust.Play();
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+    public void StopParticle()
+    {
+        _exhaust.Stop();
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    public void TeleportTo(int location)
+    {
+        transform.position = teleport[location].position;
+        transform.rotation = teleport[location].rotation;
+    }
 
 }
