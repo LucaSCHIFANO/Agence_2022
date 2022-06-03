@@ -493,9 +493,24 @@ public class TruckPhysics : TruckBase
         {
             shiftUp = input.shiftUp;
             shiftDown = input.shiftDown;
-            braking = input.breaking;
+
+            if (Backward)
+            {
+                braking = input.movement.y > 0;
+                if (input.breaking)
+                {
+                    throttle = 1;
+                }
+                else
+                    throttle = 0;
+            }
+            else
+            {
+                braking = input.breaking;
+                throttle = input.movement.y;
+            }
+            
             turn = input.movement.x;
-            throttle = input.movement.y;
             shift = input.shift;
             leftControl = input.leftControl;
 
