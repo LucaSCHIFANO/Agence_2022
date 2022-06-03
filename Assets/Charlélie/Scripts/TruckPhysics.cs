@@ -1117,15 +1117,6 @@ public class TruckPhysics : TruckBase
 
 
 
-
-
-        foreach (WheelComponent w in wheels)
-        {
-            WheelCollider col = w.collider;
-            //if (Backward && throttle > 0)
-                //col.motorTorque = -10000;
-            if (leftControl) col.motorTorque = -3000;
-        }
         //Debug.Log(Backward + "   " + braking + "  " + throttle + "   " + wheels[0].collider.motorTorque);
 
     }
