@@ -8,7 +8,7 @@ using TMPro;
 
 public class ScrapMetal : NetworkBehaviour
 {
-    public int startScrap;
+    [SerializeField] protected int startScrap;
     public TextMeshProUGUI textSmetals;
 
     [HideInInspector] public int scrapLeft;
