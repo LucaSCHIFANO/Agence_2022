@@ -44,12 +44,10 @@ GameObject:
   - component: {fileID: 5201995736541135836}
   - component: {fileID: 5201995736541135811}
   - component: {fileID: 5201995736541135810}
-  - component: {fileID: 5201995736541135809}
   - component: {fileID: 5011158922429546565}
-  - component: {fileID: 2776625263218678640}
-  - component: {fileID: 7127251428665080016}
   - component: {fileID: 6033332638884377414}
   - component: {fileID: 8939548187541356570}
+  - component: {fileID: 2279289399185579630}
   m_Layer: 8
   m_Name: Weapon_Tesla
   m_TagString: Untagged
@@ -137,23 +135,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5201995736541135809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5201995736541135815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 573551e24be747348b00b4ada79c0640, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activateDeactivate: 283
-  activated: 0
-  camera: {fileID: 7823726004606746303}
-  clampRotation: 30
-  weaponSensibility: {x: 10, y: 10}
 --- !u!114 &5011158922429546565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,6 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d56fe143667fa46b1f4348da75c66d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 1
   _shootingPoint: {fileID: 5201995737164658126}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
@@ -183,48 +165,7 @@ MonoBehaviour:
   isPossessed: 0
   canvas: {fileID: 0}
   overHeatPourcent: 0
---- !u!114 &2776625263218678640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5201995736541135815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 951099334
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
---- !u!114 &7127251428665080016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5201995736541135815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54c9647dc784a46bca664910f182491e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 1
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
-  PositionThreshold: 0.001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  InLocalSpace: 0
-  Interpolate: 1
+  _overHeatPourcentOnline: 0
 --- !u!65 &6033332638884377414
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -250,9 +191,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ec2a544d9fe1a49ba1a2219dc839d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   interactionType: 0
   requiredHoldTime: 0
   weaponName: Tesla Turret
+--- !u!114 &2279289399185579630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5201995736541135815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 0
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 0
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: 4abcbbf71fe3c0745b1bd7da63e59275
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 5011158922429546565}
+  - {fileID: 8939548187541356570}
+  SimulationBehaviours: []
 --- !u!1 &5201995737164658125
 GameObject:
   m_ObjectHideFlags: 0

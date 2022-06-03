@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5104213490626840288}
   - component: {fileID: 5374768091260926799}
   - component: {fileID: -8665527496555407943}
+  - component: {fileID: 7274899943349406891}
   m_Layer: 8
   m_Name: Weapon_Shotgun
   m_TagString: Untagged
@@ -164,6 +165,31 @@ MonoBehaviour:
   interactionType: 0
   requiredHoldTime: 0
   weaponName: ShotGun
+--- !u!114 &7274899943349406891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5844692118931409870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 0
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 0
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: 225d7fb6e646297488cfb78fc0f434fe
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 5104213490626840288}
+  - {fileID: -8665527496555407943}
+  SimulationBehaviours: []
 --- !u!1 &5844692119330793474
 GameObject:
   m_ObjectHideFlags: 0
