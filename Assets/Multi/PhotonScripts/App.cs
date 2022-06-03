@@ -275,8 +275,12 @@ public class App : MonoBehaviour, INetworkRunnerCallbacks
 		_runner = null;
 		_session = null;
 
-		if(Application.isPlaying)
+		if (Application.isPlaying)
+		{
 			SceneManager.LoadSceneAsync(_introScene);
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
+		}
 	}
 
 	public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
@@ -306,6 +310,9 @@ public class App : MonoBehaviour, INetworkRunnerCallbacks
 				break;
 			case PossessingType.WEAPON:
 				input.Set(NetworkedPlayer.Local.WeaponInputHandler.GetNetworkInput());
+				break;
+			case PossessingType.CAR:
+				input.Set(NetworkedPlayer.Local.VehiculeInputHandler.GetNetworkInput());
 				break;
 			default:
 				Debug.LogError("PossessingType not handled !! In App.cs");
