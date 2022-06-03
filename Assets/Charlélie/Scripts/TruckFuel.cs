@@ -101,6 +101,12 @@ public class TruckFuel : TruckBase
     public float maxFuel;
     public float currFuel;
 
+    public float consPerMeterInL;
+
+    float totDist;
+    float currMeter;
+    Vector3 prevPos;
+
 
 
     public override void Init()
@@ -114,6 +120,19 @@ public class TruckFuel : TruckBase
         {
             currentDamagesApplied[i].Update();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        float currDist = Vector3.Distance(transform.position, prevPos); ;
+        totDist += currDist;
+        currMeter += currDist;
+        if (currMeter >= 1)
+        {
+            currMeter = 0;
+            currFuel -= consPerMeterInL;
+        }
+        prevPos = transform.position;
     }
 
     public void GetDamage(float value)
