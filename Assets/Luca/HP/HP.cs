@@ -14,6 +14,13 @@ public class HP : MonoBehaviour
         currentHP = maxHP;
     }
 
+    public void InitializeHP(float _hp)
+    {
+        if (currentHP != 0 || _hp <= 0f) return;
+
+        currentHP = _hp;
+    }
+
     public virtual void reduceHP(float damage)
     {
         currentHP -= damage;

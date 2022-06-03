@@ -18,7 +18,6 @@ namespace Enemies
         protected float speed;
         public float range;
         protected bool isDead;
-        protected int actualHealth;
 
         protected WeaponBase[] weapons; // WeaponSO type
         [SerializeField] protected EnemySO enemySo; // TEMP
@@ -44,7 +43,7 @@ namespace Enemies
         {
             asker = GetComponent<Asker>();
 
-            actualHealth = _enemySo.health;
+            hp.InitializeHP(_enemySo.health);
             speed = _enemySo.speed;
             range = _enemySo.range;
 

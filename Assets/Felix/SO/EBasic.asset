@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc64d25eec6914a4e958bb3c7c21d427, type: 3}
-  m_Name: ESniper
+  m_Name: EBasic
   m_EditorClassIdentifier: 
-  health: 100
-  speed: 9
-  range: 30
+  health: 150
+  speed: 7.5
+  range: 15
   weapons:
-  - {fileID: 15367298702509930, guid: 2c93eecd34f224a41a7d7c5b08618694, type: 3}
-  enemyPrefab: {fileID: 6506913731331482615, guid: f5a63098b6afa5e4897288dbd7fecf0d,
+  - {fileID: 109741272987210308, guid: 5eed61b2185fdcf4f8692f53c55ca453, type: 3}
+  enemyPrefab: {fileID: 6506913731331482615, guid: 048259f9db17a28489a9e9e023a9b9e8,
     type: 3}

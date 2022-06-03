@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Enemies
 {
-    public class Sniper : Enemy
+    public class Basic : Enemy
     {
-        [SerializeField] private LayerMask obstaclesLayerMask;
+        //[SerializeField] private LayerMask obstaclesLayerMask;
         
         public override void Initialization(EnemySO _enemySo)
         {
@@ -16,11 +16,11 @@ namespace Enemies
 
             if (Runner.IsServer && target != null)
             {
-                Vector3 nPos = (transform.position - target.transform.position).normalized * (range - 5) +
+                /*Vector3 nPos = (transform.position - target.transform.position).normalized * (range - 5) +
                                target.transform.position;
 
                 asker.AskNewPath(nPos, speed, OnPathFound);
-                targetLastPosition = target.transform.position;
+                targetLastPosition = target.transform.position;*/
             }
         }
 
@@ -38,7 +38,7 @@ namespace Enemies
             if (!Runner.IsServer)
                 return;
             
-            float distance = Vector3.Distance(transform.position, target.transform.position);
+            /*float distance = Vector3.Distance(transform.position, target.transform.position);
         
             if (distance <= range)
             {
@@ -60,12 +60,12 @@ namespace Enemies
             
                 asker.AskNewPath(nPos, speed, OnPathFound);
                 targetLastPosition = target.transform.position;
-            }
+            }*/
         }
 
         public void OnPathFound(Vector3[] _points)
         {
-            if (_points.Length == 0) return;
+            /*if (_points.Length == 0) return;
             
             Vector3 direction = target.transform.position - _points[^1];
 
@@ -100,7 +100,7 @@ namespace Enemies
                         return;
                     }
                 }
-            }
+            }*/
         }
     }
 }
