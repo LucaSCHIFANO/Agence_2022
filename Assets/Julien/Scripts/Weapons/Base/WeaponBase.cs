@@ -48,6 +48,7 @@ public abstract class WeaponBase : NetworkBehaviour
     protected float _timeCoolDown;
     protected bool _isOverHeat;
     protected bool _isCoolDown;
+    protected bool _isDisable;
 
     [HideInInspector] public NetworkedPlayer possessor;
 
@@ -85,6 +86,7 @@ public abstract class WeaponBase : NetworkBehaviour
 
     public virtual void Shoot()
     {
+        if (Object == null) return;
         overHeatPourcent += (100 / _bulletToOverHeat);
         overHeatPourcentOnline = overHeatPourcent;
         
@@ -103,14 +105,21 @@ public abstract class WeaponBase : NetworkBehaviour
 
     public void DisableWeapon()
     {
+        if (Object == null) return;
+        _isDisable = true;
         _isOverHeat = true;
         _coolDownPerSecond = 0;
         overHeatPourcentOnline = 100f;
         _isCoolDown = false;
+        
+        var em = overHParticle.emission;
+        em.enabled = true;
+        em.rateOverTime = OHParticleOverTime;
     }
 
     private void Update()
     {
+        if (_isDisable) return;
         if (_isCoolDown || _isOverHeat) overHeatPourcent -= _coolDownPerSecond * Time.deltaTime;
         else if(!_isCoolDown) _timeCoolDown -= Time.deltaTime;
 
@@ -135,7 +144,7 @@ public abstract class WeaponBase : NetworkBehaviour
         if (Object != null) overHeatPourcentOnline = overHeatPourcent;
         
 
-        Debug.Log(canvas.name+ "  " + canvas.overheatSlider.name + " " + overHeatPourcent);
+//        Debug.Log(canvas.name+ "  " + canvas.overheatSlider.name + " " + overHeatPourcent);
         canvas.overheatSlider.fillAmount = (overHeatPourcent / 100f);
         if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
         else canvas.overheatSlider.color = maincolor;
