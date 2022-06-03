@@ -284,11 +284,27 @@ public class TruckPhysics : TruckBase
 
     private void SetInputs()
     {
+        Debug.Log("BCK: " + Backward);
         shiftUp = Input.GetKeyDown("page up");
         shiftDown = Input.GetKeyDown("page down");
-        braking = Backward ? (player.GetAxis("Throttle") > 0) : player.GetButton("Breaking");
+        if (Backward)
+        {
+            braking = player.GetAxis("Throttle") > 0;
+            if (player.GetButton("Breaking"))
+            {
+                throttle = 1;
+            }
+            else
+                throttle = 0;
+            //throttle = player.GetButton("Breaking") ? 1 : 0;
+        } else
+        {
+            braking = player.GetButton("Breaking");
+            throttle = player.GetAxis("Throttle");
+        }
+        //braking = Backward ? (player.GetAxis("Throttle") > 0) : player.GetButton("Breaking");
+        //throttle = Backward ? (player.GetButton("Breaking") ? 1 : 0) : player.GetAxis("Throttle");
         turn = player.GetAxis("Turn");
-        throttle = Backward ? (player.GetButton("Breaking") ? 1 : 0) : player.GetAxis("Throttle");
         shift = Input.GetKey(KeyCode.LeftShift) | Input.GetKey(KeyCode.RightShift);
     }
 
@@ -601,18 +617,23 @@ public class TruckPhysics : TruckBase
 
         if (speed < 1.0f && braking)
         {
-            //Backward = true;
+            Backward = true;
             //SetInputs();
         }
-        
 
-        if (Backward == true)
+        Debug.Log("Backwarding: " + Backward + "  Throttle: " + (throttle > 0) + "  Braking: " + braking);
+        
+        if (Backward)
         {
             //  carSetting.shiftCentre.z = -accel / -5;
             //if (speed < carSetting.gears[0] * -10)
-            
-            accel = -accel;
-            if (speed < 1.0f && braking) Backward = false;
+
+            //accel = -accel;
+            if (speed < 1.0f && braking)
+            {
+                Debug.Log("STOP BACK");
+                //Backward = false;
+            }
         }
         else
         {
@@ -711,7 +732,6 @@ public class TruckPhysics : TruckBase
                         rpm += (carSetting.idleRPM * accel);
                     }
                 }
-
 
                 motorizedWheels++;
             }
@@ -979,7 +999,6 @@ public class TruckPhysics : TruckBase
                 }
                 else
                 {
-                    // 
                     float curTorqueCol = col.motorTorque;
 
                     if (!brake && accel != 0 && NeutralGear == false)
@@ -988,8 +1007,10 @@ public class TruckPhysics : TruckBase
                         if ((speed < carSetting.LimitForwardSpeed && currentGear > 0) ||
                             (speed < carSetting.LimitBackwardSpeed && currentGear == 0))
                         {
-
-                            col.motorTorque = curTorqueCol * 0.9f + newTorque * 1.0f;
+                            if (Backward)
+                                col.motorTorque = -(curTorqueCol * 0.9f + newTorque * 1.0f);
+                            else
+                                col.motorTorque = curTorqueCol * 0.9f + newTorque * 1.0f;
                         }
                         else
                         {
@@ -1002,12 +1023,10 @@ public class TruckPhysics : TruckBase
                     else
                     {
                         col.motorTorque = 0;
-                        //Debug.Log("Here");
                     }
 
                 }
 
-                if (Backward) col.motorTorque = -2000;
 
             }
 
@@ -1068,19 +1087,7 @@ public class TruckPhysics : TruckBase
 
             PitchDelay = Pitch;
         }
-
-
-
-
-
-        foreach (WheelComponent w in wheels)
-        {
-            WheelCollider col = w.collider;
-            //if (Backward && throttle > 0)
-                //col.motorTorque = -10000;
-            if (Input.GetKey(KeyCode.LeftControl)) col.motorTorque = -3000;
-        }
-        //Debug.Log(Backward + "   " + braking + "  " + throttle + "   " + wheels[0].collider.motorTorque);
+       
 
     }
 
