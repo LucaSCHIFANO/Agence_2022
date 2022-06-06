@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  range: 1
+  range: 0.25
   enemySo: {fileID: 11400000, guid: 6905c950451cdfa4486769d1e84dc8f7, type: 2}
   weaponsPosition: []
   playersLayerMask:
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
+  _interpolationDataSource: 3
   InterpolationSpace: 0
   InterpolationTarget: {fileID: 0}
   InterpolateErrorCorrection: 1

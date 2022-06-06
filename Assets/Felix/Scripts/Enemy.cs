@@ -76,7 +76,6 @@ namespace Enemies
                 {
                     GameObject nWeapon = Instantiate(weaponsObject[i], weaponsPosition[i]);
                     weapons[i] = nWeapon.GetComponent<WeaponBase>();
-                    weapons[i].DisableWeapon();
                 } 
             }
         }
