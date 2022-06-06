@@ -129,6 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3ea2abfc6e2b2445a657f4a6db916fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   maxHP: 10
   impactEffect: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
     type: 3}
@@ -151,7 +152,7 @@ MonoBehaviour:
   - {fileID: 7099923427349109451}
   obstaclesLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!114 &969192348745435775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,6 +175,7 @@ MonoBehaviour:
     RawGuidValue: f5a63098b6afa5e4897288dbd7fecf0d
   NestedObjects: []
   NetworkedBehaviours:
+  - {fileID: 6516695958178865879}
   - {fileID: -1291067177727544176}
   - {fileID: 7042439095538118630}
   SimulationBehaviours: []

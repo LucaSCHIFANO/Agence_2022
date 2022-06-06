@@ -35,7 +35,7 @@ namespace Enemies
                 return;
             }
             
-            if (!Runner.IsServer)
+            if (!Runner.IsServer || asker == null)
                 return;
             
             float distance = Vector3.Distance(transform.position, target.transform.position);

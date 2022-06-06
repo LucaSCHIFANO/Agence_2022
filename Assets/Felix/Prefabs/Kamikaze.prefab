@@ -130,6 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3ea2abfc6e2b2445a657f4a6db916fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   maxHP: 10
   impactEffect: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
     type: 3}
@@ -146,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  range: 0
+  range: 1
   enemySo: {fileID: 11400000, guid: 6905c950451cdfa4486769d1e84dc8f7, type: 2}
   weaponsPosition: []
   playersLayerMask:
@@ -174,6 +175,7 @@ MonoBehaviour:
     RawGuidValue: 1c50dbbd474775b4e90949f560c96fdb
   NestedObjects: []
   NetworkedBehaviours:
+  - {fileID: -7017243075028714444}
   - {fileID: -346101147439010268}
   - {fileID: 3025623514163928328}
   SimulationBehaviours: []

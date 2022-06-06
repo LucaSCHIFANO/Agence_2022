@@ -129,6 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3ea2abfc6e2b2445a657f4a6db916fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   maxHP: 10
   impactEffect: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
     type: 3}
@@ -171,6 +172,7 @@ MonoBehaviour:
     RawGuidValue: 048259f9db17a28489a9e9e023a9b9e8
   NestedObjects: []
   NetworkedBehaviours:
+  - {fileID: -7017243075028714444}
   - {fileID: 5286773601199235512}
   - {fileID: 3025623514163928328}
   SimulationBehaviours: []

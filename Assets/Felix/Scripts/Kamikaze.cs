@@ -16,7 +16,7 @@ namespace Enemies
 
             target = GameObject.FindWithTag("Player");
 
-            if (Runner.IsServer)
+            if (Runner.IsServer && target != null)
             {
                 asker.AskNewPath(target.transform, speed, null);
                 targetLastPosition = target.transform.position;
@@ -27,7 +27,14 @@ namespace Enemies
         {
             base.FixedUpdateNetwork();
             
-            if (!Runner.IsServer)
+            if (target == null)
+            {
+                target = GameObject.FindWithTag("Player");
+                
+                return;
+            }
+            
+            if (!Runner.IsServer || asker == null)
                 return;
             
             if (Physics.CheckBox(transform.position, transform.localScale + Vector3.one * range, transform.rotation,

@@ -76,13 +76,14 @@ namespace Enemies
                 {
                     GameObject nWeapon = Instantiate(weaponsObject[i], weaponsPosition[i]);
                     weapons[i] = nWeapon.GetComponent<WeaponBase>();
+                    weapons[i].DisableWeapon();
                 } 
             }
         }
 
         protected virtual void FixedUpdate()
         {
-            if (target == null)
+            if (target == null || weapons == null)
                 return;
             
             foreach (WeaponBase weapon in weapons)
