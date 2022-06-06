@@ -162,12 +162,10 @@ GameObject:
   - component: {fileID: 3275136931108460807}
   - component: {fileID: 3275136931108460824}
   - component: {fileID: 3275136931108460825}
-  - component: {fileID: 3275136931108460826}
   - component: {fileID: 5666066558656346267}
-  - component: {fileID: 4884753953647772075}
-  - component: {fileID: 552739105564271115}
   - component: {fileID: 3960942473532090781}
   - component: {fileID: 8198906346638746381}
+  - component: {fileID: 7608025011187693975}
   m_Layer: 8
   m_Name: Weapon_Flame_Thrower
   m_TagString: Untagged
@@ -255,23 +253,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3275136931108460826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3275136931108460828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 573551e24be747348b00b4ada79c0640, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activateDeactivate: 283
-  activated: 0
-  camera: {fileID: 707585731434390628}
-  clampRotation: 30
-  weaponSensibility: {x: 10, y: 10}
 --- !u!114 &5666066558656346267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,6 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c37d1a8e282c4543a95da6d427b38fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 1
   _shootingPoint: {fileID: 3275136931789385493}
   _bulletPrefab: {fileID: 0}
@@ -300,50 +282,9 @@ MonoBehaviour:
   isPossessed: 0
   canvas: {fileID: 0}
   overHeatPourcent: 0
+  _overHeatPourcentOnline: 0
   particleFire: {fileID: 8190907002144595235, guid: d9a2258dcb99b294ab170540231cd31f,
     type: 3}
---- !u!114 &4884753953647772075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3275136931108460828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 951099334
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
---- !u!114 &552739105564271115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3275136931108460828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54c9647dc784a46bca664910f182491e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 1
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
-  PositionThreshold: 0.001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  InLocalSpace: 0
-  Interpolate: 1
 --- !u!65 &3960942473532090781
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -369,9 +310,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ec2a544d9fe1a49ba1a2219dc839d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   interactionType: 0
   requiredHoldTime: 0
   weaponName: FlameThrower
+--- !u!114 &7608025011187693975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3275136931108460828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 0
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 0
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: da878292b4083a84693da98d5d0f5396
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 5666066558656346267}
+  - {fileID: 8198906346638746381}
+  SimulationBehaviours: []
 --- !u!1 &3275136931789385494
 GameObject:
   m_ObjectHideFlags: 0

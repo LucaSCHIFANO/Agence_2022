@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Fusion;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class NetworkedPlayer : NetworkBehaviour
 { 
@@ -27,7 +30,7 @@ public class NetworkedPlayer : NetworkBehaviour
 
     public CharacterInputHandler CharacterInputHandler;
     public WeaponInputHandler WeaponInputHandler;
-    // public CharacterInputHandler CarInputHandler;
+    public VehiculeInputHandler VehiculeInputHandler;
     
     private Player _player;
 
@@ -58,7 +61,7 @@ public class NetworkedPlayer : NetworkBehaviour
             Camera.SetActive(true);
         
         transform.position = exitPoint.position;
-        transform.rotation = exitPoint.rotation;
+        transform.rotation = Quaternion.identity;
 
         GetComponent<CharacterController>().enabled = true;
     }
@@ -86,7 +89,7 @@ public class NetworkedPlayer : NetworkBehaviour
         }
         else if (possessingType == PossessingType.CAR)
         {
-            // handler.GetComponent<CarInputHandler>();
+            VehiculeInputHandler = handler.GetComponent<VehiculeInputHandler>();
         }
         else
         {

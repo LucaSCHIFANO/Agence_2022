@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WeaponUltima : WeaponBase
 {
@@ -14,6 +16,7 @@ public class WeaponUltima : WeaponBase
     [SerializeField] public float damage;
     
     [SerializeField] public GameObject particleFire;
+    [SerializeField] private WScriptable startingWeapon;
     
     
     public enum weapon
@@ -29,10 +32,15 @@ public class WeaponUltima : WeaponBase
 
     private int shootedRound;
     public bool isShooting;
-    
-    protected override void FixedUpdate()
+
+    private void Start()
     {
-        base.FixedUpdate();
+        actuAllStats(startingWeapon);
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        base.FixedUpdateNetwork();
         
         if (actualWeapon == weapon.BASIC || actualWeapon == weapon.BURST)
         {
@@ -46,6 +54,7 @@ public class WeaponUltima : WeaponBase
 
     public void actuAllStats(WScriptable SObject)
     {
+        if (Object == null) return;
         GetComponent<WeaponInteractable>().weaponName = SObject.turretName;
         _fireRate = SObject.fireRate;
         _bulletToOverHeat = SObject.bulletToOverheat;
@@ -62,7 +71,7 @@ public class WeaponUltima : WeaponBase
         _isOverHeat = false;
         _isCoolDown = false;
         isShooting = false;
-        overHeatPourcent = 0;
+        overHeatPourcentOnline = 0;
         _shootingTimer = 0;
         _timeCoolDown = 0;
     }
@@ -89,7 +98,7 @@ public class WeaponUltima : WeaponBase
                 
                 if (hit.collider.gameObject.GetComponent<HP>())
                 {
-                    Debug.Log("hiiit");
+                    //Debug.Log("hiiit");
                     hit.collider.gameObject.GetComponent<HP>().reduceHP(damage * (Generator.Instance.pourcentageList[0] / 100));
                 }
             }

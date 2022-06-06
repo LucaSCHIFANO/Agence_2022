@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class Shop : NetworkBehaviour
 {
-    private PlayerController _playerController;
+    private NetworkedPlayer _playerController;
     [Networked] private bool isPossessed { get; set; }
-    [SerializeField] protected TruckArea truckArea;
+    public TruckArea truckArea;
 
 
     #region Singleton
@@ -33,6 +33,7 @@ public class Shop : NetworkBehaviour
 
     public void quitShop()
     {
+        UpgradeMenu.Instance.gotoScreen(0);
         CanvasInGame.Instance.showShop(false);
                 
         if (_playerController.Object.HasInputAuthority)
@@ -40,16 +41,14 @@ public class Shop : NetworkBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             
-            _playerController.enabled = true;
+            _playerController.CharacterInputHandler.enabled = true;
             isPossessed = false;
         }
     }
 
-    public void Interact(PlayerController other)
+    public void Interact(NetworkedPlayer other)
     {
         if (isPossessed) return;
-
-
 
         var okay = false;
         foreach (var VARIABLE in truckArea.objectInAreaTruck)
@@ -71,7 +70,7 @@ public class Shop : NetworkBehaviour
             Cursor.visible = true;
 
             _playerController = other;
-            other.enabled = false;
+            other.CharacterInputHandler.enabled = false;
             isPossessed = true;
         }
 

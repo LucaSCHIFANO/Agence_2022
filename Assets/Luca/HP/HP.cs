@@ -1,15 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class HP : MonoBehaviour
+public class HP : NetworkBehaviour
 {
     [SerializeField] protected float maxHP;
     protected float currentHP;
 
-    private void Start()
+    public virtual void Start()
     {
         currentHP = maxHP;
     }
