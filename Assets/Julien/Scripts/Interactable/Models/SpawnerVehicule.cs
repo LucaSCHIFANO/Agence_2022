@@ -8,6 +8,7 @@ public class SpawnerVehicule : NetworkBehaviour
 {
     [SerializeField] private List<Transform> teleportPoints;
     [SerializeField] private NetworkObject VehiculeToSpawn;
+    [SerializeField] private GameObject enemyToSpawn;
 
     public static SpawnerVehicule instance;
 
@@ -17,6 +18,20 @@ public class SpawnerVehicule : NetworkBehaviour
         instance = this;
     }
 
+    private void Update()
+    {
+        if (Runner.IsServer && Input.GetKeyDown(KeyCode.O))
+        {
+            SpawnEnemy();
+        }
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
+    public void SpawnEnemy(RpcInfo info = default)
+    {
+        NetworkObject spawned = Runner.Spawn(enemyToSpawn.GetComponent<NetworkObject>(), new Vector3(0f, 1f, 0f));
+    }
+    
     [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     public void SpawnCar(RpcInfo info = default)
     {
