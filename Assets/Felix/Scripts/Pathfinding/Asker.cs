@@ -45,10 +45,15 @@ public class Asker : MonoBehaviour
         int pathIndex = 0;
         transform.LookAt(path.lookPoints[0]);
 
+        foreach (Vector3 v in path.lookPoints)
+        {
+            print(v);
+        }
+
         while (followingPath)
         {
             Vector2 pos2D = new Vector2(transform.position.x, transform.position.z);
-            
+
             while (path.turnBoundaries[pathIndex].HasCrossedLine(pos2D))
             {
                 if (pathIndex == path.finishLineIndex)
@@ -67,8 +72,6 @@ public class Asker : MonoBehaviour
                 Quaternion targetRotation = Quaternion.LookRotation(path.lookPoints[pathIndex] - transform.position);
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
                 transform.Translate(Vector3.forward * Time.deltaTime * speed, Space.Self);
-                
-                
             }
             
             yield return null;

@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 
 namespace Enemies
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : NetworkBehaviour
     {
+        protected HPEnemy hp;
         protected Asker asker;
 
         protected GameObject target;
@@ -16,15 +18,21 @@ namespace Enemies
         protected float speed;
         public float range;
         protected bool isDead;
-        protected int actualHealth;
 
         protected WeaponBase[] weapons; // WeaponSO type
         [SerializeField] protected EnemySO enemySo; // TEMP
 
         [SerializeField] protected Transform[] weaponsPosition;
 
-        protected void Start()
+        protected void Awake()
         {
+            hp = GetComponent<HPEnemy>();
+        }
+
+        public override void Spawned()
+        {
+            base.Spawned();
+            
             if (asker == null)
             {
                 Initialization(enemySo);
@@ -35,7 +43,7 @@ namespace Enemies
         {
             asker = GetComponent<Asker>();
 
-            actualHealth = _enemySo.health;
+            hp.InitializeHP(_enemySo.health);
             speed = _enemySo.speed;
             range = _enemySo.range;
 
@@ -74,6 +82,9 @@ namespace Enemies
 
         protected virtual void FixedUpdate()
         {
+            if (target == null || weapons == null)
+                return;
+            
             foreach (WeaponBase weapon in weapons)
             {
                 weapon.transform.LookAt(target.transform);
@@ -87,10 +98,7 @@ namespace Enemies
             if (_damages < 0)
                 _damages = Mathf.Abs(_damages);
 
-            actualHealth -= _damages;
-
-            if (actualHealth <= 0)
-                Die();
+            hp.reduceHP(_damages);
         }
 
         public virtual void TakeDamage(int _damages, Vector3 _collisionPoint, Vector3 _collisionDirection)
