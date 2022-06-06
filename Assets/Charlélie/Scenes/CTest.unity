@@ -3326,6 +3326,61 @@ PrefabInstance:
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
       value: -3629206037271565667
       objectReference: {fileID: 0}
+    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: maxFuel
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: currFuel
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: constantDamageType.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: currentDamagesApplied.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: constantDamageType.Array.data[0].damageName
+      value: Conso
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: constantDamageType.Array.data[0].isPersistant
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: constantDamageType.Array.data[1].isPersistant
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: currentDamagesApplied.Array.data[0].damageName
+      value: Conso
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: currentDamagesApplied.Array.data[0].isPersistant
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: constantDamageType.Array.data[0].damagePercentagePerSecond
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: currentDamagesApplied.Array.data[0].damagePercentagePerSecond
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5208263959663226999, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
         type: 3}
       propertyPath: m_Mesh
@@ -3341,6 +3396,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 123650526}
+    - target: {fileID: 8740809374427933077, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
+        type: 3}
+      propertyPath: carSetting.reversePower
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 8740809374433383271, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
         type: 3}
       propertyPath: m_Name
