@@ -1769,6 +1769,7 @@ MonoBehaviour:
   teleport: []
   controlMode: 1
   activeControl: 1
+  Reverse: 0
   action:
     _id: 0
     _name: 
@@ -1901,7 +1902,7 @@ MonoBehaviour:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 0
+        value: 0.13208008
         inSlope: -10.563603
         outSlope: -10.563603
         tangentMode: 0
@@ -2004,7 +2005,10 @@ MonoBehaviour:
   constantDamageType: []
   currentDamagesApplied: []
   maxFuel: 100
+  _currFuelSync: 0
   currFuel: 100
+  consPerMeterInL: 0
+  totDist: 0
 --- !u!114 &4534356275946884012
 MonoBehaviour:
   m_ObjectHideFlags: 0
