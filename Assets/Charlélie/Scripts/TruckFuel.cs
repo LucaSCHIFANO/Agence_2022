@@ -53,6 +53,7 @@ public class TruckFuel : TruckBase
             truck.currFuel -= ((damagePercentagePerSecond / truck.maxFuel) * 100) * Time.deltaTime;
         }
     }
+    [HideInInspector]
     public List<ConstantDamageType> constantDamageType = new List<ConstantDamageType>();
     [HideInInspector]
     public List<ConstantDamageType> currentDamagesApplied = new List<ConstantDamageType>();
@@ -98,12 +99,14 @@ public class TruckFuel : TruckBase
     }
     #endregion
 
+    [HideInInspector]
     public float maxFuel;
+    [HideInInspector]
     public float currFuel;
 
     public float consPerMeterInL;
 
-    float totDist;
+    public float totDist;
     float currMeter;
     Vector3 prevPos;
 
@@ -124,7 +127,7 @@ public class TruckFuel : TruckBase
 
     private void FixedUpdate()
     {
-        float currDist = Vector3.Distance(transform.position, prevPos); ;
+        float currDist = Vector3.Distance(transform.position, prevPos);
         totDist += currDist;
         currMeter += currDist;
         if (currMeter >= 1)
