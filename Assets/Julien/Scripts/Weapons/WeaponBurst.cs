@@ -20,9 +20,9 @@ public class WeaponBurst : WeaponBase
     private int shootedRound;
     private bool isShooting;
     
-    protected override void FixedUpdate()
+    public override void FixedUpdateNetwork()
     {
-        base.FixedUpdate();
+        base.FixedUpdateNetwork();
 
         if (isShooting)
         {

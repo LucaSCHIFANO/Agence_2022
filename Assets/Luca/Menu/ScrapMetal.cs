@@ -8,11 +8,11 @@ using TMPro;
 
 public class ScrapMetal : NetworkBehaviour
 {
-    public int scrap;
+    [SerializeField] protected int startScrap;
     public TextMeshProUGUI textSmetals;
-    
-    // (OnChanged = nameof(OnScrapChanged))
-    [Networked] private int scrapLeft { get; set; }
+
+    [HideInInspector] public int scrapLeft;
+    [Networked(OnChanged = nameof(OnScrapChanged))/*, Capacity(1)*/] private int scrapLeftOnline { get; set; }
 
     #region Singleton
     private static ScrapMetal instance;
@@ -23,28 +23,42 @@ public class ScrapMetal : NetworkBehaviour
     {
         if (Instance == null)
             Instance = this;
+
+        //scrapLeftOnline.Set(0, 0);
     }
 
     public override void Spawned()
     {
         base.Spawned();
-        scrapLeft = scrap;
+        scrapLeft = startScrap;
         
         actuText();
     }
 
-    private void OnScrapChanged(ScrapMetal changed)
+    public static void OnScrapChanged(Changed<ScrapMetal> changed)
+    {
+        changed.Behaviour.ChangeScrapt();
+    }
+
+    private void ChangeScrapt()
+    {
+        scrapLeft = scrapLeftOnline;
+        actuText();
+    }
+    
+    /*private void OnScrapChanged(ScrapMetal changed)
     {
         actuText();
         scrap = changed.scrapLeft;
         Debug.Log($"Scrap : {scrap} | Server Scrap : {scrapLeft}");
-    }
+    }*/
 
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     public void addMoneyServerRpc(int lint)
     {
         scrapLeft += lint;
+        scrapLeftOnline = scrapLeft;
     }
 
     public void actuText()
