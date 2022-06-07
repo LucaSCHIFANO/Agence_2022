@@ -113,8 +113,9 @@ public class TruckFuel : TruckBase
     public float totDist;
     float currMeter;
     Vector3 prevPos;
+    public bool infiniteGas = false;
 
-    public bool OutOfGas { get; private set; }
+    [Networked] public bool OutOfGas { get; private set; }
 
     public override void Init()
     {
@@ -134,6 +135,8 @@ public class TruckFuel : TruckBase
         {
             currentDamagesApplied[i].Update();
         }
+
+        if (Input.GetKeyDown(KeyCode.R)) currFuel = maxFuel;
     }
 
     public override void FixedUpdateNetwork()
@@ -143,7 +146,7 @@ public class TruckFuel : TruckBase
         if (OutOfGas && currFuel > 0) OutOfGas = false;
         float currDist = Vector3.Distance(transform.position, prevPos);
         totDist += currDist;
-        currMeter += currDist * phys.Throttle;
+        currMeter += currDist * phys.Throttle * (infiniteGas ? 0 : 1);
         if (currMeter >= 1)
         {
             currMeter = 0;
