@@ -124,7 +124,7 @@ public class TruckFuel : TruckBase
 
     private void FixedUpdate()
     {
-        float currDist = Vector3.Distance(transform.position, prevPos); ;
+        float currDist = Vector3.Distance(transform.position, prevPos);
         totDist += currDist;
         currMeter += currDist;
         if (currMeter >= 1)

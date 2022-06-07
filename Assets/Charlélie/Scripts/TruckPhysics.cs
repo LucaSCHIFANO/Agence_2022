@@ -21,6 +21,7 @@ public class TruckPhysics : TruckBase
     public ControlMode controlMode = ControlMode.simple;
 
     public bool activeControl = false;
+    public bool Reverse;
 
     private Rewired.Player player;
     public Rewired.InputAction action;
@@ -641,11 +642,7 @@ public class TruckPhysics : TruckBase
 
 
 
-        if (speed < 1.0f && braking)
-        {
-            Backward = true;
-            //SetInputs();
-        }
+        
 
         Debug.Log("Backwarding: " + Backward + "  Throttle: " + (throttle > 0) + "  Braking: " + braking);
         
@@ -658,17 +655,24 @@ public class TruckPhysics : TruckBase
             if (speed < 1.0f && braking)
             {
                 Debug.Log("STOP BACK");
-                //Backward = false;
+                Backward = false;
+                Reverse = false;
+                
             }
         }
         else
         {
-            //Backward = false;
+            if (speed < 1.0f && braking)
+            {
+                Backward = true;
+                Reverse = true;
+                //SetInputs();
+            }
             //   if (currentGear > 0)
             //   carSetting.shiftCentre.z = -(accel / currentGear) / -5;
         }
 
-
+        
         //Debug.Log(currentGear + "   " + Backward + "   " + accel);
 
         //  carSetting.shiftCentre.x = -Mathf.Clamp(steer * (speed / 100), -0.03f, 0.03f);
