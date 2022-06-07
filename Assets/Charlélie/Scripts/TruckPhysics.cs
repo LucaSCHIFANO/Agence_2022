@@ -14,6 +14,8 @@ public class TruckPhysics : TruckBase
 
     [SerializeField] public List<Transform> teleport;
     private AudioSource _audioSource;
+
+    TruckFuel fuel;
     
     #region Settings
 
@@ -242,6 +244,7 @@ public class TruckPhysics : TruckBase
     private bool shiftUp, shiftDown, braking;
     private float turn, throttle;
 
+    public float Throttle { get { return throttle; } }
 
     private class WheelComponent
     {
@@ -264,6 +267,7 @@ public class TruckPhysics : TruckBase
     {
         base.Init();
         player = Rewired.ReInput.players.GetPlayer(0);
+        fuel = GetComponent<TruckFuel>();
     }
 
     private WheelComponent SetWheelComponent(Transform wheel, float maxSteer, bool drive, float pos_y)
@@ -514,6 +518,9 @@ public class TruckPhysics : TruckBase
             turn = input.movement.x;
             shift = input.shift;
             leftControl = input.leftControl;
+
+            if (fuel.OutOfGas)
+                throttle = 0;
 
             if (input.isExiting)
             {
