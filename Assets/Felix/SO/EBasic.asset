@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc64d25eec6914a4e958bb3c7c21d427, type: 3}
+  m_Name: EBasic
+  m_EditorClassIdentifier: 
+  health: 150
+  speed: 7.5
+  range: 15
+  weapons:
+  - {fileID: 109741272987210308, guid: 5eed61b2185fdcf4f8692f53c55ca453, type: 3}
+  enemyPrefab: {fileID: 6506913731331482615, guid: 048259f9db17a28489a9e9e023a9b9e8,
+    type: 3}

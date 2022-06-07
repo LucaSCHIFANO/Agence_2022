@@ -14,7 +14,7 @@ public class PossessableWeapon : NetworkBehaviour
 
     private float timer;
     
-    public void TryPossess(GameObject futurPossessor)
+    public void TryPossess(NetworkedPlayer other)
     {
         AskForPossessionServerRpc(Runner.LocalPlayer);
     }
@@ -35,15 +35,16 @@ public class PossessableWeapon : NetworkBehaviour
         _playerController.transform.SetParent(transform);
         _playerController.Possess(transform);
         GetComponent<WeaponBase>().isPossessed = true;
+        GetComponent<WeaponBase>().possessor = _playerController;
         ConfirmPossessionClientRpc();
         SetParentingClientRpc();
-        // CanvasInGame.Instance.showOverheat(true);
         timer = 0.2f;
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
     private void ConfirmPossessionClientRpc()
     {
+        CanvasInGame.Instance.showOverheat(true);
         camera.SetActive(true);
         _playerController = Runner.GetPlayerObject(Object.InputAuthority).gameObject.GetComponent<NetworkedPlayer>();
         _playerController.gameObject.GetComponent<CharacterMovementHandler>().enabled = false;
@@ -68,15 +69,17 @@ public class PossessableWeapon : NetworkBehaviour
         Object.RemoveInputAuthority();
         _playerController.transform.SetParent(null);
         _playerController.Unpossess(exitPoint);
-        _playerController = null;
         GetComponent<WeaponBase>().isPossessed = false;
-        // CanvasInGame.Instance.showOverheat(false);
+        GetComponent<WeaponBase>().possessor = null;
         ConfirmGetOutClientRpc(rpcInfo.Source);
+        _playerController = null;
+
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void ConfirmGetOutClientRpc([RpcTarget] PlayerRef playerRef)
     {
+        CanvasInGame.Instance.showOverheat(false);
         camera.SetActive(false);
         _playerController = Runner.GetPlayerObject(playerRef).gameObject.GetComponent<NetworkedPlayer>();
         _playerController.gameObject.GetComponent<CharacterMovementHandler>().enabled = true;

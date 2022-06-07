@@ -24,7 +24,11 @@ public class Boss : MonoBehaviour
     {
         for (int i = 0; i < listAntenna.Count; i++)
         {
-            if(listAntenna[i].broken) listWeapon[i].DisableWeapon();
+            if (listAntenna[i].broken)
+            {
+                Debug.Log(i+ " is broken");
+                listWeapon[i].DisableWeapon();
+            }
         }
     }
 }
