@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 
 [ExecuteInEditMode]
 public class TruckFuel : TruckBase
@@ -104,17 +105,28 @@ public class TruckFuel : TruckBase
     [HideInInspector]
     public float currFuel;
 
-    public float consPerMeterInL;
+    [Networked] public float CurrFuelSync { get; set; }
 
+    public float consPerMeterInL;
+    TruckPhysics phys;
+    
     public float totDist;
     float currMeter;
     Vector3 prevPos;
+    public bool infiniteGas = false;
 
-
+    [Networked] public bool OutOfGas { get; private set; }
 
     public override void Init()
     {
         currFuel = maxFuel;
+        phys = GetComponent<TruckPhysics>();
+    }
+
+    public override void Spawned()
+    {
+        base.Spawned();
+        CurrFuelSync = currFuel;
     }
 
     private void Update()
@@ -123,19 +135,26 @@ public class TruckFuel : TruckBase
         {
             currentDamagesApplied[i].Update();
         }
+
+        if (Input.GetKeyDown(KeyCode.R)) currFuel = maxFuel;
     }
 
-    private void FixedUpdate()
+    public override void FixedUpdateNetwork()
     {
+        if (!Runner.IsServer) return;
+        base.FixedUpdateNetwork();
+        if (OutOfGas && currFuel > 0) OutOfGas = false;
         float currDist = Vector3.Distance(transform.position, prevPos);
         totDist += currDist;
-        currMeter += currDist;
+        currMeter += currDist * phys.Throttle * (infiniteGas ? 0 : 1);
         if (currMeter >= 1)
         {
             currMeter = 0;
             currFuel -= consPerMeterInL;
         }
         prevPos = transform.position;
+        CurrFuelSync = currFuel;
+        if (!OutOfGas && currFuel <= 0) OutOfGas = true;
     }
 
     public void GetDamage(float value)
