@@ -7,8 +7,6 @@ namespace Pathfinding
     public class Grid : MonoBehaviour
     {
         private Node[,,] grid;
-        private List<Node[,,]> otherGrids;
-        private List<GameObject> linkedObjectGrids;
 
         private float nodeDiameter;
         private int gridSizeX, gridSizeY, gridSizeZ;
@@ -61,28 +59,7 @@ namespace Pathfinding
 
             return newGrid;
         }
-
-        public void CreateBlankGrid(GameObject _owner)
-        {
-            Node[,,] newGrid = new Node[gridSizeX, gridSizeY, gridSizeZ];
-            Vector3 bottomLeft = transform.position - Vector3.right * gridSize.x / 2 - Vector3.up * gridSizeY / 2 - Vector3.forward * gridSize.z / 2;
-
-            for (int x = 0; x < gridSizeX; x++)
-            {
-                for (int z = 0; z < gridSizeZ; z++)
-                {
-                    for (int y = 0; y < gridSizeY; y++)
-                    {
-                        Vector3 point = bottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.up * (y * nodeDiameter + nodeRadius) + Vector3.forward * (z * nodeDiameter + nodeRadius);
-                        newGrid[x, y, z] = new Node(false, false, point, x, y, z, true);
-                    }
-                }
-            }
-            
-            otherGrids.Add(newGrid);
-            linkedObjectGrids.Add(_owner);
-        }
-
+        
         public List<Node> GetNeighbourNodes(Node _node)
         {
             List<Node> neighbours = new List<Node>();
@@ -110,38 +87,6 @@ namespace Pathfinding
 
             return neighbours;
         }
-        
-        public List<Node> GetNeighbourNodes(GameObject _owner, Node _node)
-        {
-            int ownerIndex = linkedObjectGrids.IndexOf(_owner);
-
-            if (ownerIndex < 0) return null;
-            
-            List<Node> neighbours = new List<Node>();
-
-            for (int x = -1; x <= 1; x++)
-            {
-                for (int y = -1; y <= 1; y++)
-                {
-                    for (int z = -1; z <= 1; z++)
-                    {
-                        if (x == 0 && y == 0 && z == 0)
-                            continue;
-
-                        int checkX = _node.gridX + x;
-                        int checkY = _node.gridY + y;
-                        int checkZ = _node.gridZ + z;
-
-                        if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY && checkZ >= 0 && checkZ < gridSizeZ)
-                        {
-                            neighbours.Add(otherGrids[ownerIndex][checkX, checkY, checkZ]);
-                        }
-                    }
-                }
-            }
-
-            return neighbours;
-        }
 
         public Node NodeFromPoint(Vector3 _position)
         {
@@ -157,26 +102,6 @@ namespace Pathfinding
             int z = Mathf.RoundToInt((gridSizeZ - 1) * zPercentage);
 
             return grid[x, y, z];
-        }
-        
-        public Node NodeFromPoint(GameObject _owner, Vector3 _position)
-        {
-            int ownerIndex = linkedObjectGrids.IndexOf(_owner);
-
-            if (ownerIndex < 0) return null;
-            
-            float xPercentage = (_position.x + gridSize.x / 2 - transform.position.x) / gridSize.x;
-            float yPercentage = (_position.y + gridSize.y / 2 - transform.position.y) / gridSize.y;
-            float zPercentage = (_position.z + gridSize.z / 2 - transform.position.z) / gridSize.z;
-            xPercentage = Mathf.Clamp01(xPercentage);
-            yPercentage = Mathf.Clamp01(yPercentage);
-            zPercentage = Mathf.Clamp01(zPercentage);
-
-            int x = Mathf.RoundToInt((gridSizeX - 1) * xPercentage);
-            int y = Mathf.RoundToInt((gridSizeY - 1) * yPercentage);
-            int z = Mathf.RoundToInt((gridSizeZ - 1) * zPercentage);
-
-            return otherGrids[ownerIndex][x, y, z];
         }
 
         public Node WalkableNodeFromPoint(Vector3 _position)
@@ -300,7 +225,7 @@ namespace Pathfinding
 
             return nodes.ToArray();
         }
-        
+
         private void OnDrawGizmos()
         {
             if (Application.isPlaying)
@@ -334,7 +259,6 @@ namespace Pathfinding
                     Gizmos.DrawCube(n.position, Vector3.one * (nodeDiameter - 0.1f));
                 }
             }
-            
         }
     }
 }
