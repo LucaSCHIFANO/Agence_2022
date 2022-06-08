@@ -5505,6 +5505,54 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.9999998, y: 1.0000001, z: 0.9999998}
   m_Center: {x: 0, y: 0, z: 0.00000008940697}
+--- !u!1 &2198379285825089624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6520167079298787937}
+  - component: {fileID: 875064653309320021}
+  m_Layer: 0
+  m_Name: HPTruck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6520167079298787937
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2198379285825089624}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 415005119823941884}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &875064653309320021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2198379285825089624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee54e04b2c170e469cbc05f71ffdb97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  maxHP: 100
+  impactEffect: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
+    type: 3}
 --- !u!1 &2335023137130791671
 GameObject:
   m_ObjectHideFlags: 0
@@ -5934,6 +5982,68 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300006, guid: 2367f3eccca72d648a9f993fdcd54cd9, type: 3}
+--- !u!1 &5883442687350133172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 415005119823941884}
+  - component: {fileID: 3246309965529894963}
+  - component: {fileID: 4388410221146443259}
+  m_Layer: 0
+  m_Name: HPPart1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &415005119823941884
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5883442687350133172}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.96, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6520167079298787937}
+  m_Father: {fileID: 8147018995279293095}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3246309965529894963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5883442687350133172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79c30717b6025f94491a64858ef8ffa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  maxHP: 0
+  hptruck: {fileID: 875064653309320021}
+--- !u!65 &4388410221146443259
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5883442687350133172}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2.5, z: 4.6}
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!1 &6422419531561238193
 GameObject:
   m_ObjectHideFlags: 0
@@ -6904,6 +7014,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 346006884931596767}
+  - {fileID: 415005119823941884}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6946,6 +7057,7 @@ MonoBehaviour:
   - {fileID: 0}
   controlMode: 1
   activeControl: 1
+  Reverse: 0
   action:
     _id: 0
     _name: 
@@ -7182,6 +7294,11 @@ MonoBehaviour:
   currentDamagesApplied: []
   maxFuel: 100
   currFuel: 100
+  _CurrFuelSync: 0
+  consPerMeterInL: 0
+  totDist: 0
+  infiniteGas: 0
+  _OutOfGas: 0
 --- !u!114 &3940883107495659312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7227,6 +7344,8 @@ MonoBehaviour:
   - {fileID: 5603136350526418245}
   - {fileID: 1681677946886891693}
   - {fileID: 6846605178378294137}
+  - {fileID: 3246309965529894963}
+  - {fileID: 875064653309320021}
   SimulationBehaviours: []
 --- !u!114 &5603136350526418245
 MonoBehaviour:

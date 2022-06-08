@@ -38,6 +38,7 @@ public abstract class WeaponBase : NetworkBehaviour
 
     [SerializeField] protected ParticleSystem overHParticle;
     [SerializeField] protected float OHParticleOverTime;
+    [SerializeField] protected bool allieTouret;
 
 
     #endregion

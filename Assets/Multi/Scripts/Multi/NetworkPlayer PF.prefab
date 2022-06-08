@@ -723,6 +723,7 @@ GameObject:
   - component: {fileID: 1631435997416349952}
   - component: {fileID: 3584816859936829951}
   - component: {fileID: 1495026243276412985}
+  - component: {fileID: -7371005191396185765}
   m_Layer: 7
   m_Name: NetworkPlayer PF
   m_TagString: Player
@@ -815,6 +816,7 @@ MonoBehaviour:
   - {fileID: 1631435997416349952}
   - {fileID: 3584816859936829951}
   - {fileID: 1495026243276412985}
+  - {fileID: -7371005191396185765}
   SimulationBehaviours: []
 --- !u!114 &998429834612817349
 MonoBehaviour:
@@ -915,6 +917,23 @@ MonoBehaviour:
   _interpolationTarget: {fileID: 7128113546201944084}
   DetachInterpTarget: 0
   SyncParent: 1
+--- !u!114 &-7371005191396185765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128113546695645496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78e30ee463bd61459ad58f2d6e1381d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  maxHP: 100
+  hpPourcent: 0
+  timeBeforeRecov: 1
+  recovPerSecond: 5
 --- !u!1 &7128113547922864037
 GameObject:
   m_ObjectHideFlags: 0
