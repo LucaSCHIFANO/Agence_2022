@@ -55,6 +55,7 @@ public class WeaponUltima : WeaponBase
     public void actuAllStats(WScriptable SObject)
     {
         if (Object == null) return;
+
         GetComponent<WeaponInteractable>().weaponName = SObject.turretName;
         _fireRate = SObject.fireRate;
         _bulletToOverHeat = SObject.bulletToOverheat;
@@ -98,8 +99,18 @@ public class WeaponUltima : WeaponBase
                 
                 if (hit.collider.gameObject.GetComponent<HP>())
                 {
-                    //Debug.Log("hiiit");
-                    hit.collider.gameObject.GetComponent<HP>().reduceHP(damage * (Generator.Instance.pourcentageList[0] / 100));
+                    if (allieTouret)
+                    {
+                        if(hit.collider.gameObject.GetComponent<HPPlayer>() || hit.collider.gameObject.GetComponent<HPSubTruck>()) return;
+                        hit.collider.gameObject.GetComponent<HP>().reduceHP(damage * (Generator.Instance.pourcentageList[0] / 100));
+                    }
+                    else
+                    {
+                        if(!hit.collider.gameObject.GetComponent<HPPlayer>() && !hit.collider.gameObject.GetComponent<HPSubTruck>()) return;
+                        hit.collider.gameObject.GetComponent<HP>().reduceHP(damage);
+                    }
+                        
+                    
                 }
             }
             
