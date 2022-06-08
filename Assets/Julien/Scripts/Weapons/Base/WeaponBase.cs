@@ -77,11 +77,18 @@ public abstract class WeaponBase : NetworkBehaviour
         changed.Behaviour.ChangeOverHeat();
     }
     
-    private void ChangeOverHeat()
+    public void ChangeOverHeat()
     {
         overHeatPourcent = overHeatPourcentOnline;
         if (overHeatPourcent >= 100) _isOverHeat = true;
 
+
+        if (Object.HasInputAuthority)
+        {
+            canvas.overheatSlider.fillAmount = overHeatPourcent / 100f;
+            if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
+            else canvas.overheatSlider.color = maincolor;
+        }
     }
 
     public virtual void Shoot()
@@ -119,35 +126,29 @@ public abstract class WeaponBase : NetworkBehaviour
 
     private void Update()
     {
-        if (_isDisable) return;
-        if (_isCoolDown || _isOverHeat) overHeatPourcent -= _coolDownPerSecond * Time.deltaTime;
-        else if(!_isCoolDown) _timeCoolDown -= Time.deltaTime;
-
-        if (_timeCoolDown <= 0) _isCoolDown = true;
-        else _isCoolDown = false;
+        if (Runner != null)
+        {
+            if (Runner.IsServer)
+            {
+                if (_isCoolDown || _isOverHeat) overHeatPourcent -= _coolDownPerSecond * Time.deltaTime;
+                else if (!_isCoolDown && _timeCoolDown > 0) _timeCoolDown -= Time.deltaTime;
+                
+                if (_timeCoolDown <= 0) _isCoolDown = true;
+                else _isCoolDown = false;
         
-        if (overHeatPourcent <= 0) _isOverHeat = false;
-
+                if (overHeatPourcent <= 0) _isOverHeat = false;
+                
+                overHeatPourcent = Mathf.Clamp(overHeatPourcent, 0, 100);
+                
+                overHeatPourcentOnline = overHeatPourcent;
+            }
+        }
+        
         var em = overHParticle.emission;
         em.enabled = true;
 
         if (_isOverHeat) em.rateOverTime = OHParticleOverTime;
         else em.rateOverTime = 0f;
-    
-
-        overHeatPourcent = Mathf.Clamp(overHeatPourcent, 0, 100);
-
-
-
-
-
-        if (Object != null) overHeatPourcentOnline = overHeatPourcent;
-        
-
-//        Debug.Log(canvas.name+ "  " + canvas.overheatSlider.name + " " + overHeatPourcent);
-        canvas.overheatSlider.fillAmount = (overHeatPourcent / 100f);
-        if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
-        else canvas.overheatSlider.color = maincolor;
     }
     
     
