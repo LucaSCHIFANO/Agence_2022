@@ -43,12 +43,12 @@ public class CharacterMovementHandler : NetworkBehaviour
         if (IsMoving && !IsMovingOld)
         {
             IsMovingOld = true;
-            anim.SetTrigger("IsMoving");
+            MySetTrigger("IsMoving");
         }
         else if (!IsMoving && IsMovingOld)
         {
             IsMovingOld = false;
-            anim.SetTrigger("IsMoving");
+            MySetTrigger("IsMoving");
         }
     }
 
@@ -75,5 +75,14 @@ public class CharacterMovementHandler : NetworkBehaviour
     public void SetViewInputVector(Vector2 viewInputVector)
     {
         this.viewInput = viewInputVector;
+    }
+    
+    
+    public void MySetTrigger(string trigger)
+    {
+        if (Object.HasStateAuthority)
+            anim.SetTrigger(trigger);
+        else if (Object.HasInputAuthority && Runner.IsForward)
+            anim.Animator.SetTrigger(trigger);
     }
 }
