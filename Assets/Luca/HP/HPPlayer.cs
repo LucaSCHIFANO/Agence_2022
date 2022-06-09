@@ -31,7 +31,7 @@ public class HPPlayer : HP
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
         hpPourcent = currentHP / maxHP;
         
-        CanvasInGame.Instance.actuBlood(Mathf.Abs(hpPourcent - 1));
+        if(Object.HasInputAuthority) CanvasInGame.Instance.actuBlood(Mathf.Abs(hpPourcent - 1));
         if (currentHP <= 0)
         {
             // Dead

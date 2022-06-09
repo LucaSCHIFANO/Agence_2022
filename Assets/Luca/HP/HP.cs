@@ -8,7 +8,7 @@ using UnityEngine;
 public class HP : NetworkBehaviour
 {
     [SerializeField] protected float maxHP;
-    protected float currentHP;
+    [Networked(OnChanged = nameof(onChangeHP))] protected float currentHP{ get; set; }
 
     public virtual void Start()
     {
@@ -26,5 +26,10 @@ public class HP : NetworkBehaviour
     {
         currentHP -= damage;
         if(currentHP <= 0) Destroy(gameObject);
+    }
+
+    public virtual void onChangeHP()
+    {
+        
     }
 }
