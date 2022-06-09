@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GameUI;
 using UnityEngine;
 
 public class HPPlayer : HP
@@ -10,6 +11,7 @@ public class HPPlayer : HP
     [SerializeField] protected float timeBeforeRecov;
     protected float currentTimeRecov;
     [SerializeField] protected float recovPerSecond;
+    private bool wasDeadBefore;
 
     private void Update()
     {
@@ -30,7 +32,18 @@ public class HPPlayer : HP
         hpPourcent = currentHP / maxHP;
         
         CanvasInGame.Instance.actuBlood(Mathf.Abs(hpPourcent - 1));
+        if (currentHP <= 0)
+        {
+            // Dead
+            wasDeadBefore = true;
+            GameOverManager.instance.PlayerDied();
+        }
 
+        if (currentHP >= maxHP && wasDeadBefore)
+        {
+            wasDeadBefore = false;
+            GameOverManager.instance.PlayerRespawn();
+        }
     }
     
     public override void reduceHP(float damage)
