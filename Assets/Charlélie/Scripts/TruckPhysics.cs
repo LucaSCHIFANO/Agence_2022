@@ -9,7 +9,7 @@ public enum ControlMode { simple = 1, touch = 2 }
 
 public class TruckPhysics : TruckBase
 {
-    [SerializeField] private AudioClip honking;
+    [SerializeField] private List<AudioClip> honking;
     [SerializeField] private ParticleSystem _exhaust;
 
     [SerializeField] public List<Transform> teleport;
@@ -529,7 +529,7 @@ public class TruckPhysics : TruckBase
 
             if (input.isHonking)
             {
-                HonkeRPC();
+                HonkeRPC(Random.Range(0, honking.Count));
             }
 
             if (throttle > 0 && !leftControl)
@@ -1157,9 +1157,10 @@ public class TruckPhysics : TruckBase
 
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
-    public void HonkeRPC()
+    public void HonkeRPC(int honk)
     {
-        _audioSource.clip = honking;
+        _audioSource.clip = honking[honk];
+        _audioSource.maxDistance = 20;
         _audioSource.Play();
     }
 
