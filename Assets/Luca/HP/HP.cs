@@ -8,7 +8,8 @@ using UnityEngine;
 public class HP : NetworkBehaviour
 {
     [SerializeField] protected float maxHP;
-    [Networked(OnChanged = nameof(onChangeHP))] protected float currentHP{ get; set; }
+
+    [Networked]protected float currentHP { get; set; }
 
     public virtual void Start()
     {
@@ -22,14 +23,23 @@ public class HP : NetworkBehaviour
         currentHP = _hp;
     }
 
-    public virtual void reduceHP(float damage)
+    public virtual void reduceHPToServ(float damage)
     {
-        currentHP -= damage;
-        if(currentHP <= 0) Destroy(gameObject);
+        reduceHPRpc(damage);
     }
 
-    public virtual void onChangeHP()
+    public virtual void TrueReduceHP(float damage)
     {
-        
+        currentHP -= damage;
+        if (currentHP <= 0) Destroy(gameObject);
     }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    protected void reduceHPRpc(float hpReduce)
+    {
+        TrueReduceHP(hpReduce);
+    }
+    
+    
 }
+

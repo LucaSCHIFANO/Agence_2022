@@ -102,12 +102,12 @@ public class WeaponUltima : WeaponBase
                     if (allieTouret)
                     {
                         if(hit.collider.gameObject.GetComponent<HPPlayer>() || hit.collider.gameObject.GetComponent<HPSubTruck>()) return;
-                        hit.collider.gameObject.GetComponent<HP>().reduceHP(damage * (Generator.Instance.pourcentageList[0] / 100));
+                        hit.collider.gameObject.GetComponent<HP>().reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
                     }
                     else
                     {
                         if(!hit.collider.gameObject.GetComponent<HPPlayer>() && !hit.collider.gameObject.GetComponent<HPSubTruck>()) return;
-                        hit.collider.gameObject.GetComponent<HP>().reduceHP(damage);
+                        hit.collider.gameObject.GetComponent<HP>().reduceHPToServ(damage);
                     }
                         
                     

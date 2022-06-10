@@ -22,7 +22,7 @@ public class HPPlayer : HP
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            reduceHP(10f);
+            reduceHPToServ(10f);
         }
 
         if (currentTimeRecov <= 0) currentHP += Time.deltaTime * recovPerSecond;
@@ -46,7 +46,7 @@ public class HPPlayer : HP
         }
     }
     
-    public override void reduceHP(float damage)
+    public override void TrueReduceHP(float damage)
     {
         currentHP -= damage;
         currentTimeRecov = timeBeforeRecov;

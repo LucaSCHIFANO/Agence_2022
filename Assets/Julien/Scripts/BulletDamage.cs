@@ -10,7 +10,7 @@ public class BulletDamage : MonoBehaviour
     
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.GetComponent<HP>()) other.gameObject.GetComponent<HP>().reduceHP(damageValue);
+        if (other.gameObject.GetComponent<HP>()) other.gameObject.GetComponent<HP>().reduceHPToServ(damageValue);
             
         Destroy(gameObject);
         
