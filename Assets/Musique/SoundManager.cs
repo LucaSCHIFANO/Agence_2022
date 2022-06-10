@@ -7,7 +7,33 @@ using Random = UnityEngine.Random;
 
 public class SoundManager : MonoBehaviour
 {
-    public Sound[] sounds;
+    
+    [System.Serializable]
+    public class Sound
+    {
+        public string name;
+        public AudioClip clip;
+        public AudioMixerGroup audioMixerGroup;
+        public bool useRandomVolume = false;
+        [Range(0f, 1f)]
+        public float volume = 0.1f;
+        [Range(0f, 1f)]
+        public float volumeRandom = 0.1f;
+    
+        public bool useRandomPitch = false;
+        [Range(-3f, 3f)]
+        public float pitch = 1.0f;
+        [Range(-3f, 3f)]
+        public float pitchRandom = 1.0f;
+    
+        public bool playOnAwake = false;
+        public bool loop = false;
+
+        [HideInInspector]
+        public AudioSource source;
+    }
+    
+    internal Sound[] sounds;
 
     void Awake()
     {
@@ -68,29 +94,4 @@ public class SoundManager : MonoBehaviour
             s.source.Stop();
         }
     }
-}
-
-[System.Serializable]
-public class Sound
-{
-    public string name;
-    public AudioClip clip;
-    public AudioMixerGroup audioMixerGroup;
-    public bool useRandomVolume = false;
-    [Range(0f, 1f)]
-    public float volume = 0.1f;
-    [Range(0f, 1f)]
-    public float volumeRandom = 0.1f;
-    
-    public bool useRandomPitch = false;
-    [Range(-3f, 3f)]
-    public float pitch = 1.0f;
-    [Range(-3f, 3f)]
-    public float pitchRandom = 1.0f;
-    
-    public bool playOnAwake = false;
-    public bool loop = false;
-
-    [HideInInspector]
-    public AudioSource source;
 }

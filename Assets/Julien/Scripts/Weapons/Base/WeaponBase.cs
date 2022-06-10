@@ -95,13 +95,16 @@ public abstract class WeaponBase : NetworkBehaviour
     public virtual void Shoot()
     {
         if (Object == null) return;
-        overHeatPourcent += (100 / _bulletToOverHeat);
-        overHeatPourcentOnline = overHeatPourcent;
+        if (Runner.IsServer)
+        {
+            overHeatPourcent += (100 / _bulletToOverHeat);
+            overHeatPourcentOnline = overHeatPourcent;
         
-        if (overHeatPourcent >= 100) _isOverHeat = true;
-        _timeCoolDown = _timeBeforeCoolDown;
+            if (overHeatPourcent >= 100) _isOverHeat = true;
+            _timeCoolDown = _timeBeforeCoolDown;
         
-        EventSystem.ShootEvent();
+            EventSystem.ShootEvent();
+        }
     }
 
     public void Reload()
@@ -150,6 +153,12 @@ public abstract class WeaponBase : NetworkBehaviour
 
         if (_isOverHeat) em.rateOverTime = OHParticleOverTime;
         else em.rateOverTime = 0f;
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    public void AskToShoot()
+    {
+        Shoot();
     }
     
     

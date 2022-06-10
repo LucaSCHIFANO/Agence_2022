@@ -7,19 +7,17 @@ public class HPAntenna : HP
 {
     public bool broken;
     public GameObject thunderEffect;
-    [Networked(OnChanged = nameof(SendHPChanged))] private float HPOnline { get; set; }
-
-
-    public override void Start()
+    
+    public override void reduceHPToServ(float damage)
     {
-        currentHP = maxHP;
+        if(Runner.IsServer) TrueReduceHP(damage);
     }
-
-    public override void reduceHP(float damage)
+    
+    public override void TrueReduceHP(float damage)
     {
         currentHP -= damage;
-        HPOnline = currentHP;
-
+        Instantiate(thunderEffect, transform.position, transform.rotation);
+        
         if (currentHP <= 0)
         {
             broken = true;
@@ -27,16 +25,5 @@ public class HPAntenna : HP
             
         }
     }
-
-
-    public static void SendHPChanged(Changed<HPAntenna> changed)
-    {
-        changed.Behaviour.SendHP();
-    }
-
-    private void SendHP()
-    {
-        Instantiate(thunderEffect, transform.position, transform.rotation);
-        currentHP = HPOnline;
-    }
+    
 }

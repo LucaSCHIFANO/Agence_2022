@@ -11,18 +11,7 @@ public class NetworkedPlayer : NetworkBehaviour
 { 
     public GameObject Camera;
     [SerializeField] private MeshRenderer _mesh;
-    [SerializeField] private TextMeshProUGUI _name;
-    
-    
-    [Header("Health")]
-    [SerializeField] protected float maxHP;
-    protected float currentHP;
-    
-    [SerializeField][Range(0, 1)] protected float hpPourcent;
-    
-    [SerializeField] protected float timeBeforeRecov;
-    protected float currentTimeRecov;
-    [SerializeField] protected float recovPerSecond;
+    [SerializeField] private TextMeshProUGUI _name; 
     
     public static NetworkedPlayer Local { get; set; }
     public PossessingType PossessingType = PossessingType.CHARACTER;
@@ -40,8 +29,6 @@ public class NetworkedPlayer : NetworkBehaviour
         _name.text = _player.Name;
         _mesh.material.color = _player.Color;
         CharacterInputHandler = GetComponent<CharacterInputHandler>();
-        
-        currentHP = maxHP;
         
         if (Object.HasInputAuthority)
         {
@@ -95,34 +82,6 @@ public class NetworkedPlayer : NetworkBehaviour
         {
             WeaponInputHandler = null;
         }
-    }
-
-    public override void FixedUpdateNetwork()
-    {
-        base.FixedUpdateNetwork();
-        HP();
-    }
-
-    void HP()
-    {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            ReceiveDamage(10f);
-        }
-
-        if (currentTimeRecov <= 0) currentHP += Time.deltaTime * recovPerSecond;
-        else currentTimeRecov -= Time.deltaTime;
-
-        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
-        hpPourcent = currentHP / maxHP;
-        
-        CanvasInGame.Instance.actuBlood(Mathf.Abs(hpPourcent - 1));
-    }
-
-    public void ReceiveDamage(float damage)
-    {
-        currentHP -= damage;
-        currentTimeRecov = timeBeforeRecov;
     }
 }
 
