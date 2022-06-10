@@ -105,7 +105,7 @@ public class TruckFuel : TruckBase
     [HideInInspector]
     public float currFuel;
 
-    [Networked] public float CurrFuelSync { get; set; }
+    [HideInInspector] [Networked] public float CurrFuelSync { get; set; }
 
     public float consPerMeterInL;
     TruckPhysics phys;
