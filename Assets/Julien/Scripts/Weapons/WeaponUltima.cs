@@ -79,6 +79,8 @@ public class WeaponUltima : WeaponBase
 
     public override void Shoot()
     {
+        if (Object == null) return;
+        if (!Runner.IsServer) return;
         if (actualWeapon == weapon.BASIC || actualWeapon == weapon.BURST) isShooting = true;
         
         if (_shootingTimer > 0) return;
@@ -92,10 +94,12 @@ public class WeaponUltima : WeaponBase
             RaycastHit hit;
             Vector3 shootingDir = Quaternion.Euler(Random.Range(-spread, spread), Random.Range(-spread, spread), Random.Range(-spread, spread)) * _shootingPoint.forward;
             Debug.DrawRay(_shootingPoint.position, shootingDir * 1000, Color.red, 10);
+            // LagCompensatedHit hit;
+            // Runner.LagCompensation.Raycast(_shootingPoint.position, shootingDir, 100, Object.InputAuthority, out hitComp) <- Only check if enemy are hit
             if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit))
             {
-                CreateBulletEffectServerRpc(hit.point);
-                Instantiate(bulletEffect, hit.point, transform.rotation);
+                BulletEffectClientRpc(hit.point);
+                // Instantiate(bulletEffect, , transform.rotation);
                 
                 if (hit.collider.gameObject.GetComponent<HP>())
                 {
