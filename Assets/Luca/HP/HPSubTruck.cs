@@ -5,8 +5,9 @@ using UnityEngine;
 public class HPSubTruck : HP
 {
     [SerializeField] private HPTruck hptruck; 
+    
     public override void reduceHPToServ(float damage)
     {
-        hptruck.reduceHPToServ(damage);
+        if(Runner.IsServer) TrueReduceHP(damage);
     }
 }

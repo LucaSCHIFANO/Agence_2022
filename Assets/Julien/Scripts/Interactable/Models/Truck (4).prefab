@@ -5934,54 +5934,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300006, guid: 2367f3eccca72d648a9f993fdcd54cd9, type: 3}
---- !u!1 &6333507140686285580
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3552486915594414953}
-  - component: {fileID: 6897316557023250893}
-  m_Layer: 0
-  m_Name: HPTruck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3552486915594414953
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6333507140686285580}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 996390588664535750}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6897316557023250893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6333507140686285580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ee54e04b2c170e469cbc05f71ffdb97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  maxHP: 100
-  impactEffect: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
-    type: 3}
 --- !u!1 &6422419531561238193
 GameObject:
   m_ObjectHideFlags: 0
@@ -6931,6 +6883,7 @@ GameObject:
   - component: {fileID: 6846605178378294137}
   - component: {fileID: 602797681604906132}
   - component: {fileID: 602797681604906133}
+  - component: {fileID: 3621019742170147116}
   m_Layer: 8
   m_Name: Truck (4)
   m_TagString: Car
@@ -6951,7 +6904,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 346006884931596767}
-  - {fileID: 996390588664535750}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6984,7 +6936,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  honking: {fileID: 8300000, guid: 8c3b2d580c2bc2c44bca5b6d7d48a411, type: 3}
+  honking:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _exhaust: {fileID: 602797682086618377}
   teleport:
   - {fileID: 0}
@@ -7281,8 +7236,7 @@ MonoBehaviour:
   - {fileID: 5603136350526418245}
   - {fileID: 1681677946886891693}
   - {fileID: 6846605178378294137}
-  - {fileID: 1050009627546322678}
-  - {fileID: 6897316557023250893}
+  - {fileID: 3621019742170147116}
   SimulationBehaviours: []
 --- !u!114 &5603136350526418245
 MonoBehaviour:
@@ -7370,6 +7324,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a31238d5581bd42b4fe4e75ae8e602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3621019742170147116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8147018995279388667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee54e04b2c170e469cbc05f71ffdb97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  maxHP: 100
+  _currentHP: 0
+  impactEffect: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
+    type: 3}
 --- !u!1 &8147018995279576237
 GameObject:
   m_ObjectHideFlags: 0
@@ -7863,68 +7834,6 @@ Transform:
   m_Father: {fileID: 346006884931596767}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8434587340057783971
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 996390588664535750}
-  - component: {fileID: 1050009627546322678}
-  - component: {fileID: 9150492866223231924}
-  m_Layer: 0
-  m_Name: HPPart1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &996390588664535750
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8434587340057783971}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.96000004, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3552486915594414953}
-  m_Father: {fileID: 8147018995279293095}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1050009627546322678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8434587340057783971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79c30717b6025f94491a64858ef8ffa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  maxHP: 0
-  hptruck: {fileID: 6897316557023250893}
---- !u!65 &9150492866223231924
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8434587340057783971}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 2.5, z: 4.6}
-  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!1 &8436695248595026997
 GameObject:
   m_ObjectHideFlags: 0

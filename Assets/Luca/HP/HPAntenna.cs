@@ -7,13 +7,12 @@ public class HPAntenna : HP
 {
     public bool broken;
     public GameObject thunderEffect;
-
-
-    public override void Start()
+    
+    public override void reduceHPToServ(float damage)
     {
-        currentHP = maxHP;
+        if(Runner.IsServer) TrueReduceHP(damage);
     }
-
+    
     public override void TrueReduceHP(float damage)
     {
         currentHP -= damage;

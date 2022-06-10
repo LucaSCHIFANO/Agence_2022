@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor((typeof(Sound)))]
+//[CustomEditor((typeof(Sound)))]
 public class SoundMEditor : Editor
 {
      /*private SerializedProperty

@@ -6,6 +6,11 @@ public class HPEnemy : HP
 {
     public GameObject impactEffect;
     
+    public override void reduceHPToServ(float damage)
+    {
+        if(Runner.IsServer) TrueReduceHP(damage);
+    }
+    
     public override void TrueReduceHP(float damage)
     {
         currentHP -= damage;

@@ -98,7 +98,7 @@ namespace Enemies
             if (_damages < 0)
                 _damages = Mathf.Abs(_damages);
 
-            hp.reduceHPToServ(_damages);
+            if(Object.HasInputAuthority) hp.reduceHPToServ(_damages);
         }
 
         public virtual void TakeDamage(int _damages, Vector3 _collisionPoint, Vector3 _collisionDirection)

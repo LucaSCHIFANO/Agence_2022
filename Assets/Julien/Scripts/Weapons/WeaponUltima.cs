@@ -101,17 +101,16 @@ public class WeaponUltima : WeaponBase
                 BulletEffectClientRpc(hit.point);
                 // Instantiate(bulletEffect, , transform.rotation);
                 
-                if (hit.collider.gameObject.GetComponent<HP>())
+                if (hit.collider.gameObject.TryGetComponent(out HP hp))
                 {
                     if (allieTouret)
                     {
-                        if(hit.collider.gameObject.GetComponent<HPPlayer>() || hit.collider.gameObject.GetComponent<HPSubTruck>()) return;
-                        hit.collider.gameObject.GetComponent<HP>().reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                        if(hp is HPPlayer || hp is HPTruck) return;
+                        hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
                     }
                     else
                     {
-                        if(!hit.collider.gameObject.GetComponent<HPPlayer>() && !hit.collider.gameObject.GetComponent<HPSubTruck>()) return;
-                        hit.collider.gameObject.GetComponent<HP>().reduceHPToServ(damage);
+                        if((hp is HPPlayer || hp is HPTruck)) hp.reduceHPToServ(damage);
                     }
                         
                     

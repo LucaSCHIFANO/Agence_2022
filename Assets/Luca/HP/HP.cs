@@ -9,10 +9,11 @@ public class HP : NetworkBehaviour
 {
     [SerializeField] protected float maxHP;
 
-    [Networked]protected float currentHP { get; set; }
+    [Networked(OnChanged = nameof(OnHPChanged))] protected float currentHP { get; set; }
 
-    public virtual void Start()
+    public override void Spawned()
     {
+        //reduceHPToServ(-maxHP);
         currentHP = maxHP;
     }
 
@@ -22,10 +23,23 @@ public class HP : NetworkBehaviour
 
         currentHP = _hp;
     }
+    
+    public static void OnHPChanged(Changed<HP> changed)
+    {
+        changed.Behaviour.ChangeHP();
+    }
+
+    private void ChangeHP()
+    {
+        Debug.Log(currentHP);
+    }
+    
+    
+    
 
     public virtual void reduceHPToServ(float damage)
     {
-        reduceHPRpc(damage);
+        if (Object.HasInputAuthority) reduceHPRpc(damage);
     }
 
     public virtual void TrueReduceHP(float damage)

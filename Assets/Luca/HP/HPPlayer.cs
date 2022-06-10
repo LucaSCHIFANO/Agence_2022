@@ -12,7 +12,7 @@ public class HPPlayer : HP
     protected float currentTimeRecov;
     [SerializeField] protected float recovPerSecond;
     private bool wasDeadBefore;
-
+    
     private void Update()
     {
         HP();
@@ -22,7 +22,7 @@ public class HPPlayer : HP
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            reduceHPToServ(10f);
+            if(Object.HasInputAuthority) reduceHPToServ(10f);
         }
 
         if (currentTimeRecov <= 0) currentHP += Time.deltaTime * recovPerSecond;
