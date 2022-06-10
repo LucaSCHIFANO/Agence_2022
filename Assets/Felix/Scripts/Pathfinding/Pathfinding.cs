@@ -33,7 +33,7 @@ namespace Pathfinding
             Node startNode = grid.NodeFromPoint(_startPosition);
             Node targetNode = grid.WalkableNodeFromPoint(_targetPosition);
 
-            Node[] optiNodes = grid.OptimizedNodesFromTransform(targetNode.position, _startTransform);
+            /*Node[] optiNodes = grid.OptimizedNodesFromTransform(targetNode.position, _startTransform);
 
             bool isTargetNodeObstructed = false;
             
@@ -44,7 +44,7 @@ namespace Pathfinding
                     isTargetNodeObstructed = true;
                     break;
                 }
-            }
+            }*/
             
             if (!startNode.isObstructed && !targetNode.isObstructed/* && !isTargetNodeObstructed*/)
             {
@@ -70,7 +70,7 @@ namespace Pathfinding
                         if (neighbour.isObstructed || !neighbour.isWalkable || closeSet.Contains(neighbour))
                             continue;
 
-                        optiNodes = grid.OptimizedNodesFromTransform(neighbour.position, _startTransform);
+                        /*optiNodes = grid.OptimizedNodesFromTransform(neighbour.position, _startTransform);
 
                         bool isNodeObstructed = false;
                         
@@ -84,7 +84,7 @@ namespace Pathfinding
                         }
                         
                         if (isNodeObstructed)
-                            continue;
+                            continue;*/
                         
                         int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
 

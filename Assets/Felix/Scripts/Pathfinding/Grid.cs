@@ -28,7 +28,7 @@ namespace Pathfinding
             gridSizeY = Mathf.RoundToInt(gridSize.y / nodeDiameter);
             gridSizeZ = Mathf.RoundToInt(gridSize.z / nodeDiameter);
 
-            CreateGrid();
+            grid = CreateGrid();
         }
 
         private Node[,,] CreateGrid()

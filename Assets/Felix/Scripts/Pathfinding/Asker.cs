@@ -31,7 +31,7 @@ public class Asker : MonoBehaviour
     {
         if (_pathSuccess)
         {
-            path = new Path(_newPath, transform.position, turnDistance);
+            path = new Path(_newPath, transform.position, turnDistance, speed);
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
 
