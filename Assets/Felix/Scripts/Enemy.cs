@@ -24,6 +24,14 @@ namespace Enemies
 
         [SerializeField] protected Transform[] weaponsPosition;
 
+        [Header("ForWaves")] 
+        protected NewNwWaves waves;
+
+        protected void Awake()
+        {
+            hp = GetComponent<HPEnemy>();
+        }
+
         public override void Spawned()
         {
             base.Spawned();
@@ -117,6 +125,16 @@ namespace Enemies
 
             // TEMP
             Destroy(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            waves.removeEnemy(this);
+        }
+
+        public void setWaves(NewNwWaves wave)
+        {
+            waves = wave;
         }
     }
 }

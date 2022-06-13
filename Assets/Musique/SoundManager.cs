@@ -33,7 +33,7 @@ public class SoundManager : MonoBehaviour
         public AudioSource source;
     }
     
-    internal Sound[] sounds;
+    public Sound[] sounds;
 
     void Awake()
     {
