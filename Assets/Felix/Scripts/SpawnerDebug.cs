@@ -97,8 +97,7 @@ public class SpawnerDebug : MonoBehaviour
         }
         else
         {
-            NetworkBehaviour networkBehaviour = FindObjectOfType<NetworkBehaviour>();
-            networkBehaviour.Runner.Spawn(networkObject, new Vector3(0f, 1f, 0f));
+            player.Runner.Spawn(networkObject, new Vector3(0f, 1f, 0f));
         }
     }
 }

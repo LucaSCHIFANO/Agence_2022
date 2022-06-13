@@ -24,11 +24,6 @@ namespace Enemies
 
         [SerializeField] protected Transform[] weaponsPosition;
 
-        protected void Awake()
-        {
-            hp = GetComponent<HPEnemy>();
-        }
-
         public override void Spawned()
         {
             base.Spawned();
@@ -42,6 +37,7 @@ namespace Enemies
         public virtual void Initialization(EnemySO _enemySo)
         {
             asker = GetComponent<Asker>();
+            hp = GetComponent<HPEnemy>();
 
             hp.InitializeHP(_enemySo.health);
             speed = _enemySo.speed;
