@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &13550103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3344,6 +3344,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1462784144, guid: 9d5e4f95d06e6a448a8d97ff1c071047, type: 3}
+      propertyPath: decal
+      value: 
+      objectReference: {fileID: 5338382363273064419, guid: fa23e694de7063e42a14a9b09ded33bb,
+        type: 3}
     - target: {fileID: 1462784144, guid: 9d5e4f95d06e6a448a8d97ff1c071047, type: 3}
       propertyPath: showGizmos
       value: 1
