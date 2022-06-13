@@ -10,28 +10,21 @@ namespace Pathfinding
     public class Pathfinding : MonoBehaviour
     {
         private Grid grid;
-        private PathRequestManager pathRequestManager;
 
         private void Awake()
         {
             grid = GetComponent<Grid>();
-            pathRequestManager = GetComponent<PathRequestManager>();
         }
 
-        public void StartFindPath(Vector3 _startPosition, Transform _startTransform, Vector3 _targetPosition)
-        {
-            StartCoroutine(FindPath(_startPosition, _startTransform, _targetPosition));
-        }
-        
-        private IEnumerator FindPath(Vector3 _startPosition, Transform _startTransform, Vector3 _targetPosition)
+        public void FindPath(PathRequest _request, Action<PathResult> _callback)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
             
             Vector3[] wayPoints = new Vector3[0];
             bool pathSuccess = false;
             
-            Node startNode = grid.NodeFromPoint(_startPosition);
-            Node targetNode = grid.WalkableNodeFromPoint(_targetPosition);
+            Node startNode = grid.NodeFromPoint(_request.startPoint);
+            Node targetNode = grid.WalkableNodeFromPoint(_request.endPoint);
 
             /*Node[] optiNodes = grid.OptimizedNodesFromTransform(targetNode.position, _startTransform);
 
@@ -104,17 +97,16 @@ namespace Pathfinding
                 }
             }
 
-            yield return null;
-
             if (pathSuccess)
             {
                 wayPoints = RetracePath(startNode, targetNode);
+                pathSuccess = wayPoints.Length > 0;
             }
 
             stopwatch.Stop();
             print(stopwatch.ElapsedMilliseconds);
-            
-            pathRequestManager.FinishedProcessingPath(wayPoints, pathSuccess);
+
+            _callback(new PathResult(wayPoints, pathSuccess, _request.callback));
         }
 
         private Vector3[] RetracePath(Node _startNode, Node _targetNode)

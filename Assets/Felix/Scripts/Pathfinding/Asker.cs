@@ -17,21 +17,21 @@ public class Asker : MonoBehaviour
     {
         speed = _speed;
         callback = _callback;
-        PathRequestManager.RequestPath(transform.position, transform, _target.position, OnPathFound);
+        PathRequestManager.RequestPath(new PathRequest(transform.position, transform, _target.position, OnPathFound));
     }
     
     public void AskNewPath(Vector3 _targetPosition, float _speed, Action<Vector3[]> _callback)
     {
         speed = _speed;
         callback = _callback;
-        PathRequestManager.RequestPath(transform.position, transform, _targetPosition, OnPathFound);
+        PathRequestManager.RequestPath(new PathRequest(transform.position, transform, _targetPosition, OnPathFound));
     }
 
     public void OnPathFound(Vector3[] _newPath, bool _pathSuccess)
     {
         if (_pathSuccess)
         {
-            path = new Path(_newPath, transform.position, turnDistance);
+            path = new Path(_newPath, transform.position, turnDistance, speed);
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
 
@@ -44,11 +44,6 @@ public class Asker : MonoBehaviour
         bool followingPath = true;
         int pathIndex = 0;
         transform.LookAt(path.lookPoints[0]);
-
-        foreach (Vector3 v in path.lookPoints)
-        {
-            print(v);
-        }
 
         while (followingPath)
         {
