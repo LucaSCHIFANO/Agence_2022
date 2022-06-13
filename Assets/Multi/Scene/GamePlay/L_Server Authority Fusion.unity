@@ -4228,7 +4228,7 @@ PrefabInstance:
     - target: {fileID: 6274724183888813008, guid: 4e5e83d8757e7e841a0479d2f2da3546,
         type: 3}
       propertyPath: _autoSession.RoomName
-      value: ege
+      value: dfdfgdfgdfg
       objectReference: {fileID: 0}
     - target: {fileID: 6274724183888813008, guid: 4e5e83d8757e7e841a0479d2f2da3546,
         type: 3}
@@ -4243,7 +4243,7 @@ PrefabInstance:
     - target: {fileID: 6274724183888813008, guid: 4e5e83d8757e7e841a0479d2f2da3546,
         type: 3}
       propertyPath: _autoSession.LobbyName
-      value: ege
+      value: dfdfgdfgdfg
       objectReference: {fileID: 0}
     - target: {fileID: 6274724183888813008, guid: 4e5e83d8757e7e841a0479d2f2da3546,
         type: 3}
@@ -7575,10 +7575,10 @@ MonoBehaviour:
   NetworkGuid:
     RawGuidValue: f3e24017dfc7407a9a3e6a40b6c34b8b
   NestedObjects: []
-  NetworkedBehaviours: []
+  NetworkedBehaviours:
+  - {fileID: 1416863535}
   SimulationBehaviours:
   - {fileID: 1416863533}
-  - {fileID: 1416863535}
 --- !u!114 &1416863533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7633,6 +7633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 397d5ce103cfc6e48bd9c3e6b000d38c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
 --- !u!1 &1426635408
 GameObject:
   m_ObjectHideFlags: 0
@@ -10515,9 +10516,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4031519212464100499, guid: 9cc520876f7631b44a2832e9218e1326,
         type: 3}
+      propertyPath: SimulationBehaviours.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4031519212464100499, guid: 9cc520876f7631b44a2832e9218e1326,
+        type: 3}
       propertyPath: NetworkedBehaviours.Array.data[2]
       value: 
       objectReference: {fileID: 4031519212696664246}
+    - target: {fileID: 4031519212464100499, guid: 9cc520876f7631b44a2832e9218e1326,
+        type: 3}
+      propertyPath: SimulationBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4031519212464100499, guid: 9cc520876f7631b44a2832e9218e1326,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]

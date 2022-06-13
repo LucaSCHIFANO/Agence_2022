@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
-public class GameOverManager : SimulationBehaviour
+public class GameOverManager : NetworkBehaviour
 {
     public static GameOverManager instance;
 
@@ -18,13 +18,16 @@ public class GameOverManager : SimulationBehaviour
 
     void Update()
     {
-        if (Runner.IsServer)
+        if (Runner)
         {
-            if (playerDead == App.Instance.Players.Count)
+            if (Runner.IsServer)
             {
-                App.Instance.Session.LoadMap(MapIndex.GameOver);
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
+                Debug.Log($"{playerDead} player dead");
+                if (playerDead == App.Instance.Players.Count)
+                {
+                    RPC_ShowCursor();
+                    App.Instance.Session.LoadMap(MapIndex.GameOver);
+                }
             }
         }
     }
@@ -37,5 +40,12 @@ public class GameOverManager : SimulationBehaviour
     public void PlayerRespawn()
     {
         playerDead--;
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_ShowCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
