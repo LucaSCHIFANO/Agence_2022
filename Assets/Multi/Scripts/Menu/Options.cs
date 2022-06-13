@@ -38,6 +38,11 @@ public class Options : MonoBehaviour
         audioMix.SetFloat("SFXVol", volume);
         saveSlider("SFXVol", volume);
     }
+
+    public void SetSlider4(float sensibility)
+    {
+        saveSlider("Sensi", sensibility);
+    }
     
     private void saveSlider(string nameVol, float volume)
     {
@@ -49,5 +54,6 @@ public class Options : MonoBehaviour
         sliderList[0].value = PlayerPrefs.GetFloat("MasterVol");
         sliderList[1].value = PlayerPrefs.GetFloat("MusicVol");
         sliderList[2].value = PlayerPrefs.GetFloat("SFXVol");
+        sliderList[3].value = PlayerPrefs.GetFloat("Sensi");
     }
 }

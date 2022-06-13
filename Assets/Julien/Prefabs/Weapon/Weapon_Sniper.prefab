@@ -129,9 +129,7 @@ GameObject:
   - component: {fileID: 8744097532039571278}
   - component: {fileID: 8744097532039571279}
   - component: {fileID: 8744097532039571280}
-  - component: {fileID: 8744097532039571281}
   - component: {fileID: 4283327344219128680}
-  - component: {fileID: 7120967260198279125}
   - component: {fileID: 5106736668299553732}
   - component: {fileID: 7171794504195544943}
   m_Layer: 8
@@ -208,19 +206,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8744097532039571281
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8744097532039571284}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4283327344219128680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,6 +231,7 @@ MonoBehaviour:
     type: 3}
   overHParticle: {fileID: 5599947499545715074}
   OHParticleOverTime: 2
+  allieTouret: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -253,19 +239,6 @@ MonoBehaviour:
   _overHeatPourcentOnline: 0
   _fireType: 0
   _spread: 0
---- !u!65 &7120967260198279125
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8744097532039571284}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 5, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5106736668299553732
 MonoBehaviour:
   m_ObjectHideFlags: 0

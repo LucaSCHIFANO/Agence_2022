@@ -753,7 +753,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-8644
+  m_Name: pb_Mesh-431654
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2852,7 +2852,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-167148
+  m_Name: pb_Mesh-431748
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3969,7 +3969,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8744097532039571282, guid: 134afa26bd40d1c42ba93342fff577e1, type: 3}
-    - {fileID: 7120967260198279125, guid: 134afa26bd40d1c42ba93342fff577e1, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 134afa26bd40d1c42ba93342fff577e1, type: 3}
 --- !u!4 &446075194 stripped
 Transform:
@@ -6484,6 +6484,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 953504654}
   m_CullTransparentMesh: 1
+--- !u!114 &956594587 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3206541504967726645, guid: f97c49aa221ddd141a8d7faf4c699dce,
+    type: 3}
+  m_PrefabInstance: {fileID: 7607877588144509510}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &959859368
 GameObject:
   m_ObjectHideFlags: 0
@@ -11813,6 +11825,21 @@ PrefabInstance:
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
       value: -3375919099376358251
       objectReference: {fileID: 0}
+    - target: {fileID: 3206541504967726645, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: Flags
+      value: 2561
+      objectReference: {fileID: 0}
+    - target: {fileID: 3206541504967726645, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
+      value: -8772991052033417257
+      objectReference: {fileID: 0}
+    - target: {fileID: 3206541504967726645, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
+      value: -2875204040670441588
+      objectReference: {fileID: 0}
     - target: {fileID: 6761859266954993557, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -12011,13 +12038,18 @@ PrefabInstance:
     - target: {fileID: 7490717165535407015, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: NestedObjects.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7490717165535407015, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: NestedObjects.Array.data[1]
       value: 
       objectReference: {fileID: 135069495}
+    - target: {fileID: 7490717165535407015, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: NestedObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 956594587}
     - target: {fileID: 7490717165535407015, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]

@@ -40,6 +40,7 @@ public class NetworkCharacterControllerPrototypeCustom : NetworkTransform
     {
         base.Awake();
         CacheController();
+        rotationSpeed = PlayerPrefs.GetFloat("Sensi");
     }
 
     public override void Spawned()
