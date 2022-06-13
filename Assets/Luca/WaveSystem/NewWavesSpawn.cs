@@ -31,7 +31,7 @@ public class NewWavesSpawn : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad9)) spawn = true;
+        if (Input.GetKeyDown(KeyCode.Keypad9)) spawn = !spawn;
         
         if (spawn || Input.GetKeyDown((KeyCode.Return)))
         {
