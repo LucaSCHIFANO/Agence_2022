@@ -123,8 +123,12 @@ namespace Enemies
             // Drop loot
 
             // TEMP
-            waves.removeEnemy(this);
             Destroy(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            waves.removeEnemy(this);
         }
 
         public void setWaves(NewNwWaves wave)

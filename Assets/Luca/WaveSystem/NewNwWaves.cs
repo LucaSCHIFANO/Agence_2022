@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Enemies;
+using Fusion;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class NewNwWaves : MonoBehaviour
+public class NewNwWaves : NetworkBehaviour
 {
     [Header("Tweekable")]
     //Nombre d'ennemis par vagues
@@ -42,7 +43,7 @@ public class NewNwWaves : MonoBehaviour
             spawn = false;
             waveEnded = false;
 
-            StartCoroutine(spawnEnemies());
+            if(Runner != null && Runner.IsServer) StartCoroutine(spawnEnemies());
         }
         
         if (waveEnded)
@@ -70,11 +71,10 @@ public class NewNwWaves : MonoBehaviour
 
     private void spawned()
     {
-        
         Vector3 spawnDistance = RandomCircle(transform.position, Random.Range(minRadius, maxRadius));
 
         var randomEnemy = enemyPool[Random.Range(0, enemyPool.Count)];
-        var enemyObject = Instantiate(randomEnemy, spawnDistance, transform.rotation);
+        var enemyObject = Runner.Spawn(randomEnemy, spawnDistance, transform.rotation);
         enemyObject.setWaves(this);
         enemiesSpawned.Add(enemyObject);
         
@@ -82,7 +82,7 @@ public class NewNwWaves : MonoBehaviour
         //enemyObject.GetComponent<Enemy>().target = target;
 
     }
-    
+
     Vector3 RandomCircle(Vector3 center, float radius)
     {
         float ang = UnityEngine.Random.value * 360;
