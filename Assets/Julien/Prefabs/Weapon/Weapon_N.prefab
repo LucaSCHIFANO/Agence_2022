@@ -58,7 +58,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 1e+12
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -356,10 +356,12 @@ MonoBehaviour:
     type: 3}
   overHParticle: {fileID: 8741968814719207331}
   OHParticleOverTime: 2
+  allieTouret: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
   overHeatPourcent: 0
+  _overHeatPourcentOnline: 0
   actualWeapon: 0
   fireType: 0
   spread: 0
@@ -367,6 +369,7 @@ MonoBehaviour:
   damage: 0
   particleFire: {fileID: 8190907002144595235, guid: d9a2258dcb99b294ab170540231cd31f,
     type: 3}
+  startingWeapon: {fileID: 0}
   isShooting: 0
 --- !u!114 &5038244686413396802
 MonoBehaviour:
