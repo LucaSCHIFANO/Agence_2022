@@ -646,7 +646,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 1e+12
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -931,6 +931,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   maxHP: 100
+  _currentHP: 0
   hpPourcent: 0
   timeBeforeRecov: 1
   recovPerSecond: 5
