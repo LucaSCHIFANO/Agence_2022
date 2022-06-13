@@ -33,7 +33,10 @@ public class TruckFuelEditor : Editor
     public override void OnInspectorGUI()
     {
         //Update our list
-        //base.DrawDefaultInspector();
+        base.DrawDefaultInspector();
+
+        EditorGUILayout.Space(5);
+
         EditorGUILayout.LabelField("Maximum Fuel");
         t.maxFuel = EditorGUILayout.FloatField(maxFuel.floatValue);
 

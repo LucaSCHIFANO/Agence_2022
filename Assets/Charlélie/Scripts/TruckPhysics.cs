@@ -9,11 +9,13 @@ public enum ControlMode { simple = 1, touch = 2 }
 
 public class TruckPhysics : TruckBase
 {
-    [SerializeField] private AudioClip honking;
+    [SerializeField] private List<AudioClip> honking;
     [SerializeField] private ParticleSystem _exhaust;
 
     [SerializeField] public List<Transform> teleport;
     private AudioSource _audioSource;
+
+    TruckFuel fuel;
     
     #region Settings
 
@@ -21,6 +23,7 @@ public class TruckPhysics : TruckBase
     public ControlMode controlMode = ControlMode.simple;
 
     public bool activeControl = false;
+    public bool Reverse;
 
     private Rewired.Player player;
     public Rewired.InputAction action;
@@ -241,6 +244,7 @@ public class TruckPhysics : TruckBase
     private bool shiftUp, shiftDown, braking;
     private float turn, throttle;
 
+    public float Throttle { get { return throttle; } }
 
     private class WheelComponent
     {
@@ -263,6 +267,7 @@ public class TruckPhysics : TruckBase
     {
         base.Init();
         player = Rewired.ReInput.players.GetPlayer(0);
+        fuel = GetComponent<TruckFuel>();
     }
 
     private WheelComponent SetWheelComponent(Transform wheel, float maxSteer, bool drive, float pos_y)
@@ -514,6 +519,9 @@ public class TruckPhysics : TruckBase
             shift = input.shift;
             leftControl = input.leftControl;
 
+            if (fuel.OutOfGas)
+                throttle = 0;
+
             if (input.isExiting)
             {
                 GetComponent<CarInteractable>().AskForExitServerRpc();
@@ -521,7 +529,7 @@ public class TruckPhysics : TruckBase
 
             if (input.isHonking)
             {
-                HonkeRPC();
+                HonkeRPC(Random.Range(0, honking.Count));
             }
 
             if (throttle > 0 && !leftControl)
@@ -641,11 +649,7 @@ public class TruckPhysics : TruckBase
 
 
 
-        if (speed < 1.0f && braking)
-        {
-            Backward = true;
-            //SetInputs();
-        }
+        
 
         Debug.Log("Backwarding: " + Backward + "  Throttle: " + (throttle > 0) + "  Braking: " + braking);
         
@@ -658,17 +662,24 @@ public class TruckPhysics : TruckBase
             if (speed < 1.0f && braking)
             {
                 Debug.Log("STOP BACK");
-                //Backward = false;
+                Backward = false;
+                Reverse = false;
+                
             }
         }
         else
         {
-            //Backward = false;
+            if (speed < 1.0f && braking)
+            {
+                Backward = true;
+                Reverse = true;
+                //SetInputs();
+            }
             //   if (currentGear > 0)
             //   carSetting.shiftCentre.z = -(accel / currentGear) / -5;
         }
 
-
+        
         //Debug.Log(currentGear + "   " + Backward + "   " + accel);
 
         //  carSetting.shiftCentre.x = -Mathf.Clamp(steer * (speed / 100), -0.03f, 0.03f);
@@ -1146,9 +1157,10 @@ public class TruckPhysics : TruckBase
 
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
-    public void HonkeRPC()
+    public void HonkeRPC(int honk)
     {
-        _audioSource.clip = honking;
+        _audioSource.clip = honking[honk];
+        _audioSource.maxDistance = 20;
         _audioSource.Play();
     }
 

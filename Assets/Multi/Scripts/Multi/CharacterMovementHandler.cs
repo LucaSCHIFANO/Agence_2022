@@ -14,6 +14,10 @@ public class CharacterMovementHandler : NetworkBehaviour
     private float cameraRotationX;
 
     public bool IsMoving;
+    private bool IsMovingOld;
+    
+    [SerializeField] protected NetworkMecanimAnimator anim;
+    
 
     private void Awake()
     {
@@ -23,7 +27,8 @@ public class CharacterMovementHandler : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        IsMoving = true;
+        IsMovingOld = false;
     }
 
     // Update is called once per frame
@@ -34,6 +39,17 @@ public class CharacterMovementHandler : NetworkBehaviour
         cameraRotationX = Mathf.Clamp(cameraRotationX, -60, 60);
         
         localCamera.transform.localRotation = Quaternion.Euler(cameraRotationX, 0, 0);
+
+        if (IsMoving && !IsMovingOld)
+        {
+            IsMovingOld = true;
+            MySetTrigger("IsMoving");
+        }
+        else if (!IsMoving && IsMovingOld)
+        {
+            IsMovingOld = false;
+            MySetTrigger("IsMoving");
+        }
     }
 
     public override void FixedUpdateNetwork()
@@ -59,5 +75,14 @@ public class CharacterMovementHandler : NetworkBehaviour
     public void SetViewInputVector(Vector2 viewInputVector)
     {
         this.viewInput = viewInputVector;
+    }
+    
+    
+    public void MySetTrigger(string trigger)
+    {
+        if (Object.HasStateAuthority)
+            anim.SetTrigger(trigger);
+        else if (Object.HasInputAuthority && Runner.IsForward)
+            anim.Animator.SetTrigger(trigger);
     }
 }

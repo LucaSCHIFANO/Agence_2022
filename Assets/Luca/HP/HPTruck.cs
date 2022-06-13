@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Fusion;
 using UnityEngine;
 
-public class HPAntenna : HP
+public class HPTruck : HP
 {
-    public bool broken;
-    public GameObject thunderEffect;
+    public GameObject impactEffect;
     
     public override void reduceHPToServ(float damage)
     {
@@ -16,14 +14,13 @@ public class HPAntenna : HP
     public override void TrueReduceHP(float damage)
     {
         currentHP -= damage;
-        Instantiate(thunderEffect, transform.position, transform.rotation);
+        Instantiate(impactEffect, transform.position, transform.rotation);
         
         if (currentHP <= 0)
         {
-            broken = true;
-            Boss.Instance.checkAntenna();
-            
+            App.Instance.Disconnect();
         }
+        
     }
     
 }
