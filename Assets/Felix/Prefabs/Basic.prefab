@@ -131,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   maxHP: 10
+  _currentHP: 0
   impactEffect: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
     type: 3}
 --- !u!114 &5286773601199235512
@@ -147,7 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   range: 5
-  enemySo: {fileID: 0}
+  enemySo: {fileID: 11400000, guid: 655036a823493e84d9f6b82443254296, type: 2}
   weaponsPosition:
   - {fileID: 7099923427349109451}
   obstaclesLayerMask:
