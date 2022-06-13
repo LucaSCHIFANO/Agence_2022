@@ -24,6 +24,9 @@ namespace Enemies
 
         [SerializeField] protected Transform[] weaponsPosition;
 
+        [Header("ForWaves")] 
+        protected NewNwWaves waves;
+
         protected void Awake()
         {
             hp = GetComponent<HPEnemy>();
@@ -120,7 +123,13 @@ namespace Enemies
             // Drop loot
 
             // TEMP
+            waves.removeEnemy(this);
             Destroy(gameObject);
+        }
+
+        public void setWaves(NewNwWaves wave)
+        {
+            waves = wave;
         }
     }
 }

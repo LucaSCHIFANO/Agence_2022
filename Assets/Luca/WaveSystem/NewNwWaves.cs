@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Enemies;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -30,6 +31,7 @@ public class NewNwWaves : MonoBehaviour
     [SerializeField] private bool spawn;
     private int wavesCount = 0;
     private bool waveEnded;
+    public List<Enemies.Enemy> enemiesSpawned = new List<Enemy>();
 
     private void Update()
     {
@@ -45,7 +47,8 @@ public class NewNwWaves : MonoBehaviour
         
         if (waveEnded)
         {
-            
+            Debug.Log("ended");
+            if(enemiesSpawned.Count == 0) Debug.Log("fin de vagues vraiment");
         }
     }
     
@@ -71,10 +74,13 @@ public class NewNwWaves : MonoBehaviour
         Vector3 spawnDistance = RandomCircle(transform.position, Random.Range(minRadius, maxRadius));
 
         var randomEnemy = enemyPool[Random.Range(0, enemyPool.Count)];
-        var enemyObject = Instantiate(randomEnemy, spawnDistance,
-            transform.rotation);
-        //enemyObject.GetComponent<Enemy>().target = target;
+        var enemyObject = Instantiate(randomEnemy, spawnDistance, transform.rotation);
+        enemyObject.setWaves(this);
+        enemiesSpawned.Add(enemyObject);
         
+
+        //enemyObject.GetComponent<Enemy>().target = target;
+
     }
     
     Vector3 RandomCircle(Vector3 center, float radius)
@@ -86,8 +92,11 @@ public class NewNwWaves : MonoBehaviour
         pos.y = center.y;
         return pos;
     }
-   
 
+    public void removeEnemy(Enemies.Enemy toRemove)
+    {
+        enemiesSpawned.Remove(toRemove);
+    }
 
     /*private void OnDrawGizmosSelected()
     {
