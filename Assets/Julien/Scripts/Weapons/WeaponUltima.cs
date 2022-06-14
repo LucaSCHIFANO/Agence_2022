@@ -9,14 +9,16 @@ public class WeaponUltima : WeaponBase
 {
 
     [SerializeField] protected weapon actualWeapon;
-    [SerializeField] public WeaponFireType fireType;
+    [SerializeField] protected WeaponFireType fireType;
 
-    [SerializeField] public float spread;
-    [SerializeField] public int numberOfShot;
-    [SerializeField] public float damage;
+    [SerializeField] protected float maxDistance;
+
+    [SerializeField] protected float spread;
+    [SerializeField] protected int numberOfShot;
+    [SerializeField] protected float damage;
     
-    [SerializeField] public GameObject particleFire;
-    [SerializeField] private WScriptable startingWeapon;
+    [SerializeField] protected GameObject particleFire;
+    [SerializeField] protected WScriptable startingWeapon;
     
     
     public enum weapon
@@ -65,6 +67,7 @@ public class WeaponUltima : WeaponBase
         overHeatColor = SObject.overHeatColor;
         actualWeapon = SObject.wType;
         fireType = SObject.fType;
+        maxDistance = SObject.maxDistanceRayCast;
         spread = SObject.spread;
         numberOfShot = SObject.numberOfShots;
         damage = SObject.damage;
@@ -96,7 +99,7 @@ public class WeaponUltima : WeaponBase
             Debug.DrawRay(_shootingPoint.position, shootingDir * 1000, Color.red, 10);
             // LagCompensatedHit hit;
             // Runner.LagCompensation.Raycast(_shootingPoint.position, shootingDir, 100, Object.InputAuthority, out hitComp) <- Only check if enemy are hit
-            if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit))
+            if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance))
             {
                 BulletEffectClientRpc(hit.point);
                 // Instantiate(bulletEffect, , transform.rotation);

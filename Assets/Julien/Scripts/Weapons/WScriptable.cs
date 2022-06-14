@@ -17,6 +17,8 @@ public class WScriptable : ScriptableObject
     public WeaponUltima.weapon wType;
     public WeaponFireType fType;
 
+    public float maxDistanceRayCast;
+
     [Header("Basic / Burst / Shotgun / MachineGun")] 
     public float spread;
     public int numberOfShots;

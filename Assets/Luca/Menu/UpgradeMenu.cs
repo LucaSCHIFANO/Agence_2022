@@ -13,6 +13,7 @@ using Random = UnityEngine.Random;
 public class UpgradeMenu : NetworkBehaviour
 {
     public List<GameObject> screenList = new List<GameObject>();
+    public List<GameObject> screenListInRed = new List<GameObject>();
 
     private int intUpgrade = 4;
 
@@ -137,8 +138,17 @@ public class UpgradeMenu : NetworkBehaviour
     {
         for (int i = 0; i < screenList.Count; i++)
         {
-            if (i == lint) screenList[i].SetActive(true);
-            else screenList[i].SetActive(false);
+            
+            if (i == lint)
+            {
+                if (i != 0 && i != 1) screenListInRed[i].SetActive(true); 
+                screenList[i].SetActive(true);
+            }
+            else
+            {
+                if (i != 0 && i != 1) screenListInRed[i].SetActive(false); 
+                screenList[i].SetActive(false);
+            }
         }
 
         if (sellMode)
