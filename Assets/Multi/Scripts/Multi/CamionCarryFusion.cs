@@ -38,8 +38,12 @@ public class CamionCarryFusion : SimulationBehaviour, IPlayerLeft
                         networkPlayer.RemoveAt(i);
                         continue;
                     }
-                    character.transform.Translate(velocity, Space.World);
-                    RotatePlayer(character, rotation.y);
+
+                    if (character.PossessingType == PossessingType.CHARACTER)
+                    {
+                        character.transform.Translate(velocity, Space.World);
+                        RotatePlayer(character, rotation.y);
+                    }
                     /*if (!character.GetComponent<CharacterMovementHandler>().IsMoving)
                     {
                         character.GetComponent<NetworkCharacterControllerPrototypeCustom>().Move(velocity);
