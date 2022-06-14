@@ -40,6 +40,12 @@ public class NetworkCharacterControllerPrototypeCustom : NetworkTransform
     {
         base.Awake();
         CacheController();
+        changeSensi();
+    }
+
+    public void changeSensi()
+    {
+        Debug.Log("test");
         rotationSpeed = PlayerPrefs.GetFloat("Sensi");
     }
 

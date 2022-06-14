@@ -8,11 +8,13 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class NetworkedPlayer : NetworkBehaviour
-{ 
+{
     public GameObject Camera;
     [SerializeField] private MeshRenderer _mesh;
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private List<GameObject> _playerVisuals;
+    
+    Rewired.Player playerRew;
 
     public static NetworkedPlayer Local { get; set; }
     public PossessingType PossessingType = PossessingType.CHARACTER;
@@ -21,8 +23,9 @@ public class NetworkedPlayer : NetworkBehaviour
     public CharacterInputHandler CharacterInputHandler;
     public WeaponInputHandler WeaponInputHandler;
     public VehiculeInputHandler VehiculeInputHandler;
-    
+
     private Player _player;
+    private bool isPaused;
 
     public override void Spawned()
     {
@@ -30,6 +33,7 @@ public class NetworkedPlayer : NetworkBehaviour
         _name.text = _player.Name;
         _mesh.material.color = _player.Color;
         CharacterInputHandler = GetComponent<CharacterInputHandler>();
+        playerRew = Rewired.ReInput.players.GetPlayer(0);
         
         if (Object.HasInputAuthority)
         {
@@ -42,7 +46,27 @@ public class NetworkedPlayer : NetworkBehaviour
             Debug.Log("Spawned Remote Player");
         }
     }
-    
+
+    private void Update()
+    {
+        if (playerRew.GetButtonDown("Escape"))
+        {
+            isPaused = !isPaused;
+            CanvasInGame.Instance.showOptiones(isPaused);
+            
+            if (isPaused)
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+        }
+    }
+
     public void Unpossess(Transform exitPoint)
     {
         if (Object.HasInputAuthority)
