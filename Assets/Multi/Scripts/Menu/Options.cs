@@ -1,14 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class Options : MonoBehaviour
+public class Options : NetworkBehaviour
 {
     [SerializeField] AudioMixer audioMix;
     [SerializeField] Slider[] sliderList;
+
+    [SerializeField] private bool isMainMenu;
 
     private void Start()
     {
@@ -42,6 +45,9 @@ public class Options : MonoBehaviour
     public void SetSlider4(float sensibility)
     {
         saveSlider("Sensi", sensibility);
+        
+        if(!isMainMenu) Runner.GetPlayerObject(Runner.LocalPlayer).GetComponent<NetworkCharacterControllerPrototypeCustom>().changeSensi();
+        else Debug.Log("blablanalanalnzlanalanlan");
     }
     
     private void saveSlider(string nameVol, float volume)
@@ -55,5 +61,6 @@ public class Options : MonoBehaviour
         sliderList[1].value = PlayerPrefs.GetFloat("MusicVol");
         sliderList[2].value = PlayerPrefs.GetFloat("SFXVol");
         sliderList[3].value = PlayerPrefs.GetFloat("Sensi");
+        
     }
 }
