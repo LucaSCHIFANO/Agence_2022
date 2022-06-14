@@ -11,8 +11,9 @@ public class NetworkedPlayer : NetworkBehaviour
 { 
     public GameObject Camera;
     [SerializeField] private MeshRenderer _mesh;
-    [SerializeField] private TextMeshProUGUI _name; 
-    
+    [SerializeField] private TextMeshProUGUI _name;
+    [SerializeField] private List<GameObject> _playerVisuals;
+
     public static NetworkedPlayer Local { get; set; }
     public PossessingType PossessingType = PossessingType.CHARACTER;
     
@@ -82,6 +83,16 @@ public class NetworkedPlayer : NetworkBehaviour
         {
             WeaponInputHandler = null;
         }
+    }
+
+    public void HideSelfVisual()
+    {
+        _playerVisuals.ForEach(el => el.SetActive(false));
+    }
+
+    public void ShowSelfVisual()
+    {
+        _playerVisuals.ForEach(el => el.SetActive(true));
     }
 }
 

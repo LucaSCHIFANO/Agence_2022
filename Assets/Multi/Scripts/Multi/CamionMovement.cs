@@ -9,6 +9,7 @@ public class CamionMovement : SimulationBehaviour
     [SerializeField] private Transform[] _movementPoint;
     [SerializeField] private float minDistance;
     [SerializeField] private float speed;
+    [SerializeField] private float rotSpeed;
     [SerializeField] private Rigidbody rb;
     
     private int currentTarget;
@@ -38,5 +39,7 @@ public class CamionMovement : SimulationBehaviour
 
             if (currentTarget >= _movementPoint.Length) currentTarget = 0;
         }
+        
+        transform.Rotate(Vector3.up, 1 * rotSpeed);
     }
 }
