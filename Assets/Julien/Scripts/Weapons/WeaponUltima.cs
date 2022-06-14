@@ -90,9 +90,11 @@ public class WeaponUltima : WeaponBase
         if (_isOverHeat) return;
         
         base.Shoot();
-
+        
+        
         if (fireType == WeaponFireType.Hitscan)
         {
+            ShootEffectClientRpc();
             
             RaycastHit hit;
             Vector3 shootingDir = Quaternion.Euler(Random.Range(-spread, spread), Random.Range(-spread, spread), Random.Range(-spread, spread)) * _shootingPoint.forward;

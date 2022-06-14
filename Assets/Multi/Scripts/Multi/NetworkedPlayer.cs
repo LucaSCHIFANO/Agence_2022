@@ -25,7 +25,7 @@ public class NetworkedPlayer : NetworkBehaviour
     public VehiculeInputHandler VehiculeInputHandler;
 
     private Player _player;
-    private bool isPaused;
+    [SerializeField]protected bool isPaused = false;
 
     public override void Spawned()
     {
@@ -34,6 +34,7 @@ public class NetworkedPlayer : NetworkBehaviour
         _mesh.material.color = _player.Color;
         CharacterInputHandler = GetComponent<CharacterInputHandler>();
         playerRew = Rewired.ReInput.players.GetPlayer(0);
+        CanvasInGame.Instance.showOptiones(false);
         
         if (Object.HasInputAuthority)
         {

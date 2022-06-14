@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class SoundManager : MonoBehaviour
+public class SoundTransmitter : MonoBehaviour
 {
     
     [System.Serializable]

@@ -16,7 +16,6 @@ public class Options : NetworkBehaviour
     private void Start()
     {
         getSlider();
-        Hide();
     }
 
     public void Hide()
@@ -45,9 +44,7 @@ public class Options : NetworkBehaviour
     public void SetSlider4(float sensibility)
     {
         saveSlider("Sensi", sensibility);
-        
-        if(!isMainMenu) Runner.GetPlayerObject(Runner.LocalPlayer).GetComponent<NetworkCharacterControllerPrototypeCustom>().changeSensi();
-        else Debug.Log("blablanalanalnzlanalanlan");
+        if(!isMainMenu) Runner?.GetPlayerObject(Runner.LocalPlayer).GetComponent<NetworkCharacterControllerPrototypeCustom>().changeSensi();
     }
     
     private void saveSlider(string nameVol, float volume)
@@ -62,5 +59,9 @@ public class Options : NetworkBehaviour
         sliderList[2].value = PlayerPrefs.GetFloat("SFXVol");
         sliderList[3].value = PlayerPrefs.GetFloat("Sensi");
         
+        audioMix.SetFloat("MasterVol", sliderList[0].value);
+        audioMix.SetFloat("MusicVol", sliderList[1].value);
+        audioMix.SetFloat("SFXVol", sliderList[2].value);
+        audioMix.SetFloat("Sensi", sliderList[3].value);
     }
 }

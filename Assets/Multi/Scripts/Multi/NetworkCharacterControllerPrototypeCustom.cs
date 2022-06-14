@@ -45,7 +45,6 @@ public class NetworkCharacterControllerPrototypeCustom : NetworkTransform
 
     public void changeSensi()
     {
-        Debug.Log("test");
         rotationSpeed = PlayerPrefs.GetFloat("Sensi");
     }
 

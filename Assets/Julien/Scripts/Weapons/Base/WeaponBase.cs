@@ -38,6 +38,10 @@ public abstract class WeaponBase : NetworkBehaviour
 
     [SerializeField] protected ParticleSystem overHParticle;
     [SerializeField] protected float OHParticleOverTime;
+    
+    [SerializeField] protected GameObject shootParticle;
+
+    
     [SerializeField] protected bool allieTouret;
 
 
@@ -166,9 +170,16 @@ public abstract class WeaponBase : NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     protected void BulletEffectClientRpc(Vector3 impactPoint)
     {
-        // if(IsOwner) return;
         Instantiate(bulletEffect, impactPoint, transform.rotation);
     }
+    
+    //creer une particule au bout du canon
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    protected void ShootEffectClientRpc()
+    {
+        Instantiate(shootParticle, _shootingPoint.position, _shootingPoint.rotation);
+    }
+    
     
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     protected void CreateBulletEffectServerRpc(Vector3 impactPoint)
