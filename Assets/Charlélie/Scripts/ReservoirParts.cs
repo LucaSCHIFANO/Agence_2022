@@ -30,15 +30,19 @@ public class ReservoirParts : MonoBehaviour
             if (curResistance <= 0)
             {
                 isLeaking = true;
-                Debug.Log("Start instance");
                 App.Instance.Session.Runner.Spawn(leakPrefab, hitPoint.point, Quaternion.Euler(hitPoint.normal), onBeforeSpawned : (runner, obj) => {
                     leak = obj;
                     obj.transform.SetParent(hitGo.transform);
                     obj.transform.forward = -hitPoint.normal;
                     obj.GetComponent<Leak>().Part = this;
                     leakPos = hitPoint.point;
+                    Leak l = obj.GetComponent<Leak>();
+                    TruckFuel[] t = FindObjectsOfType<TruckFuel>(); //TO CHANGE
+                    foreach (TruckFuel f in t)
+                    {
+                        l.Damage = f.AddConstDamage(l.DamageName);
+                    }
                 });
-                
             }
         }
 
@@ -70,21 +74,8 @@ public class ReservoirParts : MonoBehaviour
         foreach (Part part in parts) part.Init(leak); 
     }
 
-    void Start()
-    {
-        
-    }
 
-
-    void Update()
-    {
-        //Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, partlayer);
-
-        if (Input.GetMouseButtonDown(0)) HitReservoir(hit);
-    }
-
-    void HitReservoir(RaycastHit hit)
+    public void HitReservoir(RaycastHit hit)
     {
         foreach (Part part in parts)
         {

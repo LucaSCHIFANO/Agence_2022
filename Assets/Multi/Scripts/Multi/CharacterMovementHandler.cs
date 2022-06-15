@@ -17,11 +17,23 @@ public class CharacterMovementHandler : NetworkBehaviour
     private bool IsMovingOld;
     
     [SerializeField] protected NetworkMecanimAnimator anim;
-    
+
+    [Space(5)]
+
+    [Header("Leak Params")]
+    private GameObject _currLeakTargeted;
+    private float _repairLeakCurrTime;
+
+    [SerializeField] private float _repairLeakMaxTime;
+    [SerializeField] private LayerMask _leakLayer;
+    [SerializeField] private LayerMask partLayer;
+    ReservoirParts parts;
+
 
     private void Awake()
     {
         _networkCharacterControllerPrototypeCustom = GetComponent<NetworkCharacterControllerPrototypeCustom>();
+        parts = FindObjectOfType<ReservoirParts>();
     }
 
     // Start is called before the first frame update
@@ -69,6 +81,9 @@ public class CharacterMovementHandler : NetworkBehaviour
             if (networkInputData.isJumpPressed) _networkCharacterControllerPrototypeCustom.Jump();
             
             if (networkInputData.isRequestingToSpawn) SpawnerVehicule.instance.SpawnCar();
+
+            if (networkInputData.isRepairing) CheckLeakReapir();
+            if (networkInputData.isShooting) HarmTruck();
         }
     }
 
@@ -84,5 +99,39 @@ public class CharacterMovementHandler : NetworkBehaviour
             anim.SetTrigger(trigger);
         else if (Object.HasInputAuthority && Runner.IsForward)
             anim.Animator.SetTrigger(trigger);
+    }
+
+    void CheckLeakReapir()
+    {
+        RaycastHit hit;
+        Physics.Raycast(localCamera.transform.position, localCamera.transform.forward, out hit, Mathf.Infinity, _leakLayer);
+        if (hit.collider != null && (_currLeakTargeted == null | (_currLeakTargeted != hit.collider.gameObject)))
+        {
+            _repairLeakCurrTime = _repairLeakMaxTime;
+            _currLeakTargeted = hit.collider.gameObject;
+        }
+        else if (hit.collider != null && _currLeakTargeted == hit.collider.gameObject)
+        {
+            _repairLeakCurrTime -= Time.deltaTime;
+            if (_repairLeakCurrTime <= 0.0f)
+                _currLeakTargeted.transform.parent.GetComponent<Leak>().OnDoneRepair();
+        }
+        else
+        {
+            _repairLeakCurrTime = _repairLeakMaxTime;
+            _currLeakTargeted = null;
+        }
+    }
+
+    void HarmTruck()
+    {
+        HarmTruckRpc();
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    void HarmTruckRpc()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(localCamera.transform.position, localCamera.transform.forward, out hit, Mathf.Infinity, partLayer)) parts.HitReservoir(hit);
     }
 }
