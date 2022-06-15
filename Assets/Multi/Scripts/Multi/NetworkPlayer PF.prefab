@@ -791,10 +791,6 @@ MonoBehaviour:
   - {fileID: 7128113548012216033}
   - {fileID: 7823979565391891707}
   - {fileID: 5656810035027240378}
-  _repairLeakMaxTime: 1
-  _leakLayer:
-    serializedVersion: 2
-    m_Bits: 1024
   PossessingType: 0
   CharacterInputHandler: {fileID: 849729528955979180}
   WeaponInputHandler: {fileID: 0}
@@ -846,6 +842,13 @@ MonoBehaviour:
   localCamera: {fileID: 7128113546547911268}
   IsMoving: 0
   anim: {fileID: 7841295354243434412}
+  _repairLeakMaxTime: 0.25
+  _leakLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  partLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &849729528955979180
 MonoBehaviour:
   m_ObjectHideFlags: 0
