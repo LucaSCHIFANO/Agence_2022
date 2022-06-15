@@ -61,6 +61,7 @@ public class TruckFuel : TruckBase
     public ref ConstantDamageType AddConstDamage(string damageName)
     {
         ConstantDamageType[] a = constantDamageType.ToArray();
+        if (!Runner.IsServer) return ref a[0];
         ref ConstantDamageType dmg = ref a[0];
         for (int i = 0; i < constantDamageType.Count; i++)
         {
