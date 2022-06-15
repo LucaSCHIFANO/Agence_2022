@@ -1119,6 +1119,9 @@ MonoBehaviour:
   _gameOver:
     sceneAsset: {fileID: 102900000, guid: d6cad9f7ef8b656478f709399bc89fa6, type: 3}
     scenePath: Assets/Multi/Scene/Lobby/5.GameOver.unity
+  _win:
+    sceneAsset: {fileID: 102900000, guid: 84e1b91dea6444e41add03b440f81d7a, type: 3}
+    scenePath: Assets/Multi/Scene/Lobby/5.Win.unity
   _maps:
   - sceneAsset: {fileID: 102900000, guid: 18789e7760408d44186d8d060eff6526, type: 3}
     scenePath: Assets/Multi/Scene/GamePlay/Server Authority Fusion.unity
@@ -1168,8 +1171,12 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 08ada0b24d26e0845b9056f09542d74f, type: 3}
     audioMixerGroup: {fileID: 2754015317088874804, guid: 6cf919df79f5ae447b956de6086238ee,
       type: 2}
+    useRandomVolume: 0
     volume: 0.1
+    volumeRandom: 0.1
+    useRandomPitch: 0
     pitch: 1
+    pitchRandom: 1
     playOnAwake: 1
     loop: 1
     source: {fileID: 0}
