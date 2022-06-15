@@ -17,6 +17,7 @@ public class HPAntenna : HP
     {
         currentHP -= damage;
         Instantiate(thunderEffect, transform.position, transform.rotation);
+        GetComponent<SoundTransmitter>()?.Play("Hit");
         
         if (currentHP <= 0)
         {

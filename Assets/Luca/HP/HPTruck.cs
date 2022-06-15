@@ -16,6 +16,9 @@ public class HPTruck : HP
         currentHP -= damage;
         Instantiate(impactEffect, transform.position, transform.rotation);
         
+        Debug.Log("im hit " + currentHP);
+        
+        
         if (currentHP <= 0)
         {
             App.Instance.Disconnect();

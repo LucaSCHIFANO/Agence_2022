@@ -535,6 +535,8 @@ public class TruckPhysics : TruckBase
                 HonkeRPC(Random.Range(0, honking.Count));
             }
 
+            if (throttle > 0 && !leftControl) PlayParticle();
+            else StopParticle();
             
 
             if (input.teleportToSpawn) { TeleportTo(0); }
@@ -558,8 +560,8 @@ public class TruckPhysics : TruckBase
         lastSpeed = speed;
 
 
-        if(speed > minimSpeedToDust) PlayParticleDust();
-        else StopParticleDust();
+        if(speed > minimSpeedToDust && Object.InputAuthority) PlayParticleDust();
+        else if(Object.InputAuthority) StopParticleDust();
 
 
         if (slip2 != 0.0f)
@@ -1183,7 +1185,7 @@ public class TruckPhysics : TruckBase
     [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
     public void StopParticleDust()
     {
-            dust.Stop();
+        dust.Stop();
     }
     
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]

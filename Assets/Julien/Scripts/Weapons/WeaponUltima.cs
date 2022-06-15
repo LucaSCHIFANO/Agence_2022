@@ -68,6 +68,9 @@ public class WeaponUltima : WeaponBase
         actualWeapon = SObject.wType;
         fireType = SObject.fType;
         maxDistance = SObject.maxDistanceRayCast;
+        shootParticle = SObject.shootingEffect;
+        
+        
         spread = SObject.spread;
         numberOfShot = SObject.numberOfShots;
         damage = SObject.damage;
@@ -95,37 +98,75 @@ public class WeaponUltima : WeaponBase
         if (fireType == WeaponFireType.Hitscan)
         {
             ShootEffectClientRpc();
-            
-            RaycastHit hit;
-            Vector3 shootingDir = Quaternion.Euler(Random.Range(-spread, spread), Random.Range(-spread, spread), Random.Range(-spread, spread)) * _shootingPoint.forward;
-            Debug.DrawRay(_shootingPoint.position, shootingDir * 1000, Color.red, 10);
-            // LagCompensatedHit hit;
-            // Runner.LagCompensation.Raycast(_shootingPoint.position, shootingDir, 100, Object.InputAuthority, out hitComp) <- Only check if enemy are hit
-            if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance))
+
+            if (actualWeapon == weapon.SHOTGUN)
             {
-                
-                // Instantiate(bulletEffect, , transform.rotation);
-                
-                if (hit.collider.gameObject.TryGetComponent(out HP hp))
+                for (int i = 0; i < numberOfShot; i++)
                 {
-                    if (allieTouret)
+                    RaycastHit hit;
+                    Vector3 shootingDir = Quaternion.Euler(Random.Range(-spread, spread), Random.Range(-spread, spread),
+                        Random.Range(-spread, spread)) * _shootingPoint.forward;
+                    
+                    if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance))
                     {
-                        if(hp is HPPlayer || hp is HPTruck) return;
-                        hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+
+                        // Instantiate(bulletEffect, , transform.rotation);
+
+                        if (hit.collider.gameObject.TryGetComponent(out HP hp))
+                        {
+                            if (allieTouret)
+                            {
+                                if (hp is HPPlayer || hp is HPSubTruck || hp is HPTruck) return;
+                                hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                            }
+                            else
+                            {
+                                if ((hp is HPPlayer || hp is HPTruck)) hp.reduceHPToServ(damage);
+                            }
+
+
+                        }
+                        else
+                        {
+                            BulletEffectClientRpc(hit.point);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                RaycastHit hit;
+                Vector3 shootingDir = Quaternion.Euler(Random.Range(-spread, spread), Random.Range(-spread, spread),
+                    Random.Range(-spread, spread)) * _shootingPoint.forward;
+                Debug.DrawRay(_shootingPoint.position, shootingDir * 1000, Color.red, 10);
+                // LagCompensatedHit hit;
+                // Runner.LagCompensation.Raycast(_shootingPoint.position, shootingDir, 100, Object.InputAuthority, out hitComp) <- Only check if enemy are hit
+                if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance))
+                {
+
+                    // Instantiate(bulletEffect, , transform.rotation);
+
+                    if (hit.collider.gameObject.TryGetComponent(out HP hp))
+                    {
+                        if (allieTouret)
+                        {
+                            if (hp is HPPlayer || hp is HPSubTruck || hp is HPTruck) return;
+                            hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                        }
+                        else
+                        {
+                            if ((hp is HPPlayer || hp is HPTruck)) hp.reduceHPToServ(damage);
+                        }
+
+
                     }
                     else
                     {
-                        if((hp is HPPlayer || hp is HPTruck)) hp.reduceHPToServ(damage);
+                        BulletEffectClientRpc(hit.point);
                     }
-                        
-                    
-                }
-                else
-                {
-                    BulletEffectClientRpc(hit.point);
                 }
             }
-            
+
         }
         else
         {

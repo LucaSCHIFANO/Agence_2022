@@ -16,7 +16,7 @@ public class HPEnemy : HP
     {
         currentHP -= damage;
         Instantiate(impactEffect, transform.position, transform.rotation);
-        playDamage();
+        GetComponent<SoundTransmitter>()?.Play("Hit");
         
         if (currentHP <= 0)
         {
@@ -24,9 +24,6 @@ public class HPEnemy : HP
         }
     }
     
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    protected override void playDamage()
-    {
-        GetComponent<SoundTransmitter>()?.Play("Hit");
-    }
+       
+
 }
