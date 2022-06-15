@@ -11,5 +11,7 @@ public struct NetworkInputData : INetworkInput
     public float rotationYInput;
     public NetworkBool isJumpPressed;
     public NetworkBool isRequestingToSpawn;
+    public NetworkBool isRepairing;
+    public NetworkBool isShooting;
 
 }
