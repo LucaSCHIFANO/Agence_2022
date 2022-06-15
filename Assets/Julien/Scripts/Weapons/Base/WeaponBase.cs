@@ -38,6 +38,11 @@ public abstract class WeaponBase : NetworkBehaviour
 
     [SerializeField] protected ParticleSystem overHParticle;
     [SerializeField] protected float OHParticleOverTime;
+    
+    [SerializeField] protected GameObject shootParticle;
+
+    
+    [SerializeField] protected bool allieTouret;
 
 
     #endregion
@@ -77,23 +82,33 @@ public abstract class WeaponBase : NetworkBehaviour
         changed.Behaviour.ChangeOverHeat();
     }
     
-    private void ChangeOverHeat()
+    public void ChangeOverHeat()
     {
         overHeatPourcent = overHeatPourcentOnline;
         if (overHeatPourcent >= 100) _isOverHeat = true;
 
+
+        if (Object.HasInputAuthority)
+        {
+            canvas.overheatSlider.fillAmount = overHeatPourcent / 100f;
+            if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
+            else canvas.overheatSlider.color = maincolor;
+        }
     }
 
     public virtual void Shoot()
     {
         if (Object == null) return;
-        overHeatPourcent += (100 / _bulletToOverHeat);
-        overHeatPourcentOnline = overHeatPourcent;
+        if (Runner.IsServer)
+        {
+            overHeatPourcent += (100 / _bulletToOverHeat);
+            overHeatPourcentOnline = overHeatPourcent;
         
-        if (overHeatPourcent >= 100) _isOverHeat = true;
-        _timeCoolDown = _timeBeforeCoolDown;
+            if (overHeatPourcent >= 100) _isOverHeat = true;
+            _timeCoolDown = _timeBeforeCoolDown;
         
-        EventSystem.ShootEvent();
+            EventSystem.ShootEvent();
+        }
     }
 
     public void Reload()
@@ -119,35 +134,35 @@ public abstract class WeaponBase : NetworkBehaviour
 
     private void Update()
     {
-        if (_isDisable) return;
-        if (_isCoolDown || _isOverHeat) overHeatPourcent -= _coolDownPerSecond * Time.deltaTime;
-        else if(!_isCoolDown) _timeCoolDown -= Time.deltaTime;
-
-        if (_timeCoolDown <= 0) _isCoolDown = true;
-        else _isCoolDown = false;
+        if (Runner != null)
+        {
+            if (Runner.IsServer)
+            {
+                if (_isCoolDown || _isOverHeat) overHeatPourcent -= _coolDownPerSecond * Time.deltaTime;
+                else if (!_isCoolDown && _timeCoolDown > 0) _timeCoolDown -= Time.deltaTime;
+                
+                if (_timeCoolDown <= 0) _isCoolDown = true;
+                else _isCoolDown = false;
         
-        if (overHeatPourcent <= 0) _isOverHeat = false;
-
+                if (overHeatPourcent <= 0) _isOverHeat = false;
+                
+                overHeatPourcent = Mathf.Clamp(overHeatPourcent, 0, 100);
+                
+                overHeatPourcentOnline = overHeatPourcent;
+            }
+        }
+        
         var em = overHParticle.emission;
         em.enabled = true;
 
         if (_isOverHeat) em.rateOverTime = OHParticleOverTime;
         else em.rateOverTime = 0f;
-    
+    }
 
-        overHeatPourcent = Mathf.Clamp(overHeatPourcent, 0, 100);
-
-
-
-
-
-        if (Object != null) overHeatPourcentOnline = overHeatPourcent;
-        
-
-//        Debug.Log(canvas.name+ "  " + canvas.overheatSlider.name + " " + overHeatPourcent);
-        canvas.overheatSlider.fillAmount = (overHeatPourcent / 100f);
-        if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
-        else canvas.overheatSlider.color = maincolor;
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    public void AskToShoot()
+    {
+        Shoot();
     }
     
     
@@ -155,9 +170,16 @@ public abstract class WeaponBase : NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     protected void BulletEffectClientRpc(Vector3 impactPoint)
     {
-        // if(IsOwner) return;
         Instantiate(bulletEffect, impactPoint, transform.rotation);
     }
+    
+    //creer une particule au bout du canon
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    protected void ShootEffectClientRpc()
+    {
+        Instantiate(shootParticle, _shootingPoint.position, _shootingPoint.rotation);
+    }
+    
     
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     protected void CreateBulletEffectServerRpc(Vector3 impactPoint)

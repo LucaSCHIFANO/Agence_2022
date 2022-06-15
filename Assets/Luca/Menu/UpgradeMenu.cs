@@ -13,6 +13,7 @@ using Random = UnityEngine.Random;
 public class UpgradeMenu : NetworkBehaviour
 {
     public List<GameObject> screenList = new List<GameObject>();
+    public List<GameObject> screenListInRed = new List<GameObject>();
 
     private int intUpgrade = 4;
 
@@ -137,8 +138,17 @@ public class UpgradeMenu : NetworkBehaviour
     {
         for (int i = 0; i < screenList.Count; i++)
         {
-            if (i == lint) screenList[i].SetActive(true);
-            else screenList[i].SetActive(false);
+            
+            if (i == lint)
+            {
+                if (i != 0 && i != 1) screenListInRed[i].SetActive(true); 
+                screenList[i].SetActive(true);
+            }
+            else
+            {
+                if (i != 0 && i != 1) screenListInRed[i].SetActive(false); 
+                screenList[i].SetActive(false);
+            }
         }
 
         if (sellMode)
@@ -177,9 +187,9 @@ public class UpgradeMenu : NetworkBehaviour
         if (firstWeapon)
         {
             disableAllWeapon1();
-
+      
             var currentButtonTree = buttonTree;
-            lastUpgrade1 = buttonTree;
+            lastUpgrade1 = currentButtonTree;
             bool finished = false;
 
             if (!sellMode)
@@ -191,7 +201,6 @@ public class UpgradeMenu : NetworkBehaviour
                         currentButtonTree = currentButtonTree.previousUpgrades;
                     else finished = true;
                 }
-
 
                 for (int i = 0; i < listAllButton1.Count; i++)
                 {
@@ -206,7 +215,7 @@ public class UpgradeMenu : NetworkBehaviour
             {
                 if (currentButtonTree.previousUpgrades != null)
                 {
-                    currentButtonTree = currentButtonTree.previousUpgrades;
+                    //currentButtonTree = currentButtonTree.previousUpgrades;
                     currentButtonTree.sellable();
                     lastUpgrade1 = currentButtonTree;
                     if (currentButtonTree.previousUpgrades != null) currentButtonTree = currentButtonTree.previousUpgrades;
@@ -223,9 +232,8 @@ public class UpgradeMenu : NetworkBehaviour
                     else finished = true;
                 }
             }
-            
+
             upgradeWeaponTurret(turret1, lastUpgrade1.id);
-            
         }
         else
         {
@@ -258,7 +266,7 @@ public class UpgradeMenu : NetworkBehaviour
             {
                 if (currentButtonTree.previousUpgrades != null)
                 {
-                    currentButtonTree = currentButtonTree.previousUpgrades;
+                    //currentButtonTree = currentButtonTree.previousUpgrades;
                     currentButtonTree.sellable();
                     lastUpgrade2 = currentButtonTree;
                     if (currentButtonTree.previousUpgrades != null) currentButtonTree = currentButtonTree.previousUpgrades;
@@ -432,6 +440,7 @@ public class UpgradeMenu : NetworkBehaviour
         }
         
     }
+    
 
     [System.Serializable]
     public class listInt
@@ -535,7 +544,7 @@ public class UpgradeMenu : NetworkBehaviour
         
         sellMode = unlockedWeapon2Server.Count < sizeWeapon2;
         upgradeWeapon(weaponBuyed, weaponBuyed.firstWeapon);
-        sizeWeapon1 = unlockedWeapon2Server.Count;
+        sizeWeapon2 = unlockedWeapon2Server.Count;
     }
     
     #endregion

@@ -8,22 +8,25 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class NetworkedPlayer : NetworkBehaviour
-{ 
+{
     public GameObject Camera;
+    private Camera _cam;
     [SerializeField] private MeshRenderer _mesh;
     [SerializeField] private TextMeshProUGUI _name;
-    
-    
-    [Header("Health")]
-    [SerializeField] protected float maxHP;
-    protected float currentHP;
-    
-    [SerializeField][Range(0, 1)] protected float hpPourcent;
-    
-    [SerializeField] protected float timeBeforeRecov;
-    protected float currentTimeRecov;
-    [SerializeField] protected float recovPerSecond;
-    
+    [SerializeField] private List<GameObject> _playerVisuals;
+
+    [Space(5)]
+
+    [Header("Leak Params")]
+    private GameObject _currLeakTargeted;
+    private float _repairLeakCurrTime;
+
+    [SerializeField] private float _repairLeakMaxTime;
+    [SerializeField] private LayerMask _leakLayer;
+
+
+    Rewired.Player playerRew;
+
     public static NetworkedPlayer Local { get; set; }
     public PossessingType PossessingType = PossessingType.CHARACTER;
     
@@ -31,18 +34,18 @@ public class NetworkedPlayer : NetworkBehaviour
     public CharacterInputHandler CharacterInputHandler;
     public WeaponInputHandler WeaponInputHandler;
     public VehiculeInputHandler VehiculeInputHandler;
-    
+
     private Player _player;
+    private bool isPaused;
 
     public override void Spawned()
     {
         _player = App.Instance.GetPlayer(Object.InputAuthority);
         _name.text = _player.Name;
         _mesh.material.color = _player.Color;
+        _cam = Camera.GetComponent<Camera>();
         CharacterInputHandler = GetComponent<CharacterInputHandler>();
-        
-        currentHP = maxHP;
-        
+        playerRew = Rewired.ReInput.players.GetPlayer(0);
         if (Object.HasInputAuthority)
         {
             Local = this;
@@ -53,8 +56,31 @@ public class NetworkedPlayer : NetworkBehaviour
         {
             Debug.Log("Spawned Remote Player");
         }
+
+        FindObjectOfType<ReservoirParts>().cam = Camera.GetComponent<Camera>(); //DEBUG
     }
-    
+
+    private void Update()
+    {
+        if (playerRew.GetButtonDown("Escape"))
+        {
+            isPaused = !isPaused;
+            CanvasInGame.Instance.showOptiones(isPaused);
+
+            if (isPaused)
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+        }
+        else if (/*playerRew.GetButton("CheckLeak")*/Input.GetMouseButton(1)) CheckLeakReapir();
+    }
+
     public void Unpossess(Transform exitPoint)
     {
         if (Object.HasInputAuthority)
@@ -97,32 +123,35 @@ public class NetworkedPlayer : NetworkBehaviour
         }
     }
 
-    public override void FixedUpdateNetwork()
+    void CheckLeakReapir()
     {
-        base.FixedUpdateNetwork();
-        HP();
-    }
-
-    void HP()
-    {
-        if (Input.GetKeyDown(KeyCode.Return))
+        RaycastHit hit;
+        Physics.Raycast(_cam.transform.position, _cam.transform.forward, out hit, Mathf.Infinity, _leakLayer);
+        if (hit.collider != null && (_currLeakTargeted == null | (_currLeakTargeted != hit.collider.gameObject)))
         {
-            ReceiveDamage(10f);
+            _repairLeakCurrTime = _repairLeakMaxTime;
+            _currLeakTargeted = hit.collider.gameObject;
         }
-
-        if (currentTimeRecov <= 0) currentHP += Time.deltaTime * recovPerSecond;
-        else currentTimeRecov -= Time.deltaTime;
-
-        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
-        hpPourcent = currentHP / maxHP;
-        
-        CanvasInGame.Instance.actuBlood(Mathf.Abs(hpPourcent - 1));
+        else if (hit.collider != null && _currLeakTargeted == hit.collider.gameObject)
+        {
+            _repairLeakCurrTime -= Time.deltaTime;
+            if (_repairLeakCurrTime <= 0.0f)
+                _currLeakTargeted.transform.parent.GetComponent<Leak>().OnDoneRepair();
+        } else
+        {
+            _repairLeakCurrTime = _repairLeakMaxTime;
+            _currLeakTargeted = null;
+        }
     }
 
-    public void ReceiveDamage(float damage)
+    public void HideSelfVisual()
     {
-        currentHP -= damage;
-        currentTimeRecov = timeBeforeRecov;
+        _playerVisuals.ForEach(el => el.SetActive(false));
+    }
+
+    public void ShowSelfVisual()
+    {
+        _playerVisuals.ForEach(el => el.SetActive(true));
     }
 }
 

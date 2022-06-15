@@ -7,6 +7,7 @@ namespace Pathfinding
     public class Grid : MonoBehaviour
     {
         private Node[,,] grid;
+
         private float nodeDiameter;
         private int gridSizeX, gridSizeY, gridSizeZ;
 
@@ -27,12 +28,12 @@ namespace Pathfinding
             gridSizeY = Mathf.RoundToInt(gridSize.y / nodeDiameter);
             gridSizeZ = Mathf.RoundToInt(gridSize.z / nodeDiameter);
 
-            CreateGrid();
+            grid = CreateGrid();
         }
 
-        private void CreateGrid()
+        private Node[,,] CreateGrid()
         {
-            grid = new Node[gridSizeX, gridSizeY, gridSizeZ];
+            Node[,,] newGrid = new Node[gridSizeX, gridSizeY, gridSizeZ];
             Vector3 bottomLeft = transform.position - Vector3.right * gridSize.x / 2 - Vector3.up * gridSizeY / 2 - Vector3.forward * gridSize.z / 2;
 
             for (int x = 0; x < gridSizeX; x++)
@@ -44,19 +45,21 @@ namespace Pathfinding
                         Vector3 point = bottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.up * (y * nodeDiameter + nodeRadius) + Vector3.forward * (z * nodeDiameter + nodeRadius);
                         bool isObstructed = Physics.CheckSphere(point, nodeRadius, obstructedMask);
 
-                        bool isWalkable = !isObstructed && y - 1 >= 0 && grid[x, y - 1, z].isObstructed;
+                        bool isWalkable = !isObstructed && y - 1 >= 0 && newGrid[x, y - 1, z].isObstructed;
 
                         if (y == 0 && !isObstructed)
                             isWalkable = true;
                         
                         bool toShowGui = true; // TODO
 
-                        grid[x, y, z] = new Node(isObstructed, isWalkable, point, x, y, z, toShowGui);
+                        newGrid[x, y, z] = new Node(isObstructed, isWalkable, point, x, y, z, toShowGui);
                     }
                 }
             }
-        }
 
+            return newGrid;
+        }
+        
         public List<Node> GetNeighbourNodes(Node _node)
         {
             List<Node> neighbours = new List<Node>();
@@ -222,7 +225,7 @@ namespace Pathfinding
 
             return nodes.ToArray();
         }
-        
+
         private void OnDrawGizmos()
         {
             if (Application.isPlaying)
@@ -256,7 +259,6 @@ namespace Pathfinding
                     Gizmos.DrawCube(n.position, Vector3.one * (nodeDiameter - 0.1f));
                 }
             }
-            
         }
     }
 }

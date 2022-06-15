@@ -20,7 +20,7 @@ public class SpawnerVehicule : NetworkBehaviour
 
     private void Update()
     {
-        if (Runner.IsServer && Input.GetKeyDown(KeyCode.O))
+        if (Runner != null && Runner.IsServer && Input.GetKeyDown(KeyCode.O))
         {
             SpawnEnemy();
         }

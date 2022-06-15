@@ -32,8 +32,8 @@ public class PossessableWeapon : NetworkBehaviour
         isPossessed = true;
         Object.AssignInputAuthority(playerRef);
         _playerController = Runner.GetPlayerObject(playerRef).gameObject.GetComponent<NetworkedPlayer>();
-        _playerController.transform.SetParent(transform);
-        _playerController.Possess(transform);
+        _playerController.transform.SetParent(transform.GetChild(0));
+        _playerController.Possess(transform.GetChild(0));
         GetComponent<WeaponBase>().isPossessed = true;
         GetComponent<WeaponBase>().possessor = _playerController;
         ConfirmPossessionClientRpc();
@@ -49,6 +49,8 @@ public class PossessableWeapon : NetworkBehaviour
         _playerController = Runner.GetPlayerObject(Object.InputAuthority).gameObject.GetComponent<NetworkedPlayer>();
         _playerController.gameObject.GetComponent<CharacterMovementHandler>().enabled = false;
         _playerController.ChangeInputHandler(PossessingType.WEAPON, gameObject);
+        GetComponent<WeaponBase>().ChangeOverHeat();
+        _playerController.HideSelfVisual();
         // _playerController.gameObject.SetActive(false);
     }
 
@@ -56,7 +58,7 @@ public class PossessableWeapon : NetworkBehaviour
     private void SetParentingClientRpc()
     {
         Transform _playerTransform = Runner.GetPlayerObject(Object.InputAuthority).transform;
-        _playerTransform.SetParent(transform);
+        _playerTransform.SetParent(transform.GetChild(0));
     }
     
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
@@ -86,6 +88,7 @@ public class PossessableWeapon : NetworkBehaviour
         _playerController.gameObject.SetActive(true);
         _playerController.transform.SetParent(null);
         _playerController.ChangeInputHandler(PossessingType.CHARACTER, gameObject);
+        _playerController.ShowSelfVisual();
         _playerController = null;
         // CanvasInGame.Instance.showOverheat(false);
     }

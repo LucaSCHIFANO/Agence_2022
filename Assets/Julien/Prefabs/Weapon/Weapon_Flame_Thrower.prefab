@@ -161,9 +161,7 @@ GameObject:
   - component: {fileID: 3275136931108460806}
   - component: {fileID: 3275136931108460807}
   - component: {fileID: 3275136931108460824}
-  - component: {fileID: 3275136931108460825}
   - component: {fileID: 5666066558656346267}
-  - component: {fileID: 3960942473532090781}
   - component: {fileID: 8198906346638746381}
   - component: {fileID: 7608025011187693975}
   m_Layer: 8
@@ -240,19 +238,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3275136931108460825
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3275136931108460828}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5666066558656346267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,6 +263,7 @@ MonoBehaviour:
     type: 3}
   overHParticle: {fileID: 8007880054732478337}
   OHParticleOverTime: 2
+  allieTouret: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -285,19 +271,6 @@ MonoBehaviour:
   _overHeatPourcentOnline: 0
   particleFire: {fileID: 8190907002144595235, guid: d9a2258dcb99b294ab170540231cd31f,
     type: 3}
---- !u!65 &3960942473532090781
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3275136931108460828}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 5, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8198906346638746381
 MonoBehaviour:
   m_ObjectHideFlags: 0

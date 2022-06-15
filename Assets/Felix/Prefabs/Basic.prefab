@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5286773601199235512}
   - component: {fileID: 3323683867169605653}
   - component: {fileID: 3025623514163928328}
+  - component: {fileID: 4024717878686652877}
   m_Layer: 0
   m_Name: Basic
   m_TagString: Untagged
@@ -131,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   maxHP: 10
+  _currentHP: 0
   impactEffect: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
     type: 3}
 --- !u!114 &5286773601199235512
@@ -146,10 +148,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  range: 20
-  enemySo: {fileID: 0}
+  range: 5
+  enemySo: {fileID: 11400000, guid: 655036a823493e84d9f6b82443254296, type: 2}
   weaponsPosition:
   - {fileID: 7099923427349109451}
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &3323683867169605653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
+  _interpolationDataSource: 3
   InterpolationSpace: 0
   InterpolationTarget: {fileID: 0}
   InterpolateErrorCorrection: 1
@@ -202,6 +207,32 @@ MonoBehaviour:
     RotBlendStart: 0.1
     RotBlendEnd: 0.5
     RotTeleportRadians: 1.5
+--- !u!114 &4024717878686652877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6506913731331482615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50beca5dc0ae33d418c14c5417c7c757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Hit
+    clip: {fileID: 8300000, guid: 4f3eead73b2cce5479dafa2db70fac3b, type: 3}
+    audioMixerGroup: {fileID: -1828073082294812753, guid: 6cf919df79f5ae447b956de6086238ee,
+      type: 2}
+    useRandomVolume: 0
+    volume: 0.1
+    volumeRandom: 0
+    useRandomPitch: 1
+    pitch: 0.9
+    pitchRandom: 1.1
+    playOnAwake: 0
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &6977535430288246130
 GameObject:
   m_ObjectHideFlags: 0
