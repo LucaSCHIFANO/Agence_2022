@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6908096364956623107
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6908096364956623105}
+  - component: {fileID: 6908096364956623106}
+  m_Layer: 0
+  m_Name: Path
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6908096364956623105
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6908096364956623107}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -20, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6908096364956623106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6908096364956623107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 069b046f6609f9b48b16844d84d335f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _segments:
+  - pointA: {x: -40, y: 0, z: -1}
+    pointB: {x: -40, y: 0, z: -20}
+    pointC: {x: 18, y: -58, z: -104}
+    pointD: {x: 116, y: 0, z: -75}
+  - pointA: {x: 116, y: 0, z: -75}
+    pointB: {x: 157, y: 70, z: -21}
+    pointC: {x: 254, y: 57, z: 24}
+    pointD: {x: 112, y: 0, z: 95}
+  - pointA: {x: 112, y: 0, z: 95}
+    pointB: {x: 78, y: -14, z: 111}
+    pointC: {x: -61, y: -14, z: 220}
+    pointD: {x: -109, y: -14, z: 154}
+  - pointA: {x: -109, y: -14, z: 154}
+    pointB: {x: -473, y: -28, z: -539}
+    pointC: {x: -34, y: 0, z: 36}
+    pointD: {x: -40, y: 0, z: -1}
+  visual: {fileID: 0}
+  movementSpeed: 0
+  restartWhenEnded: 1
+  currentSegment: 0
