@@ -8,6 +8,6 @@ public class HPSubTruck : HP
     
     public override void reduceHPToServ(float damage)
     {
-        if(Runner.IsServer) TrueReduceHP(damage);
+        if(Runner.IsServer) hptruck.TrueReduceHP(damage);
     }
 }

@@ -48,6 +48,8 @@ public class NetworkedPlayer : NetworkBehaviour
         {
             Debug.Log("Spawned Remote Player");
         }
+
+        CanvasInGame.Instance.showOptiones(false);
     }
 
     private void Update()
