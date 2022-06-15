@@ -33,6 +33,12 @@ public class HP : NetworkBehaviour
     {
         Debug.Log(currentHP);
     }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    protected virtual void playDamage()
+    {
+        
+    }
     
     
     

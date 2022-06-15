@@ -63,5 +63,7 @@ public class Options : NetworkBehaviour
         audioMix.SetFloat("MusicVol", sliderList[1].value);
         audioMix.SetFloat("SFXVol", sliderList[2].value);
         audioMix.SetFloat("Sensi", sliderList[3].value);
+        
+        if(isMainMenu) Hide();
     }
 }

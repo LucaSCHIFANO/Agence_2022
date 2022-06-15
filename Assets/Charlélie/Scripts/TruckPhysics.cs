@@ -14,6 +14,9 @@ public class TruckPhysics : TruckBase
 
     [SerializeField] public List<Transform> teleport;
     private AudioSource _audioSource;
+    
+    [SerializeField] private ParticleSystem dust;
+    [SerializeField] private float minimSpeedToDust;
 
     TruckFuel fuel;
     
@@ -532,14 +535,7 @@ public class TruckPhysics : TruckBase
                 HonkeRPC(Random.Range(0, honking.Count));
             }
 
-            if (throttle > 0 && !leftControl)
-            {
-                PlayParticle();
-            }
-            else
-            {
-                StopParticle();
-            }
+            
 
             if (input.teleportToSpawn) { TeleportTo(0); }
             if (input.teleportToBigDrop) { TeleportTo(1); }
@@ -562,6 +558,8 @@ public class TruckPhysics : TruckBase
         lastSpeed = speed;
 
 
+        if(speed > minimSpeedToDust) PlayParticleDust();
+        else StopParticleDust();
 
 
         if (slip2 != 0.0f)
@@ -1176,6 +1174,18 @@ public class TruckPhysics : TruckBase
         _exhaust.Stop();
     }
 
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+    public void PlayParticleDust()
+    {
+        dust.Play();
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+    public void StopParticleDust()
+    {
+            dust.Stop();
+    }
+    
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     public void TeleportTo(int location)
     {
