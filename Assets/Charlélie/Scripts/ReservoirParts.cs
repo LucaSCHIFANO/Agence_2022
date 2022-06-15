@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 
-[ExecuteAlways]
 public class ReservoirParts : MonoBehaviour
 {
     [System.Serializable]
@@ -14,9 +14,10 @@ public class ReservoirParts : MonoBehaviour
         internal float curResistance;
         internal Vector3 leakPos;
         bool isLeaking;
-        GameObject leakPrefab;
-        GameObject leak;
-        public void Init(GameObject leakObj)
+        NetworkObject leakPrefab;
+        NetworkObject leak;
+
+        public void Init(NetworkObject leakObj)
         {
             curResistance = maxResistance;
             leakPrefab = leakObj;
@@ -29,23 +30,28 @@ public class ReservoirParts : MonoBehaviour
             if (curResistance <= 0)
             {
                 isLeaking = true;
-                leak = Instantiate(leakPrefab, hitPoint.point, Quaternion.Euler(hitPoint.normal));
-                leak.transform.forward = -hitPoint.normal;
-                leak.transform.parent = hitGo.transform;
-                leak.GetComponent<Leak>().Part = this;
-                leakPos = hitPoint.point;
+                Debug.Log("Start instance");
+                App.Instance.Session.Runner.Spawn(leakPrefab, hitPoint.point, Quaternion.Euler(hitPoint.normal), onBeforeSpawned : (runner, obj) => {
+                    leak = obj;
+                    obj.transform.SetParent(hitGo.transform);
+                    obj.transform.forward = -hitPoint.normal;
+                    obj.GetComponent<Leak>().Part = this;
+                    leakPos = hitPoint.point;
+                });
+                
             }
         }
 
         public void Repair()
         {
             isLeaking = false;
-            Destroy(leak);
+            //Destroy(leak);
+            App.Instance.Session.Runner.Despawn(leak);
         }
     }
 
     [SerializeField] LayerMask partlayer;
-    [SerializeField] GameObject leak;
+    [SerializeField] NetworkObject leak;
 
 
     [SerializeField] bool showGizmos;
@@ -61,7 +67,7 @@ public class ReservoirParts : MonoBehaviour
 
     private void Awake()
     {
-        foreach (Part part in parts) part.Init(leak);
+        foreach (Part part in parts) part.Init(leak); 
     }
 
     void Start()
