@@ -651,7 +651,7 @@ public class TruckPhysics : TruckBase
 
         
 
-        Debug.Log("Backwarding: " + Backward + "  Throttle: " + (throttle > 0) + "  Braking: " + braking);
+        //Debug.Log("Backwarding: " + Backward + "  Throttle: " + (throttle > 0) + "  Braking: " + braking);
         
         if (Backward)
         {
