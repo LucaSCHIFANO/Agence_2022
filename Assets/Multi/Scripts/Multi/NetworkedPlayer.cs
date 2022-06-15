@@ -10,10 +10,21 @@ using Random = UnityEngine.Random;
 public class NetworkedPlayer : NetworkBehaviour
 {
     public GameObject Camera;
+    private Camera _cam;
     [SerializeField] private MeshRenderer _mesh;
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private List<GameObject> _playerVisuals;
-    
+
+    [Space(5)]
+
+    [Header("Leak Params")]
+    private GameObject _currLeakTargeted;
+    private float _repairLeakCurrTime;
+
+    [SerializeField] private float _repairLeakMaxTime;
+    [SerializeField] private LayerMask _leakLayer;
+
+
     Rewired.Player playerRew;
 
     public static NetworkedPlayer Local { get; set; }
@@ -25,17 +36,16 @@ public class NetworkedPlayer : NetworkBehaviour
     public VehiculeInputHandler VehiculeInputHandler;
 
     private Player _player;
-    [SerializeField]protected bool isPaused = false;
+    private bool isPaused;
 
     public override void Spawned()
     {
         _player = App.Instance.GetPlayer(Object.InputAuthority);
         _name.text = _player.Name;
         _mesh.material.color = _player.Color;
+        _cam = Camera.GetComponent<Camera>();
         CharacterInputHandler = GetComponent<CharacterInputHandler>();
         playerRew = Rewired.ReInput.players.GetPlayer(0);
-        CanvasInGame.Instance.showOptiones(false);
-        
         if (Object.HasInputAuthority)
         {
             Local = this;
@@ -46,6 +56,8 @@ public class NetworkedPlayer : NetworkBehaviour
         {
             Debug.Log("Spawned Remote Player");
         }
+
+        FindObjectOfType<ReservoirParts>().cam = Camera.GetComponent<Camera>(); //DEBUG
     }
 
     private void Update()
@@ -54,7 +66,7 @@ public class NetworkedPlayer : NetworkBehaviour
         {
             isPaused = !isPaused;
             CanvasInGame.Instance.showOptiones(isPaused);
-            
+
             if (isPaused)
             {
                 Cursor.visible = true;
@@ -66,6 +78,7 @@ public class NetworkedPlayer : NetworkBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
             }
         }
+        else if (/*playerRew.GetButton("CheckLeak")*/Input.GetMouseButton(1)) CheckLeakReapir();
     }
 
     public void Unpossess(Transform exitPoint)
@@ -107,6 +120,27 @@ public class NetworkedPlayer : NetworkBehaviour
         else
         {
             WeaponInputHandler = null;
+        }
+    }
+
+    void CheckLeakReapir()
+    {
+        RaycastHit hit;
+        Physics.Raycast(_cam.transform.position, _cam.transform.forward, out hit, Mathf.Infinity, _leakLayer);
+        if (hit.collider != null && (_currLeakTargeted == null | (_currLeakTargeted != hit.collider.gameObject)))
+        {
+            _repairLeakCurrTime = _repairLeakMaxTime;
+            _currLeakTargeted = hit.collider.gameObject;
+        }
+        else if (hit.collider != null && _currLeakTargeted == hit.collider.gameObject)
+        {
+            _repairLeakCurrTime -= Time.deltaTime;
+            if (_repairLeakCurrTime <= 0.0f)
+                _currLeakTargeted.transform.parent.GetComponent<Leak>().OnDoneRepair();
+        } else
+        {
+            _repairLeakCurrTime = _repairLeakMaxTime;
+            _currLeakTargeted = null;
         }
     }
 

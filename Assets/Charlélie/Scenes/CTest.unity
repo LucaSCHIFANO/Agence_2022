@@ -3344,19 +3344,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1462784144, guid: 9d5e4f95d06e6a448a8d97ff1c071047, type: 3}
-      propertyPath: decal
-      value: 
-      objectReference: {fileID: 5338382363273064419, guid: fa23e694de7063e42a14a9b09ded33bb,
-        type: 3}
-    - target: {fileID: 1462784144, guid: 9d5e4f95d06e6a448a8d97ff1c071047, type: 3}
-      propertyPath: showGizmos
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1462784144, guid: 9d5e4f95d06e6a448a8d97ff1c071047, type: 3}
-      propertyPath: allPartsColorAlpha
-      value: 0.992
-      objectReference: {fileID: 0}
     - target: {fileID: 449606268499441804, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
         type: 3}
       propertyPath: Flags
@@ -3365,187 +3352,27 @@ PrefabInstance:
     - target: {fileID: 449606268499441804, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
-      value: -411272361210755699
+      value: 307229738624504768
       objectReference: {fileID: 0}
     - target: {fileID: 449606268499441804, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
-      value: -3629206037271565667
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: maxFuel
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currFuel
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: consPerMeterInL
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: constantDamageType.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: constantDamageType.Array.data[0].currTime
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: constantDamageType.Array.data[0].duration
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: constantDamageType.Array.data[0].damageName
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[0].currTime
-      value: 13.897797
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[0].duration
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[1].currTime
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[1].duration
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[2].currTime
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[2].duration
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[3].currTime
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[3].duration
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: constantDamageType.Array.data[0].isPersistant
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: constantDamageType.Array.data[1].isPersistant
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[0].damageName
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[1].damageName
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[2].damageName
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[3].damageName
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[0].isPersistant
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: constantDamageType.Array.data[0].damagePercentagePerSecond
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[0].damagePercentagePerSecond
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[1].damagePercentagePerSecond
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[2].damagePercentagePerSecond
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4534356275946884011, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: currentDamagesApplied.Array.data[3].damagePercentagePerSecond
-      value: 14
+      value: 1818054226193246607
       objectReference: {fileID: 0}
     - target: {fileID: 5208263959663226999, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 123650526}
-    - target: {fileID: 6294227356469682149, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7461952617521428997, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 8740809373688739790, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 123650526}
-    - target: {fileID: 8740809374427933077, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: carSetting.reversePower
-      value: 80
-      objectReference: {fileID: 0}
     - target: {fileID: 8740809374433383271, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
         type: 3}
       propertyPath: m_Name
       value: Truck
-      objectReference: {fileID: 0}
-    - target: {fileID: 8740809374433383271, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8740809374433683003, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
         type: 3}
@@ -3600,11 +3427,6 @@ PrefabInstance:
     - target: {fileID: 8740809374433683003, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8740809374438777953, guid: 9d5e4f95d06e6a448a8d97ff1c071047,
-        type: 3}
-      propertyPath: m_Constraints
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

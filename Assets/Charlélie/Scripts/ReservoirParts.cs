@@ -6,7 +6,7 @@ using UnityEngine;
 public class ReservoirParts : MonoBehaviour
 {
     [System.Serializable]
-    class Part
+    public class Part
     {
         public Collider col;
         public Color color;
@@ -14,24 +14,25 @@ public class ReservoirParts : MonoBehaviour
         internal float curResistance;
         internal Vector3 leakPos;
         bool isLeaking;
-        GameObject _Decal;
-        GameObject decalPrefab;
-        public void Init(GameObject decal)
+        GameObject leakPrefab;
+        GameObject leak;
+        public void Init(GameObject leakObj)
         {
             curResistance = maxResistance;
-            decalPrefab = decal;
+            leakPrefab = leakObj;
         }
 
-        public void GetHit(float value, RaycastHit hitPoint)
+        public void GetHit(float value, RaycastHit hitPoint, GameObject hitGo)
         {
-            if (isLeaking) { Repair(); return; }
+            if (isLeaking) { return; }
             curResistance -= value;
             if (curResistance <= 0)
             {
                 isLeaking = true;
-                _Decal = Instantiate(decalPrefab, hitPoint.point, Quaternion.Euler(hitPoint.normal));
-                _Decal.transform.forward = -hitPoint.normal;
-                //_Decal.transform.parent = hitGo.transform;
+                leak = Instantiate(leakPrefab, hitPoint.point, Quaternion.Euler(hitPoint.normal));
+                leak.transform.forward = -hitPoint.normal;
+                leak.transform.parent = hitGo.transform;
+                leak.GetComponent<Leak>().Part = this;
                 leakPos = hitPoint.point;
             }
         }
@@ -39,12 +40,12 @@ public class ReservoirParts : MonoBehaviour
         public void Repair()
         {
             isLeaking = false;
-            Destroy(_Decal);
+            Destroy(leak);
         }
     }
 
     [SerializeField] LayerMask partlayer;
-    public GameObject decal;
+    [SerializeField] GameObject leak;
 
 
     [SerializeField] bool showGizmos;
@@ -55,9 +56,12 @@ public class ReservoirParts : MonoBehaviour
 
     RaycastHit hit;
 
+    [HideInInspector]
+    public Camera cam; //DEBUG
+
     private void Awake()
     {
-        foreach (Part part in parts) part.Init(decal);
+        foreach (Part part in parts) part.Init(leak);
     }
 
     void Start()
@@ -68,8 +72,8 @@ public class ReservoirParts : MonoBehaviour
 
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(ray, out hit, Mathf.Infinity, partlayer);
+        //Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, partlayer);
 
         if (Input.GetMouseButtonDown(0)) HitReservoir(hit);
     }
@@ -79,7 +83,7 @@ public class ReservoirParts : MonoBehaviour
         foreach (Part part in parts)
         {
             BoxCollider c = part.col as BoxCollider;
-            if (hit.collider != null && hit.collider == c) part.GetHit(5, hit);
+            if (hit.collider != null && hit.collider == c) part.GetHit(5, hit, c.gameObject);
         }
     }
 
@@ -90,10 +94,11 @@ public class ReservoirParts : MonoBehaviour
             foreach (Part part in parts)
             {
                 BoxCollider c = part.col as BoxCollider;
-                Vector3 vec = new Vector3(c.size.x * (transform.localScale.x * 2), c.size.y * transform.localScale.y, c.size.z * (transform.localScale.z / 2));
+                Vector3 s = c.gameObject.transform.localScale;
+                Vector3 vec = new Vector3(c.size.x * (s.x), c.size.y * s.y, c.size.z * (s.z));
                 Gizmos.color = new Color(part.color.r, part.color.g, part.color.b, part.color.a * allPartsColorAlpha);
                 if (hit.collider != null && hit.collider == c) Gizmos.color = Color.black;
-                Gizmos.DrawCube(c.bounds.center, vec); //Assume part collider is a BoxCollider
+                Gizmos.DrawCube(c.transform.position + c.center, vec); //Assume part collider is a BoxCollider
             }
         }
     }
