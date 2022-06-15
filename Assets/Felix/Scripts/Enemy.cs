@@ -129,7 +129,7 @@ namespace Enemies
 
         private void OnDestroy()
         {
-            waves.removeEnemy(this);
+            waves?.removeEnemy(this);
         }
 
         public void setWaves(NewNwWaves wave)

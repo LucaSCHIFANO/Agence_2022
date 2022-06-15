@@ -791,10 +791,15 @@ MonoBehaviour:
   - {fileID: 7128113548012216033}
   - {fileID: 7823979565391891707}
   - {fileID: 5656810035027240378}
+  _repairLeakMaxTime: 1
+  _leakLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   PossessingType: 0
   CharacterInputHandler: {fileID: 849729528955979180}
   WeaponInputHandler: {fileID: 0}
   VehiculeInputHandler: {fileID: 0}
+  isPaused: 0
 --- !u!114 &6373303911363646584
 MonoBehaviour:
   m_ObjectHideFlags: 0
