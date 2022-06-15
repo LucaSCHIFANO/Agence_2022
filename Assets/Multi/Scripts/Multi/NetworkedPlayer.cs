@@ -48,8 +48,6 @@ public class NetworkedPlayer : NetworkBehaviour
         {
             Debug.Log("Spawned Remote Player");
         }
-
-        FindObjectOfType<ReservoirParts>().cam = Camera.GetComponent<Camera>(); //DEBUG
     }
 
     private void Update()

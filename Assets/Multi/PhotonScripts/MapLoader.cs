@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public enum MapIndex {
 	Staging,
+	Win,
 	GameOver,
 	Camion,
 	Map0,
@@ -25,6 +26,7 @@ public class MapLoader : NetworkSceneManagerBase
 	[Header("Scenes")]
 	[SerializeField] private SceneReference _staging;
 	[SerializeField] private SceneReference _gameOver;
+	[SerializeField] private SceneReference _win;
 	[SerializeField] private SceneReference[] _maps;
 
 	private void Awake()
@@ -45,6 +47,7 @@ public class MapLoader : NetworkSceneManagerBase
 		{
 			case MapIndex.Staging: path = _staging; break;
 			case MapIndex.GameOver: path = _gameOver; break;
+			case MapIndex.Win: path = _win; break;
 			default: path = _maps[newScene - (int)MapIndex.Camion]; break;
 		}	
 		yield return SceneManager.LoadSceneAsync(path, LoadSceneMode.Single);
