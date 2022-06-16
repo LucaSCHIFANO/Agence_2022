@@ -183,7 +183,7 @@ public class TruckFuel : TruckBase
     
     public void ChangeFuel()
     {
-        Debug.Log("fuuuuuuuuuuuuuuuel");
+        currFuel = CurrFuelSync;
         var fuelPourcent = currFuel / maxFuel;
         
         if (Object.HasInputAuthority)

@@ -30,11 +30,6 @@ public class NetworkedPlayer : NetworkBehaviour
     private Player _player;
     private bool isPaused;
 
-    private void Start()
-    {
-        HideSelfVisual();
-    }
-
     public override void Spawned()
     {
         _player = App.Instance.GetPlayer(Object.InputAuthority);
@@ -48,6 +43,7 @@ public class NetworkedPlayer : NetworkBehaviour
             Local = this;
             Debug.Log("Spawned Local Player");
             Camera.SetActive(true);
+            HideSelfVisual();
             
         }
         else
