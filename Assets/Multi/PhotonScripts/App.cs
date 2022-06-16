@@ -59,7 +59,6 @@ public class App : MonoBehaviour, INetworkRunnerCallbacks
 	
 	public ConnectionStatus ConnectionStatus { get; private set; }
 	public ICollection<Player> Players => _players.Values;
-	public ICollection<PlayerRef> PlayerRefs => _players.Keys;
 	public bool IsMaster => _runner != null && (_runner.IsServer || _runner.IsSharedModeMasterClient);
 
 	private void Awake()
