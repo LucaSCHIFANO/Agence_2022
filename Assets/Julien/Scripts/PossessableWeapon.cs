@@ -50,6 +50,7 @@ public class PossessableWeapon : NetworkBehaviour
         _playerController.gameObject.GetComponent<CharacterMovementHandler>().enabled = false;
         _playerController.ChangeInputHandler(PossessingType.WEAPON, gameObject);
         GetComponent<WeaponBase>().ChangeOverHeat();
+        _playerController.HideSelfVisual();
         // _playerController.gameObject.SetActive(false);
     }
 
@@ -87,6 +88,7 @@ public class PossessableWeapon : NetworkBehaviour
         _playerController.gameObject.SetActive(true);
         _playerController.transform.SetParent(null);
         _playerController.ChangeInputHandler(PossessingType.CHARACTER, gameObject);
+        _playerController.ShowSelfVisual();
         _playerController = null;
         // CanvasInGame.Instance.showOverheat(false);
     }

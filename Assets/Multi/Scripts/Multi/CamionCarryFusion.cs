@@ -9,6 +9,7 @@ public class CamionCarryFusion : SimulationBehaviour, IPlayerLeft
     public List<NetworkedPlayer> networkPlayer = new List<NetworkedPlayer>();
 
     public Vector3 lastPosition;
+    public Vector3 lastRotation;
     private Transform _transform;
 
     // public Vector3 CurrentVelocity { get; private set; }
@@ -17,17 +18,18 @@ public class CamionCarryFusion : SimulationBehaviour, IPlayerLeft
     {
         _transform = transform;
         lastPosition = _transform.position;
+        lastRotation = _transform.eulerAngles;
     }
-    
+
     public override void FixedUpdateNetwork()
     {
         if (Runner.IsServer)
         {
-            Vector3 velocity = (_transform.position - lastPosition);
-            // CurrentVelocity = velocity;
-
             if (networkPlayer.Count > 0)
             {
+                Vector3 velocity = (_transform.position - lastPosition);
+                Vector3 rotation = (_transform.eulerAngles - lastRotation);
+                
                 for (int i = 0; i < networkPlayer.Count; i++)
                 {
                     NetworkedPlayer character = networkPlayer[i];
@@ -36,13 +38,21 @@ public class CamionCarryFusion : SimulationBehaviour, IPlayerLeft
                         networkPlayer.RemoveAt(i);
                         continue;
                     }
-                    // character.transform.Translate(velocity, _transform);
-                    if (!character.GetComponent<CharacterMovementHandler>().IsMoving)
+
+                    if (character.PossessingType == PossessingType.CHARACTER)
+                    {
+                        character.transform.Translate(velocity, Space.World);
+                        RotatePlayer(character, rotation.y);
+                    }
+                    /*if (!character.GetComponent<CharacterMovementHandler>().IsMoving)
+                    {
                         character.GetComponent<NetworkCharacterControllerPrototypeCustom>().Move(velocity);
+                    }*/
                 }
             }
 
             lastPosition = _transform.position;
+            lastRotation = _transform.eulerAngles;
         }
     }
 
@@ -61,5 +71,10 @@ public class CamionCarryFusion : SimulationBehaviour, IPlayerLeft
     public void PlayerLeft(PlayerRef player)
     {
         RemovePlayer(App.Instance.GetPlayer(player).CharacterPrefab);
+    }
+
+    void RotatePlayer(NetworkedPlayer player, float amount)
+    {
+        player.transform.RotateAround(_transform.position, Vector3.up, amount);
     }
 }

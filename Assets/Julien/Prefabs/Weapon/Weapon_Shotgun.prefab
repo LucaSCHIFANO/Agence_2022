@@ -11,9 +11,7 @@ GameObject:
   - component: {fileID: 5844692118931409876}
   - component: {fileID: 5844692118931409877}
   - component: {fileID: 5844692118931409866}
-  - component: {fileID: 5844692118931409867}
   - component: {fileID: 5104213490626840288}
-  - component: {fileID: 5374768091260926799}
   - component: {fileID: -8665527496555407943}
   - component: {fileID: 7274899943349406891}
   m_Layer: 8
@@ -90,19 +88,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5844692118931409867
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5844692118931409870}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5104213490626840288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,6 +114,7 @@ MonoBehaviour:
     type: 3}
   overHParticle: {fileID: 8014006940026525252}
   OHParticleOverTime: 2
+  allieTouret: 0
   possessor: {fileID: 0}
   isPossessed: 1
   canvas: {fileID: 0}
@@ -136,19 +122,6 @@ MonoBehaviour:
   _overHeatPourcentOnline: 0
   _numberOfBullet: 20
   _spread: 15
---- !u!65 &5374768091260926799
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5844692118931409870}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 5, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-8665527496555407943
 MonoBehaviour:
   m_ObjectHideFlags: 0

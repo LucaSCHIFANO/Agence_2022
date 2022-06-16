@@ -38,7 +38,7 @@ public class NewNwWaves : NetworkBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Keypad9)) spawn = !spawn;
         
-        if (spawn || Input.GetKeyDown((KeyCode.Return)))
+        if (spawn || Input.GetKeyDown((KeyCode.KeypadEnter)))
         {
             spawn = false;
             waveEnded = false;
