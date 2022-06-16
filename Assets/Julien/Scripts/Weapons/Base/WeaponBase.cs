@@ -151,12 +151,15 @@ public abstract class WeaponBase : NetworkBehaviour
                 overHeatPourcentOnline = overHeatPourcent;
             }
         }
-        
-        var em = overHParticle.emission;
-        em.enabled = true;
 
-        if (_isOverHeat) em.rateOverTime = OHParticleOverTime;
-        else em.rateOverTime = 0f;
+        if (overHParticle != null)
+        {
+            var em = overHParticle.emission;
+            em.enabled = true;
+
+            if (_isOverHeat) em.rateOverTime = OHParticleOverTime;
+            else em.rateOverTime = 0f;
+        }
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]

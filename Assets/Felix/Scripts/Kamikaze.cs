@@ -55,6 +55,16 @@ namespace Enemies
         {
             Debug.Log("Boom");
 
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 5f);
+            foreach (Collider collider in colliders)
+            {
+                HP hp = collider.GetComponent<HP>();
+                if (hp != null)
+                {
+                    hp.TrueReduceHP(50f);
+                }
+            }
+
             Die();
         }
     }

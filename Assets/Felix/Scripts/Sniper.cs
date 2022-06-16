@@ -42,7 +42,7 @@ namespace Enemies
         
             if (distance <= range)
             {
-                foreach (WeaponBase weapon in weapons)
+                foreach (WeaponUltima weapon in weapons)
                 {
                     if (Physics.Raycast(weapon.transform.position, weapon.transform.forward, out RaycastHit hit))
                     {
@@ -77,7 +77,7 @@ namespace Enemies
                     return;
                 }
             }
-            
+
             direction.y = 0;
             direction.Normalize();
             
