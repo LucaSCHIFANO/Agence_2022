@@ -30,11 +30,6 @@ public class NetworkedPlayer : NetworkBehaviour
     private Player _player;
     private bool isPaused;
 
-    private void Start()
-    {
-        HideSelfVisual();
-    }
-
     public override void Spawned()
     {
         _player = App.Instance.GetPlayer(Object.InputAuthority);
@@ -42,12 +37,14 @@ public class NetworkedPlayer : NetworkBehaviour
         _mesh.material.color = _player.Color;
         
         CharacterInputHandler = GetComponent<CharacterInputHandler>();
-        playerRew = Rewired.ReInput.players.GetPlayer(0);
+        //playerRew = Rewired.ReInput.players.GetPlayer(0);
         if (Object.HasInputAuthority)
         {
             Local = this;
             Debug.Log("Spawned Local Player");
             Camera.SetActive(true);
+            HideSelfVisual();
+            
         }
         else
         {
@@ -59,7 +56,7 @@ public class NetworkedPlayer : NetworkBehaviour
 
     private void Update()
     {
-        if (playerRew.GetButtonDown("Escape"))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             isPaused = !isPaused;
             CanvasInGame.Instance.showOptiones(isPaused);

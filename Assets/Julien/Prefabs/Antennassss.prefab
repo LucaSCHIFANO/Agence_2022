@@ -80,6 +80,7 @@ GameObject:
   - component: {fileID: 8873962321791827719}
   - component: {fileID: 8873962321791827724}
   - component: {fileID: 8873962321791827715}
+  - component: {fileID: 7501381092546413772}
   m_Layer: 6
   m_Name: Antenna (1)
   m_TagString: Untagged
@@ -223,6 +224,33 @@ MonoBehaviour:
   broken: 0
   thunderEffect: {fileID: 7492690339654233429, guid: 0061470a1b6aefc41a1471a5f292d1df,
     type: 3}
+--- !u!114 &7501381092546413772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8873962321791827717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50beca5dc0ae33d418c14c5417c7c757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Hit
+    clip: {fileID: 8300000, guid: 4f3eead73b2cce5479dafa2db70fac3b, type: 3}
+    audioMixerGroup: {fileID: -1828073082294812753, guid: 6cf919df79f5ae447b956de6086238ee,
+      type: 2}
+    useRandomVolume: 0
+    volume: 0.1
+    volumeRandom: 0
+    useRandomPitch: 1
+    pitch: 0.9
+    pitchRandom: 1.1
+    maxDistance: 20
+    playOnAwake: 0
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &8873962322572776197
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,6 +266,7 @@ GameObject:
   - component: {fileID: 8873962322572776199}
   - component: {fileID: 8873962322572776198}
   - component: {fileID: 8873962322572776204}
+  - component: {fileID: 3358470381082502708}
   m_Layer: 6
   m_Name: Antenna (4)
   m_TagString: Untagged
@@ -381,6 +410,33 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 8873962322572776198}
   SimulationBehaviours: []
+--- !u!114 &3358470381082502708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8873962322572776197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50beca5dc0ae33d418c14c5417c7c757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Hit
+    clip: {fileID: 8300000, guid: 4f3eead73b2cce5479dafa2db70fac3b, type: 3}
+    audioMixerGroup: {fileID: -1828073082294812753, guid: 6cf919df79f5ae447b956de6086238ee,
+      type: 2}
+    useRandomVolume: 0
+    volume: 0.1
+    volumeRandom: 0
+    useRandomPitch: 1
+    pitch: 0.9
+    pitchRandom: 1.1
+    maxDistance: 20
+    playOnAwake: 0
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &8873962323184175018
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,6 +452,7 @@ GameObject:
   - component: {fileID: 8873962323184174996}
   - component: {fileID: 8873962323184174992}
   - component: {fileID: 8873962323184174993}
+  - component: {fileID: 824296859877714824}
   m_Layer: 6
   m_Name: Antenna (2)
   m_TagString: Untagged
@@ -539,6 +596,33 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 8873962323184174992}
   SimulationBehaviours: []
+--- !u!114 &824296859877714824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8873962323184175018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50beca5dc0ae33d418c14c5417c7c757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Hit
+    clip: {fileID: 8300000, guid: 4f3eead73b2cce5479dafa2db70fac3b, type: 3}
+    audioMixerGroup: {fileID: -1828073082294812753, guid: 6cf919df79f5ae447b956de6086238ee,
+      type: 2}
+    useRandomVolume: 0
+    volume: 0.1
+    volumeRandom: 0
+    useRandomPitch: 1
+    pitch: 0.9
+    pitchRandom: 1.1
+    maxDistance: 20
+    playOnAwake: 0
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &8873962323274873891
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,6 +638,7 @@ GameObject:
   - component: {fileID: 8873962323274873901}
   - component: {fileID: 8873962323274873897}
   - component: {fileID: 8873962323274873898}
+  - component: {fileID: 5208851919645068056}
   m_Layer: 6
   m_Name: Antenna (3)
   m_TagString: Untagged
@@ -697,6 +782,33 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 8873962323274873897}
   SimulationBehaviours: []
+--- !u!114 &5208851919645068056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8873962323274873891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50beca5dc0ae33d418c14c5417c7c757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Hit
+    clip: {fileID: 8300000, guid: 4f3eead73b2cce5479dafa2db70fac3b, type: 3}
+    audioMixerGroup: {fileID: -1828073082294812753, guid: 6cf919df79f5ae447b956de6086238ee,
+      type: 2}
+    useRandomVolume: 0
+    volume: 0.1
+    volumeRandom: 0
+    useRandomPitch: 1
+    pitch: 0.9
+    pitchRandom: 1.1
+    maxDistance: 20
+    playOnAwake: 0
+    loop: 0
+    source: {fileID: 0}
 --- !u!1001 &3325339146438616084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -792,12 +904,45 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 3325339146438616084}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 8873962322239312227}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8873962322239312227 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6125845346354132343, guid: ac9f24aaf73e56f4d964d3e8d9557ca3,
+    type: 3}
+  m_PrefabInstance: {fileID: 3325339146438616084}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7282211952244108787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8873962322239312227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50beca5dc0ae33d418c14c5417c7c757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Hit
+    clip: {fileID: 8300000, guid: 4f3eead73b2cce5479dafa2db70fac3b, type: 3}
+    audioMixerGroup: {fileID: -1828073082294812753, guid: 6cf919df79f5ae447b956de6086238ee,
+      type: 2}
+    useRandomVolume: 0
+    volume: 0.1
+    volumeRandom: 0
+    useRandomPitch: 1
+    pitch: 0.9
+    pitchRandom: 1.1
+    maxDistance: 20
+    playOnAwake: 0
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &8873962322239312236 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6125845346354132344, guid: ac9f24aaf73e56f4d964d3e8d9557ca3,
