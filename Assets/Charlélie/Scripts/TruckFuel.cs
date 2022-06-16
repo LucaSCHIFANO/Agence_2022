@@ -127,11 +127,13 @@ public class TruckFuel : TruckBase
     public bool infiniteGas = false;
 
     [Networked] public bool OutOfGas { get; private set; }
+    protected CanvasInGame canvas;
 
     public override void Init()
     {
         currFuel = maxFuel;
         phys = GetComponent<TruckPhysics>();
+        canvas = CanvasInGame.Instance;
     }
 
     public override void Spawned()
@@ -172,5 +174,20 @@ public class TruckFuel : TruckBase
     {
         currFuel -= value;
     }
+    
+    public static void OnFuelChanged(Changed<TruckFuel> changed)
+    {
+        changed.Behaviour.ChangeFuel();
+    }
 
+    public void ChangeFuel()
+    {
+        currFuel = CurrFuelSync;
+        var fuelPourcent = currFuel / maxFuel;
+
+        if (Object.HasInputAuthority)
+        {
+            canvas.fuelSlider.fillAmount = fuelPourcent;
+        }
+    }
 }

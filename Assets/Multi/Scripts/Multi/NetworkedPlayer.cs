@@ -43,6 +43,7 @@ public class NetworkedPlayer : NetworkBehaviour
             Local = this;
             Debug.Log("Spawned Local Player");
             Camera.SetActive(true);
+            
         }
         else
         {
