@@ -131,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   maxHP: 10
+  _currentHP: 0
   impactEffect: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
     type: 3}
 --- !u!114 &-1291067177727544176
@@ -152,7 +153,7 @@ MonoBehaviour:
   - {fileID: 7099923427349109451}
   obstaclesLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
 --- !u!114 &969192348745435775
 MonoBehaviour:
   m_ObjectHideFlags: 0

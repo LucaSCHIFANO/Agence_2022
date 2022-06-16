@@ -55,8 +55,10 @@ public class WeaponUltima : WeaponBase
     public void actuAllStats(WScriptable SObject)
     {
         if (Object == null) return;
-
-        GetComponent<WeaponInteractable>().weaponName = SObject.turretName;
+        
+        WeaponInteractable interactable = GetComponent<WeaponInteractable>();
+        if (interactable != null) interactable.weaponName = SObject.turretName;
+        
         _fireRate = SObject.fireRate;
         _bulletToOverHeat = SObject.bulletToOverheat;
         _coolDownPerSecond = SObject.coolDownPerSecond;
@@ -96,7 +98,7 @@ public class WeaponUltima : WeaponBase
             Debug.DrawRay(_shootingPoint.position, shootingDir * 1000, Color.red, 10);
             // LagCompensatedHit hit;
             // Runner.LagCompensation.Raycast(_shootingPoint.position, shootingDir, 100, Object.InputAuthority, out hitComp) <- Only check if enemy are hit
-            if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit))
+            if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, 1000f))
             {
                 BulletEffectClientRpc(hit.point);
                 // Instantiate(bulletEffect, , transform.rotation);

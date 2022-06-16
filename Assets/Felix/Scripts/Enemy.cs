@@ -19,12 +19,12 @@ namespace Enemies
         public float range;
         protected bool isDead;
 
-        protected WeaponBase[] weapons; // WeaponSO type
-        [SerializeField] protected EnemySO enemySo; // TEMP
+        protected WeaponUltima[] weapons;
+        [SerializeField] protected EnemySO enemySo;
 
         [SerializeField] protected Transform[] weaponsPosition;
 
-        [Header("ForWaves")] 
+        // For waves
         protected NewNwWaves waves;
 
         protected void Awake()
@@ -74,12 +74,18 @@ namespace Enemies
                     }
                 }
 
-                weapons = new WeaponBase[weaponsObject.Length];
+                weapons = new WeaponUltima[weaponsObject.Length];
 
                 for (int i = 0; i < weaponsObject.Length; i++)
                 {
-                    GameObject nWeapon = Instantiate(weaponsObject[i], weaponsPosition[i]);
-                    weapons[i] = nWeapon.GetComponent<WeaponBase>();
+                    //GameObject nWeapon = Instantiate(weaponsObject[i], weaponsPosition[i]);
+                    GameObject nWeapon = Runner.Spawn(weaponsObject[i].GetComponent<NetworkObject>(), weaponsPosition[i].position, weaponsPosition[i].rotation).gameObject;
+                    nWeapon.transform.SetParent(weaponsPosition[i]);
+                    WeaponUltima weaponUltima = nWeapon.GetComponent<WeaponUltima>();
+                    weaponUltima.actuAllStats(enemySo.weaponsScriptable[i]);
+                    weaponUltima.isPossessed = false;
+                    
+                    weapons[i] = weaponUltima;
                 } 
             }
         }
@@ -89,7 +95,7 @@ namespace Enemies
             if (target == null || weapons == null)
                 return;
             
-            foreach (WeaponBase weapon in weapons)
+            foreach (WeaponUltima weapon in weapons)
             {
                 weapon.transform.LookAt(target.transform);
             }
@@ -132,9 +138,9 @@ namespace Enemies
             waves.removeEnemy(this);
         }
 
-        public void setWaves(NewNwWaves wave)
+        public void SetWaves(NewNwWaves _wave)
         {
-            waves = wave;
+            waves = _wave;
         }
     }
 }

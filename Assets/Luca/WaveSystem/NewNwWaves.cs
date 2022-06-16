@@ -75,7 +75,7 @@ public class NewNwWaves : NetworkBehaviour
 
         var randomEnemy = enemyPool[Random.Range(0, enemyPool.Count)];
         var enemyObject = Runner.Spawn(randomEnemy, spawnDistance, transform.rotation);
-        enemyObject.setWaves(this);
+        enemyObject.SetWaves(this);
         enemiesSpawned.Add(enemyObject);
         
 
