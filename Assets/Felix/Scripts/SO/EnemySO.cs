@@ -11,6 +11,7 @@ namespace Enemies
         public float speed;
         public float range;
         [Space] public GameObject[] weapons; // Weapons array to generate on the vehicle model // WeaponSO type
+        public WScriptable[] weaponsScriptable;
         [Space] public GameObject enemyPrefab;
     }
 }

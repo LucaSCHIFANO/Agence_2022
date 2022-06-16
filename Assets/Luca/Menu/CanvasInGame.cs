@@ -16,7 +16,7 @@ public class CanvasInGame : MonoBehaviour
 
     [Header("Options")] public GameObject optDisplay;
     
-    [Header("Overheat")] public GameObject fuelDisplay;
+    [Header("Overheat")] public GameObject truckDisplay;
     public Image fuelSlider;
     
     #region Singleton
@@ -68,8 +68,8 @@ public class CanvasInGame : MonoBehaviour
         optDisplay.SetActive(boul);
     }
     
-    public void showFuel(bool boul)
+    public void showTruck(bool boul)
     {
-        fuelDisplay.SetActive(boul);
+        truckDisplay.SetActive(boul);
     }
 }

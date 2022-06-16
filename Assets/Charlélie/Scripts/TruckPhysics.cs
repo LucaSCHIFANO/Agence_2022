@@ -562,8 +562,8 @@ public class TruckPhysics : TruckBase
         lastSpeed = speed;
 
 
-        if(speed > minimSpeedToDust && Object.InputAuthority) PlayParticleDust();
-        else if(Object.InputAuthority) StopParticleDust();
+        if(speed > minimSpeedToDust && Object.HasInputAuthority) PlayParticleDust();
+        else if(Object.HasInputAuthority) StopParticleDust();
 
 
         if (slip2 != 0.0f)

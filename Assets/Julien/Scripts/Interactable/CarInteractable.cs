@@ -54,6 +54,7 @@ public class CarInteractable : Interactable
     void ConfirmPossessionClientRpc()
     {
         camera.SetActive(true);
+        CanvasInGame.Instance.showTruck(true);
         NetworkedPlayer player = Runner.GetPlayerObject(Runner.LocalPlayer).GetComponent<NetworkedPlayer>();
         player.ChangeInputHandler(PossessingType.CAR, gameObject);
     }
@@ -83,6 +84,7 @@ public class CarInteractable : Interactable
     void ConfirmExitClientRpc([RpcTarget] PlayerRef target)
     {
         camera.SetActive(false);
+        CanvasInGame.Instance.showTruck(false);
         _playerController = Runner.GetPlayerObject(target).gameObject.GetComponent<NetworkedPlayer>();
         _playerController.gameObject.SetActive(true);
         _playerController.transform.SetParent(null);
