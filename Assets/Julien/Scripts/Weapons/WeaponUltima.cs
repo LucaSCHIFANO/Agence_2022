@@ -57,8 +57,10 @@ public class WeaponUltima : WeaponBase
     public void actuAllStats(WScriptable SObject)
     {
         if (Object == null) return;
-
-        GetComponent<WeaponInteractable>().weaponName = SObject.turretName;
+        
+        WeaponInteractable interactable = GetComponent<WeaponInteractable>();
+        if (interactable != null) interactable.weaponName = SObject.turretName;
+        
         _fireRate = SObject.fireRate;
         _bulletToOverHeat = SObject.bulletToOverheat;
         _coolDownPerSecond = SObject.coolDownPerSecond;
@@ -116,12 +118,12 @@ public class WeaponUltima : WeaponBase
                         {
                             if (allieTouret)
                             {
-                                if (hp is HPPlayer || hp is HPSubTruck || hp is HPTruck) return;
-                                hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                                if (hp is HPPlayer || hp is HPSubTruck || hp is HPTruck) Debug.Log("friendly fire not allowed");
+                                else hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
                             }
                             else
                             {
-                                if ((hp is HPPlayer || hp is HPTruck)) hp.reduceHPToServ(damage);
+                                if ((hp is HPPlayer || hp is HPSubTruck|| hp is HPTruck)) hp.reduceHPToServ(damage);
                             }
 
 
@@ -133,6 +135,7 @@ public class WeaponUltima : WeaponBase
                     }
                 }
             }
+            
             else
             {
                 RaycastHit hit;
@@ -143,19 +146,19 @@ public class WeaponUltima : WeaponBase
                 // Runner.LagCompensation.Raycast(_shootingPoint.position, shootingDir, 100, Object.InputAuthority, out hitComp) <- Only check if enemy are hit
                 if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance))
                 {
-
+                    Debug.Log((hit.collider));
                     // Instantiate(bulletEffect, , transform.rotation);
 
                     if (hit.collider.gameObject.TryGetComponent(out HP hp))
                     {
                         if (allieTouret)
                         {
-                            if (hp is HPPlayer || hp is HPSubTruck || hp is HPTruck) return;
-                            hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                            if (hp is HPPlayer || hp is HPSubTruck || hp is HPTruck) Debug.Log("friendly fire not allowed");
+                            else hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
                         }
                         else
                         {
-                            if ((hp is HPPlayer || hp is HPTruck)) hp.reduceHPToServ(damage);
+                            if ((hp is HPPlayer || hp is HPSubTruck|| hp is HPTruck)) hp.reduceHPToServ(damage);
                         }
 
 

@@ -18,6 +18,8 @@ public class TruckPhysics : TruckBase
     [SerializeField] private ParticleSystem dust;
     [SerializeField] private float minimSpeedToDust;
 
+    [SerializeField] private ParticleSystem fire;
+
     TruckFuel fuel;
     
     #region Settings
@@ -560,8 +562,8 @@ public class TruckPhysics : TruckBase
         lastSpeed = speed;
 
 
-        if(speed > minimSpeedToDust && Object.InputAuthority) PlayParticleDust();
-        else if(Object.InputAuthority) StopParticleDust();
+        if(speed > minimSpeedToDust && Object.HasInputAuthority) PlayParticleDust();
+        else if(Object.HasInputAuthority) StopParticleDust();
 
 
         if (slip2 != 0.0f)
@@ -1134,6 +1136,12 @@ public class TruckPhysics : TruckBase
 
     #endregion
 
+    public void activateFire(bool boul)
+    {
+        if(boul) fire.Play();
+        else fire.Stop();
+    }
+    
     #region Gizmos
 
     /////////////// Show Normal Gizmos ////////////////////////////

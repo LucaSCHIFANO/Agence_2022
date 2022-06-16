@@ -1,11 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HPTruck : HP
 {
-    public GameObject impactEffect;
-    
+    [SerializeField] private GameObject impactEffect;
+    [SerializeField] private float pourcentageCritique;
+    private TruckPhysics truck;
+
+    private void Start()
+    {
+        truck = GetComponent<TruckPhysics>();
+        truck?.activateFire(false);
+    }
+
     public override void reduceHPToServ(float damage)
     {
         if(Runner.IsServer) TrueReduceHP(damage);
@@ -15,15 +24,20 @@ public class HPTruck : HP
     {
         currentHP -= damage;
         Instantiate(impactEffect, transform.position, transform.rotation);
-        
-        Debug.Log("im hit " + currentHP);
-        
-        
+
+        if (currentHP <= pourcentageCritique) truck?.activateFire(true);
+        else truck?.activateFire(false);
+
         if (currentHP <= 0)
         {
-            App.Instance.Disconnect();
+            if (Runner)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                App.Instance.Session.LoadMap(MapIndex.GameOver);
+            }
         }
-        
+
     }
     
 }
