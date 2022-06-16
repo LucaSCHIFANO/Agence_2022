@@ -460,7 +460,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7128113546203165904}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 0}
 --- !u!23 &7128113546203165907
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -546,7 +546,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7128113546351468521}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 0}
 --- !u!23 &7128113546351468516
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -784,13 +784,7 @@ MonoBehaviour:
   _mesh: {fileID: 7128113546351468516}
   _name: {fileID: 1831990981866921811}
   _playerVisuals:
-  - {fileID: 7128113546351468521}
-  - {fileID: 7128113547931589527}
-  - {fileID: 7128113547922864037}
-  - {fileID: 7128113546203165904}
-  - {fileID: 7128113548012216033}
   - {fileID: 7823979565391891707}
-  - {fileID: 5656810035027240378}
   PossessingType: 0
   CharacterInputHandler: {fileID: 849729528955979180}
   WeaponInputHandler: {fileID: 0}
@@ -1019,7 +1013,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7128113547922864037}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 0}
 --- !u!23 &7128113547922864032
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1103,7 +1097,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7128113547931589527}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 0}
 --- !u!23 &7128113547931589522
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1186,7 +1180,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7128113548012216033}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 0}
 --- !u!23 &7128113548012215964
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1350,17 +1344,17 @@ PrefabInstance:
     - target: {fileID: 4456646157548796159, guid: 6fe42915e21346042a158f4602dffb27,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4
+      value: 0.29
       objectReference: {fileID: 0}
     - target: {fileID: 4456646157548796159, guid: 6fe42915e21346042a158f4602dffb27,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: 0.29
       objectReference: {fileID: 0}
     - target: {fileID: 4456646157548796159, guid: 6fe42915e21346042a158f4602dffb27,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4
+      value: 0.29
       objectReference: {fileID: 0}
     - target: {fileID: 4456646157548796159, guid: 6fe42915e21346042a158f4602dffb27,
         type: 3}

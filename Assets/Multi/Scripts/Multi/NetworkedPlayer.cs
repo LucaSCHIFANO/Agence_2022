@@ -30,12 +30,17 @@ public class NetworkedPlayer : NetworkBehaviour
     private Player _player;
     private bool isPaused;
 
+    private void Start()
+    {
+        HideSelfVisual();
+    }
+
     public override void Spawned()
     {
         _player = App.Instance.GetPlayer(Object.InputAuthority);
         _name.text = _player.Name;
         _mesh.material.color = _player.Color;
-       
+        
         CharacterInputHandler = GetComponent<CharacterInputHandler>();
         playerRew = Rewired.ReInput.players.GetPlayer(0);
         if (Object.HasInputAuthority)

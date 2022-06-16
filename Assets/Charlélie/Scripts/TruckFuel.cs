@@ -116,7 +116,7 @@ public class TruckFuel : TruckBase
     [HideInInspector]
     public float currFuel;
 
-    [HideInInspector] [Networked] public float CurrFuelSync { get; set; }
+    [HideInInspector] [Networked(OnChanged = nameof(OnFuelChanged))] public float CurrFuelSync { get; set; }
 
     public float consPerMeterInL;
     TruckPhysics phys;
@@ -127,6 +127,8 @@ public class TruckFuel : TruckBase
     public bool infiniteGas = false;
 
     [Networked] public bool OutOfGas { get; private set; }
+    
+    protected CanvasInGame canvas;
 
     public override void Init()
     {
@@ -138,6 +140,7 @@ public class TruckFuel : TruckBase
     {
         base.Spawned();
         CurrFuelSync = currFuel;
+        canvas = CanvasInGame.Instance;
     }
 
     private void Update()
@@ -171,6 +174,22 @@ public class TruckFuel : TruckBase
     public void GetDamage(float value)
     {
         currFuel -= value;
+    }
+    
+    public static void OnFuelChanged(Changed<TruckFuel> changed)
+    {
+        changed.Behaviour.ChangeFuel();
+    }
+    
+    public void ChangeFuel()
+    {
+        Debug.Log("fuuuuuuuuuuuuuuuel");
+        var fuelPourcent = currFuel / maxFuel;
+        
+        if (Object.HasInputAuthority)
+        {
+            canvas.fuelSlider.fillAmount = fuelPourcent;
+        }
     }
 
 }

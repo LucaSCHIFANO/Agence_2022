@@ -59,7 +59,7 @@ public abstract class WeaponBase : NetworkBehaviour
 
     [HideInInspector] public bool isPossessed;
     
-    public CanvasInGame canvas;
+    [SerializeField] protected CanvasInGame canvas;
 
 
     public float overHeatPourcent;
