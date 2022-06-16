@@ -37,7 +37,7 @@ public class NetworkedPlayer : NetworkBehaviour
         _mesh.material.color = _player.Color;
         
         CharacterInputHandler = GetComponent<CharacterInputHandler>();
-        playerRew = Rewired.ReInput.players.GetPlayer(0);
+        //playerRew = Rewired.ReInput.players.GetPlayer(0);
         if (Object.HasInputAuthority)
         {
             Local = this;
@@ -56,7 +56,7 @@ public class NetworkedPlayer : NetworkBehaviour
 
     private void Update()
     {
-        if (playerRew.GetButtonDown("Escape"))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             isPaused = !isPaused;
             CanvasInGame.Instance.showOptiones(isPaused);

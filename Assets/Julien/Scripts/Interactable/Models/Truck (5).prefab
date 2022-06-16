@@ -1349,9 +1349,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   honking:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: a5b6da5acab0a1a48b5cfcae367e0bd6, type: 3}
+  - {fileID: 8300000, guid: 8c3b2d580c2bc2c44bca5b6d7d48a411, type: 3}
   _exhaust: {fileID: 7046177486938634942}
   teleport:
   - {fileID: 0}
@@ -1361,7 +1360,7 @@ MonoBehaviour:
   - {fileID: 0}
   dust: {fileID: 7315795345866713272}
   minimSpeedToDust: 50
-  fire: {fileID: 0}
+  fire: {fileID: 2322765329226471147}
   controlMode: 1
   activeControl: 1
   Reverse: 0
@@ -8368,6 +8367,12 @@ PrefabInstance:
 --- !u!4 &1420156077314868468 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8800583660555424535, guid: b703fd20d4caf1b4daf425f435cfb3bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 7607877587984209891}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &2322765329226471147 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5307635754755113224, guid: b703fd20d4caf1b4daf425f435cfb3bc,
     type: 3}
   m_PrefabInstance: {fileID: 7607877587984209891}
   m_PrefabAsset: {fileID: 0}

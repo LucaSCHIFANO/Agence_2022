@@ -414,15 +414,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: 
-    clip: {fileID: 0}
-    audioMixerGroup: {fileID: 0}
+  - name: Hit
+    clip: {fileID: 8300000, guid: 4f3eead73b2cce5479dafa2db70fac3b, type: 3}
+    audioMixerGroup: {fileID: -1828073082294812753, guid: 6cf919df79f5ae447b956de6086238ee,
+      type: 2}
     useRandomVolume: 0
-    volume: 0
+    volume: 0.1
     volumeRandom: 0
-    useRandomPitch: 0
-    pitch: 0
-    pitchRandom: 0
+    useRandomPitch: 1
+    pitch: 0.9
+    pitchRandom: 1.1
+    maxDistance: 20
     playOnAwake: 0
     loop: 0
     source: {fileID: 0}
