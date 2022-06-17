@@ -8,6 +8,9 @@ public class HPTruck : HP
 {
     [SerializeField] private GameObject impactEffect;
     private TruckPhysics truck;
+    
+    public float currenthealth { get { return currentHP; } }
+    public float maxhealth { get { return maxHP; } }
 
     private void Start()
     {
@@ -52,6 +55,14 @@ public class HPTruck : HP
     {
         GetComponent<SoundTransmitter>()?.Play("Hit");
         Instantiate(impactEffect, transform.position, transform.rotation);
+    }
+
+    public void heal(bool fullHeal)
+    {
+        if (fullHeal) currentHP = maxHP;
+        else currentHP += (maxHP / 10);
+
+        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
     }
     
 }
