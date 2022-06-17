@@ -20,7 +20,7 @@ public class HPBoss : HP
         if (currentHP <= 0)
         {
             RPC_ShowCursor();
-            App.Instance.Session.LoadMap(MapIndex.GameOver);
+            App.Instance.Session.LoadMap(MapIndex.Win);
         }
     }
     

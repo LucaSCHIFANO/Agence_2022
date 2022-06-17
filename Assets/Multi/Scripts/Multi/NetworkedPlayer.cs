@@ -14,8 +14,8 @@ public class NetworkedPlayer : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private List<GameObject> _playerVisuals;
 
-    
 
+    [Networked] public NetworkBool IsInSomething { get; set; }
 
     Rewired.Player playerRew;
 
@@ -84,6 +84,7 @@ public class NetworkedPlayer : NetworkBehaviour
         transform.rotation = Quaternion.identity;
 
         GetComponent<CharacterController>().enabled = true;
+        IsInSomething = false;
     }
 
     public void Possess(Transform seat)
@@ -98,6 +99,7 @@ public class NetworkedPlayer : NetworkBehaviour
         
         if (Object.HasInputAuthority)
             Camera.SetActive(false);
+        IsInSomething = true;
     }
 
     public void ChangeInputHandler(PossessingType possessingType, GameObject handler)

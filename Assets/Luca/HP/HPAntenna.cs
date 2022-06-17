@@ -22,7 +22,7 @@ public class HPAntenna : HP
         {
             broken = true;
             Boss.Instance.checkAntenna();
-            
+            DestroyAntenna();
         }
     }
     
@@ -32,6 +32,12 @@ public class HPAntenna : HP
     {
         GetComponent<SoundTransmitter>()?.Play("Hit");
         Instantiate(thunderEffect, transform.position, transform.rotation);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    void DestroyAntenna()
+    {
+        gameObject.SetActive(false);
     }
     
 }
