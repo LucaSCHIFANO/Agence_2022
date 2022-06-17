@@ -39,7 +39,7 @@ public class CamionCarryFusion : SimulationBehaviour, IPlayerLeft
                         continue;
                     }
 
-                    if (character.PossessingType == PossessingType.CHARACTER)
+                    if (!character.IsInSomething)
                     {
                         character.transform.Translate(velocity, Space.World);
                         RotatePlayer(character, rotation.y);

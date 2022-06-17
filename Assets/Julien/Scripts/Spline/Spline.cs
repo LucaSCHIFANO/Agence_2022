@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using Fusion;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
-public class Spline : MonoBehaviour
+public class Spline : SimulationBehaviour
 {
     [SerializeField] private List<BezierSegment> _segments;
     [SerializeField] private Transform visual;
@@ -20,6 +21,8 @@ public class Spline : MonoBehaviour
     
     private void Update()
     {
+        if (Runner && Runner.IsServer)
+        
         interpolateAmount = (interpolateAmount + movementSpeed * Time.deltaTime);
 
         visual.position = CubicLerp(_segments[currentSegment].pointA, _segments[currentSegment].pointB,
