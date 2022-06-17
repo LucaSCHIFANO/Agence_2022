@@ -2,17 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 
 public class HPTruck : HP
 {
     [SerializeField] private GameObject impactEffect;
-    [SerializeField] private float pourcentageCritique;
     private TruckPhysics truck;
 
     private void Start()
     {
         truck = GetComponent<TruckPhysics>();
-        truck?.activateFire(false);
+        truck.activateDamageParticle(100f);
     }
 
     public override void reduceHPToServ(float damage)
@@ -23,10 +23,9 @@ public class HPTruck : HP
     public override void TrueReduceHP(float damage)
     {
         currentHP -= damage;
-        Instantiate(impactEffect, transform.position, transform.rotation);
-
-        if (currentHP <= pourcentageCritique) truck?.activateFire(true);
-        else truck?.activateFire(false);
+        SoundRPC();
+        particleVisuRpc();
+        
 
         if (currentHP <= 0)
         {
@@ -38,6 +37,21 @@ public class HPTruck : HP
             }
         }
 
+    }
+    
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void particleVisuRpc()
+    {
+        var pourcent = (currentHP / maxHP) * 100;
+        truck.activateDamageParticle(pourcent);
+        
+    }
+    
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void SoundRPC()
+    {
+        GetComponent<SoundTransmitter>()?.Play("Hit");
+        Instantiate(impactEffect, transform.position, transform.rotation);
     }
     
 }

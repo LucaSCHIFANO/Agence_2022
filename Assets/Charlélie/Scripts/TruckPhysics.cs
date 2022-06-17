@@ -17,8 +17,9 @@ public class TruckPhysics : TruckBase
     
     [SerializeField] private ParticleSystem dust;
     [SerializeField] private float minimSpeedToDust;
-
-    [SerializeField] private ParticleSystem fire;
+    
+    [SerializeField] private List<ParticleSystem> particleImpact = new List<ParticleSystem>();
+    [SerializeField] private List<float> pourcentageImpact = new List<float>();
 
     TruckFuel fuel;
     
@@ -1136,11 +1137,17 @@ public class TruckPhysics : TruckBase
 
     #endregion
 
-    public void activateFire(bool boul)
+    
+    public void activateDamageParticle(float pourcentage)
     {
-        if(boul) fire.Play();
-        else fire.Stop();
+        for (int i = 0; i < pourcentageImpact.Count; i++)
+        {
+            if(pourcentageImpact[i] >= pourcentage) particleImpact[i].Play();
+            else particleImpact[i].Stop();
+        }
     }
+    
+    
     
     #region Gizmos
 
