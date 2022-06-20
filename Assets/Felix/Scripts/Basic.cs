@@ -7,43 +7,23 @@ namespace Enemies
     public class Basic : Enemy
     {
         [SerializeField] private LayerMask obstaclesLayerMask;
-        
-        public override void Initialization(EnemySO _enemySo)
-        {
-            base.Initialization(_enemySo);
-            
-            target = GameObject.FindWithTag("Player");
-
-            if (Runner.IsServer && target != null)
-            {
-                asker.AskNewPath(FindNewPosition(), speed, null);
-                targetLastPosition = target.transform.position;
-            }
-        }
 
         public override void FixedUpdateNetwork()
         {
             base.FixedUpdateNetwork();
-
-            if (target == null)
-            {
-                target = GameObject.FindWithTag("Player");
-                
-                return;
-            }
             
-            if (!Runner.IsServer)
+            if (!Runner.IsServer || asker == null || !isChasing)
                 return;
             
             float distance = Vector3.Distance(transform.position, target.transform.position);
         
             if (distance <= range)
             {
-                foreach (WeaponBase weapon in weapons)
+                foreach (WeaponUltima weapon in weapons)
                 {
                     if (Physics.Raycast(weapon.transform.position, weapon.transform.forward, out RaycastHit hit))
                     {
-                        if (hit.collider.CompareTag("Player"))
+                        if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Car"))
                         {
                             weapon.Shoot();
                         }
