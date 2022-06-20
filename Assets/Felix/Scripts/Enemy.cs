@@ -15,8 +15,10 @@ namespace Enemies
         
         protected Vector3 targetLastPosition;
 
+        protected bool isChasing;
+
         protected float speed;
-        public float range;
+        protected float range;
         protected bool isDead;
 
         protected WeaponUltima[] weapons;
@@ -88,6 +90,18 @@ namespace Enemies
                     weapons[i] = weaponUltima;
                 } 
             }
+        }
+
+        public void Chase(GameObject _target)
+        {
+            isChasing = true;
+            target = _target;
+        }
+
+        public void StopChasing(Vector3 _returnPosition)
+        {
+            isChasing = false;
+            asker.AskNewPath(_returnPosition, speed, null);
         }
 
         protected virtual void FixedUpdate()
