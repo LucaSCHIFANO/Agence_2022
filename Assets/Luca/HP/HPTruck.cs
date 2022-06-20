@@ -8,6 +8,7 @@ public class HPTruck : HP
 {
     [SerializeField] private GameObject impactEffect;
     private TruckPhysics truck;
+    private UpgradeMenu menu;
     
     public float currenthealth { get { return currentHP; } }
     public float maxhealth { get { return maxHP; } }
@@ -16,6 +17,7 @@ public class HPTruck : HP
     {
         truck = GetComponent<TruckPhysics>();
         truck.activateDamageParticle(100f);
+        menu = UpgradeMenu.Instance;
     }
 
     public override void reduceHPToServ(float damage)
@@ -47,6 +49,8 @@ public class HPTruck : HP
     {
         var pourcent = (currentHP / maxHP) * 100;
         truck.activateDamageParticle(pourcent);
+        
+        menu.forRepair();
         
     }
     

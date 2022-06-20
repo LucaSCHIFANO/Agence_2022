@@ -450,10 +450,10 @@ public class UpgradeMenu : NetworkBehaviour
         
     }
 
-    void forRepair()
+    public void forRepair()
     {
         hpSlider.value = truck.currenthealth / truck.maxhealth;
-        hpText.text = truck.currenthealth + " / " + truck.maxhealth;
+        hpText.text = ((int)truck.currenthealth + " / " + truck.maxhealth).ToString();
 
         float prePriceFull = (truck.currenthealth / truck.maxhealth);
         float priceFull = fullRepairPrice - (fullRepairPrice * prePriceFull);
