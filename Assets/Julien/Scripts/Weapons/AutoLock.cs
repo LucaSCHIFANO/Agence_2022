@@ -21,7 +21,7 @@ public class AutoLock : NetworkBehaviour
         {
             playersTargets = new List<Transform>();
             _weaponBase = GetComponent<WeaponBase>();
-            StartCoroutine(RefreshPlayerList());
+            // StartCoroutine(RefreshPlayerList());
         }
     }
 
