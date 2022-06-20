@@ -25,6 +25,8 @@ public class SoundTransmitter : MonoBehaviour
         public float pitch = 1.0f;
         [Range(-3f, 3f)]
         public float pitchRandom = 1.0f;
+
+        public float maxDistance = 20.0f;
     
         public bool playOnAwake = false;
         public bool loop = false;
@@ -60,7 +62,8 @@ public class SoundTransmitter : MonoBehaviour
                 s.source.pitch = Random.Range(minim, max);
             }
             else s.source.pitch = s.pitch;
-            
+
+            s.source.maxDistance = s.maxDistance;
             s.source.playOnAwake = s.playOnAwake;
             s.source.loop = s.loop;
             

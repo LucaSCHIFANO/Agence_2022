@@ -16,15 +16,28 @@ public class HPAntenna : HP
     public override void TrueReduceHP(float damage)
     {
         currentHP -= damage;
-        Instantiate(thunderEffect, transform.position, transform.rotation);
-        GetComponent<SoundTransmitter>()?.Play("Hit");
+        SoundRPC();
         
         if (currentHP <= 0)
         {
             broken = true;
             Boss.Instance.checkAntenna();
-            
+            DestroyAntenna();
         }
+    }
+    
+    
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void SoundRPC()
+    {
+        GetComponent<SoundTransmitter>()?.Play("Hit");
+        Instantiate(thunderEffect, transform.position, transform.rotation);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    void DestroyAntenna()
+    {
+        gameObject.SetActive(false);
     }
     
 }
