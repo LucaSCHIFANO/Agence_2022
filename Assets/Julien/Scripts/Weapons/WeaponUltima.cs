@@ -130,7 +130,7 @@ public class WeaponUltima : WeaponBase
                         }
                         else
                         {
-                            BulletEffectClientRpc(hit.point);
+                            BulletEffectClientRpc(hit.point, hit.collider.tag);
                         }
                     }
                 }
@@ -165,7 +165,7 @@ public class WeaponUltima : WeaponBase
                     }
                     else
                     {
-                        BulletEffectClientRpc(hit.point);
+                        BulletEffectClientRpc(hit.point, hit.collider.tag);
                     }
                 }
             }
