@@ -55,6 +55,7 @@ public class CarInteractable : Interactable
     {
         camera.SetActive(true);
         CanvasInGame.Instance.showTruck(true);
+        GetComponent<TruckFuel>().ChangeFuel();
         NetworkedPlayer player = Runner.GetPlayerObject(Runner.LocalPlayer).GetComponent<NetworkedPlayer>();
         player.ChangeInputHandler(PossessingType.CAR, gameObject);
     }

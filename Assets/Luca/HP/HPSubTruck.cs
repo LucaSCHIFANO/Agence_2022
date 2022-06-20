@@ -10,4 +10,5 @@ public class HPSubTruck : HP
     {
         if(Runner.IsServer) hptruck.TrueReduceHP(damage);
     }
+
 }
