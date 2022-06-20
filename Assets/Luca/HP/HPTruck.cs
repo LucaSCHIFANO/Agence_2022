@@ -67,6 +67,7 @@ public class HPTruck : HP
         else currentHP += (maxHP / 10);
 
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+        particleVisuRpc();
     }
     
 }
