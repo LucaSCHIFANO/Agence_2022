@@ -34,7 +34,8 @@ public abstract class WeaponBase : NetworkBehaviour
     [SerializeField] protected Color maincolor;
     [SerializeField] protected Color overHeatColor;
 
-    [SerializeField] protected GameObject bulletEffect;
+    [SerializeField] protected GameObject bulletEffectSand;
+    [SerializeField] protected GameObject bulletEffectNormal;
 
     [SerializeField] protected ParticleSystem overHParticle;
     [SerializeField] protected float OHParticleOverTime;
@@ -171,9 +172,17 @@ public abstract class WeaponBase : NetworkBehaviour
     
     //creer une particule qd une bullet touche un mur
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    protected void BulletEffectClientRpc(Vector3 impactPoint)
+    protected void BulletEffectClientRpc(Vector3 impactPoint, string tag)
     {
-        Instantiate(bulletEffect, impactPoint, transform.rotation);
+        switch (tag)
+        {
+            case "Sand" : 
+                Instantiate(bulletEffectSand, impactPoint, transform.rotation);
+                break;
+            default :
+                Instantiate(bulletEffectNormal, impactPoint, transform.rotation);
+                break;
+            }
     }
     
     //creer une particule au bout du canon
@@ -185,9 +194,9 @@ public abstract class WeaponBase : NetworkBehaviour
     
     
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-    protected void CreateBulletEffectServerRpc(Vector3 impactPoint)
+    protected void CreateBulletEffectServerRpc(Vector3 impactPoint, string tag)
     {
-        BulletEffectClientRpc(impactPoint);
+        BulletEffectClientRpc(impactPoint, tag);
     }
     
     

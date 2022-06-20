@@ -72,4 +72,9 @@ public class CanvasInGame : MonoBehaviour
     {
         truckDisplay.SetActive(boul);
     }
+
+    public void disco()
+    {
+        App.Instance.Disconnect();
+    }
 }

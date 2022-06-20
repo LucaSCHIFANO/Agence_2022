@@ -15,13 +15,12 @@ public class HPBoss : HP
     public override void TrueReduceHP(float damage)
     {
         currentHP -= damage;
-        Instantiate(impactEffect, transform.position, transform.rotation);
-        GetComponent<SoundTransmitter>()?.Play("Hit");
+        SoundRPC();
         
         if (currentHP <= 0)
         {
             RPC_ShowCursor();
-            App.Instance.Session.LoadMap(MapIndex.GameOver);
+            App.Instance.Session.LoadMap(MapIndex.Win);
         }
     }
     
@@ -30,5 +29,12 @@ public class HPBoss : HP
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+    }
+    
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void SoundRPC()
+    {
+        GetComponent<SoundTransmitter>()?.Play("Hit");
+        Instantiate(impactEffect, transform.position, transform.rotation);
     }
 }

@@ -55,6 +55,13 @@ public class UpgradeMenu : NetworkBehaviour
 
     private bool sellMode;
 
+    [Header("Repair")] [SerializeField] protected HPTruck truck;
+    [SerializeField] protected TextMeshProUGUI fullText;
+    [SerializeField] protected TextMeshProUGUI partialText;
+    [SerializeField] protected float fullRepairPrice;
+    [SerializeField] protected Slider hpSlider;
+    [SerializeField] protected TextMeshProUGUI hpText;
+
     #region Singleton
 
     private static UpgradeMenu instance;
@@ -149,6 +156,8 @@ public class UpgradeMenu : NetworkBehaviour
                 if (i != 0 && i != 1) screenListInRed[i].SetActive(false); 
                 screenList[i].SetActive(false);
             }
+            
+            if(i == 5) forRepair(); 
         }
 
         if (sellMode)
@@ -439,6 +448,40 @@ public class UpgradeMenu : NetworkBehaviour
             }else upgradeWeapon(lastUpgrade2, false);
         }
         
+    }
+
+    public void forRepair()
+    {
+        hpSlider.value = truck.currenthealth / truck.maxhealth;
+        hpText.text = ((int)truck.currenthealth + " / " + truck.maxhealth).ToString();
+
+        float prePriceFull = (truck.currenthealth / truck.maxhealth);
+        float priceFull = fullRepairPrice - (fullRepairPrice * prePriceFull);
+        float pricePartial = fullRepairPrice / 10;
+        
+        
+        fullText.text = "Full repair : " + ((int)priceFull).ToString() + " metals";
+        
+        if(priceFull > pricePartial) partialText.text = "Partial repair : " + ((int)pricePartial).ToString() + " metals";
+        else partialText.text = "Partial repair : " + ((int)priceFull).ToString() + " metals";
+    }
+    
+    public void healTruck(bool fullHeal)
+    {
+        int price1 = (int)fullRepairPrice / 10;
+        int price2 = (int)(fullRepairPrice - (fullRepairPrice * (truck.currenthealth / truck.maxhealth)));
+
+        if (fullHeal) if(price2 <= ScrapMetal.Instance.scrapLeft) ScrapMetal.Instance.addMoneyServerRpc(-price2);
+            
+        else
+        {
+            var cheap = Mathf.Min(price1, price2);
+            if(cheap <= ScrapMetal.Instance.scrapLeft) ScrapMetal.Instance.addMoneyServerRpc(-cheap);
+
+        }
+        
+        truck.heal(fullHeal);
+        forRepair();
     }
     
 
