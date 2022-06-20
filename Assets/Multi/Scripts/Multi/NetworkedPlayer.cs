@@ -113,9 +113,17 @@ public class NetworkedPlayer : NetworkBehaviour
         {
             VehiculeInputHandler = handler.GetComponent<VehiculeInputHandler>();
         }
+        else if (possessingType == PossessingType.CHARACTER)
+        {
+            CharacterInputHandler = GetComponent<CharacterInputHandler>();
+            WeaponInputHandler = null;
+            VehiculeInputHandler = null;
+        }
         else
         {
+            CharacterInputHandler = null;
             WeaponInputHandler = null;
+            VehiculeInputHandler = null;
         }
     }
 
@@ -136,5 +144,6 @@ public enum PossessingType
 {
     CHARACTER,
     CAR,
-    WEAPON
+    WEAPON,
+    NONE
 }
