@@ -5,15 +5,14 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UI.Extensions;
 
 public class Generator : MonoBehaviour
 {
-    [SerializeField] protected OnClickTriangle triangleButton;
+    /*[SerializeField] protected OnClickTriangle triangleButton;
 
     [SerializeField] protected GameObject upgradePoint;
     [SerializeField] private List<Transform> listSommets = new List<Transform>();
-    [SerializeField] private List<UILineRenderer> myLines = new List<UILineRenderer>();
+    // [SerializeField] private List<UILineRenderer> myLines = new List<UILineRenderer>();
     [SerializeField] private float lineThinkness;
     [SerializeField] private List<float> colorDistance = new List<float>(); // green then orange then red
     [SerializeField] private List<TextMeshProUGUI> textList = new List<TextMeshProUGUI>(); // att def spd
@@ -72,7 +71,7 @@ public class Generator : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-    }*/
+    }
     private void Update()
     {
         if(triangleButton.canMove) onClickTriangle(true);
@@ -170,5 +169,5 @@ public class Generator : MonoBehaviour
                     break;
             }
         }
-    }
+    }*/
 }

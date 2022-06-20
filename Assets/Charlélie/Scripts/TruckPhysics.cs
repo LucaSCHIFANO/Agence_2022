@@ -877,7 +877,7 @@ public class TruckPhysics : TruckBase
                 //carSounds.nitro.Stop();
 
                 powerShift = Mathf.MoveTowards(powerShift, 100.0f, Time.deltaTime * 5.0f);
-                curTorque = carSetting.carPower * Generator.Instance.pourcentageList[2];
+                //curTorque = carSetting.carPower * Generator.Instance.pourcentageList[2];
                 //carParticles.shiftParticle1.emissionRate = Mathf.Lerp(carParticles.shiftParticle1.emissionRate, 0, Time.deltaTime * 10.0f);
                 //carParticles.shiftParticle2.emissionRate = Mathf.Lerp(carParticles.shiftParticle2.emissionRate, 0, Time.deltaTime * 10.0f);
             }
