@@ -1,31 +1,43 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
 using UnityEngine;
+using Fusion;
 
 namespace Enemies
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : NetworkBehaviour
     {
+        protected HPEnemy hp;
         protected Asker asker;
 
         protected GameObject target;
         
         protected Vector3 targetLastPosition;
 
-        protected float speed;
-        public float range;
-        protected bool isDead;
-        protected int actualHealth;
+        protected bool isChasing;
 
-        protected WeaponBase[] weapons; // WeaponSO type
-        [SerializeField] protected EnemySO enemySo; // TEMP
+        protected float speed;
+        protected float range;
+        protected bool isDead;
+
+        protected WeaponUltima[] weapons;
+        [SerializeField] protected EnemySO enemySo;
 
         [SerializeField] protected Transform[] weaponsPosition;
 
-        protected void Start()
+        // For waves
+        protected NewNwWaves waves;
+
+        protected void Awake()
         {
+            hp = GetComponent<HPEnemy>();
+        }
+
+        public override void Spawned()
+        {
+            base.Spawned();
+            
             if (asker == null)
             {
                 Initialization(enemySo);
@@ -35,8 +47,9 @@ namespace Enemies
         public virtual void Initialization(EnemySO _enemySo)
         {
             asker = GetComponent<Asker>();
+            hp = GetComponent<HPEnemy>();
 
-            actualHealth = _enemySo.health;
+            hp.InitializeHP(_enemySo.health);
             speed = _enemySo.speed;
             range = _enemySo.range;
 
@@ -63,19 +76,40 @@ namespace Enemies
                     }
                 }
 
-                weapons = new WeaponBase[weaponsObject.Length];
+                weapons = new WeaponUltima[weaponsObject.Length];
 
                 for (int i = 0; i < weaponsObject.Length; i++)
                 {
-                    GameObject nWeapon = Instantiate(weaponsObject[i], weaponsPosition[i]);
-                    weapons[i] = nWeapon.GetComponent<WeaponBase>();
+                    //GameObject nWeapon = Instantiate(weaponsObject[i], weaponsPosition[i]);
+                    GameObject nWeapon = Runner.Spawn(weaponsObject[i].GetComponent<NetworkObject>(), weaponsPosition[i].position, weaponsPosition[i].rotation).gameObject;
+                    nWeapon.transform.SetParent(weaponsPosition[i]);
+                    WeaponUltima weaponUltima = nWeapon.GetComponent<WeaponUltima>();
+                    weaponUltima.actuAllStats(enemySo.weaponsScriptable[i]);
+                    weaponUltima.isPossessed = false;
+                    
+                    weapons[i] = weaponUltima;
                 } 
             }
         }
 
+        public void Chase(GameObject _target)
+        {
+            isChasing = true;
+            target = _target;
+        }
+
+        public void StopChasing(Vector3 _returnPosition)
+        {
+            isChasing = false;
+            asker.AskNewPath(_returnPosition, speed, null);
+        }
+
         protected virtual void FixedUpdate()
         {
-            foreach (WeaponBase weapon in weapons)
+            if (target == null || weapons == null)
+                return;
+            
+            foreach (WeaponUltima weapon in weapons)
             {
                 weapon.transform.LookAt(target.transform);
             }
@@ -88,10 +122,7 @@ namespace Enemies
             if (_damages < 0)
                 _damages = Mathf.Abs(_damages);
 
-            actualHealth -= _damages;
-
-            if (actualHealth <= 0)
-                Die();
+            if(Object.HasInputAuthority) hp.reduceHPToServ(_damages);
         }
 
         public virtual void TakeDamage(int _damages, Vector3 _collisionPoint, Vector3 _collisionDirection)
@@ -114,6 +145,16 @@ namespace Enemies
 
             // TEMP
             Destroy(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            waves?.removeEnemy(this);
+        }
+
+        public void SetWaves(NewNwWaves _wave)
+        {
+            waves = _wave;
         }
     }
 }

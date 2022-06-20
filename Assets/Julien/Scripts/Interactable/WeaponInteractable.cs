@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
 using UnityEngine;
 
 public class WeaponInteractable : Interactable
@@ -14,6 +13,6 @@ public class WeaponInteractable : Interactable
 
     public override void Interact(PlayerInteraction interactor)
     {
-        GetComponent<TestControlWeapon>().Interact(interactor.GetComponent<PlayerController>());
+        GetComponent<PossessableWeapon>().TryPossess(interactor.GetComponent<NetworkedPlayer>());
     }
 }

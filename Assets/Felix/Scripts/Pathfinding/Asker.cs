@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using Pathfinding;
 using UnityEngine;
-using Unity.Netcode;
 
 public class Asker : MonoBehaviour
 {
@@ -18,21 +17,21 @@ public class Asker : MonoBehaviour
     {
         speed = _speed;
         callback = _callback;
-        PathRequestManager.RequestPath(transform.position, transform, _target.position, OnPathFound);
+        PathRequestManager.RequestPath(new PathRequest(transform.position, transform, _target.position, OnPathFound));
     }
     
     public void AskNewPath(Vector3 _targetPosition, float _speed, Action<Vector3[]> _callback)
     {
         speed = _speed;
         callback = _callback;
-        PathRequestManager.RequestPath(transform.position, transform, _targetPosition, OnPathFound);
+        PathRequestManager.RequestPath(new PathRequest(transform.position, transform, _targetPosition, OnPathFound));
     }
 
     public void OnPathFound(Vector3[] _newPath, bool _pathSuccess)
     {
         if (_pathSuccess)
         {
-            path = new Path(_newPath, transform.position, turnDistance);
+            path = new Path(_newPath, transform.position, turnDistance, speed);
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
 
@@ -49,7 +48,7 @@ public class Asker : MonoBehaviour
         while (followingPath)
         {
             Vector2 pos2D = new Vector2(transform.position.x, transform.position.z);
-            
+
             while (path.turnBoundaries[pathIndex].HasCrossedLine(pos2D))
             {
                 if (pathIndex == path.finishLineIndex)
@@ -68,8 +67,6 @@ public class Asker : MonoBehaviour
                 Quaternion targetRotation = Quaternion.LookRotation(path.lookPoints[pathIndex] - transform.position);
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
                 transform.Translate(Vector3.forward * Time.deltaTime * speed, Space.Self);
-                
-                
             }
             
             yield return null;

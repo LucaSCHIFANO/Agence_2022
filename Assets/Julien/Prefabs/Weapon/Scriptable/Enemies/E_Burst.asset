@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fe74749fed9de84b847ce6488762201, type: 3}
+  m_Name: E_Burst
+  m_EditorClassIdentifier: 
+  turretName: Burst Turret
+  fireRate: 2
+  bulletToOverheat: 50
+  coolDownPerSecond: 20
+  timeBeforeCoolDown: 1
+  mainColor: {r: 1, g: 0.6666667, b: 0.9960785, a: 1}
+  overHeatColor: {r: 0.4666667, g: 0.36078432, b: 0.47058827, a: 1}
+  wType: 1
+  fType: 0
+  maxDistanceRayCast: 100
+  shootingEffect: {fileID: 3853778323762076991, guid: 49c7c10f24555044b873883eedbc053f,
+    type: 3}
+  spread: 10
+  numberOfShots: 3
+  damage: 2

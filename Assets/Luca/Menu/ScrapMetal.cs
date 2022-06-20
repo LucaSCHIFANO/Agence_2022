@@ -1,17 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.Netcode;
 
 public class ScrapMetal : NetworkBehaviour
 {
-    public int scrap;
+    [SerializeField] protected int startScrap;
     public TextMeshProUGUI textSmetals;
 
-    private NetworkVariable<int> scrapLeft = new NetworkVariable<int>();
+    [HideInInspector] public int scrapLeft;
+    [Networked(OnChanged = nameof(OnScrapChanged))/*, Capacity(1)*/] private int scrapLeftOnline { get; set; }
 
     #region Singleton
     private static ScrapMetal instance;
@@ -23,41 +24,45 @@ public class ScrapMetal : NetworkBehaviour
         if (Instance == null)
             Instance = this;
 
-        scrapLeft.Value = scrap;
+        //scrapLeftOnline.Set(0, 0);
     }
 
-    public override void OnNetworkSpawn()
+    public override void Spawned()
     {
-        base.OnNetworkSpawn();
-
-        if (IsClient)
-        {
-            scrapLeft.OnValueChanged += OnScrapChanged;
-        }
+        base.Spawned();
+        scrapLeft = startScrap;
         
-    }
-
-    private void OnScrapChanged(int previousvalue, int newvalue)
-    {
-        actuText();
-        scrap = newvalue;
-        Debug.Log($"Scrap : {scrap} | Server Scrap : {scrapLeft.Value}");
-    }
-
-
-    private void Start()
-    {
         actuText();
     }
 
-    [ServerRpc(Delivery = RpcDelivery.Reliable, RequireOwnership = false)]
+    public static void OnScrapChanged(Changed<ScrapMetal> changed)
+    {
+        changed.Behaviour.ChangeScrapt();
+    }
+
+    private void ChangeScrapt()
+    {
+        scrapLeft = scrapLeftOnline;
+        actuText();
+    }
+    
+    /*private void OnScrapChanged(ScrapMetal changed)
+    {
+        actuText();
+        scrap = changed.scrapLeft;
+        Debug.Log($"Scrap : {scrap} | Server Scrap : {scrapLeft}");
+    }*/
+
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     public void addMoneyServerRpc(int lint)
     {
-        scrapLeft.Value += lint;
+        scrapLeft += lint;
+        scrapLeftOnline = scrapLeft;
     }
 
     public void actuText()
     {
-        textSmetals.text = "Metals : " + scrapLeft.Value.ToString();
+        textSmetals.text = "Metals : " + scrapLeft;
     }
 }

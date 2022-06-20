@@ -261,12 +261,10 @@ GameObject:
   - component: {fileID: 7192941488078450275}
   - component: {fileID: 7192941488078450300}
   - component: {fileID: 7192941488078450301}
-  - component: {fileID: 8409050375456013163}
   - component: {fileID: 7192941488078450303}
-  - component: {fileID: 967086811462645455}
-  - component: {fileID: 5263107944908477807}
   - component: {fileID: -3112277987992863487}
   - component: {fileID: -5956005546540747877}
+  - component: {fileID: 5777032276320203477}
   m_Layer: 8
   m_Name: Weapon_Machine_Gun
   m_TagString: Untagged
@@ -354,23 +352,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8409050375456013163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7192941488078450296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 573551e24be747348b00b4ada79c0640, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activateDeactivate: 282
-  activated: 0
-  camera: {fileID: 5147668227004191488}
-  clampRotation: 30
-  weaponSensibility: {x: 10, y: 10}
 --- !u!114 &7192941488078450303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,6 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5699421c6917a8e43baf3ac8c23cf4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _fireRate: 30
   _shootingPoint: {fileID: 7192941487095535729}
   _bulletPrefab: {fileID: 8633947298692116883, guid: 6a4aa25c83aa0a949a0a6017daae8a7a,
@@ -400,50 +382,9 @@ MonoBehaviour:
   isPossessed: 0
   canvas: {fileID: 0}
   overHeatPourcent: 0
+  _overHeatPourcentOnline: 0
   _fireType: 1
   _spread: 2
---- !u!114 &967086811462645455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7192941488078450296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 951099334
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
---- !u!114 &5263107944908477807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7192941488078450296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54c9647dc784a46bca664910f182491e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 1
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
-  PositionThreshold: 0.001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  InLocalSpace: 0
-  Interpolate: 1
 --- !u!65 &-3112277987992863487
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -469,9 +410,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ec2a544d9fe1a49ba1a2219dc839d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   interactionType: 0
   requiredHoldTime: 0
   weaponName: MachineGun
+--- !u!114 &5777032276320203477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7192941488078450296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 0
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 0
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: d88326bff26a21146871e04661daf6db
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 7192941488078450303}
+  - {fileID: -5956005546540747877}
+  SimulationBehaviours: []
 --- !u!1 &7192941488215936436
 GameObject:
   m_ObjectHideFlags: 0

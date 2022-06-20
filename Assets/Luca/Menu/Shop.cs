@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using Unity.Jobs;
-using Unity.Netcode;
 using UnityEngine;
 
 public class Shop : NetworkBehaviour
 {
-    private PlayerController _playerController;
-    private NetworkVariable<bool> isPossessed = new NetworkVariable<bool>(false);
-    [SerializeField] protected TruckArea truckArea;
+    private NetworkedPlayer _playerController;
+    [Networked] private bool isPossessed { get; set; }
+    public TruckArea truckArea;
 
 
     #region Singleton
@@ -33,23 +33,22 @@ public class Shop : NetworkBehaviour
 
     public void quitShop()
     {
+        UpgradeMenu.Instance.gotoScreen(0);
         CanvasInGame.Instance.showShop(false);
                 
-        if (_playerController.IsLocalPlayer)
+        if (_playerController.Object.HasInputAuthority)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             
-            _playerController.enabled = true;
-            isPossessed.Value = false;
+            _playerController.CharacterInputHandler.enabled = true;
+            isPossessed = false;
         }
     }
 
-    public void Interact(PlayerController other)
+    public void Interact(NetworkedPlayer other)
     {
-        if (isPossessed.Value) return;
-
-
+        if (isPossessed) return;
 
         var okay = false;
         foreach (var VARIABLE in truckArea.objectInAreaTruck)
@@ -65,14 +64,14 @@ public class Shop : NetworkBehaviour
 
         CanvasInGame.Instance.showShop(true);
 
-        if (other.IsLocalPlayer)
+        if (other.Object.HasInputAuthority)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
             _playerController = other;
-            other.enabled = false;
-            isPossessed.Value = true;
+            other.CharacterInputHandler.enabled = false;
+            isPossessed = true;
         }
 
 

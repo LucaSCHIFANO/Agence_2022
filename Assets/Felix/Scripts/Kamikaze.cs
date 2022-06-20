@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
 namespace Enemies
@@ -9,19 +10,12 @@ namespace Enemies
     {
         [SerializeField] private LayerMask playersLayerMask;
 
-        public override void Initialization(EnemySO _enemySo)
+        public override void FixedUpdateNetwork()
         {
-            base.Initialization(_enemySo);
-
-            target = GameObject.FindWithTag("Player");
-
-            asker.AskNewPath(target.transform, speed, null);
-            targetLastPosition = target.transform.position;
-        }
-
-        protected override void FixedUpdate()
-        {
-            //base.FixedUpdate(); // No weapons so don't need to call it
+            base.FixedUpdateNetwork();
+            
+            if (!Runner.IsServer || asker == null || !isChasing)
+                return;
             
             if (Physics.CheckBox(transform.position, transform.localScale + Vector3.one * range, transform.rotation,
                 playersLayerMask))
@@ -36,9 +30,20 @@ namespace Enemies
             }
         }
 
+        [Rpc(RpcSources.All, RpcTargets.All)]
         private void Explode()
         {
             Debug.Log("Boom");
+
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 5f);
+            foreach (Collider collider in colliders)
+            {
+                HP hp = collider.GetComponent<HP>();
+                if (hp != null)
+                {
+                    hp.TrueReduceHP(50f);
+                }
+            }
 
             Die();
         }

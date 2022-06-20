@@ -13,6 +13,6 @@ public class GeneratorInteractable : Interactable
 
     public override void Interact(PlayerInteraction interactor)
     {
-        GetComponent<GenPanel>().Interact(interactor.GetComponent<PlayerController>());
+        GetComponent<GenPanel>().Interact(interactor.GetComponent<NetworkedPlayer>());
     }
 }

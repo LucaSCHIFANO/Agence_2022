@@ -14,6 +14,11 @@ public class CanvasInGame : MonoBehaviour
 
     [Header("Health")] public Image healthDisplay;
 
+    [Header("Options")] public GameObject optDisplay;
+    
+    [Header("Overheat")] public GameObject truckDisplay;
+    public Image fuelSlider;
+    
     #region Singleton
 
     private static CanvasInGame instance;
@@ -56,5 +61,20 @@ public class CanvasInGame : MonoBehaviour
     {
         var col = healthDisplay.color;
         healthDisplay.color = new Color(col.r, col.g, col.b, alpha);
+    }
+    
+    public void showOptiones(bool boul)
+    {
+        optDisplay.SetActive(boul);
+    }
+    
+    public void showTruck(bool boul)
+    {
+        truckDisplay.SetActive(boul);
+    }
+
+    public void disco()
+    {
+        App.Instance.Disconnect();
     }
 }
