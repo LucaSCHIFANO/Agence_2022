@@ -99,7 +99,7 @@ public class TruckPhysics : TruckBase
 
     // Car sounds /////////////////////////////////
 
-    [HideInInspector] public CarSounds carSounds;
+    public CarSounds carSounds;
 
     [System.Serializable]
     public class CarSounds
@@ -530,6 +530,7 @@ public class TruckPhysics : TruckBase
 
     public override void FixedUpdateNetwork()
     {
+        Debug.Log(currentGear);
         base.FixedUpdateNetwork();
         if (GetInput(out VehiculeInputData input))
         {
@@ -1138,39 +1139,39 @@ public class TruckPhysics : TruckBase
 
 
         // calculate pitch (keep it within reasonable bounds)
-        Pitch = Mathf.Clamp(1.2f + ((motorRPM - carSetting.idleRPM) / (carSetting.shiftUpRPM - carSetting.idleRPM)), 1.0f, 10.0f);
+        Pitch = Mathf.Clamp(1.2f + ((motorRPM - carSetting.idleRPM) / (carSetting.shiftUpRPM - carSetting.idleRPM)), 0.5f, 1.25f);
 
         shiftTime = Mathf.MoveTowards(shiftTime, 0.0f, 0.1f);
 
         if (Pitch == 1)
         {
-            //carSounds.IdleEngine.volume = Mathf.Lerp(carSounds.IdleEngine.volume, 1.0f, 0.1f);
-            //carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.5f, 0.1f);
-            //carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 0.0f, 0.1f);
+            carSounds.IdleEngine.volume = Mathf.Lerp(carSounds.IdleEngine.volume, 1.0f, 0.1f);
+            carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.5f, 0.1f);
+            carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 0.0f, 0.1f);
 
         }
         else
         {
 
-            //carSounds.IdleEngine.volume = Mathf.Lerp(carSounds.IdleEngine.volume, 1.8f - Pitch, 0.1f);
+            carSounds.IdleEngine.volume = Mathf.Lerp(carSounds.IdleEngine.volume, 1.8f - Pitch, 0.1f);
 
 
             if ((Pitch > PitchDelay || accel > 0) && shiftTime == 0.0f)
             {
-                //carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.0f, 0.2f);
-                ////carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 1.0f, 0.1f);
+                carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.0f, 0.2f);
+                carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 1.0f, 0.1f);
             }
             else
             {
-                //carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.5f, 0.1f);
-                //carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 0.0f, 0.2f);
+                carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.5f, 0.1f);
+                carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 0.0f, 0.2f);
             }
 
 
 
 
-            //carSounds.HighEngine.pitch = Pitch;
-            //carSounds.LowEngine.pitch = Pitch;
+            carSounds.HighEngine.pitch = Pitch;
+            carSounds.LowEngine.pitch = Pitch;
 
             PitchDelay = Pitch;
         }
