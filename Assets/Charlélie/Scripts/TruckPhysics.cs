@@ -41,6 +41,19 @@ public class TruckPhysics : TruckBase
     private Rewired.Player player;
     public Rewired.InputAction action;
 
+    // Debug Settings /////////////////////////////////
+
+    public Debugs debugs;
+
+    [System.Serializable]
+    public class Debugs
+    {
+        public float MotorTorque;
+        public float BreakTorque;
+        public bool IsBreaking;
+        public float Accel;
+    }
+
 
     // Wheels Setting /////////////////////////////////
 
@@ -600,6 +613,7 @@ public class TruckPhysics : TruckBase
                     steer = Mathf.MoveTowards(steer, turn, 0.2f);
                     accel = throttle;
                     brake = braking;
+                    debugs.IsBreaking = brake;
                 }
 
             }
@@ -807,10 +821,12 @@ public class TruckPhysics : TruckBase
 
 
                     wantedRPM = 0.0f;
-                    col.brakeTorque = carSetting.brakePower;
                     w.rotation = w_rotate;
 
                 }
+
+                if (brake)
+                    col.brakeTorque = carSetting.brakePower;
             }
             else
             {
@@ -1067,14 +1083,20 @@ public class TruckPhysics : TruckBase
 
 
                     }
-                    else
+                    else if (brake && accel == 0)
                     {
-                        col.motorTorque = 0;
+                        if (Backward)
+                            col.motorTorque = curTorqueCol * 0.9f + newTorque * 1.0f;
+                        else
+                            col.motorTorque = -(curTorqueCol * 0.9f + newTorque * 1.0f);
+                        //col.motorTorque = 0;
                     }
 
                 }
 
-
+                debugs.MotorTorque = col.motorTorque;
+                debugs.Accel = accel;
+                debugs.BreakTorque = col.brakeTorque;
             }
 
 
