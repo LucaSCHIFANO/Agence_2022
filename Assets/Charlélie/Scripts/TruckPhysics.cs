@@ -533,6 +533,8 @@ public class TruckPhysics : TruckBase
                 braking = input.breaking;
                 throttle = input.movement.y;
             }
+
+            throttle = GetComponent<CarInteractable>().isPossessed ? throttle : 0;
             
             turn = input.movement.x;
             shift = input.shift;
