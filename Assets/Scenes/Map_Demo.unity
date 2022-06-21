@@ -4159,12 +4159,12 @@ PrefabInstance:
     - target: {fileID: 6194862444308805060, guid: 682d2a75842959f468e79d09e788ac8f,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6194862444308805060, guid: 682d2a75842959f468e79d09e788ac8f,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6194862444308805060, guid: 682d2a75842959f468e79d09e788ac8f,
         type: 3}
@@ -6123,6 +6123,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103211549564230192, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -55.574005
       objectReference: {fileID: 0}
     - target: {fileID: 5891317641868352293, guid: 7155ffc9e90adff42be892838432656c,
         type: 3}
@@ -9368,7 +9373,7 @@ PrefabInstance:
     - target: {fileID: 6274724183888813008, guid: 4e5e83d8757e7e841a0479d2f2da3546,
         type: 3}
       propertyPath: _autoSession.RoomName
-      value: azer
+      value: azerty
       objectReference: {fileID: 0}
     - target: {fileID: 6274724183888813008, guid: 4e5e83d8757e7e841a0479d2f2da3546,
         type: 3}
@@ -9383,7 +9388,7 @@ PrefabInstance:
     - target: {fileID: 6274724183888813008, guid: 4e5e83d8757e7e841a0479d2f2da3546,
         type: 3}
       propertyPath: _autoSession.LobbyName
-      value: azer
+      value: azerty
       objectReference: {fileID: 0}
     - target: {fileID: 6274724183888813008, guid: 4e5e83d8757e7e841a0479d2f2da3546,
         type: 3}
