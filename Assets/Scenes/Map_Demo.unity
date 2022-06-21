@@ -3133,6 +3133,11 @@ PrefabInstance:
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
       value: 3045049035368917641
       objectReference: {fileID: 0}
+    - target: {fileID: 5106346940529150329, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: sounds.Array.data[0].maxDistance
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 5792445869063153902, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: InterpolationSpace
@@ -5949,6 +5954,7 @@ MonoBehaviour:
     maxDistance: 20
     playOnAwake: 0
     loop: 0
+    in3D: 1
     source: {fileID: 0}
 --- !u!114 &1313894160
 MonoBehaviour:
