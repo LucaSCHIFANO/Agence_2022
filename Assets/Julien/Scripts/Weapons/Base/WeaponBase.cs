@@ -89,7 +89,7 @@ public abstract class WeaponBase : NetworkBehaviour
     {
         overHeatPourcent = overHeatPourcentOnline;
         if (overHeatPourcent >= 100) _isOverHeat = true;
-
+        if (overHeatPourcent <= 0) _isOverHeat = false;
 
         if (Object.HasInputAuthority)
         {

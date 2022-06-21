@@ -378,6 +378,8 @@ MonoBehaviour:
     type: 3}
   startingWeapon: {fileID: 0}
   audioClip: {fileID: 0}
+  timeBtwSound: 0
+  actualTimeBtwSound: 0
   isShooting: 0
 --- !u!114 &5038244686413396802
 MonoBehaviour:
@@ -517,6 +519,8 @@ MonoBehaviour:
     maxDistance: 10
     playOnAwake: 0
     loop: 0
+    in3D: 1
+    spatialBlend: 1
     source: {fileID: 0}
 --- !u!1 &4332460895376048094
 GameObject:
