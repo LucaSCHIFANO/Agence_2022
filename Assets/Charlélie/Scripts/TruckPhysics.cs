@@ -20,6 +20,13 @@ public class TruckPhysics : TruckBase
     
     [SerializeField] private List<ParticleSystem> particleImpact = new List<ParticleSystem>();
     [SerializeField] private List<float> pourcentageImpact = new List<float>();
+    [SerializeField] private TruckReference Reference;
+    [SerializeField] private List<Transform> _respawnPoints;
+
+    public List<Transform> RespawnPoints
+    {
+        get => _respawnPoints;
+    }
 
     TruckFuel fuel;
     
@@ -307,7 +314,7 @@ public class TruckPhysics : TruckBase
 
     void Awake()
     {
-
+        (Reference as IReferenceHead<TruckPhysics>).Set(this);
         if (carSetting.automaticGear) NeutralGear = false;
 
         myRigidbody = transform.GetComponent<Rigidbody>();

@@ -10,7 +10,7 @@ public class CharacterInputHandler : MonoBehaviour
     private bool isJumpButtonPressed;
     private bool isRequestingToSpawn;
 
-    private bool isRepairing;
+    private bool isRepairing;
     private bool isShooting;
 
     private CharacterMovementHandler _characterMovementHandler;

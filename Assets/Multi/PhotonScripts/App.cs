@@ -315,6 +315,8 @@ public class App : MonoBehaviour, INetworkRunnerCallbacks
 			case PossessingType.CAR:
 				input.Set(NetworkedPlayer.Local.VehiculeInputHandler.GetNetworkInput());
 				break;
+			case PossessingType.NONE:
+				break;
 			default:
 				Debug.LogError("PossessingType not handled !! In App.cs");
 				break;
