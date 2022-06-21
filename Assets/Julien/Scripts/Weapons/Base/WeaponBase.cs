@@ -61,6 +61,8 @@ public abstract class WeaponBase : NetworkBehaviour
     [HideInInspector] public bool isPossessed;
     
     [SerializeField] protected CanvasInGame canvas;
+    
+    [SerializeField] protected SoundTransmitter sound;
 
 
     public float overHeatPourcent;
@@ -133,7 +135,7 @@ public abstract class WeaponBase : NetworkBehaviour
         em.rateOverTime = OHParticleOverTime;
     }
 
-    private void Update()
+    public virtual void Update()
     {
         if (Runner != null)
         {
@@ -169,6 +171,12 @@ public abstract class WeaponBase : NetworkBehaviour
         Shoot();
     }
     
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    protected void ShootSoundRpc()
+    {
+        sound.Play("Shoot");
+    }
+    
     
     //creer une particule qd une bullet touche un mur
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
@@ -182,7 +190,8 @@ public abstract class WeaponBase : NetworkBehaviour
             default :
                 Instantiate(bulletEffectNormal, impactPoint, transform.rotation);
                 break;
-            }
+        }
+        
     }
     
     //creer une particule au bout du canon
