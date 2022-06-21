@@ -21,6 +21,12 @@ public class TruckPhysics : TruckBase
     [SerializeField] private List<ParticleSystem> particleImpact = new List<ParticleSystem>();
     [SerializeField] private List<float> pourcentageImpact = new List<float>();
 
+    [SerializeField] private float timeToStart;
+
+    public bool Started { get; set; } = false;
+
+    CarInteractable interact;
+
     TruckFuel fuel;
     
     #region Settings
@@ -32,7 +38,6 @@ public class TruckPhysics : TruckBase
     public bool Reverse;
 
     private Rewired.Player player;
-    public Rewired.InputAction action;
 
     // Debug Settings /////////////////////////////////
 
@@ -287,6 +292,7 @@ public class TruckPhysics : TruckBase
         base.Init();
         player = Rewired.ReInput.players.GetPlayer(0);
         fuel = GetComponent<TruckFuel>();
+        interact = GetComponent<CarInteractable>();
     }
 
     private WheelComponent SetWheelComponent(Transform wheel, float maxSteer, bool drive, float pos_y)
@@ -371,6 +377,17 @@ public class TruckPhysics : TruckBase
         }
 
         _audioSource = gameObject.AddComponent<AudioSource>();
+    }
+
+    public void StartTruck()
+    {
+        StartCoroutine(StartCarCor());
+    }
+
+    IEnumerator StartCarCor()
+    {
+        yield return new WaitForSeconds(timeToStart);
+        Started = true;
     }
 
     #endregion
@@ -492,6 +509,7 @@ public class TruckPhysics : TruckBase
     #region Updates
     void Update()
     {
+        if (!Started) return;
         if (!carSetting.automaticGear && activeControl)
         {
             if (shiftUp)
@@ -515,6 +533,10 @@ public class TruckPhysics : TruckBase
         base.FixedUpdateNetwork();
         if (GetInput(out VehiculeInputData input))
         {
+            throttle = interact.isPossessed ? throttle : 0;
+            braking = interact.isPossessed ? braking : true;
+            if (!Started) return;
+
             shiftUp = input.shiftUp;
             shiftDown = input.shiftDown;
 
@@ -534,8 +556,8 @@ public class TruckPhysics : TruckBase
                 throttle = input.movement.y;
             }
 
-            throttle = GetComponent<CarInteractable>().isPossessed ? throttle : 0;
             
+
             turn = input.movement.x;
             shift = input.shift;
             leftControl = input.leftControl;
@@ -564,6 +586,7 @@ public class TruckPhysics : TruckBase
             if (input.teleportToBigDrop4) { TeleportTo(4); }
         }
 
+        
 
         // speed of car
         speed = myRigidbody.velocity.magnitude * 2.7f;
