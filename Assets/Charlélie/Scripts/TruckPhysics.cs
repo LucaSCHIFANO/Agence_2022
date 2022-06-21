@@ -28,6 +28,12 @@ public class TruckPhysics : TruckBase
         get => _respawnPoints;
     }
 
+    [SerializeField] private float timeToStart;
+
+    public bool Started { get; set; } = false;
+
+    CarInteractable interact;
+
     TruckFuel fuel;
     
     #region Settings
@@ -39,7 +45,6 @@ public class TruckPhysics : TruckBase
     public bool Reverse;
 
     private Rewired.Player player;
-    public Rewired.InputAction action;
 
     // Debug Settings /////////////////////////////////
 
@@ -101,7 +106,7 @@ public class TruckPhysics : TruckBase
 
     // Car sounds /////////////////////////////////
 
-    [HideInInspector] public CarSounds carSounds;
+    public CarSounds carSounds;
 
     [System.Serializable]
     public class CarSounds
@@ -294,6 +299,7 @@ public class TruckPhysics : TruckBase
         base.Init();
         player = Rewired.ReInput.players.GetPlayer(0);
         fuel = GetComponent<TruckFuel>();
+        interact = GetComponent<CarInteractable>();
     }
 
     private WheelComponent SetWheelComponent(Transform wheel, float maxSteer, bool drive, float pos_y)
@@ -378,6 +384,27 @@ public class TruckPhysics : TruckBase
         }
 
         _audioSource = gameObject.AddComponent<AudioSource>();
+    }
+
+    public void StartTruck()
+    {
+        StartCoroutine(StartCarCor());
+    }
+
+    IEnumerator StartCarCor()
+    {
+        yield return new WaitForSeconds(timeToStart);
+        Started = true;
+        carSounds.IdleEngine.Play();
+        carSounds.HighEngine.Play();
+        carSounds.LowEngine.Play();
+    }
+
+    public void onExit()
+    {
+        carSounds.IdleEngine.Stop();
+        carSounds.HighEngine.Stop();
+        carSounds.LowEngine.Stop();
     }
 
     #endregion
@@ -499,6 +526,7 @@ public class TruckPhysics : TruckBase
     #region Updates
     void Update()
     {
+        if (!Started) return;
         if (!carSetting.automaticGear && activeControl)
         {
             if (shiftUp)
@@ -519,9 +547,14 @@ public class TruckPhysics : TruckBase
 
     public override void FixedUpdateNetwork()
     {
+        Debug.Log(currentGear);
         base.FixedUpdateNetwork();
         if (GetInput(out VehiculeInputData input))
         {
+            throttle = interact.isPossessed ? throttle : 0;
+            braking = interact.isPossessed ? braking : true;
+            if (!Started) return;
+
             shiftUp = input.shiftUp;
             shiftDown = input.shiftDown;
 
@@ -540,7 +573,9 @@ public class TruckPhysics : TruckBase
                 braking = input.breaking;
                 throttle = input.movement.y;
             }
+
             
+
             turn = input.movement.x;
             shift = input.shift;
             leftControl = input.leftControl;
@@ -569,6 +604,7 @@ public class TruckPhysics : TruckBase
             if (input.teleportToBigDrop4) { TeleportTo(4); }
         }
 
+        
 
         // speed of car
         speed = myRigidbody.velocity.magnitude * 2.7f;
@@ -1120,39 +1156,39 @@ public class TruckPhysics : TruckBase
 
 
         // calculate pitch (keep it within reasonable bounds)
-        Pitch = Mathf.Clamp(1.2f + ((motorRPM - carSetting.idleRPM) / (carSetting.shiftUpRPM - carSetting.idleRPM)), 1.0f, 10.0f);
+        Pitch = Mathf.Clamp(1.2f + ((motorRPM - carSetting.idleRPM) / (carSetting.shiftUpRPM - carSetting.idleRPM)), 0.5f, 1.25f);
 
         shiftTime = Mathf.MoveTowards(shiftTime, 0.0f, 0.1f);
 
         if (Pitch == 1)
         {
-            //carSounds.IdleEngine.volume = Mathf.Lerp(carSounds.IdleEngine.volume, 1.0f, 0.1f);
-            //carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.5f, 0.1f);
-            //carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 0.0f, 0.1f);
+            carSounds.IdleEngine.volume = Mathf.Lerp(carSounds.IdleEngine.volume, 1.0f, 0.1f);
+            carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.5f, 0.1f);
+            carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 0.0f, 0.1f);
 
         }
         else
         {
 
-            //carSounds.IdleEngine.volume = Mathf.Lerp(carSounds.IdleEngine.volume, 1.8f - Pitch, 0.1f);
+            carSounds.IdleEngine.volume = Mathf.Lerp(carSounds.IdleEngine.volume, 1.8f - Pitch, 0.1f);
 
 
             if ((Pitch > PitchDelay || accel > 0) && shiftTime == 0.0f)
             {
-                //carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.0f, 0.2f);
-                ////carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 1.0f, 0.1f);
+                carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.0f, 0.2f);
+                carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 1.0f, 0.1f);
             }
             else
             {
-                //carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.5f, 0.1f);
-                //carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 0.0f, 0.2f);
+                carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.5f, 0.1f);
+                carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 0.0f, 0.2f);
             }
 
 
 
 
-            //carSounds.HighEngine.pitch = Pitch;
-            //carSounds.LowEngine.pitch = Pitch;
+            carSounds.HighEngine.pitch = Pitch;
+            carSounds.LowEngine.pitch = Pitch;
 
             PitchDelay = Pitch;
         }
