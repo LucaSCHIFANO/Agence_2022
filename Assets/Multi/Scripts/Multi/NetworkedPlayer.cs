@@ -10,7 +10,6 @@ using Random = UnityEngine.Random;
 public class NetworkedPlayer : NetworkBehaviour
 {
     public GameObject Camera;
-    [SerializeField] private MeshRenderer _mesh;
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private List<GameObject> _playerVisuals;
 
@@ -21,12 +20,13 @@ public class NetworkedPlayer : NetworkBehaviour
 
     public static NetworkedPlayer Local { get; set; }
     public PossessingType PossessingType = PossessingType.CHARACTER;
-    
+
 
     public CharacterInputHandler CharacterInputHandler;
     public WeaponInputHandler WeaponInputHandler;
     public VehiculeInputHandler VehiculeInputHandler;
 
+    private PlayerInteraction _playerInteraction;
     private Player _player;
     private bool isPaused;
 
@@ -34,8 +34,9 @@ public class NetworkedPlayer : NetworkBehaviour
     {
         _player = App.Instance.GetPlayer(Object.InputAuthority);
         _name.text = _player.Name;
-        _mesh.material.color = _player.Color;
+        _name.color = _player.Color;
         
+        _playerInteraction = GetComponent<PlayerInteraction>();
         CharacterInputHandler = GetComponent<CharacterInputHandler>();
         //playerRew = Rewired.ReInput.players.GetPlayer(0);
         if (Object.HasInputAuthority)
@@ -105,22 +106,28 @@ public class NetworkedPlayer : NetworkBehaviour
     public void ChangeInputHandler(PossessingType possessingType, GameObject handler)
     {
         PossessingType = possessingType;
+        _playerInteraction.HideTooltip();
         if (possessingType == PossessingType.WEAPON)
         {
             WeaponInputHandler = handler.GetComponent<WeaponInputHandler>();
+            _playerInteraction.enabled = false;
         }
         else if (possessingType == PossessingType.CAR)
         {
             VehiculeInputHandler = handler.GetComponent<VehiculeInputHandler>();
+            _playerInteraction.enabled = false;
         }
         else if (possessingType == PossessingType.CHARACTER)
         {
             CharacterInputHandler = GetComponent<CharacterInputHandler>();
             WeaponInputHandler = null;
             VehiculeInputHandler = null;
+            _playerInteraction.enabled = true;
+            _playerInteraction.ShowTooltip();
         }
         else
         {
+            _playerInteraction.enabled = false;
             CharacterInputHandler = null;
             WeaponInputHandler = null;
             VehiculeInputHandler = null;

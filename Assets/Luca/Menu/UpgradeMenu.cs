@@ -450,7 +450,7 @@ public class UpgradeMenu : NetworkBehaviour
         
     }
 
-    void forRepair()
+    public void forRepair()
     {
         hpSlider.value = truck.currenthealth / truck.maxhealth;
         hpText.text = truck.currenthealth + " / " + truck.maxhealth;
