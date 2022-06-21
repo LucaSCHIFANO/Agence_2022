@@ -94,5 +94,6 @@ public class CarInteractable : Interactable
         _playerController.transform.SetParent(null);
         _playerController.ChangeInputHandler(PossessingType.CHARACTER, gameObject);
         _playerController = null;
+        truck.onExit();
     }
 }

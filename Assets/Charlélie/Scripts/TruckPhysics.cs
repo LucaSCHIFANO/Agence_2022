@@ -395,6 +395,16 @@ public class TruckPhysics : TruckBase
     {
         yield return new WaitForSeconds(timeToStart);
         Started = true;
+        carSounds.IdleEngine.Play();
+        carSounds.HighEngine.Play();
+        carSounds.LowEngine.Play();
+    }
+
+    public void onExit()
+    {
+        carSounds.IdleEngine.Stop();
+        carSounds.HighEngine.Stop();
+        carSounds.LowEngine.Stop();
     }
 
     #endregion

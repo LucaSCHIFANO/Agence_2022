@@ -42,11 +42,9 @@ public class EnemiesZoneTrigger : NetworkBehaviour
             enemies[i] = colliders[i].GetComponent<Enemy>();
             enemiesStartPosition[i] = colliders[i].transform.position;
         }
-<<<<<<< HEAD
-        
+   
         playerTruck = GameObject.FindGameObjectWithTag("Car");
-=======
->>>>>>> Charlelie_Fusion
+
     }
 
     public override void FixedUpdateNetwork()
