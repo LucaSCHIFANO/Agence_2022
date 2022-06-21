@@ -9821,6 +9821,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6274724183888813008, guid: 4e5e83d8757e7e841a0479d2f2da3546,
         type: 3}
+      propertyPath: _autoSession.PlayerLimit
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6274724183888813008, guid: 4e5e83d8757e7e841a0479d2f2da3546,
+        type: 3}
       propertyPath: _autoSession.SkipStaging
       value: 1
       objectReference: {fileID: 0}
