@@ -123,11 +123,13 @@ public class WeaponUltima : WeaponBase
                             }
                             else
                             {
-                                if ((hp is HPPlayer || hp is HPSubTruck|| hp is HPTruck)) hp.reduceHPToServ(damage);
+                                if ((hp is HPPlayer || hp is HPSubTruck || hp is HPTruck)) hp.reduceHPToServ(damage);
                             }
 
 
                         }
+                        else if (hit.collider.gameObject.layer == 10)
+                            FindObjectOfType<CharacterMovementHandler>().HarmTruck(hit); //TODO: Change
                         else
                         {
                             BulletEffectClientRpc(hit.point);
@@ -163,6 +165,8 @@ public class WeaponUltima : WeaponBase
 
 
                     }
+                    else if (hit.collider.gameObject.layer == 10) 
+                        FindObjectOfType<CharacterMovementHandler>().HarmTruck(hit); //TODO: Change
                     else
                     {
                         BulletEffectClientRpc(hit.point);

@@ -83,7 +83,7 @@ public class CharacterMovementHandler : NetworkBehaviour
             if (networkInputData.isRequestingToSpawn) SpawnerVehicule.instance.SpawnCar();
 
             if (networkInputData.isRepairing) CheckLeakReapir();
-            if (networkInputData.isShooting) HarmTruck();
+            //if (networkInputData.isShooting) HarmTruck();
         }
     }
 
@@ -123,15 +123,18 @@ public class CharacterMovementHandler : NetworkBehaviour
         }
     }
 
-    void HarmTruck()
+    public void HarmTruck(RaycastHit hit)
     {
-        HarmTruckRpc();
+        HarmTruckRpc(hit);
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-    void HarmTruckRpc()
+    void HarmTruckRpc(RaycastHit hit)
     {
+        /*
         RaycastHit hit;
-        if (Physics.Raycast(localCamera.transform.position, localCamera.transform.forward, out hit, Mathf.Infinity, partLayer)) parts.HitReservoir(hit);
+        if (Physics.Raycast(localCamera.transform.position, localCamera.transform.forward, out hit, Mathf.Infinity, partLayer))
+        */
+        parts.HitReservoir(hit);
     }
 }
