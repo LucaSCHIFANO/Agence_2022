@@ -6,6 +6,8 @@ using UnityEngine;
 public class HPBoss : HP
 {
     public GameObject impactEffect;
+    [SerializeField] protected ParticleSystem dust;
+    [SerializeField] protected WinRef winReference;
     
     public override void reduceHPToServ(float damage)
     {
@@ -20,7 +22,10 @@ public class HPBoss : HP
         if (currentHP <= 0)
         {
             RPC_ShowCursor();
-            App.Instance.Session.LoadMap(MapIndex.Win);
+            dust.Stop();
+            WinManager _winReference = winReference.Acquire();
+            _winReference.callTheEnd();
+            //App.Instance.Session.LoadMap(MapIndex.Win);
         }
     }
     
