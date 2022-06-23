@@ -6,6 +6,7 @@ using UnityEngine;
 public class HPEnemy : HP
 {
     public GameObject impactEffect;
+    public int enemyPrice;
     
     public override void reduceHPToServ(float damage)
     {
@@ -19,7 +20,8 @@ public class HPEnemy : HP
         
         if (currentHP <= 0)
         {
-            Destroy(gameObject);
+            ScrapMetal.Instance.addMoneyServerRpc(enemyPrice);
+            RPC_End();
         }
     }
     
@@ -28,6 +30,13 @@ public class HPEnemy : HP
     {
         GetComponent<SoundTransmitter>()?.Play("Hit");
         Instantiate(impactEffect, transform.position, transform.rotation);
+    }
+    
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_End()
+    {
+        Destroy(gameObject);
+        
     }
     
        

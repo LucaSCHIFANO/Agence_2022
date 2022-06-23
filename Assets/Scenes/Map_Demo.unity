@@ -3309,6 +3309,11 @@ PrefabInstance:
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
       value: 3045049035368917641
       objectReference: {fileID: 0}
+    - target: {fileID: 4031519212836367178, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.486
+      objectReference: {fileID: 0}
     - target: {fileID: 4745683986952144407, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: m_audioClip
@@ -6517,6 +6522,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
         type: 3}
+      propertyPath: fuel
+      value: 
+      objectReference: {fileID: 1803861824}
+    - target: {fileID: 5103211548772673408, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
       propertyPath: truck
       value: 
       objectReference: {fileID: 1803861816}
@@ -6639,6 +6649,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231231060109375451, guid: 7155ffc9e90adff42be892838432656c,
+        type: 3}
+      propertyPath: pourcentageUpgrades
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8202021422794752718, guid: 7155ffc9e90adff42be892838432656c,
         type: 3}
@@ -7819,7 +7834,7 @@ MonoBehaviour:
   spline: {fileID: 238470527}
   boss: {fileID: 1872768908}
   camera: {fileID: 72605844}
-  timeBtwExplosion: {x: 0, y: 0.75}
+  timeBtwExplosion: {x: 0.25, y: 0.75}
   plusOuMoins: {x: -1, y: 5}
   explosion: {fileID: 3280915942492169377, guid: 5b0b906fe4b94ab4e9900272da41dc09,
     type: 3}
@@ -9061,6 +9076,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ee54e04b2c170e469cbc05f71ffdb97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1803861824 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6855683791000344704, guid: f97c49aa221ddd141a8d7faf4c699dce,
+    type: 3}
+  m_PrefabInstance: {fileID: 353842810}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba1a7f0b8dfb4204185a66cdcd4512ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1823461814 stripped
