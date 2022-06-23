@@ -24,8 +24,8 @@ public class Map : SimulationBehaviour, ISpawned
 		{
 			SpawnAvatar(player, false);
 		}
-		
-		blackScreen.GetComponent<Animator>().SetTrigger("ActivateFadeOut");
+
+		StartCoroutine(desableBlackscreen());
 
 		// Tell the master that we're done loading
 		App.Instance.Session.RPC_FinishedLoading(Runner.LocalPlayer);
@@ -33,6 +33,13 @@ public class Map : SimulationBehaviour, ISpawned
 		_countdownMessage.gameObject.SetActive(true);
 
 		App.Instance.Session.Map = this;
+	}
+
+	IEnumerator desableBlackscreen()
+	{
+		blackScreen.GetComponent<Animator>().SetTrigger("ActivateFadeOut");
+		yield return new WaitForSeconds(1f);
+		blackScreen.SetActive(false);
 	}
 	
 	
