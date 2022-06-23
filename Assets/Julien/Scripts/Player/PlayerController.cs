@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Fusion;
 using TMPro;
 using Unity.Collections;
-using Unity.Netcode;
-using Unity.Netcode.Components;
 using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
 {
-    
+    /*
     [SerializeField] private GameObject Camera;
 
     [SerializeField] private float movementSpeed;
@@ -40,8 +39,8 @@ public class PlayerController : NetworkBehaviour
     private Quaternion possessRotation;
     private Quaternion cameraPossessRotation;
     
-    private NetworkVariable<FixedString32Bytes> displayName = new NetworkVariable<FixedString32Bytes>();
-    private NetworkVariable<int> selectedMaterial = new NetworkVariable<int>();
+    [Networked] private string displayName { get; set; }
+    [Networked] private int selectedMaterial { get; set; }
 
     [SerializeField] protected Animator anim;
 
@@ -49,12 +48,6 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] protected float maxHP;
     protected float currentHP;
     
-    [SerializeField][Range(0, 1)] protected float hpPourcent;
-    
-    [SerializeField] protected float timeBeforeRecov;
-    protected float currentTimeRecov;
-    [SerializeField] protected float recovPerSecond;
-
     private void Start()
     {
         _controller = GetComponent<CharacterController>();
@@ -62,7 +55,7 @@ public class PlayerController : NetworkBehaviour
         originalRotation = transform.rotation;
         originalCamRotation = Camera.transform.localRotation;
 
-        if (IsLocalPlayer)
+        if (Object.HasInputAuthority)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -75,7 +68,7 @@ public class PlayerController : NetworkBehaviour
 
     private void Update()
     {
-        if (IsLocalPlayer)
+        if (Object.HasInputAuthority)
         {
             // Debug.Log("Client Update");
 
@@ -102,10 +95,7 @@ public class PlayerController : NetworkBehaviour
             anim.SetBool("isWalking", (moveDirection.x != 0 || moveDirection.z != 0));
             // anim.gameObject.GetComponent<NetworkAnimator>().SetTrigger(0, true);
             // anim.gameObject.GetComponent<NetworkAnimator>().SetTrigger(1, true);
-            
-            
-            HP();
-        }
+            }
         
         //if(IsClient) anim.SetBool("isWalking", (moveDirection.x != 0 || moveDirection.z != 0));
 
@@ -205,11 +195,11 @@ public class PlayerController : NetworkBehaviour
     private void Awake()
     {
         Debug.Log("Enable Player Controller");
-        displayName.OnValueChanged += HandleDisplayNameChanged;
-        selectedMaterial.OnValueChanged += HandleSkinChanged;
+        // displayName.OnValueChanged += HandleDisplayNameChanged;
+        // selectedMaterial.OnValueChanged += HandleSkinChanged;
     }
 
-    public override void OnNetworkSpawn()
+    /*public override void OnNetworkSpawn()
     {
         if (!IsServer) return;
 
@@ -248,34 +238,11 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
-    void HP()
-    {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            ReceiveDamage(10f);
-        }
-
-        if (currentTimeRecov <= 0) currentHP += Time.deltaTime * recovPerSecond;
-        else currentTimeRecov -= Time.deltaTime;
-
-        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
-        hpPourcent = currentHP / maxHP;
-        
-        CanvasInGame.Instance.actuBlood(Mathf.Abs(hpPourcent - 1));
-        
-    }
-
-    public void ReceiveDamage(float damage)
-    {
-        currentHP -= damage;
-        currentTimeRecov = timeBeforeRecov;
-    }
-
-    
+   
     [ServerRpc]
     void MakePlayerAnimServerRpc(bool isWalking)
     {
-        if (IsOwner && IsClient) return;
+        // if (IsOwner && IsClient) return;
         
         anim.SetBool("isWalking", isWalking);
     }
@@ -374,4 +341,5 @@ public class PlayerController : NetworkBehaviour
         
         _controller.Move(moveDirection * Time.deltaTime);
     }*/
+
 }

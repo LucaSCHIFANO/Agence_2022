@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Fusion;
 using UnityEngine;
-using Unity.Netcode;
 
 public class WeaponFlameThrower : WeaponBase
 {
@@ -23,10 +23,9 @@ public class WeaponFlameThrower : WeaponBase
 
     }
     
-    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     protected override void ShootBulletClientRpc()
     {
-        if(IsOwner) return;
         Instantiate(particleFire, _shootingPoint.position, _shootingPoint.rotation);
         
     }

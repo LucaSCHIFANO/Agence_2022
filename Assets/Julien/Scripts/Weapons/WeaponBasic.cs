@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Fusion;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using Unity.Netcode;
 
 public class WeaponBasic : WeaponBase
 {
@@ -20,9 +20,9 @@ public class WeaponBasic : WeaponBase
     private int shootedRound;
     private bool isShooting;
     
-    protected override void FixedUpdate()
+    public override void FixedUpdateNetwork()
     {
-        base.FixedUpdate();
+        base.FixedUpdateNetwork();
 
         if (isShooting)
         {
@@ -45,8 +45,8 @@ public class WeaponBasic : WeaponBase
             Debug.DrawRay(_shootingPoint.position, shootingDir * 1000, maincolor, 1);
             if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit))
             {
-                CreateBulletEffectServerRpc(hit.point);
-                Instantiate(bulletEffect, hit.point, transform.rotation);
+                CreateBulletEffectServerRpc(hit.point, hit.collider.tag);
+                Instantiate(bulletEffectSand, hit.point, transform.rotation);
             }
         }
         else if (_fireType == WeaponFireType.Projectile)
@@ -80,10 +80,10 @@ public class WeaponBasic : WeaponBase
     }*/
     
     
-    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     protected override void ShootBulletClientRpc()
     {
-        if(IsOwner) return;
+        // if(IsOwner) return;
         Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-_spread, _spread),
             Random.Range(-_spread, _spread), Random.Range(-_spread, _spread))));
         

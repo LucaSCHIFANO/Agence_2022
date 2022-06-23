@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
-using Unity.Netcode;
+using Fusion;
+using Game;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,10 +34,16 @@ public abstract class WeaponBase : NetworkBehaviour
     [SerializeField] protected Color maincolor;
     [SerializeField] protected Color overHeatColor;
 
-    [SerializeField] protected GameObject bulletEffect;
+    [SerializeField] protected GameObject bulletEffectSand;
+    [SerializeField] protected GameObject bulletEffectNormal;
 
     [SerializeField] protected ParticleSystem overHParticle;
     [SerializeField] protected float OHParticleOverTime;
+    
+    [SerializeField] protected GameObject shootParticle;
+
+    
+    [SerializeField] protected bool allieTouret;
 
 
     #endregion
@@ -47,41 +54,62 @@ public abstract class WeaponBase : NetworkBehaviour
     protected float _timeCoolDown;
     protected bool _isOverHeat;
     protected bool _isCoolDown;
+    protected bool _isDisable;
 
-    [HideInInspector] public PlayerController possessor;
+    [HideInInspector] public NetworkedPlayer possessor;
 
     [HideInInspector] public bool isPossessed;
     
-    public CanvasInGame canvas;
+    [SerializeField] protected CanvasInGame canvas;
 
-    
-    [SerializeField][Range(0, 100)] protected float overHeatPourcent;
-    
-    protected virtual void Start()
+
+    public float overHeatPourcent;
+    [Networked(OnChanged = nameof(OnOverHChanged))] protected float overHeatPourcentOnline{ get; set; }
+
+    public override void Spawned()
     {
+        base.Spawned();
+        overHeatPourcentOnline = 0;
         isPossessed = false;
-        overHeatPourcent = 0;
-        Invoke("delayStart", 2);
     }
-
-    private void delayStart()
-    {
-        canvas = CanvasInGame.Instance;
-    }
-
-    protected virtual void FixedUpdate()
+    
+    public override void FixedUpdateNetwork()
     {
         if (_shootingTimer >= 0) _shootingTimer -= Time.deltaTime;
     }
 
+    public static void OnOverHChanged(Changed<WeaponBase> changed)
+    {
+        changed.Behaviour.ChangeOverHeat();
+    }
+    
+    public void ChangeOverHeat()
+    {
+        overHeatPourcent = overHeatPourcentOnline;
+        if (overHeatPourcent >= 100) _isOverHeat = true;
+
+
+        if (Object.HasInputAuthority)
+        {
+            canvas.overheatSlider.fillAmount = overHeatPourcent / 100f;
+            if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
+            else canvas.overheatSlider.color = maincolor;
+        }
+    }
 
     public virtual void Shoot()
     {
-        overHeatPourcent += (100 / _bulletToOverHeat);
-        if (overHeatPourcent >= 100) _isOverHeat = true;
-        _timeCoolDown = _timeBeforeCoolDown;
+        if (Object == null) return;
+        if (Runner.IsServer)
+        {
+            overHeatPourcent += (100 / _bulletToOverHeat);
+            overHeatPourcentOnline = overHeatPourcent;
         
-        EventSystem.ShootEvent();
+            if (overHeatPourcent >= 100) _isOverHeat = true;
+            _timeCoolDown = _timeBeforeCoolDown;
+        
+            EventSystem.ShootEvent();
+        }
     }
 
     public void Reload()
@@ -93,63 +121,93 @@ public abstract class WeaponBase : NetworkBehaviour
 
     public void DisableWeapon()
     {
+        if (Object == null) return;
+        _isDisable = true;
         _isOverHeat = true;
         _coolDownPerSecond = 0;
-        overHeatPourcent = 100f;
+        overHeatPourcentOnline = 100f;
         _isCoolDown = false;
+        
+        var em = overHParticle.emission;
+        em.enabled = true;
+        em.rateOverTime = OHParticleOverTime;
     }
 
     private void Update()
     {
-        if (_isCoolDown || _isOverHeat) overHeatPourcent -= _coolDownPerSecond * Time.deltaTime;
-        else if(!_isCoolDown) _timeCoolDown -= Time.deltaTime;
-
-        if (_timeCoolDown <= 0) _isCoolDown = true;
-        else _isCoolDown = false;
+        if (Runner != null)
+        {
+            if (Runner.IsServer)
+            {
+                if (_isCoolDown || _isOverHeat) overHeatPourcent -= _coolDownPerSecond * Time.deltaTime;
+                else if (!_isCoolDown && _timeCoolDown > 0) _timeCoolDown -= Time.deltaTime;
+                
+                if (_timeCoolDown <= 0) _isCoolDown = true;
+                else _isCoolDown = false;
         
-        if (overHeatPourcent <= 0) _isOverHeat = false;
+                if (overHeatPourcent <= 0) _isOverHeat = false;
+                
+                overHeatPourcent = Mathf.Clamp(overHeatPourcent, 0, 100);
+                
+                overHeatPourcentOnline = overHeatPourcent;
+            }
+        }
 
-        var em = overHParticle.emission;
-        em.enabled = true;
-        
-        if(_isOverHeat)em.rateOverTime = OHParticleOverTime;
-        else em.rateOverTime = 0f;
-    
+        if (overHParticle != null)
+        {
+            var em = overHParticle.emission;
+            em.enabled = true;
 
-        overHeatPourcent = Mathf.Clamp(overHeatPourcent, 0, 100);
-        
-        
-        if (!isPossessed) return;
+            if (_isOverHeat) em.rateOverTime = OHParticleOverTime;
+            else em.rateOverTime = 0f;
+        }
+    }
 
-        canvas.overheatSlider.fillAmount = (overHeatPourcent / 100);
-        if (_isOverHeat) canvas.overheatSlider.color = overHeatColor;
-        else canvas.overheatSlider.color = maincolor;
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    public void AskToShoot()
+    {
+        Shoot();
     }
     
     
     //creer une particule qd une bullet touche un mur
-    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
-    protected void BulletEffectClientRpc(Vector3 impactPoint)
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    protected void BulletEffectClientRpc(Vector3 impactPoint, string tag)
     {
-        if(IsOwner) return;
-        Instantiate(bulletEffect, impactPoint, transform.rotation);
+        switch (tag)
+        {
+            case "Sand" : 
+                Instantiate(bulletEffectSand, impactPoint, transform.rotation);
+                break;
+            default :
+                Instantiate(bulletEffectNormal, impactPoint, transform.rotation);
+                break;
+            }
     }
     
-    [ServerRpc(Delivery = RpcDelivery.Unreliable)]
-    protected void CreateBulletEffectServerRpc(Vector3 impactPoint)
+    //creer une particule au bout du canon
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    protected void ShootEffectClientRpc()
     {
-        BulletEffectClientRpc(impactPoint);
+        Instantiate(shootParticle, _shootingPoint.position, _shootingPoint.rotation);
+    }
+    
+    
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    protected void CreateBulletEffectServerRpc(Vector3 impactPoint, string tag)
+    {
+        BulletEffectClientRpc(impactPoint, tag);
     }
     
     
     //creer la balle override en fct de l'arme
-    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     protected virtual void ShootBulletClientRpc()
     {
-        if(IsOwner) return;
+        // if(IsOwner) return;
     }
     
-    [ServerRpc(Delivery = RpcDelivery.Unreliable)]
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     protected void ShootBulletServerRpc()
     {
         ShootBulletClientRpc();

@@ -1,16 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Fusion;
 using TMPro;
 using Unity.Collections;
-using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class UpgradeMenu : NetworkBehaviour
 {
     public List<GameObject> screenList = new List<GameObject>();
+    public List<GameObject> screenListInRed = new List<GameObject>();
 
     private int intUpgrade = 4;
 
@@ -50,10 +53,14 @@ public class UpgradeMenu : NetworkBehaviour
     public List<listInt> CPrice = new List<listInt>();
 
 
-
     private bool sellMode;
 
-    
+    [Header("Repair")] [SerializeField] protected HPTruck truck;
+    [SerializeField] protected TextMeshProUGUI fullText;
+    [SerializeField] protected TextMeshProUGUI partialText;
+    [SerializeField] protected float fullRepairPrice;
+    [SerializeField] protected Slider hpSlider;
+    [SerializeField] protected TextMeshProUGUI hpText;
 
     #region Singleton
 
@@ -67,11 +74,12 @@ public class UpgradeMenu : NetworkBehaviour
 
     #endregion
 
-    private NetworkList<int> upgradesForteresseServer;
-    private NetworkList<int> upgradesCamionServer;
-    private NetworkList<int> unlockedWeapon1Server;
+    [Networked(OnChanged = nameof(UpgradesForteresseServerOnChanged)), Capacity(3)] private NetworkArray<int> upgradesForteresseServer => default;
+    [Networked(OnChanged = nameof(UpgradesCamionServerOnChanged)), Capacity(3)] private NetworkArray<int> upgradesCamionServer => default;
+    [Networked(OnChanged = nameof(UnlockWeapon1ServerOnChanged)), Capacity(5)] private NetworkLinkedList<int> unlockedWeapon1Server => default;
+    [Networked(OnChanged = nameof(UnlockWeapon2ServerOnChanged)), Capacity(5)] private NetworkLinkedList<int> unlockedWeapon2Server => default;
+    
     private int sizeWeapon1;
-    private NetworkList<int> unlockedWeapon2Server;
     private int sizeWeapon2;
 
     private void Awake()
@@ -79,11 +87,6 @@ public class UpgradeMenu : NetworkBehaviour
         if (Instance == null)
             Instance = this;
 
-
-        upgradesForteresseServer = new NetworkList<int>();
-        upgradesCamionServer = new NetworkList<int>();
-        unlockedWeapon1Server = new NetworkList<int>();
-        unlockedWeapon2Server = new NetworkList<int>();
 
         for (int i = 0; i < 3; i++)
         {
@@ -94,15 +97,18 @@ public class UpgradeMenu : NetworkBehaviour
     }
 
 
-    private void Start()
+    public override void Spawned()
     {
-        if (IsHost)
+        if (Runner.IsServer)
         {
             for (int i = 0; i < 3; i++)
             {
-                upgradesForteresseServer.Add(0);
-                upgradesCamionServer.Add(0);
+                upgradesForteresseServer.Set(i, 0);
+                upgradesCamionServer.Set(i,0);
             }
+            
+            unlockedWeapon1Server.Add(0);
+            unlockedWeapon2Server.Add(0);
         }
 
         #region pour tout set et que ca bug pas
@@ -119,9 +125,10 @@ public class UpgradeMenu : NetworkBehaviour
         gameObject.SetActive(false);
 
         #endregion
+
     }
 
-    public override void OnNetworkSpawn()
+    /*public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
 
@@ -132,15 +139,25 @@ public class UpgradeMenu : NetworkBehaviour
             unlockedWeapon1Server.OnListChanged += UnlockWeapon1ServerOnChanged;
             unlockedWeapon2Server.OnListChanged += UnlockWeapon2ServerOnChanged;
         }
-    }
-
+    }*/
 
     public void gotoScreen(int lint)
     {
         for (int i = 0; i < screenList.Count; i++)
         {
-            if (i == lint) screenList[i].SetActive(true);
-            else screenList[i].SetActive(false);
+            
+            if (i == lint)
+            {
+                if (i != 0 && i != 1) screenListInRed[i].SetActive(true); 
+                screenList[i].SetActive(true);
+            }
+            else
+            {
+                if (i != 0 && i != 1) screenListInRed[i].SetActive(false); 
+                screenList[i].SetActive(false);
+            }
+            
+            if(i == 5) forRepair(); 
         }
 
         if (sellMode)
@@ -154,7 +171,8 @@ public class UpgradeMenu : NetworkBehaviour
 
     public void upgradeForteresse(int lint)
     {
-        if (FPrice[lint].intList[upgradesF[lint]] <= ScrapMetal.Instance.scrap)
+        
+        if (FPrice[lint].intList[upgradesF[lint]] <= ScrapMetal.Instance.scrapLeft)
         {
             ScrapMetal.Instance.addMoneyServerRpc(-FPrice[lint].intList[upgradesF[lint]]);
 
@@ -164,7 +182,7 @@ public class UpgradeMenu : NetworkBehaviour
 
     public void upgradeCamion(int lint)
     {
-        if (CPrice[lint].intList[upgradesC[lint]] <= ScrapMetal.Instance.scrap)
+        if (CPrice[lint].intList[upgradesC[lint]] <= ScrapMetal.Instance.scrapLeft)
         {
             ScrapMetal.Instance.addMoneyServerRpc(-CPrice[lint].intList[upgradesC[lint]]);
 
@@ -178,9 +196,9 @@ public class UpgradeMenu : NetworkBehaviour
         if (firstWeapon)
         {
             disableAllWeapon1();
-
+      
             var currentButtonTree = buttonTree;
-            lastUpgrade1 = buttonTree;
+            lastUpgrade1 = currentButtonTree;
             bool finished = false;
 
             if (!sellMode)
@@ -192,7 +210,6 @@ public class UpgradeMenu : NetworkBehaviour
                         currentButtonTree = currentButtonTree.previousUpgrades;
                     else finished = true;
                 }
-
 
                 for (int i = 0; i < listAllButton1.Count; i++)
                 {
@@ -207,7 +224,7 @@ public class UpgradeMenu : NetworkBehaviour
             {
                 if (currentButtonTree.previousUpgrades != null)
                 {
-                    currentButtonTree = currentButtonTree.previousUpgrades;
+                    //currentButtonTree = currentButtonTree.previousUpgrades;
                     currentButtonTree.sellable();
                     lastUpgrade1 = currentButtonTree;
                     if (currentButtonTree.previousUpgrades != null) currentButtonTree = currentButtonTree.previousUpgrades;
@@ -224,9 +241,8 @@ public class UpgradeMenu : NetworkBehaviour
                     else finished = true;
                 }
             }
-            
+
             upgradeWeaponTurret(turret1, lastUpgrade1.id);
-            
         }
         else
         {
@@ -259,7 +275,7 @@ public class UpgradeMenu : NetworkBehaviour
             {
                 if (currentButtonTree.previousUpgrades != null)
                 {
-                    currentButtonTree = currentButtonTree.previousUpgrades;
+                    //currentButtonTree = currentButtonTree.previousUpgrades;
                     currentButtonTree.sellable();
                     lastUpgrade2 = currentButtonTree;
                     if (currentButtonTree.previousUpgrades != null) currentButtonTree = currentButtonTree.previousUpgrades;
@@ -377,15 +393,15 @@ public class UpgradeMenu : NetworkBehaviour
        
         turret.GetComponent<WeaponUltima>().actuAllStats(allWeapon[id]);
         
-        turret.GetComponent<TestControlWeapon>().actuGauge();
+        // turret.GetComponent<TestControlWeapon>().actuGauge();
     }
 
     
-    public void quitUpgrade()
+    /*public void quitUpgrade()
     {
         gotoScreen(0);
         Shop.Instance.quitShop();
-    }
+    }*/
 
     public void changeSellMode(bool firstweapon)
     {
@@ -434,6 +450,41 @@ public class UpgradeMenu : NetworkBehaviour
         
     }
 
+    public void forRepair()
+    {
+        hpSlider.value = truck.currenthealth / truck.maxhealth;
+        hpText.text = ((int)truck.currenthealth + " / " + truck.maxhealth).ToString();
+
+        float prePriceFull = (truck.currenthealth / truck.maxhealth);
+        float priceFull = fullRepairPrice - (fullRepairPrice * prePriceFull);
+        float pricePartial = fullRepairPrice / 10;
+        
+        
+        fullText.text = "Full repair : " + ((int)priceFull).ToString() + " metals";
+        
+        if(priceFull > pricePartial) partialText.text = "Partial repair : " + ((int)pricePartial).ToString() + " metals";
+        else partialText.text = "Partial repair : " + ((int)priceFull).ToString() + " metals";
+    }
+    
+    public void healTruck(bool fullHeal)
+    {
+        int price1 = (int)fullRepairPrice / 10;
+        int price2 = (int)(fullRepairPrice - (fullRepairPrice * (truck.currenthealth / truck.maxhealth)));
+
+        if (fullHeal) if(price2 <= ScrapMetal.Instance.scrapLeft) ScrapMetal.Instance.addMoneyServerRpc(-price2);
+            
+        else
+        {
+            var cheap = Mathf.Min(price1, price2);
+            if(cheap <= ScrapMetal.Instance.scrapLeft) ScrapMetal.Instance.addMoneyServerRpc(-cheap);
+
+        }
+        
+        truck.heal(fullHeal);
+        forRepair();
+    }
+    
+
     [System.Serializable]
     public class listInt
     {
@@ -442,67 +493,81 @@ public class UpgradeMenu : NetworkBehaviour
     }
 
 
+    
+    
     #region Online
 
-    [ServerRpc(RequireOwnership = false, Delivery = RpcDelivery.Reliable)]
-    public void UpgradeForteresseServerRpc(int upgradeIndex, ServerRpcParams serverRpcParams = default)
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
+    public void UpgradeForteresseServerRpc(int upgradeIndex)
     {
-        upgradesForteresseServer[upgradeIndex]++;
+        upgradesForteresseServer.Set(upgradeIndex, upgradesForteresseServer[upgradeIndex]+1);
     }
 
-    [ServerRpc(RequireOwnership = false, Delivery = RpcDelivery.Reliable)]
-    public void UpgradeCamionServerRpc(int upgradeIndex, ServerRpcParams serverRpcParams = default)
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
+    public void UpgradeCamionServerRpc(int upgradeIndex)
     {
-        upgradesCamionServer[upgradeIndex]++;
+        upgradesCamionServer.Set(upgradeIndex, upgradesCamionServer[upgradeIndex]+1);
     }
 
-    [ServerRpc(RequireOwnership = false, Delivery = RpcDelivery.Reliable)]
-    public void UnlockWeapon1ServerRpc(int weaponIdToUnlock, ServerRpcParams serverRpcParams = default)
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
+    public void UnlockWeapon1ServerRpc(int weaponIdToUnlock, RpcInfo info = default)
     {
         unlockedWeapon1Server.Add(weaponIdToUnlock);
+        
     }
     
-    [ServerRpc(RequireOwnership = false, Delivery = RpcDelivery.Reliable)]
-    public void SellWeapon1ServerRpc(int weaponIdToUnlock, ServerRpcParams serverRpcParams = default)
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
+    public void SellWeapon1ServerRpc(int weaponIdToUnlock, RpcInfo info = default)
     {
         unlockedWeapon1Server.Remove(weaponIdToUnlock);
     }
 
 
-    [ServerRpc(RequireOwnership = false, Delivery = RpcDelivery.Reliable)]
-    public void UnlockWeapon2ServerRpc(int weaponIdToUnlock, ServerRpcParams serverRpcParams = default)
+    
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
+    public void UnlockWeapon2ServerRpc(int weaponIdToUnlock)
     {
         unlockedWeapon2Server.Add(weaponIdToUnlock);
     }
     
-    [ServerRpc(RequireOwnership = false, Delivery = RpcDelivery.Reliable)]
-    public void SellWeapon2ServerRpc(int weaponIdToUnlock, ServerRpcParams serverRpcParams = default)
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
+    public void SellWeapon2ServerRpc(int weaponIdToUnlock)
     {
         unlockedWeapon2Server.Remove(weaponIdToUnlock);
     }
 
-    private void UpgradesForteresseServerOnChanged(NetworkListEvent<int> newList)
+    public static void UpgradesForteresseServerOnChanged(Changed<UpgradeMenu> changed)
     {
-        Debug.Log($"upgradesF[{newList.Index}] = {newList.Value}");
+        changed.Behaviour.ForteresseChange();
+    }
 
-        upgradesF[newList.Index] = newList.Value;
+    private void ForteresseChange()
+    {
+        upgradesF = upgradesForteresseServer.ToList();
         visuF();
     }
 
-    private void UpgradesCamionServerOnChanged(NetworkListEvent<int> newList)
+    public static void UpgradesCamionServerOnChanged(Changed<UpgradeMenu> changed)
     {
-        Debug.Log($"upgradesC[{newList.Index}] = {newList.Value}");
-
-        upgradesC[newList.Index] = newList.Value;
+        changed.Behaviour.CamionChange();
+    }
+    
+    private void CamionChange()
+    {
+        upgradesC = upgradesCamionServer.ToList();
         visuC();
     }
+    
 
-    private void UnlockWeapon1ServerOnChanged(NetworkListEvent<int> newList)
+    public static void UnlockWeapon1ServerOnChanged(Changed<UpgradeMenu> changed)
     {
-        WTreeButton weaponBuyed = listAllButton1.Find((button) =>
-        {
-            return button.id == newList.Value;
-        });
+        changed.Behaviour.weapon1Change();
+    }
+
+    private void weapon1Change()
+    {
+        
+        WTreeButton weaponBuyed = listAllButton1[unlockedWeapon1Server.Last()];
         
         sellMode = unlockedWeapon1Server.Count < sizeWeapon1;
         upgradeWeapon(weaponBuyed, weaponBuyed.firstWeapon);
@@ -510,18 +575,21 @@ public class UpgradeMenu : NetworkBehaviour
     }
     
     
-    private void UnlockWeapon2ServerOnChanged(NetworkListEvent<int> newList)
+    public static void UnlockWeapon2ServerOnChanged(Changed<UpgradeMenu> changed)
     {
-        WTreeButton weaponBuyed = listAllButton2.Find((button) =>
-        {
-            return button.id == newList.Value;
-        });
+        changed.Behaviour.weapon2Change();
+    }
+    
+    private void weapon2Change()
+    {
+        
+        WTreeButton weaponBuyed = listAllButton2[unlockedWeapon2Server.Last()];
         
         sellMode = unlockedWeapon2Server.Count < sizeWeapon2;
         upgradeWeapon(weaponBuyed, weaponBuyed.firstWeapon);
         sizeWeapon2 = unlockedWeapon2Server.Count;
     }
     
-    
     #endregion
 }
+

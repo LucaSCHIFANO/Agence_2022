@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
 using UnityEngine;
+using Fusion;
 
 public class TestControlWeapon : NetworkBehaviour
 {
-
+    /*
     [SerializeField] private KeyCode activateDeactivate;
 
     [SerializeField] bool activated;
@@ -54,7 +54,7 @@ public class TestControlWeapon : NetworkBehaviour
                 GetComponent<WeaponBase>().Reload();
             }*/
 
-            if (Input.GetKeyDown(KeyCode.E))
+            /*if (Input.GetKeyDown(KeyCode.E))
             {
                 Debug.Log("Get Out");
                 _playerController.enabled = true;
@@ -124,5 +124,5 @@ public class TestControlWeapon : NetworkBehaviour
             NetworkManager.Singleton.ConnectedClients[rpcParams.Receive.SenderClientId].PlayerObject.transform.SetParent(null);
             GetComponent<NetworkObject>().RemoveOwnership();
         }
-    }
+    }*/
 }

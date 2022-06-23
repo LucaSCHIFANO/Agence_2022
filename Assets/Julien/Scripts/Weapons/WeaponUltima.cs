@@ -1,22 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
-using Unity.Netcode;
+using Random = UnityEngine.Random;
 
 public class WeaponUltima : WeaponBase
 {
 
     [SerializeField] protected weapon actualWeapon;
-    [SerializeField] public WeaponFireType fireType;
+    [SerializeField] protected WeaponFireType fireType;
 
-    [SerializeField] public float spread;
-    [SerializeField] public int numberOfShot;
-    [SerializeField] public float damage;
+    [SerializeField] protected float maxDistance;
+
+    [SerializeField] protected float spread;
+    [SerializeField] protected int numberOfShot;
+    [SerializeField] protected float damage;
     
-    [SerializeField] public GameObject particleFire;
+    [SerializeField] protected GameObject particleFire;
+    [SerializeField] protected WScriptable startingWeapon;
     
     
-        public enum weapon
+    public enum weapon
     {
         BASIC,
         BURST,
@@ -29,14 +34,19 @@ public class WeaponUltima : WeaponBase
 
     private int shootedRound;
     public bool isShooting;
-    
-    protected override void FixedUpdate()
+
+    private void Start()
     {
-        base.FixedUpdate();
+        actuAllStats(startingWeapon);
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        base.FixedUpdateNetwork();
         
         if (actualWeapon == weapon.BASIC || actualWeapon == weapon.BURST)
         {
-            if (isShooting)
+            if (isShooting && isPossessed)
             {
                 Shoot();
             }
@@ -46,7 +56,11 @@ public class WeaponUltima : WeaponBase
 
     public void actuAllStats(WScriptable SObject)
     {
-        GetComponent<WeaponInteractable>().weaponName = SObject.turretName;
+        if (Object == null) return;
+        
+        WeaponInteractable interactable = GetComponent<WeaponInteractable>();
+        if (interactable != null) interactable.weaponName = SObject.turretName;
+        
         _fireRate = SObject.fireRate;
         _bulletToOverHeat = SObject.bulletToOverheat;
         _coolDownPerSecond = SObject.coolDownPerSecond;
@@ -55,6 +69,10 @@ public class WeaponUltima : WeaponBase
         overHeatColor = SObject.overHeatColor;
         actualWeapon = SObject.wType;
         fireType = SObject.fType;
+        maxDistance = SObject.maxDistanceRayCast;
+        shootParticle = SObject.shootingEffect;
+        
+        
         spread = SObject.spread;
         numberOfShot = SObject.numberOfShots;
         damage = SObject.damage;
@@ -62,34 +80,96 @@ public class WeaponUltima : WeaponBase
         _isOverHeat = false;
         _isCoolDown = false;
         isShooting = false;
-        overHeatPourcent = 0;
+        overHeatPourcentOnline = 0;
         _shootingTimer = 0;
         _timeCoolDown = 0;
     }
 
     public override void Shoot()
     {
+        if (Object == null) return;
+        if (!Runner.IsServer) return;
         if (actualWeapon == weapon.BASIC || actualWeapon == weapon.BURST) isShooting = true;
         
         if (_shootingTimer > 0) return;
         if (_isOverHeat) return;
         
         base.Shoot();
-
+        
+        
         if (fireType == WeaponFireType.Hitscan)
         {
-            
-            RaycastHit hit;
-            Vector3 shootingDir = Quaternion.Euler(Random.Range(-spread, spread), Random.Range(-spread, spread), Random.Range(-spread, spread)) * _shootingPoint.forward;
-            Debug.DrawRay(_shootingPoint.position, shootingDir * 1000, Color.red, 10);
-            if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit))
+            ShootEffectClientRpc();
+
+            if (actualWeapon == weapon.SHOTGUN)
             {
-                CreateBulletEffectServerRpc(hit.point);
-                Instantiate(bulletEffect, hit.point, transform.rotation);
-                
-                if (hit.collider.gameObject.GetComponent<HP>()) hit.collider.gameObject.GetComponent<HP>().reduceHP(damage * (Generator.Instance.pourcentageList[0] / 100));
+                for (int i = 0; i < numberOfShot; i++)
+                {
+                    RaycastHit hit;
+                    Vector3 shootingDir = Quaternion.Euler(Random.Range(-spread, spread), Random.Range(-spread, spread),
+                        Random.Range(-spread, spread)) * _shootingPoint.forward;
+                    
+                    if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance))
+                    {
+
+                        // Instantiate(bulletEffect, , transform.rotation);
+
+                        if (hit.collider.gameObject.TryGetComponent(out HP hp))
+                        {
+                            if (allieTouret)
+                            {
+                                if (hp is HPPlayer || hp is HPSubTruck || hp is HPTruck) Debug.Log("friendly fire not allowed");
+                                else hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                            }
+                            else
+                            {
+                                if ((hp is HPPlayer || hp is HPSubTruck|| hp is HPTruck)) hp.reduceHPToServ(damage);
+                            }
+
+
+                        }
+                        else
+                        {
+                            BulletEffectClientRpc(hit.point, hit.collider.tag);
+                        }
+                    }
+                }
             }
             
+            else
+            {
+                RaycastHit hit;
+                Vector3 shootingDir = Quaternion.Euler(Random.Range(-spread, spread), Random.Range(-spread, spread),
+                    Random.Range(-spread, spread)) * _shootingPoint.forward;
+                Debug.DrawRay(_shootingPoint.position, shootingDir * 1000, Color.red, 10);
+                // LagCompensatedHit hit;
+                // Runner.LagCompensation.Raycast(_shootingPoint.position, shootingDir, 100, Object.InputAuthority, out hitComp) <- Only check if enemy are hit
+                if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance))
+                {
+                    Debug.Log((hit.collider));
+                    // Instantiate(bulletEffect, , transform.rotation);
+
+                    if (hit.collider.gameObject.TryGetComponent(out HP hp))
+                    {
+                        if (allieTouret)
+                        {
+                            if (hp is HPPlayer || hp is HPSubTruck || hp is HPTruck) Debug.Log("friendly fire not allowed");
+                            else hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                        }
+                        else
+                        {
+                            if ((hp is HPPlayer || hp is HPSubTruck|| hp is HPTruck)) hp.reduceHPToServ(damage);
+                        }
+
+
+                    }
+                    else
+                    {
+                        BulletEffectClientRpc(hit.point, hit.collider.tag);
+                    }
+                }
+            }
+
         }
         else
         {
@@ -119,10 +199,10 @@ public class WeaponUltima : WeaponBase
     
     
     
-    [ClientRpc(Delivery = RpcDelivery.Unreliable)]
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     protected override void ShootBulletClientRpc()
     {
-        if(IsOwner) return;
+        // if(IsOwner) return;
         
         if(fireType == WeaponFireType.Projectile) shootWeaponBullet();
         

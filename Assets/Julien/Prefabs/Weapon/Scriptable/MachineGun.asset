@@ -21,6 +21,9 @@ MonoBehaviour:
   overHeatColor: {r: 0.5294118, g: 0, b: 0, a: 1}
   wType: 2
   fType: 0
+  maxDistanceRayCast: 100
+  shootingEffect: {fileID: 3853778323762076991, guid: 49c7c10f24555044b873883eedbc053f,
+    type: 3}
   spread: 2
   numberOfShots: 0
   damage: 1

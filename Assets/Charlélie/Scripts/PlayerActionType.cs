@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public enum PlayerActionType
-{
-    WALKING,
-    DRIVING,
-    SHOOTING
+using System.Collections; 
+using System.Collections.Generic; 
+using UnityEngine; 
+ 
+public enum PlayerActionType 
+{ 
+    WALKING, 
+    DRIVING, 
+    SHOOTING 
 }

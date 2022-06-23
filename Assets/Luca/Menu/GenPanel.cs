@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
+using Fusion;
 using UnityEngine;
 
 public class GenPanel : NetworkBehaviour
 {
     
     [Header("Interact")]
-    private PlayerController _playerController;
-    private NetworkVariable<bool> isPossessed = new NetworkVariable<bool>(false);
+    private NetworkedPlayer _playerController;
+    [Networked] private bool isPossessed { get; set; }
     
     
     
@@ -35,34 +35,34 @@ public class GenPanel : NetworkBehaviour
     public void quitPanel()
     {
         CanvasInGame.Instance.showGen(false);
-                
-        if (_playerController.IsLocalPlayer)
+        
+        if (_playerController.Object.HasInputAuthority)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             
             _playerController.enabled = true;
-            isPossessed.Value = false;
+            isPossessed = false;
         }
+
     }
 
 
 
-    public void Interact(PlayerController other)
+    public void Interact(NetworkedPlayer other)
     {
-        if (isPossessed.Value) return;
-
-
+        if (isPossessed) return;
+        
         CanvasInGame.Instance.showGen(true);
 
-        if (other.IsLocalPlayer)
+        if (other.Object.HasInputAuthority)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
             _playerController = other;
             other.enabled = false;
-            isPossessed.Value = true;
+            isPossessed = true;
         }
 
 
