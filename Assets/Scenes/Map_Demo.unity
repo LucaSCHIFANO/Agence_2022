@@ -6247,7 +6247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  maxHP: 500
+  maxHP: 10
   _currentHP: 0
   impactEffect: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
     type: 3}
@@ -7819,11 +7819,12 @@ MonoBehaviour:
   spline: {fileID: 238470527}
   boss: {fileID: 1872768908}
   camera: {fileID: 72605844}
-  numberOfExplosion: 10
-  timeBtwExplosion: 0.5
+  timeBtwExplosion: {x: 0, y: 0.75}
   plusOuMoins: {x: -1, y: 5}
-  explosion: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
+  explosion: {fileID: 3280915942492169377, guid: 5b0b906fe4b94ab4e9900272da41dc09,
     type: 3}
+  timeBeforeFonduAuNoir: 5
+  blackScreen: {fileID: 1731447671}
 --- !u!4 &1528892610
 Transform:
   m_ObjectHideFlags: 0
@@ -8944,6 +8945,7 @@ GameObject:
   - component: {fileID: 1731447672}
   - component: {fileID: 1731447674}
   - component: {fileID: 1731447673}
+  - component: {fileID: 1731447675}
   m_Layer: 5
   m_Name: HIDE ALL
   m_TagString: Untagged
@@ -9009,6 +9011,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1731447671}
   m_CullTransparentMesh: 1
+--- !u!95 &1731447675
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731447671}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 753a1261e1b434944b9b641b99d8dd10, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1768260542 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6868334529711643000, guid: 274257755fd8cbe478668ba8106d8bc0,
