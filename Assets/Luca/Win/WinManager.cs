@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,12 +16,15 @@ public class WinManager : MonoBehaviour
     [SerializeField] protected GameObject camera;
 
     [Header("Explosion")]
-    [SerializeField] protected int numberOfExplosion;
-    [SerializeField] protected float timeBtwExplosion;
-    
+    [SerializeField] protected Vector2 timeBtwExplosion;
+
     [SerializeField] protected Vector2 plusOuMoins;
 
     [SerializeField] protected GameObject explosion;
+    
+    [Header("BlackScreen")]
+    [SerializeField] protected float timeBeforeFonduAuNoir;
+    [SerializeField] protected GameObject blackScreen;
     
     private void Awake()
     {
@@ -29,7 +33,7 @@ public class WinManager : MonoBehaviour
 
     public void callTheEnd()
     {
-        spline.getSpeed = 0;
+        spline.getSpeed = 0.0000000001f;
         camera.SetActive(true);
         for (int i = 0; i < boss.listWeapon.Count; i++)
         {
@@ -37,19 +41,31 @@ public class WinManager : MonoBehaviour
         }
 
         StartCoroutine(explosionToEnd());
+        StartCoroutine(fadeOutToEnd());
         
     }
     
     IEnumerator explosionToEnd()
     {
-        for (int i = 0; i < numberOfExplosion; i++)
+        while(true)
         {
             Vector3 pos = new Vector3(boss.transform.position.x + Random.Range(plusOuMoins.x, plusOuMoins.y), boss.transform.position.y + Random.Range(plusOuMoins.x, plusOuMoins.y), boss.transform.position.z + Random.Range(plusOuMoins.x, plusOuMoins.y));
 
             Instantiate(explosion, pos, boss.transform.rotation);
-            yield return new WaitForSeconds(timeBtwExplosion);
+            yield return new WaitForSeconds(Random.Range(timeBtwExplosion.x, timeBtwExplosion.y));
         }
         
+    }
+    
+    IEnumerator fadeOutToEnd()
+    {
+        yield return new WaitForSeconds(timeBeforeFonduAuNoir);
+        
+        blackScreen.SetActive(true);
+        blackScreen.GetComponent<Animator>().SetTrigger("ChangerState");
+        
+        yield return new WaitForSeconds(1.2f);
+
         App.Instance.Session.LoadMap(MapIndex.Win);
     }
     

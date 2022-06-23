@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
@@ -23,7 +24,9 @@ public class Map : SimulationBehaviour, ISpawned
 		{
 			SpawnAvatar(player, false);
 		}
-		blackScreen.SetActive(false);
+		
+		blackScreen.GetComponent<Animator>().SetTrigger("ActivateFadeOut");
+
 		// Tell the master that we're done loading
 		App.Instance.Session.RPC_FinishedLoading(Runner.LocalPlayer);
 		// Show the countdown message
@@ -31,6 +34,7 @@ public class Map : SimulationBehaviour, ISpawned
 
 		App.Instance.Session.Map = this;
 	}
+	
 	
 	public void SpawnAvatar(Player player, bool lateJoiner)
 	{
