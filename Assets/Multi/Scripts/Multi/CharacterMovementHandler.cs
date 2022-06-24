@@ -18,18 +18,30 @@ public class CharacterMovementHandler : NetworkBehaviour
     
     [SerializeField] protected NetworkMecanimAnimator anim;
 
-    [Space(5)]
-
-    [Header("Leak Params")]
-    private GameObject _currLeakTargeted;
-    private float _repairLeakCurrTime;
-
-    [SerializeField] private float _repairLeakMaxTime;
-    [SerializeField] private LayerMask _leakLayer;
-    [SerializeField] private LayerMask partLayer;
-    ReservoirParts parts;
-
-
+    [Space(5)]
+
+
+
+    [Header("Leak Params")]
+
+    private GameObject _currLeakTargeted;
+
+    private float _repairLeakCurrTime;
+
+
+
+    [SerializeField] private float _repairLeakMaxTime;
+
+    [SerializeField] private LayerMask _leakLayer;
+
+    [SerializeField] private LayerMask partLayer;
+
+    ReservoirParts parts;
+
+
+
+
+
     private void Awake()
     {
         _networkCharacterControllerPrototypeCustom = GetComponent<NetworkCharacterControllerPrototypeCustom>();
@@ -56,11 +68,13 @@ public class CharacterMovementHandler : NetworkBehaviour
         {
             IsMovingOld = true;
             MySetTrigger("IsMoving");
+            Debug.Log("move");
         }
         else if (!IsMoving && IsMovingOld)
         {
             IsMovingOld = false;
-            MySetTrigger("IsMoving");
+            MySetTrigger("IsIdle");
+            Debug.Log("idle");
         }
     }
 
@@ -115,7 +129,8 @@ public class CharacterMovementHandler : NetworkBehaviour
             _repairLeakCurrTime -= Time.deltaTime;
             if (_repairLeakCurrTime <= 0.0f)
                 _currLeakTargeted.transform.parent.GetComponent<Leak>().OnDoneRepair();
-        }
+        }
+
         else
         {
             _repairLeakCurrTime = _repairLeakMaxTime;
@@ -123,15 +138,22 @@ public class CharacterMovementHandler : NetworkBehaviour
         }
     }
 
-    void HarmTruck()
-    {
-        HarmTruckRpc();
+    void HarmTruck()
+
+    {
+
+        HarmTruckRpc();
+
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-    void HarmTruckRpc()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(localCamera.transform.position, localCamera.transform.forward, out hit, Mathf.Infinity, partLayer)) parts.HitReservoir(hit);
+    void HarmTruckRpc()
+
+    {
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(localCamera.transform.position, localCamera.transform.forward, out hit, Mathf.Infinity, partLayer)) parts.HitReservoir(hit);
+
     }
 }
