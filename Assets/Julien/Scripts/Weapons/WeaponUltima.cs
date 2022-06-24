@@ -66,7 +66,7 @@ public class WeaponUltima : WeaponBase
     
     public void actuAllStats(WScriptable SObject)
     {
-        if (Object == null) return;
+        if (Object == null || SObject == null) return;
         
         WeaponInteractable interactable = GetComponent<WeaponInteractable>();
         if (interactable != null) interactable.weaponName = SObject.turretName;
