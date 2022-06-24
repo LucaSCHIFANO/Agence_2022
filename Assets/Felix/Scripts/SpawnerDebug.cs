@@ -97,7 +97,7 @@ public class SpawnerDebug : MonoBehaviour
         }
         else
         {
-            player.Runner.Spawn(networkObject, new Vector3(0f, 1f, 0f));
+            player.Runner.Spawn(networkObject, player.gameObject.transform.forward * 5f);
         }
     }
 }
