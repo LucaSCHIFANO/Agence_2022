@@ -4545,17 +4545,17 @@ PrefabInstance:
     - target: {fileID: 6194862444308805060, guid: 682d2a75842959f468e79d09e788ac8f,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6194862444308805060, guid: 682d2a75842959f468e79d09e788ac8f,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6194862444308805060, guid: 682d2a75842959f468e79d09e788ac8f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 460
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 682d2a75842959f468e79d09e788ac8f, type: 3}
@@ -6357,6 +6357,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042439095538118630, guid: f5a63098b6afa5e4897288dbd7fecf0d,
+        type: 3}
+      propertyPath: _interpolationDataSource
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5a63098b6afa5e4897288dbd7fecf0d, type: 3}
@@ -9898,10 +9903,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1270292900}
     m_Modifications:
+    - target: {fileID: -1291067177727544176, guid: f5a63098b6afa5e4897288dbd7fecf0d,
+        type: 3}
+      propertyPath: obstaclesLayerMask.m_Bits
+      value: 448
+      objectReference: {fileID: 0}
     - target: {fileID: 969192348745435775, guid: f5a63098b6afa5e4897288dbd7fecf0d,
         type: 3}
       propertyPath: Flags
-      value: 133633
+      value: 2561
       objectReference: {fileID: 0}
     - target: {fileID: 969192348745435775, guid: f5a63098b6afa5e4897288dbd7fecf0d,
         type: 3}
@@ -9976,7 +9986,12 @@ PrefabInstance:
     - target: {fileID: 6506913731331482615, guid: f5a63098b6afa5e4897288dbd7fecf0d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042439095538118630, guid: f5a63098b6afa5e4897288dbd7fecf0d,
+        type: 3}
+      propertyPath: _interpolationDataSource
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5a63098b6afa5e4897288dbd7fecf0d, type: 3}

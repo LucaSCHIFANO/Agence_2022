@@ -87,7 +87,8 @@ public class WeaponUltima : WeaponBase
         numberOfShot = SObject.numberOfShots;
         damage = SObject.damage;
         audioClip = SObject.weaponSound;
-        sound.sounds[0].clip = audioClip;
+        if (sound != null && audioClip != null)
+            sound.sounds[0].clip = audioClip;
 
         timeBtwSound = SObject.timeBtwSound;
         

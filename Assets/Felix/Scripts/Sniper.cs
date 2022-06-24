@@ -41,11 +41,17 @@ namespace Enemies
         {
             if (_points.Length == 0) return;
             
-            Vector3 direction = target.transform.position - _points[^1];
+            Vector3 direction = target.transform.position + new Vector3(0f, 1f, 0f) - _points[^1];
 
             if (Physics.Raycast(_points[^1], direction.normalized, out RaycastHit hit, range, obstaclesLayerMask))
             {
-                if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Car"))
+                Transform highParent = hit.transform;
+                while (highParent.parent != null)
+                {
+                    highParent = highParent.parent;
+                }
+                
+                if (highParent.CompareTag("Player") || highParent.CompareTag("Car"))
                 {
                     print("Sniper will see player at end");
                     return;
@@ -65,9 +71,15 @@ namespace Enemies
                 Vector3 nVector = new Vector3(x2, 0, z2) * range;
                 nVector.y = target.transform.position.y;
 
-                if (Physics.Raycast(nVector, (target.transform.position - nVector).normalized, out RaycastHit hit2, range, obstaclesLayerMask))
+                if (Physics.Raycast(nVector, (target.transform.position + new Vector3(0f, 1f, 0f) - nVector).normalized, out hit, range, obstaclesLayerMask))
                 {
-                    if (hit2.collider.CompareTag("Player")  || hit.collider.CompareTag("Car"))
+                    Transform highParent = hit.transform;
+                    while (highParent.parent != null)
+                    {
+                        highParent = highParent.parent;
+                    }
+                    
+                    if (highParent.CompareTag("Player") || highParent.CompareTag("Car"))
                     {
                         print("Sniper found a new position where he will see player at end");
                         asker.AskNewPath(nVector, speed, null);
