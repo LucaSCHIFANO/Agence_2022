@@ -4377,6 +4377,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: VisuTruck
       objectReference: {fileID: 0}
+    - target: {fileID: 5723704941633605732, guid: c2f9fad8581f66746916343fb97d60dd,
+        type: 3}
+      propertyPath: m_text
+      value: Speed
+      objectReference: {fileID: 0}
+    - target: {fileID: 5723704941668968210, guid: c2f9fad8581f66746916343fb97d60dd,
+        type: 3}
+      propertyPath: m_Name
+      value: Reservoir
+      objectReference: {fileID: 0}
+    - target: {fileID: 5723704941713904812, guid: c2f9fad8581f66746916343fb97d60dd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5723704941830355359, guid: c2f9fad8581f66746916343fb97d60dd,
+        type: 3}
+      propertyPath: m_text
+      value: Armour
+      objectReference: {fileID: 0}
     - target: {fileID: 5723704941956553330, guid: c2f9fad8581f66746916343fb97d60dd,
         type: 3}
       propertyPath: m_IsActive
@@ -4692,6 +4712,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5723704942425739714, guid: c2f9fad8581f66746916343fb97d60dd,
+        type: 3}
+      propertyPath: m_Name
+      value: Blindage
+      objectReference: {fileID: 0}
+    - target: {fileID: 5723704942470376846, guid: c2f9fad8581f66746916343fb97d60dd,
+        type: 3}
+      propertyPath: m_Name
+      value: Vitesse
+      objectReference: {fileID: 0}
     - target: {fileID: 5723704942842124839, guid: c2f9fad8581f66746916343fb97d60dd,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -4741,6 +4771,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -55.574
+      objectReference: {fileID: 0}
+    - target: {fileID: 5723704942993162598, guid: c2f9fad8581f66746916343fb97d60dd,
+        type: 3}
+      propertyPath: m_text
+      value: Tank
       objectReference: {fileID: 0}
     - target: {fileID: 5723704943010848943, guid: c2f9fad8581f66746916343fb97d60dd,
         type: 3}

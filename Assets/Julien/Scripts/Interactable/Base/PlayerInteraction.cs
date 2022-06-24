@@ -44,6 +44,17 @@ public class PlayerInteraction : NetworkBehaviour
         }
     }
 
+    public void HideTooltip()
+    {
+        interactionText.alpha = 0;
+        interactionText.text = "";
+    }
+
+    public void ShowTooltip()
+    {
+        interactionText.alpha = 1;
+    }
+
     void HandleInteraction(Interactable interactable)
     {
         switch (interactable.interactionType)

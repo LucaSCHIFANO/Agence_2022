@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 3323683867169605653}
   - component: {fileID: 3025623514163928328}
   - component: {fileID: 1496436279535288313}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Kamikaze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,12 +149,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  range: 0.25
   enemySo: {fileID: 11400000, guid: 6905c950451cdfa4486769d1e84dc8f7, type: 2}
   weaponsPosition: []
   playersLayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
 --- !u!114 &3323683867169605653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,6 +229,7 @@ MonoBehaviour:
     useRandomPitch: 1
     pitch: 0.9
     pitchRandom: 1.1
+    maxDistance: 20
     playOnAwake: 0
     loop: 0
     source: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7099923427349109451}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: WeaponPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6059505656964179133}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: WeaponPoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
