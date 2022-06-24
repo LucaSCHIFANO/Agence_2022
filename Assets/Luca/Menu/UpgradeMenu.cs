@@ -366,7 +366,7 @@ public class UpgradeMenu : NetworkBehaviour
     {
 
         fuel.changeMaxFuel();
-        
+
         var multi = 1;
         for (int i = 0; i < upgradesC.Count; i++)
         {

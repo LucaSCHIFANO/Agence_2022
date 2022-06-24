@@ -34,6 +34,8 @@ public class GenPanel : NetworkBehaviour
 
     public void quitPanel()
     {
+        
+        
         _playerController.ChangeInputHandler(PossessingType.CHARACTER, gameObject);
         CanvasInGame.Instance.showGen(false);
         

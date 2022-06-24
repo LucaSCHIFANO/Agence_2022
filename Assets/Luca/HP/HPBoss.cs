@@ -26,7 +26,7 @@ public class HPBoss : HP
         }
     }
     
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     private void RPC_EndBoss()
     {
         Cursor.lockState = CursorLockMode.None;

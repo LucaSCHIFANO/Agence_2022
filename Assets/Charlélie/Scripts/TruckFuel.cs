@@ -195,7 +195,11 @@ public class TruckFuel : TruckBase
     public void changeMaxFuel()
     {
         if (UpgradeMenu.Instance.upgradesC[0] != 0)
+        {
             maxFuel *= (1f + (UpgradeMenu.Instance.upgradesC[0] * Generator.Instance.getPourcentUpgrade) / 100f);
+            GetComponent<TruckFuel>().ChangeFuel();
+        }
+
 
     }
 
