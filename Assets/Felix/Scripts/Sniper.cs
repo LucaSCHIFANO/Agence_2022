@@ -59,7 +59,7 @@ namespace Enemies
 
             for (int i = 5; i < 360; i+=5)
             {
-                float x2 = Mathf.Cos(i * direction.x) - Mathf.Sin(i*direction.z);
+                float x2 = Mathf.Cos(i * direction.x) - Mathf.Sin(i * direction.z);
                 float z2 = Mathf.Sign(i * direction.x) + Mathf.Cos(i * direction.z);
 
                 Vector3 nVector = new Vector3(x2, 0, z2) * range;
