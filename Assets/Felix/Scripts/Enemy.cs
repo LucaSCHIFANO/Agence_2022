@@ -80,7 +80,6 @@ namespace Enemies
 
                 for (int i = 0; i < weaponsObject.Length; i++)
                 {
-                    //GameObject nWeapon = Instantiate(weaponsObject[i], weaponsPosition[i]);
                     GameObject nWeapon = Runner.Spawn(weaponsObject[i].GetComponent<NetworkObject>(), weaponsPosition[i].position, weaponsPosition[i].rotation).gameObject;
                     nWeapon.transform.SetParent(weaponsPosition[i]);
                     WeaponUltima weaponUltima = nWeapon.GetComponent<WeaponUltima>();
