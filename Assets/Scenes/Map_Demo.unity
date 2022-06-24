@@ -10119,7 +10119,7 @@ PrefabInstance:
     - target: {fileID: 969192348745435775, guid: f5a63098b6afa5e4897288dbd7fecf0d,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 969192348745435775, guid: f5a63098b6afa5e4897288dbd7fecf0d,
         type: 3}
@@ -10192,6 +10192,11 @@ PrefabInstance:
       value: Sniper
       objectReference: {fileID: 0}
     - target: {fileID: 6506913731331482615, guid: f5a63098b6afa5e4897288dbd7fecf0d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977535430288246130, guid: f5a63098b6afa5e4897288dbd7fecf0d,
         type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -10391,6 +10396,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977535430288246130, guid: 048259f9db17a28489a9e9e023a9b9e8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 048259f9db17a28489a9e9e023a9b9e8, type: 3}
