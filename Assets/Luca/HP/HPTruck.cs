@@ -27,7 +27,9 @@ public class HPTruck : HP
     
     public override void TrueReduceHP(float damage)
     {
-        currentHP -= damage;
+        var startdamage = damage;
+        if (UpgradeMenu.Instance.upgradesC[1] != 0) damage *= (1f + (UpgradeMenu.Instance.upgradesC[1] * Generator.Instance.getPourcentUpgrade) / 100f);
+        currentHP -= (damage - (damage - startdamage));
         SoundRPC();
         particleVisuRpc();
         

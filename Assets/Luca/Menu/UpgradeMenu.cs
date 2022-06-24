@@ -33,7 +33,7 @@ public class UpgradeMenu : NetworkBehaviour
     private List<GameObject> upgradesCButton = new List<GameObject>(); //upgrades forteresse mais les buttons +
 
     [SerializeField] private List<TextMeshProUGUI> listPriceC = new List<TextMeshProUGUI>();
-    private List<int> upgradesC = new List<int>(); //upgrades forteresse en int
+    [HideInInspector] public List<int> upgradesC = new List<int>(); //upgrades forteresse en int
 
     [Header("Weapons1")] 
     public List<WTreeButton> listAllButton1 = new List<WTreeButton>();
@@ -61,6 +61,8 @@ public class UpgradeMenu : NetworkBehaviour
     [SerializeField] protected float fullRepairPrice;
     [SerializeField] protected Slider hpSlider;
     [SerializeField] protected TextMeshProUGUI hpText;
+
+    [SerializeField] private TruckFuel fuel;
 
     #region Singleton
 
@@ -362,6 +364,9 @@ public class UpgradeMenu : NetworkBehaviour
 
     private void visuC()
     {
+
+        fuel.changeMaxFuel();
+
         var multi = 1;
         for (int i = 0; i < upgradesC.Count; i++)
         {
