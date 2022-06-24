@@ -158,6 +158,7 @@ public class TruckFuel : TruckBase
         if (!Runner.IsServer) return;
         base.FixedUpdateNetwork();
         if (OutOfGas && currFuel > 0) OutOfGas = false;
+        
         float currDist = Vector3.Distance(transform.position, prevPos);
         totDist += currDist;
         currMeter += currDist * phys.Throttle * (infiniteGas ? 0 : 1);

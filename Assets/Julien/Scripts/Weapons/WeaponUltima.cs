@@ -109,6 +109,7 @@ public class WeaponUltima : WeaponBase
         if (_isOverHeat) return;
         
         base.Shoot();
+        
         if (actualTimeBtwSound <= 0)
         {
             ShootSoundRpc();
