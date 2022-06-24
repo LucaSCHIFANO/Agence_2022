@@ -34,7 +34,8 @@ public class GenPanel : NetworkBehaviour
 
     public void quitPanel()
     {
-        
+        sendUpgradePosRpc(Generator.Instance.pourcentageListWOutChange.ToArray(), Generator.Instance.pourcentageList.ToArray());
+        //Part2Rpc(Generator.Instance.pourcentageList);
         
         _playerController.ChangeInputHandler(PossessingType.CHARACTER, gameObject);
         CanvasInGame.Instance.showGen(false);
@@ -49,6 +50,25 @@ public class GenPanel : NetworkBehaviour
         }
 
     }
+    
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void sendUpgradePosRpc(float[] pourcent, float[] pourcentChanged)
+    {
+        var value1 = new List<float>(pourcent);
+        var value2 = new List<float>(pourcentChanged);
+        
+        Generator.Instance.pourcentageListWOutChange = value1;
+        Generator.Instance.pourcentageList = value1;
+        Generator.Instance.visuelChange();
+        
+    }
+
+    /*[Rpc(RpcSources.All, RpcTargets.All)]
+    private void Part2Rpc(List<float> pourcentChanged)
+    {
+        Generator.Instance.pourcentageList = pourcentChanged;
+        Generator.Instance.visuelChange();
+    }*/
 
 
 

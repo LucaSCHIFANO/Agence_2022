@@ -1306,6 +1306,8 @@ MonoBehaviour:
   overclokePourcent: 150
   overclokePourcentOther: 0
   pourcentageList: []
+  pourcentageListWOutChange: []
+  pourcentageUpgrades: 10
 --- !u!1 &1924243472854003020
 GameObject:
   m_ObjectHideFlags: 0
@@ -4656,6 +4658,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5723704942103657767, guid: c2f9fad8581f66746916343fb97d60dd,
+        type: 3}
+      propertyPath: m_text
+      value: Truck
       objectReference: {fileID: 0}
     - target: {fileID: 5723704942127341192, guid: c2f9fad8581f66746916343fb97d60dd,
         type: 3}

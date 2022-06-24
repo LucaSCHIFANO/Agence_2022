@@ -65,8 +65,9 @@ public class CarInteractable : Interactable
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void SetParentingClientRpc()
     {
-        Transform _playerTransform = Runner.GetPlayerObject(Object.InputAuthority).transform;
-        _playerTransform.SetParent(transform);
+        var test = Runner.GetPlayerObject(Object.InputAuthority);
+        Transform _playerTransform = test.transform;
+        _playerTransform.SetParent(seat);
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
