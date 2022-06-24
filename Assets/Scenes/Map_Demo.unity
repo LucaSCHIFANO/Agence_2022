@@ -2972,6 +2972,17 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -1.681
       objectReference: {fileID: 0}
+    - target: {fileID: 1434855997210280667, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e6465e60ae718d343a32cb5a8de67c4a, type: 3}
+    - target: {fileID: 1434855997210280667, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -1828073082294812753, guid: 6cf919df79f5ae447b956de6086238ee,
+        type: 2}
     - target: {fileID: 1766707134016895645, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3133,6 +3144,33 @@ PrefabInstance:
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
       value: 3045049035368917641
       objectReference: {fileID: 0}
+    - target: {fileID: 4745683986952144407, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 650e257c70f4a93438ef66a03230603e, type: 3}
+    - target: {fileID: 4745683986952144407, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4745683986952144407, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -1828073082294812753, guid: 6cf919df79f5ae447b956de6086238ee,
+        type: 2}
+    - target: {fileID: 5058573573041381717, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f15bea0b66b005a4f88ed4602e558324, type: 3}
+    - target: {fileID: 5058573573041381717, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -1828073082294812753, guid: 6cf919df79f5ae447b956de6086238ee,
+        type: 2}
     - target: {fileID: 5106346940529150329, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: sounds.Array.data[0].maxDistance
@@ -3168,6 +3206,22 @@ PrefabInstance:
       propertyPath: _interpolationDataSource
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6570771367908600480, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ed81eb64b07107f46b44ac72f2c9455f, type: 3}
+    - target: {fileID: 6570771367908600480, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570771367908600480, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -1828073082294812753, guid: 6cf919df79f5ae447b956de6086238ee,
+        type: 2}
     - target: {fileID: 6639255481687269755, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: canvas
@@ -3183,6 +3237,22 @@ PrefabInstance:
       propertyPath: consPerMeterInL
       value: 0.16
       objectReference: {fileID: 0}
+    - target: {fileID: 6889253509523990654, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0c00797116b9d144bae242a1b836c8e8, type: 3}
+    - target: {fileID: 6889253509523990654, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6889253509523990654, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -1828073082294812753, guid: 6cf919df79f5ae447b956de6086238ee,
+        type: 2}
     - target: {fileID: 7490717165535407015, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: Flags
