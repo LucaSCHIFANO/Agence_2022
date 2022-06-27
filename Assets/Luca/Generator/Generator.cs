@@ -11,7 +11,7 @@ public class Generator : MonoBehaviour
 {
     [SerializeField] protected OnClickTriangle triangleButton;
 
-    [SerializeField] protected GameObject upgradePoint;
+    [SerializeField] public GameObject upgradePoint;
     [SerializeField] private List<Transform> listSommets = new List<Transform>();
     [SerializeField] private List<UILineRenderer> myLines = new List<UILineRenderer>();
     [SerializeField] private float lineThinkness;
@@ -25,6 +25,12 @@ public class Generator : MonoBehaviour
     [SerializeField] private float overclokePourcentOther; // pourcent quand autre en overcloke
 
     [HideInInspector] public List<float> pourcentageList = new List<float>(); // 0 atk 1 def 2 spd
+    [HideInInspector] public List<float> pourcentageListWOutChange = new List<float>(); // 0 atk 1 def 2 spd
+    [SerializeField] private int pourcentageUpgrades;
+    public int getPourcentUpgrade
+    {
+        get => pourcentageUpgrades; 
+    }
 
 
     #region Singleton
@@ -54,6 +60,7 @@ public class Generator : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             pourcentageList.Add(0);
+            pourcentageListWOutChange.Add(0);
         }
 
         onClickTriangle(false);
@@ -123,22 +130,38 @@ public class Generator : MonoBehaviour
             
             var pourcent =
                 (((maximumDist - distTop) / maximumDist) * 100).ToString("F2"); // max distance 800 min distance 0
+            
+            pourcentageListWOutChange[i] = (((maximumDist - distTop) / maximumDist) * 100);
+            
             switch (i)
             {
                 case 0:
                     textList[0].text = "Att : " + pourcent + "%";
-                    pourcentageList[0] = ((maximumDist - distTop) / maximumDist) * 100;
+                    pourcentageList[0] = (((maximumDist - distTop) / maximumDist) * 100);
                     break;
                 case 1:
                     textList[1].text = "Def : " + pourcent + "%";
-                    pourcentageList[1] = ((maximumDist - distTop) / maximumDist) * 100;
+                    pourcentageList[1] = (((maximumDist - distTop) / maximumDist) * 100);
+                    
+                    if(UpgradeMenu.Instance.upgradesC[1] != 0) pourcentageList[1] *= ( 1 + (UpgradeMenu.Instance.upgradesC[1] * pourcentageUpgrades) / 100);
+                    
                     break;
                 case 2:
                     textList[2].text = "Spd : " + pourcent + "%";
-                    pourcentageList[2] = ((maximumDist - distTop) / maximumDist) * 100;
+                    pourcentageList[2] = (((maximumDist - distTop) / maximumDist) * 100);
+                    
+                    if(UpgradeMenu.Instance.upgradesC[2] != 0) pourcentageList[2] *= ( 1 + (UpgradeMenu.Instance.upgradesC[2] * pourcentageUpgrades) / 100);
+                    
                     break;
             }
         }
+    }
+
+    public void visuelChange()
+    {
+        textList[0].text = "Att : " + pourcentageListWOutChange[0].ToString("F2") + "%";
+        textList[1].text = "Def : " + pourcentageListWOutChange[1].ToString("F2") + "%";
+        textList[2].text = "Spd : " + pourcentageListWOutChange[2].ToString("F2") + "%";
     }
 
 

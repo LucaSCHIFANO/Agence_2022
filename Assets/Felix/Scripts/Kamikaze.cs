@@ -23,9 +23,19 @@ namespace Enemies
                 Explode();
             }
 
-            if (Vector3.Distance(targetLastPosition, target.transform.position) >= range * speed / 2)
+            if (Vector3.Distance(targetLastPosition, target.transform.position) >= 4.5f)
             {
                 asker.AskNewPath(target.transform, speed, null);
+                /*if (asker.pathEnd)
+                {
+                    asker.AskNewPath(target.transform, speed, null);
+                }
+                else
+                {
+                    // Add line calcul
+                    asker.AskNewPathAtEnd(target.transform.position);
+                }*/
+
                 targetLastPosition = target.transform.position;
             }
         }

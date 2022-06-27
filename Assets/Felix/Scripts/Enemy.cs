@@ -78,9 +78,8 @@ namespace Enemies
 
                 weapons = new WeaponUltima[weaponsObject.Length];
 
-                for (int i = 0; i < weaponsObject.Length; i++)
+                for (int i = 0; i < weapons.Length; i++)
                 {
-                    //GameObject nWeapon = Instantiate(weaponsObject[i], weaponsPosition[i]);
                     GameObject nWeapon = Runner.Spawn(weaponsObject[i].GetComponent<NetworkObject>(), weaponsPosition[i].position, weaponsPosition[i].rotation).gameObject;
                     nWeapon.transform.SetParent(weaponsPosition[i]);
                     WeaponUltima weaponUltima = nWeapon.GetComponent<WeaponUltima>();
@@ -111,7 +110,7 @@ namespace Enemies
             
             foreach (WeaponUltima weapon in weapons)
             {
-                weapon.transform.LookAt(target.transform);
+                weapon.transform.LookAt(target.transform.position + new Vector3(0f, 1f, 0f));
             }
         }
 

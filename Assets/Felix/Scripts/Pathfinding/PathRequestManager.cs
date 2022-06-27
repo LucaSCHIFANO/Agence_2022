@@ -13,7 +13,6 @@ namespace Pathfinding
 
         private Queue<PathResult> results = new Queue<PathResult>();
 
-
         private void Awake()
         {
             instance = this;
@@ -71,14 +70,12 @@ namespace Pathfinding
     public struct PathRequest
     {
         public Vector3 startPoint;
-        public Transform startTransform;
         public Vector3 endPoint;
         public Action<Vector3[], bool> callback;
 
-        public PathRequest(Vector3 _startPoint, Transform _startTransform, Vector3 _endPoint, Action<Vector3[], bool> _callback)
+        public PathRequest(Vector3 _startPoint, Vector3 _endPoint, Action<Vector3[], bool> _callback)
         {
             startPoint = _startPoint;
-            startTransform = _startTransform;
             endPoint = _endPoint;
             callback = _callback;
         }

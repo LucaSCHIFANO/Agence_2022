@@ -9,6 +9,8 @@ public class HPTruck : HP
     [SerializeField] private GameObject impactEffect;
     private TruckPhysics truck;
     private UpgradeMenu menu;
+    private float reductionAt100;
+    [SerializeField] protected WinRef winReference;
     
     public float currenthealth { get { return currentHP; } }
     public float maxhealth { get { return maxHP; } }
@@ -27,7 +29,10 @@ public class HPTruck : HP
     
     public override void TrueReduceHP(float damage)
     {
-        currentHP -= damage;
+        var reduction = 0f;
+        if (UpgradeMenu.Instance.upgradesC[1] != 0) reduction = (Generator.Instance.pourcentageList[1] * reductionAt100) / 100;
+
+        currentHP -= (damage * (1 - (reduction) / 100));
         SoundRPC();
         particleVisuRpc();
         
@@ -38,10 +43,18 @@ public class HPTruck : HP
             {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
-                App.Instance.Session.LoadMap(MapIndex.GameOver);
+
+                RPC_EndGame();
             }
         }
 
+    }
+    
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void RPC_EndGame()
+    {
+        WinManager _winReference = winReference.Acquire();
+        _winReference.callTheGameOver();
     }
     
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]

@@ -20,7 +20,12 @@ public class WeaponUltima : WeaponBase
     [SerializeField] protected GameObject particleFire;
     [SerializeField] protected WScriptable startingWeapon;
     
-    
+    [SerializeField] protected AudioClip audioClip;
+
+    [SerializeField] protected float timeBtwSound;
+    [SerializeField] protected float actualTimeBtwSound;
+
+
     public enum weapon
     {
         BASIC,
@@ -53,10 +58,15 @@ public class WeaponUltima : WeaponBase
         }
     }
 
-
+    public override void Update()
+    {
+        base.Update();
+        actualTimeBtwSound -= Time.deltaTime;
+    }
+    
     public void actuAllStats(WScriptable SObject)
     {
-        if (Object == null) return;
+        if (Object == null || SObject == null) return;
         
         WeaponInteractable interactable = GetComponent<WeaponInteractable>();
         if (interactable != null) interactable.weaponName = SObject.turretName;
@@ -76,7 +86,12 @@ public class WeaponUltima : WeaponBase
         spread = SObject.spread;
         numberOfShot = SObject.numberOfShots;
         damage = SObject.damage;
+        audioClip = SObject.weaponSound;
+        if (sound != null && audioClip != null)
+            sound.sounds[0].clip = audioClip;
 
+        timeBtwSound = SObject.timeBtwSound;
+        
         _isOverHeat = false;
         _isCoolDown = false;
         isShooting = false;
@@ -96,6 +111,12 @@ public class WeaponUltima : WeaponBase
         
         base.Shoot();
         
+        if (actualTimeBtwSound <= 0)
+        {
+            ShootSoundRpc();
+            actualTimeBtwSound = timeBtwSound;
+        }
+        
         
         if (fireType == WeaponFireType.Hitscan)
         {
@@ -108,7 +129,7 @@ public class WeaponUltima : WeaponBase
                     RaycastHit hit;
                     Vector3 shootingDir = Quaternion.Euler(Random.Range(-spread, spread), Random.Range(-spread, spread),
                         Random.Range(-spread, spread)) * _shootingPoint.forward;
-                    
+
                     if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance))
                     {
 

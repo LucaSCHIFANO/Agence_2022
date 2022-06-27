@@ -158,6 +158,7 @@ public class TruckFuel : TruckBase
         if (!Runner.IsServer) return;
         base.FixedUpdateNetwork();
         if (OutOfGas && currFuel > 0) OutOfGas = false;
+        
         float currDist = Vector3.Distance(transform.position, prevPos);
         totDist += currDist;
         currMeter += currDist * phys.Throttle * (infiniteGas ? 0 : 1);
@@ -190,6 +191,17 @@ public class TruckFuel : TruckBase
         {
             canvas.fuelSlider.fillAmount = fuelPourcent;
         }
+    }
+
+    public void changeMaxFuel()
+    {
+        if (UpgradeMenu.Instance.upgradesC[0] != 0)
+        {
+            maxFuel *= (1f + (UpgradeMenu.Instance.upgradesC[0] * Generator.Instance.getPourcentUpgrade) / 100f);
+            GetComponent<TruckFuel>().ChangeFuel();
+        }
+
+
     }
 
 }

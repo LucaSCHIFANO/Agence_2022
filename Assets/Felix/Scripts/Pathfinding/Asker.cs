@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Asker : MonoBehaviour
 {
-    private Path path;
+    public Path path;
+    public bool pathEnd { get; private set; }
 
     private Action<Vector3[]> callback;
 
@@ -13,18 +14,54 @@ public class Asker : MonoBehaviour
     [SerializeField] private float turnDistance;
     [SerializeField] private float turnSpeed;
 
+    private void Start()
+    {
+        pathEnd = true;
+    }
+
     public void AskNewPath(Transform _target, float _speed, Action<Vector3[]> _callback)
     {
         speed = _speed;
         callback = _callback;
-        PathRequestManager.RequestPath(new PathRequest(transform.position, transform, _target.position, OnPathFound));
+        PathRequestManager.RequestPath(new PathRequest(transform.position, _target.position, OnPathFound));
     }
     
     public void AskNewPath(Vector3 _targetPosition, float _speed, Action<Vector3[]> _callback)
     {
         speed = _speed;
         callback = _callback;
-        PathRequestManager.RequestPath(new PathRequest(transform.position, transform, _targetPosition, OnPathFound));
+        PathRequestManager.RequestPath(new PathRequest(transform.position, _targetPosition, OnPathFound));
+    }
+
+    public void AskNewPathAtEnd(Vector3 _targetPosition)
+    {
+        if (path == null) return;
+        
+        PathRequestManager.RequestPath(new PathRequest(path.lookPoints[^1], _targetPosition, OnPathFoundAtEnd));
+    }
+
+    public void OnPathFoundAtEnd(Vector3[] _path, bool _pathSuccess)
+    {
+        if (_pathSuccess)
+        {
+            StopCoroutine("FollowPath");
+            Vector3[] newPathPoints = new Vector3[_path.Length + path.lookPoints.Length];
+
+            for (int i = 0; i < newPathPoints.Length; i++)
+            {
+                if (i < path.lookPoints.Length)
+                {
+                    newPathPoints[i] = path.lookPoints[i];
+                }
+                else
+                {
+                    newPathPoints[i] = _path[i - path.lookPoints.Length];
+                }
+            }
+
+            path = new Path(newPathPoints, path.startPosition, turnDistance, speed);
+            StartCoroutine("FollowPath");
+        }
     }
 
     public void OnPathFound(Vector3[] _newPath, bool _pathSuccess)
@@ -44,6 +81,7 @@ public class Asker : MonoBehaviour
         bool followingPath = true;
         int pathIndex = 0;
         transform.LookAt(path.lookPoints[0]);
+        pathEnd = false;
 
         while (followingPath)
         {
@@ -71,30 +109,8 @@ public class Asker : MonoBehaviour
             
             yield return null;
         }
-        
-        /*if (path.Length <= 0)
-            yield break;
 
-        Vector3 currentWaypoint = path[0];
-
-        while (true)
-        {
-            if (transform.position == currentWaypoint)
-            {
-                targetIndex++;
-
-                if (targetIndex >= path.Length)
-                {
-                    yield break;
-                }
-
-                currentWaypoint = path[targetIndex];
-            }
-
-            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
-
-            yield return null;
-        }*/
+        pathEnd = true;
     }
 
     private void OnDrawGizmos()
