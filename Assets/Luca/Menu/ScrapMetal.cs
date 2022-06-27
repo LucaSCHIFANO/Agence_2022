@@ -9,9 +9,11 @@ using TMPro;
 public class ScrapMetal : NetworkBehaviour
 {
     [SerializeField] protected int startScrap;
-    public TextMeshProUGUI textSmetals;
-
+    [SerializeField] protected TextMeshProUGUI textSmetals;
+    [SerializeField] protected TextMeshProUGUI textSmetalsInGame;
+    
     [HideInInspector] public int scrapLeft;
+    [HideInInspector] public int scrapLeftInGame;
     [Networked(OnChanged = nameof(OnScrapChanged))/*, Capacity(1)*/] private int scrapLeftOnline { get; set; }
 
     #region Singleton
@@ -64,5 +66,6 @@ public class ScrapMetal : NetworkBehaviour
     public void actuText()
     {
         textSmetals.text = "Metals : " + scrapLeft;
+        textSmetalsInGame.text = scrapLeft.ToString();
     }
 }

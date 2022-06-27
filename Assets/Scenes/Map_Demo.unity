@@ -1039,6 +1039,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2566051665882894955, guid: f8a555aa206b6d045b6ac88932dacbc7,
         type: 3}
+      propertyPath: AllowStateAuthorityOverride
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2566051665882894955, guid: f8a555aa206b6d045b6ac88932dacbc7,
+        type: 3}
       propertyPath: NetworkedBehaviours.Array.size
       value: 2
       objectReference: {fileID: 0}
