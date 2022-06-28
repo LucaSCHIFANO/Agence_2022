@@ -204,4 +204,12 @@ public class TruckFuel : TruckBase
 
     }
 
+    public void AddFuel(float fuelToAdd)
+    {
+        if (Runner.IsServer)
+        {
+            CurrFuelSync += fuelToAdd;
+        }
+    }
+
 }
