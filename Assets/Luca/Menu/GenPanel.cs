@@ -32,9 +32,11 @@ public class GenPanel : NetworkBehaviour
 
 
 
-    public void quitPanel()
-    {
-        sendUpgradePosRpc(Generator.Instance.pourcentageListWOutChange.ToArray(), Generator.Instance.pourcentageList.ToArray());
+    public void quitPanel(){
+
+        Vector2 newPos = SetGoodValue();
+        sendUpgradePosRpc(Generator.Instance.pourcentageListWOutChange.ToArray(),
+            Generator.Instance.pourcentageList.ToArray(), newPos, Generator.Instance.isOvercloaking, Generator.Instance.overCloakeInt);
         //Part2Rpc(Generator.Instance.pourcentageList);
         
         _playerController.ChangeInputHandler(PossessingType.CHARACTER, gameObject);
@@ -50,16 +52,33 @@ public class GenPanel : NetworkBehaviour
         }
 
     }
-    
+
+    private Vector2 SetGoodValue()
+    {
+        Generator gen = Generator.Instance; 
+       var maximumHeight = gen.listSommets[1].transform.position.y - gen.listSommets[0].transform.position.y;
+       var actualHeight = gen.upgradePoint.transform.position.y - gen.listSommets[0].transform.position.y;
+
+       var pourcentDistanceH = (actualHeight / maximumHeight);
+
+       var maximumWidth = gen.listSommets[2].transform.position.x - gen.listSommets[1].transform.position.x;
+       var actualWidth = gen.upgradePoint.transform.position.x - gen.listSommets[1].transform.position.x;
+
+       var pourcentDistanceW = (actualWidth / maximumWidth);
+
+       return new Vector2(pourcentDistanceW, pourcentDistanceH);
+    }
+
     [Rpc(RpcSources.All, RpcTargets.All)]
-    private void sendUpgradePosRpc(float[] pourcent, float[] pourcentChanged)
+    private void sendUpgradePosRpc(float[] pourcent, float[] pourcentChanged, Vector2 newPos, NetworkBool isover, int leint)
     {
         var value1 = new List<float>(pourcent);
         var value2 = new List<float>(pourcentChanged);
         
         Generator.Instance.pourcentageListWOutChange = value1;
-        Generator.Instance.pourcentageList = value1;
-        Generator.Instance.visuelChange();
+        Generator.Instance.pourcentageList = value2;
+        
+        Generator.Instance.visuelChange(newPos, isover, leint);
         
     }
 
