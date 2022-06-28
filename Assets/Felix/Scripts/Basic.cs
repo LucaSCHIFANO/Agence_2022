@@ -31,7 +31,7 @@ namespace Enemies
                 }
             }
 
-            if (Vector3.Distance(targetLastPosition, target.transform.position) >= 2f)
+            if (Vector3.Distance(targetLastPosition, target.transform.position) >= range)
             {
                 asker.AskNewPath(FindNewPosition(), speed, null);
                 targetLastPosition = target.transform.position;
@@ -40,16 +40,16 @@ namespace Enemies
 
         private Vector3 FindNewPosition()
         {
-            float distance = 5f;
+            float distance = range / 10;
             
             for (int i = -1; i <= 1; i += 2)
             {
                 Vector3 dir = target.transform.right * i;
                 if (Physics.Raycast(target.transform.position, dir, out RaycastHit hit, distance, obstaclesLayerMask))
                 {
-                    if (Vector3.Distance(target.transform.position, hit.point) > 3.5f)
+                    if (Vector3.Distance(target.transform.position, hit.point) > range)
                     {
-                        return target.transform.position + target.transform.right * i * (distance - 1.5f);
+                        return target.transform.position + target.transform.right * i * (distance - distance / 2);
                     }
                 }
                 else
@@ -63,7 +63,7 @@ namespace Enemies
                 new Vector2(target.transform.right.x, target.transform.right.z),
                 new Vector2(transform.position.x, transform.position.z));
 
-            return target.transform.position + target.transform.forward * (isBehind ? -1f : 1f) * 5f;
+            return target.transform.position + target.transform.forward * (isBehind ? -1f : 1f) * distance / 2;
         }
 
         private bool isPointLeft(Vector2 _a, Vector2 _b, Vector2 _point)

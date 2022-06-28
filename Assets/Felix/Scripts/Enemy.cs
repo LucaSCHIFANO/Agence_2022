@@ -22,6 +22,13 @@ namespace Enemies
         protected bool isDead;
 
         protected WeaponUltima[] weapons;
+        
+        public EnemySO EnemySo
+        {
+            get => enemySo;
+            private set => enemySo = value;
+        }
+
         [SerializeField] protected EnemySO enemySo;
 
         [SerializeField] protected Transform[] weaponsPosition;
@@ -32,16 +39,6 @@ namespace Enemies
         protected void Awake()
         {
             hp = GetComponent<HPEnemy>();
-        }
-
-        public override void Spawned()
-        {
-            base.Spawned();
-            
-            if (asker == null)
-            {
-                Initialization(enemySo);
-            }
         }
 
         public virtual void Initialization(EnemySO _enemySo)

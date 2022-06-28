@@ -28,9 +28,10 @@ namespace Enemies
                 }
             }
 
-            if (Vector3.Distance(targetLastPosition, target.transform.position) > 5 && (distance <= range - 5 || distance > range))
+            
+            if (Vector3.Distance(target.transform.position, targetLastPosition) >= range / 10 || distance <= range - range / 10)
             {
-                Vector3 nPos = (transform.position - target.transform.position).normalized * (range - 5) + target.transform.position;
+                Vector3 nPos = (transform.position - target.transform.position).normalized * (range - range / 10) + target.transform.position;
             
                 asker.AskNewPath(nPos, speed, OnPathFound);
                 targetLastPosition = target.transform.position;

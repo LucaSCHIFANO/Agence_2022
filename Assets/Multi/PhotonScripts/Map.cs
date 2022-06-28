@@ -32,7 +32,20 @@ public class Map : SimulationBehaviour, ISpawned
 		// Show the countdown message
 		_countdownMessage.gameObject.SetActive(true);
 
+		StartCoroutine(WaitPlayersInitialization());
+
 		App.Instance.Session.Map = this;
+	}
+
+	IEnumerator WaitPlayersInitialization()
+	{
+		yield return new WaitForSeconds(2f);
+		
+		EnemiesZoneTrigger[] zoneTriggers = FindObjectsOfType<EnemiesZoneTrigger>();
+		foreach (EnemiesZoneTrigger zoneTrigger in zoneTriggers)
+		{
+			zoneTrigger.Initialization();
+		}
 	}
 
 	IEnumerator desableBlackscreen()
