@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 1037
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Project
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 95
+  controlID: 64
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 96
+  controlID: 65
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -318,23 +318,23 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes
+  - Assets
   m_LastFoldersGridSize: -1
   m_LastProjectPath: "D:\\Bureau\\Developpement jeux\\Cr\xE9ations Jeux Vid\xE9o\\Shoot'em
     up\\Agtence_2022"
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 535}
-    m_SelectedIDs: 02a70000
-    m_LastClickedID: 42754
-    m_ExpandedIDs: 000000007ea6000080a6000082a6000084a6000086a6000088a600008aa600008ca600008ea60000a2a60000
+    scrollPos: {x: 0, y: 31}
+    m_SelectedIDs: 889d0000
+    m_LastClickedID: 40328
+    m_ExpandedIDs: 00000000729d0000749d0000769d0000789d00007a9d00007c9d00007e9d0000809d0000829d0000889d0000a89d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -362,7 +362,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000007ea6000080a6000082a6000084a6000086a6000088a600008aa600008ca600008ea60000
+    m_ExpandedIDs: 00000000729d0000749d0000769d0000789d00007a9d00007c9d00007e9d0000809d0000829d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -491,10 +491,10 @@ MonoBehaviour:
     m_SaveData: []
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 32a90000
+      scrollPos: {x: 0, y: 320}
+      m_SelectedIDs: 74a20000
       m_LastClickedID: 0
-      m_ExpandedIDs: c4e8ffff6eeaffff90f0ffff
+      m_ExpandedIDs: f4faffff067b0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -744,9 +744,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 477.24484, y: 46.002514, z: 528.2368}
+    m_Target: {x: 868.6197, y: 2.609474, z: 458.19427}
     speed: 2
-    m_Value: {x: 477.24484, y: 46.002514, z: 528.2368}
+    m_Value: {x: 868.6197, y: 2.609474, z: 458.19427}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -793,13 +793,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.055047717, y: -0.7079372, z: 0.055595297, w: 0.70205885}
+    m_Target: {x: 0.15461288, y: -0.6277806, z: 0.1290973, w: 0.75188404}
     speed: 2
-    m_Value: {x: 0.055209212, y: -0.70576334, z: 0.05542484, w: 0.70411515}
+    m_Value: {x: 0.15348418, y: -0.62797064, z: 0.12815487, w: 0.7521116}
   m_Size:
     m_Target: 10
     speed: 2
-    m_Value: 10
+    m_Value: 1.9775538
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -815,7 +815,7 @@ MonoBehaviour:
     m_FieldOfViewHorizontalOrVertical: 60
     m_NearClip: 0.03
     m_FarClip: 10000
-    m_DynamicClip: 0
+    m_DynamicClip: 1
     m_OcclusionCulling: 0
   m_LastSceneViewRotation: {x: 0, y: 0, z: 0, w: 0}
   m_LastSceneViewOrtho: 0
@@ -876,8 +876,8 @@ MonoBehaviour:
     vZoomLockedByDefault: 0
     m_HBaseRangeMin: -766
     m_HBaseRangeMax: 766
-    m_VBaseRangeMin: -384.5
-    m_VBaseRangeMax: 384.5
+    m_VBaseRangeMin: -395
+    m_VBaseRangeMax: 395
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -894,11 +894,11 @@ MonoBehaviour:
     m_DrawArea:
       serializedVersion: 2
       x: 0
-      y: 21
+      y: 0
       width: 1532
-      height: 769
+      height: 790
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 766, y: 384.5}
+    m_Translation: {x: 766, y: 395}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
@@ -906,9 +906,9 @@ MonoBehaviour:
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
       x: -766
-      y: -384.5
+      y: -395
       width: 1532
-      height: 769
+      height: 790
     m_MinimalGUI: 1
   m_defaultScale: 1
   m_LastWindowPixelSize: {x: 1532, y: 790}

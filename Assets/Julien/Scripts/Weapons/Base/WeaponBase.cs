@@ -174,7 +174,8 @@ public abstract class WeaponBase : NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     protected void ShootSoundRpc()
     {
-        sound.Play("Shoot");
+        if (sound != null)
+            sound.Play("Shoot");
     }
     
     

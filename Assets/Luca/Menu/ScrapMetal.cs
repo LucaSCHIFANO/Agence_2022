@@ -59,13 +59,18 @@ public class ScrapMetal : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     public void addMoneyServerRpc(int lint)
     {
-        scrapLeft += lint;
-        scrapLeftOnline = scrapLeft;
+        AddServerScrap(lint);
     }
 
     public void actuText()
     {
         textSmetals.text = "Metals : " + scrapLeft;
         textSmetalsInGame.text = scrapLeft.ToString();
+    }
+
+    public void AddServerScrap(int lint)
+    {
+        scrapLeft += lint;
+        scrapLeftOnline = scrapLeft;
     }
 }
