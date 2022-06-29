@@ -44,10 +44,15 @@ public class PossessableWeapon : NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
     private void ConfirmPossessionClientRpc()
     {
+        //_playerController.isSomethingActuRpc(true);
+        
         CanvasInGame.Instance.showOverheat(true);
         camera.SetActive(true);
         _playerController = Runner.GetPlayerObject(Object.InputAuthority).gameObject.GetComponent<NetworkedPlayer>();
         _playerController.gameObject.GetComponent<CharacterMovementHandler>().enabled = false;
+        
+        //_playerController.gameObject.GetComponent<NetworkMecanimAnimator>().SetTrigger("Idle");
+        
         _playerController.ChangeInputHandler(PossessingType.WEAPON, gameObject);
         GetComponent<WeaponBase>().ChangeOverHeat();
         //_playerController.HideSelfVisual();
@@ -81,10 +86,15 @@ public class PossessableWeapon : NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void ConfirmGetOutClientRpc([RpcTarget] PlayerRef playerRef)
     {
+        //_playerController.isSomethingActuRpc(false);
+        
         CanvasInGame.Instance.showOverheat(false);
         camera.SetActive(false);
         _playerController = Runner.GetPlayerObject(playerRef).gameObject.GetComponent<NetworkedPlayer>();
         _playerController.gameObject.GetComponent<CharacterMovementHandler>().enabled = true;
+        
+        //_playerController.gameObject.GetComponent<NetworkMecanimAnimator>().SetTrigger("Idle");
+        
         _playerController.gameObject.SetActive(true);
         _playerController.transform.SetParent(null);
         _playerController.ChangeInputHandler(PossessingType.CHARACTER, gameObject);

@@ -6987,19 +6987,17 @@ MonoBehaviour:
   minimSpeedToDust: 50
   particleImpact: []
   pourcentageImpact: []
+  Reference: {fileID: 0}
+  _respawnPoints: []
+  timeToStart: 0
   controlMode: 1
   activeControl: 1
   Reverse: 0
-  action:
-    _id: 0
-    _name: 
-    _type: 0
-    _descriptiveName: 
-    _positiveDescriptiveName: 
-    _negativeDescriptiveName: 
-    _behaviorId: 0
-    _userAssignable: 0
-    _categoryId: 0
+  debugs:
+    MotorTorque: 0
+    BreakTorque: 0
+    IsBreaking: 0
+    Accel: 0
   carWheels:
     wheels:
       frontWheelDrive: 1
@@ -7335,6 +7333,7 @@ MonoBehaviour:
   seat: {fileID: 6092435132501966815}
   exit: {fileID: 6092435131714731812}
   _isPossessed: 0
+  truck: {fileID: 0}
 --- !u!65 &3296980903994381978
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7375,8 +7374,12 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 100
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   impactEffect: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
     type: 3}
+  winReference: {fileID: 0}
 --- !u!114 &5346935273172696601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8254,8 +8257,17 @@ PrefabInstance:
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[8]
       value: 
-      objectReference: {fileID: 5782937994283143777, guid: dee5aefe1f4e4b64094304373d2b1b76,
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[9]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[10]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
@@ -8545,6 +8557,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 1719488441350353698}
 --- !u!1 &2116045733191720224 stripped
 GameObject:
@@ -8581,6 +8596,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 1719488441350353698}
 --- !u!4 &2456171094199280690 stripped
 Transform:
@@ -8623,6 +8641,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 1719488441350353698}
 --- !u!1 &2736472617327385179 stripped
 GameObject:
@@ -8659,6 +8680,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 1719488441350353698}
 --- !u!1 &4056020858564556418 stripped
 GameObject:
@@ -8695,6 +8719,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 1719488441350353698}
 --- !u!1 &5959273609244886630 stripped
 GameObject:
@@ -8731,6 +8758,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 1719488441350353698}
 --- !u!1 &7219947812771763313 stripped
 GameObject:
@@ -8767,6 +8797,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 1719488441350353698}
 --- !u!1 &7714741663880071559 stripped
 GameObject:
@@ -8803,6 +8836,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 1719488441350353698}
 --- !u!1 &8854017011616475935 stripped
 GameObject:
@@ -8839,6 +8875,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 1719488441350353698}
 --- !u!1 &9104840013536570596 stripped
 GameObject:
@@ -8875,6 +8914,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 1719488441350353698}
 --- !u!1001 &3296980903262212581
 PrefabInstance:
@@ -9037,8 +9079,17 @@ PrefabInstance:
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[8]
       value: 
-      objectReference: {fileID: 5782937994283143777, guid: dee5aefe1f4e4b64094304373d2b1b76,
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[9]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[10]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]

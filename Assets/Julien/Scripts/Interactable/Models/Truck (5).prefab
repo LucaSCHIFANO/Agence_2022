@@ -350,7 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c68bdc5b5f9d6e48b3a55df73144457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 1766707134442733644}
   speed: 1
 --- !u!1 &552890194
 GameObject:
@@ -3127,6 +3127,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 10
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   impactEffect: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
     type: 3}
   winReference: {fileID: 11400000, guid: cd3c4145380d244408f1b8ca3a8ec786, type: 2}
@@ -11742,6 +11745,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7879574448218091112}
     m_Modifications:
+    - target: {fileID: 3407535137564009486, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: sounds.Array.data[0].pitch
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3407535137564009486, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: sounds.Array.data[0].maxDistance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3407535137564009486, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: sounds.Array.data[0].pitchRandom
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3407535137564009486, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: sounds.Array.data[0].volumeRandom
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 3407535137564009486, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: sounds.Array.data[0].useRandomPitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3407535137564009486, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: sounds.Array.data[0].useRandomVolume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3579213555381976242, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
       propertyPath: InterpolationSpace
@@ -11911,8 +11944,17 @@ PrefabInstance:
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[8]
       value: 
-      objectReference: {fileID: 5782937994283143777, guid: dee5aefe1f4e4b64094304373d2b1b76,
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[9]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[10]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
@@ -11940,13 +11982,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8743449443401351034, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743449443401351034, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.296
+      value: 0.76
       objectReference: {fileID: 0}
     - target: {fileID: 8743449443401351034, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.14
+      value: -1.56
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebb70dc5fecceca49940f2910c67ecd0, type: 3}
@@ -12183,8 +12230,33 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3407535137564009486, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
+      propertyPath: sounds.Array.data[0].pitch
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3407535137564009486, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
       propertyPath: sounds.Array.data[0].maxDistance
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3407535137564009486, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: sounds.Array.data[0].pitchRandom
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3407535137564009486, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: sounds.Array.data[0].volumeRandom
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 3407535137564009486, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: sounds.Array.data[0].useRandomPitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3407535137564009486, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: sounds.Array.data[0].useRandomVolume
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3579213555381976242, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
@@ -12355,8 +12427,17 @@ PrefabInstance:
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[8]
       value: 
-      objectReference: {fileID: 5782937994283143777, guid: dee5aefe1f4e4b64094304373d2b1b76,
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[9]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[10]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
@@ -12385,17 +12466,17 @@ PrefabInstance:
     - target: {fileID: 8743449443401351034, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.944
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 8743449443401351034, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.35
+      value: 0.76
       objectReference: {fileID: 0}
     - target: {fileID: 8743449443401351034, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.681
+      value: -1.56
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebb70dc5fecceca49940f2910c67ecd0, type: 3}
@@ -12646,6 +12727,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 6617175567376397979}
 --- !u!1 &2817128101802445886 stripped
 GameObject:
@@ -12682,6 +12766,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 6617175567376397979}
 --- !u!1 &2898734822192075208 stripped
 GameObject:
@@ -12718,6 +12805,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 6617175567376397979}
 --- !u!1 &3626194290777188701 stripped
 GameObject:
@@ -12754,6 +12844,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 6617175567376397979}
 --- !u!1 &3951906687524581030 stripped
 GameObject:
@@ -12790,6 +12883,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 6617175567376397979}
 --- !u!1 &4987555241764041677 stripped
 GameObject:
@@ -12826,6 +12922,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 6617175567376397979}
 --- !u!1 &5860735471085246617 stripped
 GameObject:
@@ -12862,6 +12961,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 6617175567376397979}
 --- !u!1 &7603801210893800183 stripped
 GameObject:
@@ -12898,6 +13000,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 6617175567376397979}
 --- !u!1 &7634112533366775778 stripped
 GameObject:
@@ -12934,6 +13039,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 6617175567376397979}
 --- !u!4 &7934820441877275019 stripped
 Transform:
@@ -12976,6 +13084,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 0
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   hptruck: {fileID: 6617175567376397979}
 --- !u!1001 &8356111144137179068
 PrefabInstance:
