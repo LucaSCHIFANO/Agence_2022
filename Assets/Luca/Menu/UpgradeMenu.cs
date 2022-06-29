@@ -62,6 +62,8 @@ public class UpgradeMenu : NetworkBehaviour
     [SerializeField] protected Slider hpSlider;
     [SerializeField] protected TextMeshProUGUI hpText;
 
+    [SerializeField] private TruckFuel fuel;
+
     #region Singleton
 
     private static UpgradeMenu instance;
@@ -362,6 +364,9 @@ public class UpgradeMenu : NetworkBehaviour
 
     private void visuC()
     {
+
+        fuel.changeMaxFuel();
+
         var multi = 1;
         for (int i = 0; i < upgradesC.Count; i++)
         {
@@ -450,7 +455,7 @@ public class UpgradeMenu : NetworkBehaviour
         
     }
 
-    void forRepair()
+    public void forRepair()
     {
         hpSlider.value = truck.currenthealth / truck.maxhealth;
         hpText.text = truck.currenthealth + " / " + truck.maxhealth;

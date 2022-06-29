@@ -12,7 +12,7 @@ using Color = UnityEngine.Color;
 
 public class Generator : MonoBehaviour
 {
-    /*[SerializeField] protected OnClickTriangle triangleButton;
+    [SerializeField] protected OnClickTriangle triangleButton;
 
     [SerializeField] public GameObject upgradePoint;
     [SerializeField] public List<Transform> listSommets = new List<Transform>();
@@ -88,7 +88,7 @@ public class Generator : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-    }
+    }*/
     private void Update()
     {
         if(triangleButton.canMove) onClickTriangle(true);
@@ -128,15 +128,21 @@ public class Generator : MonoBehaviour
             {
                 case 0:
                     textList[0].text = "Att : " + pourcent + "%";
-                    pourcentageList[0] = ((maximumDist - distTop) / maximumDist) * 100;
+                    pourcentageList[0] = (((maximumDist - distTop) / maximumDist) * 100);
                     break;
                 case 1:
                     textList[1].text = "Def : " + pourcent + "%";
-                    pourcentageList[1] = ((maximumDist - distTop) / maximumDist) * 100;
+                    pourcentageList[1] = (((maximumDist - distTop) / maximumDist) * 100);
+                    
+                    if(UpgradeMenu.Instance.upgradesC[1] != 0) pourcentageList[1] *= ( 1 + (UpgradeMenu.Instance.upgradesC[1] * pourcentageUpgrades) / 100);
+                    
                     break;
                 case 2:
                     textList[2].text = "Spd : " + pourcent + "%";
-                    pourcentageList[2] = ((maximumDist - distTop) / maximumDist) * 100;
+                    pourcentageList[2] = (((maximumDist - distTop) / maximumDist) * 100);
+                    
+                    if(UpgradeMenu.Instance.upgradesC[2] != 0) pourcentageList[2] *= ( 1 + (UpgradeMenu.Instance.upgradesC[2] * pourcentageUpgrades) / 100);
+                    
                     break;
             }
         }
@@ -222,5 +228,5 @@ public class Generator : MonoBehaviour
                     break;
             }
         }
-    }*/
+    }
 }

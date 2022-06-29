@@ -19,6 +19,7 @@ public class HPTruck : HP
     {
         truck = GetComponent<TruckPhysics>();
         truck.activateDamageParticle(100f);
+        menu = UpgradeMenu.Instance;
     }
 
     public override void reduceHPToServ(float damage)
@@ -62,6 +63,8 @@ public class HPTruck : HP
         var pourcent = (currentHP / maxHP) * 100;
         truck.activateDamageParticle(pourcent);
         
+        menu.forRepair();
+        
     }
     
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
@@ -77,6 +80,7 @@ public class HPTruck : HP
         else currentHP += (maxHP / 10);
 
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+        particleVisuRpc();
     }
     
 }

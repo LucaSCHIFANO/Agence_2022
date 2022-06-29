@@ -34,7 +34,7 @@ public class HP : NetworkBehaviour
 
     private void ChangeHP()
     {
-        Debug.Log(currentHP + " : " + name);
+        //Debug.Log(currentHP + " : " + name);
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]

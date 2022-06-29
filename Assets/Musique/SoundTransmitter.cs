@@ -30,6 +30,8 @@ public class SoundTransmitter : MonoBehaviour
     
         public bool playOnAwake = false;
         public bool loop = false;
+        public bool in3D = true;
+        public float spatialBlend = 0;
 
         [HideInInspector]
         public AudioSource source;
@@ -52,6 +54,8 @@ public class SoundTransmitter : MonoBehaviour
             s.source.maxDistance = s.maxDistance;
             s.source.playOnAwake = s.playOnAwake;
             s.source.loop = s.loop;
+            s.source.spatialize = s.in3D;
+            s.source.spatialBlend = s.spatialBlend;
             
             if(s.playOnAwake) Play(s.name);
         }

@@ -19,16 +19,8 @@ public class EnemiesZoneTrigger : NetworkBehaviour
     [SerializeField] private LayerMask enemiesLayer;
     [Space]
     [SerializeField] private float timeStopChasing;
-    
 
-    public override void Spawned()
-    {
-        base.Spawned();
-        
-        Initialization();
-    }
-
-    private void Initialization()
+    public void Initialization()
     {
         if (!Runner.IsServer) return;
         
@@ -41,6 +33,7 @@ public class EnemiesZoneTrigger : NetworkBehaviour
         {
             enemies[i] = colliders[i].GetComponent<Enemy>();
             enemiesStartPosition[i] = colliders[i].transform.position;
+            enemies[i].Initialization(enemies[i].EnemySo);
         }
    
         playerTruck = GameObject.FindGameObjectWithTag("Car");

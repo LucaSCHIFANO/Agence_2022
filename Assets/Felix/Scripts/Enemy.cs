@@ -15,8 +15,10 @@ namespace Enemies
         
         protected Vector3 targetLastPosition;
 
+        protected bool isChasing;
+
         protected float speed;
-        public float range;
+        protected float range;
         protected bool isDead;
 
         protected WeaponUltima[] weapons;

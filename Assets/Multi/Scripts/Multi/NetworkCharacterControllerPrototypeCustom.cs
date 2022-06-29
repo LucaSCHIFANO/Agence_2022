@@ -94,6 +94,7 @@ public class NetworkCharacterControllerPrototypeCustom : NetworkTransform
             Velocity = newVel;
         }
     }
+    
 
     /// <summary>
     /// Basic implementation of a character controller's movement function based on an intended direction.

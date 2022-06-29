@@ -34,7 +34,8 @@ public abstract class WeaponBase : NetworkBehaviour
     [SerializeField] protected Color maincolor;
     [SerializeField] protected Color overHeatColor;
 
-    [SerializeField] protected GameObject bulletEffect;
+    [SerializeField] protected GameObject bulletEffectSand;
+    [SerializeField] protected GameObject bulletEffectNormal;
 
     [SerializeField] protected ParticleSystem overHParticle;
     [SerializeField] protected float OHParticleOverTime;
@@ -60,6 +61,8 @@ public abstract class WeaponBase : NetworkBehaviour
     [HideInInspector] public bool isPossessed;
     
     [SerializeField] protected CanvasInGame canvas;
+    
+    [SerializeField] protected SoundTransmitter sound;
 
 
     public float overHeatPourcent;
@@ -86,7 +89,7 @@ public abstract class WeaponBase : NetworkBehaviour
     {
         overHeatPourcent = overHeatPourcentOnline;
         if (overHeatPourcent >= 100) _isOverHeat = true;
-
+        if (overHeatPourcent <= 0) _isOverHeat = false;
 
         if (Object.HasInputAuthority)
         {
@@ -132,7 +135,7 @@ public abstract class WeaponBase : NetworkBehaviour
         em.rateOverTime = OHParticleOverTime;
     }
 
-    private void Update()
+    public virtual void Update()
     {
         if (Runner != null)
         {
@@ -175,11 +178,21 @@ public abstract class WeaponBase : NetworkBehaviour
             sound.Play("Shoot");
     }
     
+    
     //creer une particule qd une bullet touche un mur
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    protected void BulletEffectClientRpc(Vector3 impactPoint)
+    protected void BulletEffectClientRpc(Vector3 impactPoint, string tag)
     {
-        Instantiate(bulletEffect, impactPoint, transform.rotation);
+        switch (tag)
+        {
+            case "Sand" : 
+                Instantiate(bulletEffectSand, impactPoint, transform.rotation);
+                break;
+            default :
+                Instantiate(bulletEffectNormal, impactPoint, transform.rotation);
+                break;
+        }
+        
     }
     
     //creer une particule au bout du canon
@@ -191,9 +204,9 @@ public abstract class WeaponBase : NetworkBehaviour
     
     
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-    protected void CreateBulletEffectServerRpc(Vector3 impactPoint)
+    protected void CreateBulletEffectServerRpc(Vector3 impactPoint, string tag)
     {
-        BulletEffectClientRpc(impactPoint);
+        BulletEffectClientRpc(impactPoint, tag);
     }
     
     

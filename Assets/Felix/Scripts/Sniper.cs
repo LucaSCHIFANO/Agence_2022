@@ -7,35 +7,12 @@ namespace Enemies
     public class Sniper : Enemy
     {
         [SerializeField] private LayerMask obstaclesLayerMask;
-        
-        public override void Initialization(EnemySO _enemySo)
-        {
-            base.Initialization(_enemySo);
-            
-            target = GameObject.FindWithTag("Player");
-
-            if (Runner.IsServer && target != null)
-            {
-                Vector3 nPos = (transform.position - target.transform.position).normalized * (range - 5) +
-                               target.transform.position;
-
-                asker.AskNewPath(nPos, speed, OnPathFound);
-                targetLastPosition = target.transform.position;
-            }
-        }
 
         public override void FixedUpdateNetwork()
         {
             base.FixedUpdateNetwork();
 
-            if (target == null)
-            {
-                target = GameObject.FindWithTag("Player");
-                
-                return;
-            }
-            
-            if (!Runner.IsServer || asker == null)
+            if (!Runner.IsServer || asker == null || !isChasing)
                 return;
             
             float distance = Vector3.Distance(transform.position, target.transform.position);
@@ -46,10 +23,7 @@ namespace Enemies
                 {
                     if (Physics.Raycast(weapon.transform.position, weapon.transform.forward, out RaycastHit hit))
                     {
-                        if (hit.collider.CompareTag("Player"))
-                        {
-                            weapon.Shoot();
-                        }
+                        weapon.Shoot();
                     }
                 }
             }
