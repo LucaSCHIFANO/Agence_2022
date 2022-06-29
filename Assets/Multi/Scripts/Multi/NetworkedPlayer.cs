@@ -22,6 +22,7 @@ public class NetworkedPlayer : NetworkBehaviour
     public PossessingType PossessingType = PossessingType.CHARACTER;
 
 
+    public CharacterMovementHandler CharacterMovementHandler;
     public CharacterInputHandler CharacterInputHandler;
     public WeaponInputHandler WeaponInputHandler;
     public VehiculeInputHandler VehiculeInputHandler;
@@ -38,6 +39,7 @@ public class NetworkedPlayer : NetworkBehaviour
         
         _playerInteraction = GetComponent<PlayerInteraction>();
         CharacterInputHandler = GetComponent<CharacterInputHandler>();
+        CharacterMovementHandler = GetComponent<CharacterMovementHandler>();
         //playerRew = Rewired.ReInput.players.GetPlayer(0);
         if (Object.HasInputAuthority)
         {
@@ -85,7 +87,7 @@ public class NetworkedPlayer : NetworkBehaviour
         transform.rotation = Quaternion.identity;
 
         GetComponent<CharacterController>().enabled = true;
-        IsInSomething = false;
+        //isSomethingActuRpc(false);
     }
 
     public void Possess(Transform seat)
@@ -100,9 +102,18 @@ public class NetworkedPlayer : NetworkBehaviour
         
         if (Object.HasInputAuthority)
             Camera.SetActive(false);
-        IsInSomething = true;
-    }
 
+        //isSomethingActuRpc(true);
+    }
+    
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void isSomethingActuRpc(NetworkBool leBool)
+    {
+        IsInSomething = leBool;
+        Debug.Log("first step");
+    }
+    
+    
     public void ChangeInputHandler(PossessingType possessingType, GameObject handler)
     {
         PossessingType = possessingType;

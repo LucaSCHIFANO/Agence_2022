@@ -978,7 +978,7 @@ MonoBehaviour:
     _inverse: 999.99994
     _hash: -814817977
   StateHashes: 000000002b1a167c7940695528a981077af3fe2e20e23b685928a8ce
-  TriggerHashes: 000000000a882e072fa5b57a
+  TriggerHashes: 000000000a882e072fa5b57a28a98107
 --- !u!1 &8636776342020994156
 GameObject:
   m_ObjectHideFlags: 0
@@ -1469,6 +1469,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 1762d7c1cff379745a35b1f7e25a2126, type: 2}
+    - target: {fileID: 7477672114596797951, guid: 802371e8078be684d959dddb3c6a21a4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5507d5cff009aef46a34421931746a86, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 802371e8078be684d959dddb3c6a21a4, type: 3}
 --- !u!1 &4014965408550261007 stripped

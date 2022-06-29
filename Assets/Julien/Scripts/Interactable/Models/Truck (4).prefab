@@ -6951,20 +6951,19 @@ MonoBehaviour:
   - {fileID: 0}
   dust: {fileID: 0}
   minimSpeedToDust: 50
-  fire: {fileID: 5507513620931427967}
+  particleImpact: []
+  pourcentageImpact: []
+  Reference: {fileID: 0}
+  _respawnPoints: []
+  timeToStart: 0
   controlMode: 1
   activeControl: 1
   Reverse: 0
-  action:
-    _id: 0
-    _name: 
-    _type: 0
-    _descriptiveName: 
-    _positiveDescriptiveName: 
-    _negativeDescriptiveName: 
-    _behaviorId: 0
-    _userAssignable: 0
-    _categoryId: 0
+  debugs:
+    MotorTorque: 0
+    BreakTorque: 0
+    IsBreaking: 0
+    Accel: 0
   carWheels:
     wheels:
       frontWheelDrive: 1
@@ -7304,6 +7303,7 @@ MonoBehaviour:
   seat: {fileID: 8147018995670328785}
   exit: {fileID: 8147018996963534122}
   _isPossessed: 0
+  truck: {fileID: 0}
 --- !u!65 &602797681604906132
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7344,9 +7344,12 @@ MonoBehaviour:
   _interpolationDataSource: 0
   maxHP: 100
   _currentHP: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   impactEffect: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
     type: 3}
-  pourcentageCritique: 0
+  winReference: {fileID: 0}
 --- !u!1 &8147018995279576237
 GameObject:
   m_ObjectHideFlags: 0
@@ -8006,12 +8009,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b703fd20d4caf1b4daf425f435cfb3bc, type: 3}
---- !u!198 &5507513620931427967 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5307635754755113224, guid: b703fd20d4caf1b4daf425f435cfb3bc,
-    type: 3}
-  m_PrefabInstance: {fileID: 416051816663973751}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9216591187382250592 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8800583660555424535, guid: b703fd20d4caf1b4daf425f435cfb3bc,
@@ -8184,7 +8181,17 @@ PrefabInstance:
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[8]
       value: 
-      objectReference: {fileID: 5782937994283143777}
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[9]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[10]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
