@@ -61,11 +61,17 @@ public class HPPlayer : HP
 
     IEnumerator RespawnPlayer()
     {
-        yield return new WaitForSecondsRealtime(respawnDelay);
-        wasDeadBefore = false;
-        currentHP = maxHP;
-        HideDeathScreen();
-        GameOverManager.instance.PlayerRespawn();
+        if (Object.HasStateAuthority)
+        {
+            yield return new WaitForSecondsRealtime(respawnDelay);
+            wasDeadBefore = false;
+            currentHP = maxHP;
+            TruckPhysics truckPhysics = _truckReference.Acquire();
+            Transform respawnPoint = truckPhysics.RespawnPoints[Random.Range(0, truckPhysics.RespawnPoints.Count)];
+            ccCustom.TeleportToPositionRotation(respawnPoint.position, respawnPoint.rotation);
+            HideDeathScreen();
+            GameOverManager.instance.PlayerRespawn();
+        }
     }
     
     public override void TrueReduceHP(float damage)
@@ -84,9 +90,6 @@ public class HPPlayer : HP
     [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
     private void HideDeathScreen()
     {
-        TruckPhysics truckPhysics = _truckReference.Acquire();
-        Transform respawnPoint = truckPhysics.RespawnPoints[Random.Range(0, truckPhysics.RespawnPoints.Count)];
-        ccCustom.TeleportToPositionRotation(respawnPoint.position, respawnPoint.rotation);
         _deathScreen.SetActive(false);
         _player.ChangeInputHandler(PossessingType.CHARACTER, gameObject);
     }

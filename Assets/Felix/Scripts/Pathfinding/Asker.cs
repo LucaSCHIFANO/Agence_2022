@@ -19,25 +19,25 @@ public class Asker : MonoBehaviour
         pathEnd = true;
     }
 
-    public void AskNewPath(Transform _target, float _speed, Action<Vector3[]> _callback)
+    public void AskNewPath(Transform _target, float _speed, Action<Vector3[]> _callback, bool _isAStar)
     {
         speed = _speed;
         callback = _callback;
-        PathRequestManager.RequestPath(new PathRequest(transform.position, _target.position, OnPathFound));
+        PathRequestManager.RequestPath(new PathRequest(transform.position, _target.position, OnPathFound), _isAStar);
     }
     
-    public void AskNewPath(Vector3 _targetPosition, float _speed, Action<Vector3[]> _callback)
+    public void AskNewPath(Vector3 _targetPosition, float _speed, Action<Vector3[]> _callback, bool _isAStar)
     {
         speed = _speed;
         callback = _callback;
-        PathRequestManager.RequestPath(new PathRequest(transform.position, _targetPosition, OnPathFound));
+        PathRequestManager.RequestPath(new PathRequest(transform.position, _targetPosition, OnPathFound), _isAStar);
     }
 
-    public void AskNewPathAtEnd(Vector3 _targetPosition)
+    public void AskNewPathAtEnd(Vector3 _targetPosition, bool _isAStar)
     {
         if (path == null) return;
         
-        PathRequestManager.RequestPath(new PathRequest(path.lookPoints[^1], _targetPosition, OnPathFoundAtEnd));
+        PathRequestManager.RequestPath(new PathRequest(path.lookPoints[^1], _targetPosition, OnPathFoundAtEnd), _isAStar);
     }
 
     public void OnPathFoundAtEnd(Vector3[] _path, bool _pathSuccess)

@@ -35,11 +35,11 @@ namespace Pathfinding
             }
         }
 
-        public static void RequestPath(PathRequest _request)
+        public static void RequestPath(PathRequest _request, bool _isAStar)
         {
             ThreadStart threadStart = delegate
             {
-                instance.pathfinding.FindPath(_request, instance.FinishedProcessingPath);
+                instance.pathfinding.FindPath(_request, instance.FinishedProcessingPath, _isAStar);
             };
             threadStart.Invoke();
         }

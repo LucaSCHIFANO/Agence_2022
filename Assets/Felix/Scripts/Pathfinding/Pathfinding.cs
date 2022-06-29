@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.Diagnostics;
 
 namespace Pathfinding
 {
@@ -16,10 +15,22 @@ namespace Pathfinding
             grid = GetComponent<Grid>();
         }
 
-        public void FindPath(PathRequest _request, Action<PathResult> _callback)
+        public void FindPath(PathRequest _request, Action<PathResult> _callback, bool _isAStar)
+        {
+            if (_isAStar)
+            {
+                FindPathAStar(_request, _callback);
+            }
+            else
+            {
+                FindPathJPS(_request, _callback);
+            }
+        }
+        
+        public void FindPathAStar(PathRequest _request, Action<PathResult> _callback)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
-            
+
             Vector3[] wayPoints = Array.Empty<Vector3>();
             bool pathSuccess = false;
             
@@ -40,12 +51,12 @@ namespace Pathfinding
             }*/
             
             if (!startNode.isObstructed && !targetNode.isObstructed/* && !isTargetNodeObstructed*/)
-            {
+            {               
                 Heap<Node> openSet = new Heap<Node>(grid.MaxSize);
                 HashSet<Node> closeSet = new HashSet<Node>();
 
                 openSet.Add(startNode);
-
+                
                 while (openSet.Count > 0)
                 {
                     Node currentNode = openSet.RemoveFirst();
@@ -78,7 +89,7 @@ namespace Pathfinding
                         
                         if (isNodeObstructed)
                             continue;*/
-                        
+
                         int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
 
                         if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
@@ -99,17 +110,85 @@ namespace Pathfinding
 
             if (pathSuccess)
             {
-                wayPoints = RetracePath(startNode, targetNode);
+                wayPoints = RetracePath(startNode, targetNode, true);
                 pathSuccess = wayPoints.Length > 0;
             }
 
             stopwatch.Stop();
-            print(stopwatch.ElapsedMilliseconds);
+            print("A Star" + (pathSuccess ? "succeed, " : "failed, ") + "time: " + stopwatch.ElapsedMilliseconds + "ms");
 
             _callback(new PathResult(wayPoints, pathSuccess, _request.callback));
         }
 
-        private Vector3[] RetracePath(Node _startNode, Node _targetNode)
+        public void FindPathJPS(PathRequest _request, Action<PathResult> _callback)
+        {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            
+            Vector3[] wayPoints = Array.Empty<Vector3>();
+            bool pathSuccess = false;
+            
+            Node startNode = grid.NodeFromPoint(_request.startPoint);
+            Node targetNode = grid.NodeFromPoint(_request.endPoint);
+            
+            if (!startNode.isObstructed && !targetNode.isObstructed)
+            {
+                Heap<Node> openSet = new Heap<Node>(grid.MaxSize);
+                HashSet<Node> closeSet = new HashSet<Node>();
+
+                openSet.Add(startNode);
+                
+                while (openSet.Count > 0)
+                {
+                    Node currentNode = openSet.RemoveFirst();
+
+                    closeSet.Add(currentNode);
+
+                    if (currentNode == targetNode)
+                    {
+                        pathSuccess = true;
+                        break; // Good path
+                    }
+
+                    List<Node> neighbours = grid.PruneNeighbours(currentNode, targetNode);
+
+                    foreach (Node neighbour in neighbours)
+                    {
+                        if (neighbour.isObstructed || closeSet.Contains(neighbour))
+                            continue;
+
+                        int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
+
+                        if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
+                        {
+                            neighbour.gCost = newMovementCostToNeighbour;
+                            neighbour.hCost = GetDistance(neighbour, targetNode);
+
+                            neighbour.parent = currentNode;
+
+                            if (!openSet.Contains(neighbour))
+                                openSet.Add(neighbour);
+                            else
+                                openSet.UpdateItem(neighbour);
+                        }
+                    }
+                }
+            }
+
+            if (pathSuccess)
+            {
+                wayPoints = RetracePath(startNode, targetNode, false);
+                pathSuccess = wayPoints.Length > 0;
+            }
+            
+            stopwatch.Stop();
+            print("JPS " + (pathSuccess ? "succeed, " : "failed, ") + "time: " + stopwatch.ElapsedMilliseconds + "ms");
+            
+            _callback(new PathResult(wayPoints, pathSuccess, _request.callback));
+        }
+
+        
+        
+        private Vector3[] RetracePath(Node _startNode, Node _targetNode, bool _isAStar)
         {
             List<Node> path = new List<Node>();
 
@@ -120,8 +199,21 @@ namespace Pathfinding
                 path.Add(currentNode);
                 currentNode = currentNode.parent;
             }
+            
+            Vector3[] waypoints;
 
-            Vector3[] waypoints = SimplifyPath(path);
+            if (_isAStar)
+            {
+                waypoints = SimplifyPath(path);
+            }
+            else
+            {
+                waypoints = new Vector3[path.Count];
+                for (int i = 0; i < waypoints.Length; i++)
+                {
+                    waypoints[i] = path[i].position;
+                }
+            }
             
             Array.Reverse(waypoints);
             return waypoints;
