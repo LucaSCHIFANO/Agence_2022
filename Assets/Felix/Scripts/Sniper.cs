@@ -33,7 +33,7 @@ namespace Enemies
             {
                 Vector3 nPos = (transform.position - target.transform.position).normalized * (range - range / 10) + target.transform.position;
             
-                asker.AskNewPath(nPos, speed, OnPathFound);
+                asker.AskNewPath(nPos, speed, OnPathFound, false);
                 targetLastPosition = target.transform.position;
             }
         }
@@ -83,7 +83,7 @@ namespace Enemies
                     if (highParent.CompareTag("Player") || highParent.CompareTag("Car"))
                     {
                         print("Sniper found a new position where he will see player at end");
-                        asker.AskNewPath(nVector, speed, null);
+                        asker.AskNewPath(nVector, speed, null, false);
                         return;
                     }
                 }

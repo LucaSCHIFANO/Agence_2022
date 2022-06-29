@@ -97,7 +97,7 @@ namespace Enemies
         public void StopChasing(Vector3 _returnPosition)
         {
             isChasing = false;
-            asker.AskNewPath(_returnPosition, speed, null);
+            asker.AskNewPath(_returnPosition, speed, null, false);
         }
 
         protected virtual void FixedUpdate()

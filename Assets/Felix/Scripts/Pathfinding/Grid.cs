@@ -50,7 +50,7 @@ namespace Pathfinding
 
             return newGrid;
         }
-        
+
         public List<Node> GetNeighbourNodes(Node _node)
         {
             List<Node> neighbours = new List<Node>();
@@ -75,6 +75,89 @@ namespace Pathfinding
             return neighbours;
         }
 
+        public List<Node> PruneNeighbours(Node _currentNode, Node _destinationNode)
+        {
+            List<Node> returnNeighbours = new List<Node>();
+            
+            List<Node> neighbours = GetNeighbourNodes(_currentNode);
+
+            foreach (Node neighbour in neighbours)
+            {
+                int x = Mathf.Clamp(neighbour.gridX - _currentNode.gridX, -1, 1);
+                int y = Mathf.Clamp(neighbour.gridZ - _currentNode.gridZ, -1, 1);
+
+                Node jumpPoint = Jump(_currentNode, x, y, _destinationNode);
+                
+                if (jumpPoint != null)
+                    returnNeighbours.Add(jumpPoint);
+            }
+
+            return returnNeighbours;
+        }
+
+        private Node Jump(Node _currentNode, int _xDirection, int _yDirection, Node _destination)
+        {
+            int xJumpPosition = _currentNode.gridX + _xDirection;
+            int yJumpPosition = _currentNode.gridZ + _yDirection;
+
+            if (!IsWalkable(xJumpPosition, yJumpPosition))
+                return null;
+
+            Node jumpPoint = grid[xJumpPosition, yJumpPosition];
+
+            if (jumpPoint == _destination)
+                return jumpPoint;
+
+            // Horizontals
+            if (_xDirection != 0 && _yDirection == 0)
+            {
+                if (!IsWalkable(_currentNode.gridX, _currentNode.gridZ + 1) &&
+                    IsWalkable(_currentNode.gridX + _xDirection, _currentNode.gridZ + 1))
+                {
+                    return jumpPoint;
+                }
+                else if (!IsWalkable(_currentNode.gridX, _currentNode.gridZ - 1) &&
+                         IsWalkable(_currentNode.gridX + _xDirection, _currentNode.gridZ - 1))
+                {
+                    return jumpPoint;
+                }
+            }
+            // Verticals
+            else if (_xDirection == 0 && _yDirection != 0)
+            {
+                if (!IsWalkable(_currentNode.gridX + 1, _currentNode.gridZ) &&
+                    IsWalkable(_currentNode.gridX + 1, _currentNode.gridZ + _yDirection))
+                {
+                    return jumpPoint;
+                }
+                else if (!IsWalkable(_currentNode.gridX - 1, _currentNode.gridZ) &&
+                         IsWalkable(_currentNode.gridX - 1, _currentNode.gridZ + _yDirection))
+                {
+                    return jumpPoint;
+                }
+            }
+            // Diagonals
+            else if (_xDirection != 0 && _yDirection != 0)
+            {
+                if (!IsWalkable(_currentNode.gridX + _xDirection, _currentNode.gridZ))
+                {
+                    return jumpPoint;
+                }
+                else if (!IsWalkable(_currentNode.gridX, _currentNode.gridZ + _yDirection))
+                {
+                    return jumpPoint;
+                }
+
+                if (Jump(jumpPoint, _xDirection, 0, _destination) != null ||
+                    Jump(jumpPoint, 0, _yDirection, _destination) != null)
+                {
+                    return jumpPoint;
+                }
+            }
+
+            return Jump(jumpPoint, _xDirection, _yDirection, _destination);
+        }
+
         public Node NodeFromPoint(Vector3 _position)
         {
             float xPercentage = (_position.x + gridSize.x / 2 - transform.position.x) / gridSize.x;
@@ -86,6 +169,27 @@ namespace Pathfinding
             int z = Mathf.RoundToInt((gridSizeZ - 1) * zPercentage);
 
             return grid[x, z];
+        }
+        
+        public Node NodeFromPoint(Vector2 _position)
+        {
+            float xPercentage = (_position.x + gridSize.x / 2 - transform.position.x) / gridSize.x;
+            float yPercentage = (_position.y + gridSize.z / 2 - transform.position.z) / gridSize.z;
+            xPercentage = Mathf.Clamp01(xPercentage);
+            yPercentage = Mathf.Clamp01(yPercentage);
+
+            int x = Mathf.RoundToInt((gridSizeX - 1) * xPercentage);
+            int y = Mathf.RoundToInt((gridSizeZ - 1) * yPercentage);
+
+            return grid[x, y];
+        }
+        
+        private bool IsWalkable(int _gridX, int _gridY)
+        {
+            if (_gridX < 0 || _gridX > gridSize.x - 1 || _gridY < 0 || _gridY > gridSize.z - 1)
+                return false;
+
+            return !grid[_gridX, _gridY].isObstructed;
         }
 
         public Node[] OptimizedNodesFromTransform(Transform _object)
