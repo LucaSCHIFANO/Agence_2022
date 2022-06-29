@@ -359,9 +359,7 @@ MonoBehaviour:
   _timeBeforeCoolDown: 0
   maincolor: {r: 0, g: 0, b: 0, a: 0}
   overHeatColor: {r: 0, g: 0, b: 0, a: 0}
-  bulletEffectSand: {fileID: 5854372352750547732, guid: bd10d1c447c0435469145dfb8017efca,
-    type: 3}
-  bulletEffectNormal: {fileID: 7755849309380149150, guid: 813a397fc35628948a5b33b5e09ce8f3,
+  bulletEffect: {fileID: 5854372352750547732, guid: bd10d1c447c0435469145dfb8017efca,
     type: 3}
   overHParticle: {fileID: 8741968814719207331}
   OHParticleOverTime: 2
@@ -371,7 +369,6 @@ MonoBehaviour:
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
-  sound: {fileID: 3407535137564009486}
   overHeatPourcent: 0
   _overHeatPourcentOnline: 0
   actualWeapon: 0

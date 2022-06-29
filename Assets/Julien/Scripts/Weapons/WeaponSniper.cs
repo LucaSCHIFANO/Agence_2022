@@ -24,8 +24,8 @@ public class WeaponSniper : WeaponBase
             Debug.DrawRay(_shootingPoint.position, shootingDir * 1000, Color.red, 10);
             if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit))
             {
-                CreateBulletEffectServerRpc(hit.point, hit.collider.tag);
-                Instantiate(bulletEffectSand, hit.point, transform.rotation);
+                CreateBulletEffectServerRpc(hit.point);
+                Instantiate(bulletEffect, hit.point, transform.rotation);
             }
         }
         else if (_fireType == WeaponFireType.Projectile)

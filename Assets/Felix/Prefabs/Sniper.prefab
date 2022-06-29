@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 969192348745435775}
   - component: {fileID: 7042439095538118630}
   - component: {fileID: -9044397595050556484}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Sniper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  range: 10
   enemySo: {fileID: 11400000, guid: 0eb7a22ef67bb764483a503d443ef97e, type: 2}
   weaponsPosition:
   - {fileID: 7099923427349109451}
@@ -229,7 +230,6 @@ MonoBehaviour:
     useRandomPitch: 1
     pitch: 0.9
     pitchRandom: 1.1
-    maxDistance: 20
     playOnAwake: 0
     loop: 0
     source: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7099923427349109451}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: WeaponPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -35,13 +35,6 @@ public class HPEnemy : HP
         Instantiate(impactEffect, transform.position, transform.rotation);
     }
     
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_End()
-    {
-        Destroy(gameObject);
-        
-    }
-    
        
 
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
@@ -12,7 +11,6 @@ public class Map : SimulationBehaviour, ISpawned
 {
 	[SerializeField] private Text _countdownMessage;
 	[SerializeField] private Transform[] _spawnPoints;
-	[SerializeField] private GameObject blackScreen;
 
 	private Dictionary<Player, NetworkedPlayer> _playerCharacters = new Dictionary<Player, NetworkedPlayer>();
 	
@@ -24,9 +22,6 @@ public class Map : SimulationBehaviour, ISpawned
 		{
 			SpawnAvatar(player, false);
 		}
-
-		StartCoroutine(desableBlackscreen());
-
 		// Tell the master that we're done loading
 		App.Instance.Session.RPC_FinishedLoading(Runner.LocalPlayer);
 		// Show the countdown message
@@ -54,7 +49,6 @@ public class Map : SimulationBehaviour, ISpawned
 		yield return new WaitForSeconds(1f);
 		blackScreen.SetActive(false);
 	}
-	
 	
 	public void SpawnAvatar(Player player, bool lateJoiner)
 	{

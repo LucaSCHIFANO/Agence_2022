@@ -26,9 +26,6 @@ public class WScriptable : ScriptableObject
     public int numberOfShots;
 
     public float damage;
-    public AudioClip weaponSound;
-
-    public float timeBtwSound;
 
 
 }

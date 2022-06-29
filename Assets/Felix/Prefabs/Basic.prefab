@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 3323683867169605653}
   - component: {fileID: 3025623514163928328}
   - component: {fileID: 4024717878686652877}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Basic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  range: 5
   enemySo: {fileID: 11400000, guid: 655036a823493e84d9f6b82443254296, type: 2}
   weaponsPosition:
   - {fileID: 7099923427349109451}
@@ -229,7 +230,6 @@ MonoBehaviour:
     useRandomPitch: 1
     pitch: 0.9
     pitchRandom: 1.1
-    maxDistance: 20
     playOnAwake: 0
     loop: 0
     source: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7099923427349109451}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: WeaponPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

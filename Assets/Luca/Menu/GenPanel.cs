@@ -94,12 +94,11 @@ public class GenPanel : NetworkBehaviour
     public void Interact(NetworkedPlayer other)
     {
         if (isPossessed) return;
+        
+        CanvasInGame.Instance.showGen(true);
 
         if (other.Object.HasInputAuthority)
         {
-            other.ChangeInputHandler(PossessingType.NONE, gameObject);
-            CanvasInGame.Instance.showGen(true);
-            
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 

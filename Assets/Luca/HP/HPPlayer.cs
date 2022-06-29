@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Fusion;
 using GameUI;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class HPPlayer : HP
 {
@@ -14,21 +12,7 @@ public class HPPlayer : HP
     protected float currentTimeRecov;
     [SerializeField] protected float recovPerSecond;
     private bool wasDeadBefore;
-
-    [SerializeField] private TruckReference _truckReference;
-    [SerializeField] private GameObject _deathScreen;
-    [SerializeField] private float respawnDelay;
-
-    private NetworkedPlayer _player;
-    private NetworkCharacterControllerPrototypeCustom ccCustom;
     
-    public override void Spawned()
-    {
-        base.Spawned();
-        _player = GetComponent<NetworkedPlayer>();
-        ccCustom = GetComponent<NetworkCharacterControllerPrototypeCustom>();
-    }
-
     private void Update()
     {
         HP();
@@ -46,18 +30,14 @@ public class HPPlayer : HP
  
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
         hpPourcent = currentHP / maxHP;
-
-        if(Object.HasInputAuthority && !wasDeadBefore) CanvasInGame.Instance.actuBlood(Mathf.Abs(hpPourcent - 1));
+        
+        if(Object.HasInputAuthority) CanvasInGame.Instance.actuBlood(Mathf.Abs(hpPourcent - 1));
         if (currentHP <= 0 && !wasDeadBefore)
         {
             // Dead
             wasDeadBefore = true;
-            CanvasInGame.Instance.actuBlood(0);
-            ShowDeathScreen();
             GameOverManager.instance.PlayerDied();
-            StartCoroutine(RespawnPlayer());
         }
-    }
 
     IEnumerator RespawnPlayer()
     {

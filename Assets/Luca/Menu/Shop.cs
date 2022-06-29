@@ -33,7 +33,6 @@ public class Shop : NetworkBehaviour
 
     public void quitShop()
     {
-        _playerController.ChangeInputHandler(PossessingType.CHARACTER, gameObject);
         UpgradeMenu.Instance.gotoScreen(0);
         CanvasInGame.Instance.showShop(false);
                 
@@ -63,15 +62,15 @@ public class Shop : NetworkBehaviour
 
         if (!okay) return;
 
+        CanvasInGame.Instance.showShop(true);
+
         if (other.Object.HasInputAuthority)
         {
-            other.ChangeInputHandler(PossessingType.NONE, gameObject);
-            CanvasInGame.Instance.showShop(true);
-            
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
             _playerController = other;
+            other.CharacterInputHandler.enabled = false;
             isPossessed = true;
         }
 

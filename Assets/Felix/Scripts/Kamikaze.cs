@@ -10,11 +10,31 @@ namespace Enemies
     {
         [SerializeField] private LayerMask playersLayerMask;
 
+        public override void Initialization(EnemySO _enemySo)
+        {
+            base.Initialization(_enemySo);
+
+            target = GameObject.FindWithTag("Player");
+
+            if (Runner.IsServer && target != null)
+            {
+                asker.AskNewPath(target.transform, speed, null);
+                targetLastPosition = target.transform.position;
+            }
+        }
+
         public override void FixedUpdateNetwork()
         {
             base.FixedUpdateNetwork();
             
-            if (!Runner.IsServer || asker == null || !isChasing)
+            if (target == null)
+            {
+                target = GameObject.FindWithTag("Player");
+                
+                return;
+            }
+            
+            if (!Runner.IsServer || asker == null)
                 return;
             
             if (Physics.CheckBox(transform.position, transform.localScale + Vector3.one * range, transform.rotation,

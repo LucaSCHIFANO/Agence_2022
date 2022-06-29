@@ -2754,18 +2754,19 @@ MonoBehaviour:
   - 15
   - 10
   - 10
-  Reference: {fileID: 11400000, guid: e9aab27ce2c17d545be0d41ba6367da5, type: 2}
-  _respawnPoints:
-  - {fileID: 1959391206}
-  timeToStart: 0
   controlMode: 1
   activeControl: 1
   Reverse: 0
-  debugs:
-    MotorTorque: 0
-    BreakTorque: 0
-    IsBreaking: 0
-    Accel: 0
+  action:
+    _id: 0
+    _name: 
+    _type: 0
+    _descriptiveName: 
+    _positiveDescriptiveName: 
+    _negativeDescriptiveName: 
+    _behaviorId: 0
+    _userAssignable: 0
+    _categoryId: 0
   carWheels:
     wheels:
       frontWheelDrive: 1
@@ -2788,11 +2789,11 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
   carSounds:
-    IdleEngine: {fileID: 6889253509523990654}
-    LowEngine: {fileID: 6570771367908600480}
-    HighEngine: {fileID: 4745683986952144407}
-    nitro: {fileID: 7628744174758163200}
-    switchGear: {fileID: 1434855997210280667}
+    IdleEngine: {fileID: 0}
+    LowEngine: {fileID: 0}
+    HighEngine: {fileID: 0}
+    nitro: {fileID: 0}
+    switchGear: {fileID: 0}
   carParticles:
     brakeParticlePerfab: {fileID: 100000, guid: 7688b4d44a0c11a43b20da32baad8732,
       type: 3}
@@ -2816,7 +2817,7 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    springs: 1500
+    springs: 25000
     dampers: 1500
     carPower: 10000
     shiftPower: 150
@@ -2837,7 +2838,7 @@ MonoBehaviour:
     - 2
     - 1
     LimitBackwardSpeed: 60
-    LimitForwardSpeed: 90
+    LimitForwardSpeed: 220
   brake: 0
   curTorque: 100
   powerShift: 100
@@ -2993,7 +2994,7 @@ MonoBehaviour:
   maxFuel: 1000
   currFuel: 1000
   _CurrFuelSync: 0
-  consPerMeterInL: 0.16
+  consPerMeterInL: 0.01
   totDist: 0
   infiniteGas: 0
   _OutOfGas: 0
@@ -3086,7 +3087,6 @@ MonoBehaviour:
   seat: {fileID: 1766707134838176358}
   exit: {fileID: 1766707134016895645}
   _isPossessed: 0
-  truck: {fileID: 1766707134435982014}
 --- !u!65 &7046177488562164515
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12034,11 +12034,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4461469335234737447, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
-      propertyPath: maxDistance
-      value: 2143.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 4461469335234737447, guid: ebb70dc5fecceca49940f2910c67ecd0,
-        type: 3}
       propertyPath: actualWeapon
       value: 3
       objectReference: {fileID: 0}
@@ -12589,11 +12584,6 @@ PrefabInstance:
         type: 3}
       propertyPath: allieTouret
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4461469335234737447, guid: ebb70dc5fecceca49940f2910c67ecd0,
-        type: 3}
-      propertyPath: maxDistance
-      value: 2143.72
       objectReference: {fileID: 0}
     - target: {fileID: 4461469335234737447, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}

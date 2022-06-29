@@ -60,12 +60,7 @@ public class WeaponUltima : WeaponBase
         }
     }
 
-    public override void Update()
-    {
-        base.Update();
-        actualTimeBtwSound -= Time.deltaTime;
-    }
-    
+
     public void actuAllStats(WScriptable SObject)
     {
         if (Object == null || SObject == null) return;
@@ -92,8 +87,6 @@ public class WeaponUltima : WeaponBase
         if (sound != null && audioClip != null)
             sound.sounds[0].clip = audioClip;
 
-        timeBtwSound = SObject.timeBtwSound;
-        
         _isOverHeat = false;
         _isCoolDown = false;
         isShooting = false;
@@ -148,7 +141,7 @@ public class WeaponUltima : WeaponBase
                     RaycastHit hit;
                     Vector3 shootingDir = Quaternion.Euler(Random.Range(-spread, spread), Random.Range(-spread, spread),
                         Random.Range(-spread, spread)) * _shootingPoint.forward;
-
+                    
                     if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance))
                     {
 
@@ -159,7 +152,7 @@ public class WeaponUltima : WeaponBase
                             if (allieTouret)
                             {
                                 if (hp is HPPlayer || hp is HPSubTruck || hp is HPTruck) Debug.Log("friendly fire not allowed");
-                                else hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                                //else hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
                             }
                             else
                             {
@@ -170,7 +163,7 @@ public class WeaponUltima : WeaponBase
                         }
                         else
                         {
-                            BulletEffectClientRpc(hit.point, hit.collider.tag);
+                            BulletEffectClientRpc(hit.point);
                         }
                     }
                 }
@@ -194,7 +187,7 @@ public class WeaponUltima : WeaponBase
                         if (allieTouret)
                         {
                             if (hp is HPPlayer || hp is HPSubTruck || hp is HPTruck) Debug.Log("friendly fire not allowed");
-                            else hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                            //else hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
                         }
                         else
                         {
@@ -205,7 +198,7 @@ public class WeaponUltima : WeaponBase
                     }
                     else
                     {
-                        BulletEffectClientRpc(hit.point, hit.collider.tag);
+                        BulletEffectClientRpc(hit.point);
                     }
                 }
             }
