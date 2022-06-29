@@ -13,8 +13,10 @@ public class CharacterMovementHandler : NetworkBehaviour
 
     private float cameraRotationX;
 
+    private CharacterController chara;
     public bool IsMoving;
     private bool IsMovingOld;
+    private bool isWasJumping;
     
     [SerializeField] protected NetworkMecanimAnimator anim;
 
@@ -46,6 +48,7 @@ public class CharacterMovementHandler : NetworkBehaviour
     {
         _networkCharacterControllerPrototypeCustom = GetComponent<NetworkCharacterControllerPrototypeCustom>();
         parts = FindObjectOfType<ReservoirParts>();
+        chara = GetComponent<CharacterController>();
     }
 
     // Start is called before the first frame update
@@ -64,18 +67,30 @@ public class CharacterMovementHandler : NetworkBehaviour
         
         localCamera.transform.localRotation = Quaternion.Euler(cameraRotationX, 0, 0);
 
-        if (IsMoving && !IsMovingOld)
+        if (chara.isGrounded)
         {
-            IsMovingOld = true;
-            MySetTrigger("IsMoving");
-            Debug.Log("move");
+            if (IsMoving && (!IsMovingOld || isWasJumping))
+            {
+                IsMovingOld = true;
+                isWasJumping = false;
+                MySetTrigger("IsMoving");
+                Debug.Log("move");
+            }
+            else if (!IsMoving && (IsMovingOld || isWasJumping))
+            {
+                IsMovingOld = false;
+                isWasJumping = false;
+                MySetTrigger("IsIdle");
+                Debug.Log("idle");
+            }
         }
-        else if (!IsMoving && IsMovingOld)
+        else if (!isWasJumping)
         {
-            IsMovingOld = false;
-            MySetTrigger("IsIdle");
-            Debug.Log("idle");
+            isWasJumping = true;
+            MySetTrigger("Jump");
+            Debug.Log("in the air ");
         }
+
     }
 
     public override void FixedUpdateNetwork()

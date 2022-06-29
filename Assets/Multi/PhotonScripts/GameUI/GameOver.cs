@@ -16,6 +16,7 @@ namespace GameUI
 
 		public void OnQuit()
 		{
+			App.Instance.Disconnect();
 			Application.Quit();
 		}
 	}
