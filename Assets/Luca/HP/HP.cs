@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using Fusion;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HP : NetworkBehaviour
 {
     [SerializeField] protected float maxHP;
 
     [Networked(OnChanged = nameof(OnHPChanged))] protected float currentHP { get; set; }
+    
+    [SerializeField] protected UnityEvent OnDeath;
 
     public override void Spawned()
     {
@@ -39,9 +42,6 @@ public class HP : NetworkBehaviour
     {
         
     }
-    
-    
-    
 
     public virtual void reduceHPToServ(float damage)
     {
@@ -51,7 +51,11 @@ public class HP : NetworkBehaviour
     public virtual void TrueReduceHP(float damage)
     {
         currentHP -= damage;
-        if (currentHP <= 0) Destroy(gameObject);
+        if (currentHP <= 0)
+        {
+            OnDeath?.Invoke();
+            Destroy(gameObject);
+        }
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]

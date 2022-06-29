@@ -1,26 +1,35 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using Fusion;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
+using Color = UnityEngine.Color;
 
 public class Generator : MonoBehaviour
 {
     [SerializeField] protected OnClickTriangle triangleButton;
 
     [SerializeField] public GameObject upgradePoint;
-    [SerializeField] private List<Transform> listSommets = new List<Transform>();
+    [SerializeField] public List<Transform> listSommets = new List<Transform>();
     [SerializeField] private List<UILineRenderer> myLines = new List<UILineRenderer>();
     [SerializeField] private float lineThinkness;
     [SerializeField] private List<float> colorDistance = new List<float>(); // green then orange then red
     [SerializeField] private List<TextMeshProUGUI> textList = new List<TextMeshProUGUI>(); // att def spd
     [SerializeField] private List<GameObject> textButtonOverCloke = new List<GameObject>(); // att def spds
 
-    [Header("Pourcentage")] private float minimumDist = 0; // 0 au plus pret du sommet
-    private float maximumDist = 850; // ~840 au plus loin du sommet
+    [Header("Pourcentage")] 
+    private float minimumDist = 0; 
+    private float maximumDist = 0; 
+    private float maximumHeight = 0;
+    private float maximumWidth = 0;
+
+    [HideInInspector] public bool isOvercloaking;
+    [HideInInspector] public int overCloakeInt;
     [SerializeField] private float overclokePourcent; // pourcent en overcloke
     [SerializeField] private float overclokePourcentOther; // pourcent quand autre en overcloke
 
@@ -87,6 +96,8 @@ public class Generator : MonoBehaviour
 
     public void onClickTriangle(bool boul)
     {
+        isOvercloaking = false; 
+        
         if (boul) upgradePoint.transform.position = Input.mousePosition;
 
         for (int i = 0; i < myLines.Count; i++)
@@ -99,7 +110,6 @@ public class Generator : MonoBehaviour
             myLines[i].transform.position = upgradePoint.transform.position;
 
             float distTop = Vector3.Distance(upgradePoint.transform.position, listSommets[i].position);
-            Vector3 vectorTop = listSommets[i].position - upgradePoint.transform.position;
 
             if (distTop < 10 || distTop < 10)
             {
@@ -107,26 +117,7 @@ public class Generator : MonoBehaviour
             }
 
             myLines[i].LineThickness = lineThinkness;
-
-            var pointlist = new List<Vector2>();
-
-            pointlist.Add(Vector2.zero);
-
-            pointlist.Add(-listSommets[i].transform.InverseTransformPoint(upgradePoint.transform.position));
-
-            myLines[i].Points = pointlist.ToArray();
-            
-            if ((distTop / maximumDist) * 100 < colorDistance[0]) 
-                myLines[i].color = Color.Lerp(Color.green, new Color(0.7f, 0.49f, 0.11f), distTop / ((maximumDist * colorDistance[0]) * 0.01f ));
-            
-            else if ((distTop / maximumDist) * 100 < colorDistance[1])
-            
-                myLines[i].color = Color.Lerp(new Color(0.7f, 0.49f, 0.11f), new Color(0.36f, 0.02f, 0f),
-                    (distTop - ((maximumDist * colorDistance[0]) * 0.01f )) / (((maximumDist * colorDistance[1]) * 0.01f) - ((maximumDist * colorDistance[0]) * 0.01f )) );
-            
-            else myLines[i].color = new Color(0.36f, 0.02f, 0f);
-
-            
+          
             
             var pourcent =
                 (((maximumDist - distTop) / maximumDist) * 100).ToString("F2"); // max distance 800 min distance 0
@@ -155,18 +146,62 @@ public class Generator : MonoBehaviour
                     break;
             }
         }
+        
+        setLine();
     }
 
-    public void visuelChange()
+    void setLine()
     {
-        textList[0].text = "Att : " + pourcentageListWOutChange[0].ToString("F2") + "%";
-        textList[1].text = "Def : " + pourcentageListWOutChange[1].ToString("F2") + "%";
-        textList[2].text = "Spd : " + pourcentageListWOutChange[2].ToString("F2") + "%";
+        for (int i = 0; i < listSommets.Count; i++)
+        {
+            float distTop = Vector3.Distance(upgradePoint.transform.position, listSommets[i].position);
+
+            var pointlist = new List<Vector2>();
+
+            pointlist.Add(Vector2.zero);
+
+            pointlist.Add(-listSommets[i].transform.InverseTransformPoint(upgradePoint.transform.position));
+
+            myLines[i].Points = pointlist.ToArray();
+
+            if ((distTop / maximumDist) * 100 < colorDistance[0])
+                myLines[i].color = Color.Lerp(Color.green, new Color(0.7f, 0.49f, 0.11f),
+                    distTop / ((maximumDist * colorDistance[0]) * 0.01f));
+
+            else if ((distTop / maximumDist) * 100 < colorDistance[1])
+
+                myLines[i].color = Color.Lerp(new Color(0.7f, 0.49f, 0.11f), new Color(0.36f, 0.02f, 0f),
+                    (distTop - ((maximumDist * colorDistance[0]) * 0.01f)) /
+                    (((maximumDist * colorDistance[1]) * 0.01f) - ((maximumDist * colorDistance[0]) * 0.01f)));
+
+            else myLines[i].color = new Color(0.36f, 0.02f, 0f);
+        }
+    }
+
+    public void visuelChange(Vector2 newPos, bool isOver, int leint)
+    {
+        Debug.Log(isOver + " " + leint);
+        if (isOver) overcloking(leint);
+        else
+        {
+            textList[0].text = "Att : " + pourcentageListWOutChange[0].ToString("F2") + "%";
+            textList[1].text = "Def : " + pourcentageListWOutChange[1].ToString("F2") + "%";
+            textList[2].text = "Spd : " + pourcentageListWOutChange[2].ToString("F2") + "%";
+
+            upgradePoint.transform.position = new Vector2(
+                Mathf.Lerp(listSommets[1].transform.position.x, listSommets[2].transform.position.x, newPos.x),
+                Mathf.Lerp(listSommets[0].transform.position.y, listSommets[1].transform.position.y, newPos.y));
+
+            onClickTriangle(false);
+        }
     }
 
 
     public void overcloking(int position)
     {
+        isOvercloaking = true;
+        overCloakeInt = position;
+        
         upgradePoint.transform.position = textButtonOverCloke[position].transform.position;
 
         for (int i = 0; i < myLines.Count; i++)

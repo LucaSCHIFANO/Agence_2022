@@ -68,7 +68,9 @@ public class Map : SimulationBehaviour, ISpawned
 			Transform t = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
 			NetworkedPlayer character = Runner.Spawn(player.CharacterPrefab, t.position, Quaternion.identity, player.Object.InputAuthority);
 			Debug.Log($"Spawned player at location {t.position} but real position is {character.transform.position}");
+			if (t.position != character.transform.position) Debug.LogError("You did not spawned at the right place");
 			Runner.SetPlayerObject(player.Object.InputAuthority, character.Object);
+			character.GetComponent<NetworkCharacterControllerPrototypeCustom>().TeleportToPosition(t.position);
 			_playerCharacters[player] = character;
 			player.InputEnabled = lateJoiner;
 		}

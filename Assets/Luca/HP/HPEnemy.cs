@@ -6,8 +6,10 @@ using UnityEngine;
 public class HPEnemy : HP
 {
     public GameObject impactEffect;
-    public int enemyPrice;
+    // public int enemyPrice;
     
+    
+
     public override void reduceHPToServ(float damage)
     {
         if(Runner.IsServer) TrueReduceHP(damage);
@@ -20,7 +22,8 @@ public class HPEnemy : HP
         
         if (currentHP <= 0)
         {
-            ScrapMetal.Instance.addMoneyServerRpc(enemyPrice);
+            OnDeath?.Invoke();
+            // ScrapMetal.Instance.addMoneyServerRpc(enemyPrice);
             RPC_End();
         }
     }
