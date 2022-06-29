@@ -14,17 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turretName: MachineGun
   fireRate: 30
-  bulletToOverheat: 100
+  bulletToOverheat: 60
   coolDownPerSecond: 10
   timeBeforeCoolDown: 1
   mainColor: {r: 1, g: 0.5019608, b: 0.5019608, a: 1}
   overHeatColor: {r: 0.5294118, g: 0, b: 0, a: 1}
   wType: 2
   fType: 0
-  maxDistanceRayCast: 100
+  maxDistanceRayCast: 70
   shootingEffect: {fileID: 3853778323762076991, guid: 49c7c10f24555044b873883eedbc053f,
     type: 3}
   spread: 2
   numberOfShots: 0
-  damage: 1
+  damage: 10
   weaponSound: {fileID: 8300000, guid: bbdccdcd0c1c01d478a6d3c0355a1638, type: 3}
+  timeBtwSound: 0

@@ -10,22 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8fe74749fed9de84b847ce6488762201, type: 3}
-  m_Name: Shotgun
+  m_Name: machinegun Upgrade
   m_EditorClassIdentifier: 
-  turretName: ShotGun
-  fireRate: 1
-  bulletToOverheat: 4.9
-  coolDownPerSecond: 20
-  timeBeforeCoolDown: 1.5
-  mainColor: {r: 0.10588236, g: 0.22352943, b: 0.83921576, a: 1}
-  overHeatColor: {r: 0, g: 0.06666667, b: 0.29411766, a: 1}
-  wType: 4
+  turretName: MachineGun
+  fireRate: 30
+  bulletToOverheat: 90
+  coolDownPerSecond: 10
+  timeBeforeCoolDown: 1
+  mainColor: {r: 1, g: 0.5019608, b: 0.5019608, a: 0}
+  overHeatColor: {r: 0.5294118, g: 0, b: 0, a: 0}
+  wType: 0
   fType: 0
-  maxDistanceRayCast: 30
-  shootingEffect: {fileID: 7314420997393787132, guid: 2cb7b4c08e33e2a4ba58fdaa799ec072,
-    type: 3}
-  spread: 15
-  numberOfShots: 25
-  damage: 3
+  maxDistanceRayCast: 75
+  shootingEffect: {fileID: 0}
+  spread: 2
+  numberOfShots: 0
+  damage: 10
   weaponSound: {fileID: 8300000, guid: bbdccdcd0c1c01d478a6d3c0355a1638, type: 3}
   timeBtwSound: 0
