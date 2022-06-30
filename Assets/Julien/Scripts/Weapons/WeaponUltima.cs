@@ -159,7 +159,12 @@ public class WeaponUltima : WeaponBase
                             if (allieTouret)
                             {
                                 if (hp is HPPlayer || hp is HPSubTruck || hp is HPTruck) Debug.Log("friendly fire not allowed");
-                                else hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                                else
+                                {
+                                   
+                                    sound.Play("Shoot");
+                                    hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                                }
                             }
                             else
                             {
@@ -194,7 +199,11 @@ public class WeaponUltima : WeaponBase
                         if (allieTouret)
                         {
                             if (hp is HPPlayer || hp is HPSubTruck || hp is HPTruck) Debug.Log("friendly fire not allowed");
-                            else hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                            else
+                            {
+                                if(Object.StateAuthority == Runner.GetPlayerObject(Runner.LocalPlayer))sound.Play("Hit");
+                                hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                            }
                         }
                         else
                         {

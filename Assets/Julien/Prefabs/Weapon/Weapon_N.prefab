@@ -513,6 +513,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
+  - name: Hit
+    clip: {fileID: 8300000, guid: bbdccdcd0c1c01d478a6d3c0355a1638, type: 3}
+    audioMixerGroup: {fileID: -1828073082294812753, guid: 6cf919df79f5ae447b956de6086238ee,
+      type: 2}
+    useRandomVolume: 0
+    volume: 0.05
+    volumeRandom: 0
+    useRandomPitch: 0
+    pitch: 1
+    pitchRandom: 0
+    maxDistance: 10
+    playOnAwake: 0
+    loop: 0
+    in3D: 1
+    spatialBlend: 1
+    source: {fileID: 0}
   - name: Shoot
     clip: {fileID: 8300000, guid: bbdccdcd0c1c01d478a6d3c0355a1638, type: 3}
     audioMixerGroup: {fileID: -1828073082294812753, guid: 6cf919df79f5ae447b956de6086238ee,

@@ -17,12 +17,13 @@ MonoBehaviour:
   bulletToOverheat: 90
   coolDownPerSecond: 10
   timeBeforeCoolDown: 1
-  mainColor: {r: 1, g: 0.5019608, b: 0.5019608, a: 0}
-  overHeatColor: {r: 0.5294118, g: 0, b: 0, a: 0}
+  mainColor: {r: 1, g: 0.5019608, b: 0.5019608, a: 1}
+  overHeatColor: {r: 0.5294118, g: 0, b: 0, a: 1}
   wType: 0
   fType: 0
   maxDistanceRayCast: 75
-  shootingEffect: {fileID: 0}
+  shootingEffect: {fileID: 3853778323762076991, guid: 49c7c10f24555044b873883eedbc053f,
+    type: 3}
   spread: 2
   numberOfShots: 0
   damage: 10
