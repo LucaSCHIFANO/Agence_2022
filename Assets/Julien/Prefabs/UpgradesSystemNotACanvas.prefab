@@ -10384,6 +10384,7 @@ MonoBehaviour:
   - {fileID: 5723704942121846309}
   - {fileID: 5723704941819932682}
   - {fileID: 5723704942277714025}
+  upgradesC: 
   listAllButton1:
   - {fileID: 5723704942236234337}
   - {fileID: 5723704941180468944}
@@ -10420,7 +10421,22 @@ MonoBehaviour:
   - {fileID: 5723704941411517746}
   lastUpgrade2: {fileID: 0}
   turret2: {fileID: 0}
-  allWeapon: []
+  allWeapon:
+  - {fileID: 11400000, guid: 86a131bb159242d448ab463a2ee2300f, type: 2}
+  - {fileID: 11400000, guid: c1731a32204b4474e90a548cc2f8ff0e, type: 2}
+  - {fileID: 11400000, guid: 3aed98938cf4d5a4499c274f73989961, type: 2}
+  - {fileID: 11400000, guid: a339788b0ea251f44a9d284d33ea7df5, type: 2}
+  - {fileID: 11400000, guid: 423285e306054a448aa27f518479b814, type: 2}
+  - {fileID: 11400000, guid: 58cf8a999e371c74195daf959b4c8cf4, type: 2}
+  - {fileID: 11400000, guid: f538a39a9ec01f8469096408026bb6c1, type: 2}
+  - {fileID: 11400000, guid: d8e0fac37146ec542839cb02f754848c, type: 2}
+  - {fileID: 11400000, guid: f538a39a9ec01f8469096408026bb6c1, type: 2}
+  - {fileID: 11400000, guid: f538a39a9ec01f8469096408026bb6c1, type: 2}
+  - {fileID: 11400000, guid: f538a39a9ec01f8469096408026bb6c1, type: 2}
+  - {fileID: 11400000, guid: 2f0e7d320d963fa4b8d3e3e7c425a8c3, type: 2}
+  - {fileID: 11400000, guid: 2f0e7d320d963fa4b8d3e3e7c425a8c3, type: 2}
+  - {fileID: 11400000, guid: 769442f1fcbab944eb166eccede7ef8c, type: 2}
+  - {fileID: 11400000, guid: 769442f1fcbab944eb166eccede7ef8c, type: 2}
   FPrice:
   - newName: Fort1
     intList: 01000000020000000300000004000000
@@ -10435,6 +10451,13 @@ MonoBehaviour:
     intList: 02000000030000000400000005000000
   - newName: Cam3
     intList: 04000000050000000600000007000000
+  truck: {fileID: 0}
+  fullText: {fileID: 0}
+  partialText: {fileID: 0}
+  fullRepairPrice: 0
+  hpSlider: {fileID: 0}
+  hpText: {fileID: 0}
+  fuel: {fileID: 0}
 --- !u!114 &5723704942055649993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10450,7 +10473,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   startScrap: 1000
   textSmetals: {fileID: 5723704941300886091}
+  textSmetalsInGame: {fileID: 0}
   scrapLeft: 0
+  scrapLeftInGame: 0
 --- !u!114 &4523258346133077208
 MonoBehaviour:
   m_ObjectHideFlags: 0
