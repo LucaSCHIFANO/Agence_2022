@@ -27,13 +27,12 @@ public class CharacterMovementHandler : NetworkBehaviour
     [SerializeField] private float _repairLeakMaxTime;
     [SerializeField] private LayerMask _leakLayer;
     [SerializeField] private LayerMask partLayer;
-    ReservoirParts parts;
+
 
 
     private void Awake()
     {
         _networkCharacterControllerPrototypeCustom = GetComponent<NetworkCharacterControllerPrototypeCustom>();
-        parts = FindObjectOfType<ReservoirParts>();
     }
 
     // Start is called before the first frame update
@@ -123,18 +122,4 @@ public class CharacterMovementHandler : NetworkBehaviour
         }
     }
 
-    public void HarmTruck(RaycastHit hit)
-    {
-        HarmTruckRpc(hit);
-    }
-
-    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-    void HarmTruckRpc(RaycastHit hit)
-    {
-        /*
-        RaycastHit hit;
-        if (Physics.Raycast(localCamera.transform.position, localCamera.transform.forward, out hit, Mathf.Infinity, partLayer))
-        */
-        parts.HitReservoir(hit);
-    }
 }
