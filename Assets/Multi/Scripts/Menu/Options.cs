@@ -13,7 +13,7 @@ public class Options : NetworkBehaviour
 
     [SerializeField] private bool isMainMenu;
 
-    private void Start()
+    private void Awake()
     {
         getSlider();
     }
@@ -59,12 +59,11 @@ public class Options : NetworkBehaviour
         sliderList[2].value = PlayerPrefs.GetFloat("SFXVol");
         sliderList[3].value = PlayerPrefs.GetFloat("Sensi");
         
-        if(sliderList[3].value < sliderList[3].minValue) sliderList[3].value = sliderList[3].minValue;
-        
         audioMix.SetFloat("MasterVol", sliderList[0].value);
         audioMix.SetFloat("MusicVol", sliderList[1].value);
         audioMix.SetFloat("SFXVol", sliderList[2].value);
         audioMix.SetFloat("Sensi", sliderList[3].value);
+        Runner?.GetPlayerObject(Runner.LocalPlayer).GetComponent<NetworkCharacterControllerPrototypeCustom>().changeSensi();
         
         if(isMainMenu) Hide();
     }

@@ -1526,16 +1526,12 @@ PrefabInstance:
       value: 2561
       objectReference: {fileID: 0}
     - target: {fileID: 639639400, guid: f3066092f2cc974499dbcfba0556e878, type: 3}
-      propertyPath: NetworkedBehaviours.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 639639400, guid: f3066092f2cc974499dbcfba0556e878, type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
-      value: -627448149776212425
+      value: 8448998821717283792
       objectReference: {fileID: 0}
     - target: {fileID: 639639400, guid: f3066092f2cc974499dbcfba0556e878, type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
-      value: 4439539753420901281
+      value: 852303113671172274
       objectReference: {fileID: 0}
     - target: {fileID: 518831518953086508, guid: f3066092f2cc974499dbcfba0556e878,
         type: 3}
@@ -3560,6 +3556,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 543450653329986626, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 543450653685359875, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 1766707134442733644, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: m_Name
@@ -3700,6 +3706,11 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 205625334}
+    - target: {fileID: 6617175567376397979, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: maxHP
+      value: 10000000
+      objectReference: {fileID: 0}
     - target: {fileID: 6639255481687269755, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: canvas
@@ -5993,12 +6004,12 @@ PrefabInstance:
     - target: {fileID: 6194862444308805060, guid: 682d2a75842959f468e79d09e788ac8f,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6194862444308805060, guid: 682d2a75842959f468e79d09e788ac8f,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6194862444308805060, guid: 682d2a75842959f468e79d09e788ac8f,
         type: 3}
@@ -8756,7 +8767,7 @@ PrefabInstance:
     - target: {fileID: 3323683867169605653, guid: 1c50dbbd474775b4e90949f560c96fdb,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 3323683867169605653, guid: 1c50dbbd474775b4e90949f560c96fdb,
         type: 3}
@@ -9035,7 +9046,7 @@ PrefabInstance:
     - target: {fileID: 3323683867169605653, guid: 1c50dbbd474775b4e90949f560c96fdb,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 3323683867169605653, guid: 1c50dbbd474775b4e90949f560c96fdb,
         type: 3}
@@ -9363,7 +9374,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1270292898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9381,7 +9392,7 @@ MonoBehaviour:
   DestroyWhenStateAuthorityLeaves: 0
   AllowStateAuthorityOverride: 0
   AoiPositionSource: {fileID: 0}
-  Flags: 2561
+  Flags: 133633
   NetworkGuid:
     RawGuidValue: 55f4138b33ef4a248e3964eabb8e2a35
   NestedObjects:
