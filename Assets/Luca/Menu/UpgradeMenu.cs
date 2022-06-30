@@ -596,5 +596,10 @@ public class UpgradeMenu : NetworkBehaviour
     }
     
     #endregion
+
+    public void quitShopPanel()
+    {
+        Shop.Instance.quitShop();
+    }
 }
 

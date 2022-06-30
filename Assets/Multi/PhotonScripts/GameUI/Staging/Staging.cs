@@ -1,4 +1,5 @@
 using System.Text;
+using Fusion;
 using UIComponents;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,8 +46,13 @@ namespace GameUI.Staging
 			int count = 0;
 			int ready = 0;
 			_playerGrid.BeginUpdate();
-			foreach (Player ply in App.Instance.Players)
+			foreach (PlayerRef plyRef in App.Instance.PlayerRefs)
 			{
+				Player ply = App.Instance.GetPlayer(plyRef);
+
+				if (_sessionRefresh <= 0)
+					ply.RTT = ply.Runner.GetPlayerRtt(plyRef);
+
 				_playerGrid.AddRow(_playerListItemPrefab, item => item.Setup(ply));
 				count++;
 				if (ply.Ready)

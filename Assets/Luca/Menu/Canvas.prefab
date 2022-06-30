@@ -4424,12 +4424,12 @@ PrefabInstance:
     - target: {fileID: 1271723468641161455, guid: c2f9fad8581f66746916343fb97d60dd,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: quitShop
+      value: quitShopPanel
       objectReference: {fileID: 0}
     - target: {fileID: 1271723468641161455, guid: c2f9fad8581f66746916343fb97d60dd,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Shop, Assembly-CSharp
+      value: UpgradeMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1271723468641161455, guid: c2f9fad8581f66746916343fb97d60dd,
         type: 3}
