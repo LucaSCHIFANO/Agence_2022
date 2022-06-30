@@ -27,6 +27,9 @@ public class WeaponUltima : WeaponBase
 
     [SerializeField] protected List<GameObject> listPrefabW = new List<GameObject>();
 
+    [SerializeField] LayerMask leakLayer;
+
+    ReservoirParts parts;
 
     public enum weapon
     {
@@ -45,6 +48,7 @@ public class WeaponUltima : WeaponBase
     private void Start()
     {
         actuAllStats(startingWeapon);
+        parts = FindObjectOfType<ReservoirParts>();
     }
 
     public override void FixedUpdateNetwork()
@@ -173,6 +177,10 @@ public class WeaponUltima : WeaponBase
 
 
                         }
+                        else if (hit.collider.gameObject.layer == 10)
+                        {
+                            parts.HitReservoir(hit);
+                        }
                         else
                         {
                             BulletEffectClientRpc(hit.point, hit.collider.tag);
@@ -211,6 +219,10 @@ public class WeaponUltima : WeaponBase
                         }
 
 
+                    }
+                    else if (hit.collider.gameObject.layer == 10)
+                    {
+                        parts.HitReservoir(hit);
                     }
                     else
                     {

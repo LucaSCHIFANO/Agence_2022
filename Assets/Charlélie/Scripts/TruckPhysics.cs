@@ -579,6 +579,9 @@ public class TruckPhysics : TruckBase
             {
                 braking = input.breaking;
                 throttle = input.movement.y;
+
+                //if (speed > 1 && throttle == 0)
+                //    throttle = -1;
             }
 
             
@@ -1097,8 +1100,12 @@ public class TruckPhysics : TruckBase
 
             if (w.drive)
             {
-
-                if (Mathf.Abs(col.rpm) > Mathf.Abs(wantedRPM))
+                if (!brake && accel == 0)
+                {
+                    Debug.Log("HEEEERE");
+                    col.brakeTorque = carSetting.brakePower / 5;
+                }
+                else if (Mathf.Abs(col.rpm) > Mathf.Abs(wantedRPM))
                 {
 
                     col.motorTorque = 0;
@@ -1109,7 +1116,6 @@ public class TruckPhysics : TruckBase
 
                     if (!brake && accel != 0 && NeutralGear == false)
                     {
-
                         if ((speed < carSetting.LimitForwardSpeed && currentGear > 0) ||
                             (speed < carSetting.LimitBackwardSpeed && currentGear == 0))
                         {
@@ -1123,8 +1129,6 @@ public class TruckPhysics : TruckBase
                             col.motorTorque = 0;
                             col.brakeTorque = 2000;
                         }
-
-
                     }
                     else if (brake && accel == 0)
                     {
@@ -1139,6 +1143,7 @@ public class TruckPhysics : TruckBase
 
                 debugs.MotorTorque = col.motorTorque;
                 debugs.Accel = accel;
+                Debug.Log(throttle);
                 debugs.BreakTorque = col.brakeTorque;
             }
 
