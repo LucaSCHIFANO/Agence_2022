@@ -1,16 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
-public class BulletDamage : MonoBehaviour
+public class BulletDamage : NetworkBehaviour
 {
     public float damageValue;
     
     
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.GetComponent<HP>()) other.gameObject.GetComponent<HP>().reduceHP(damageValue);
+        
+        if (other.gameObject.TryGetComponent(out HP hp)) hp.reduceHPToServ(damageValue);
             
         Destroy(gameObject);
         

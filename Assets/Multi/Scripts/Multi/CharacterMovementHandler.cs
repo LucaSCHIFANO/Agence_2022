@@ -13,7 +13,34 @@ public class CharacterMovementHandler : NetworkBehaviour
 
     private float cameraRotationX;
 
+    private CharacterController chara;
+    private NetworkedPlayer playe;
+    
     public bool IsMoving;
+    private bool IsMovingOld;
+    private bool isWasJumping;
+    
+    [HideInInspector] public NetworkMecanimAnimator anim;
+
+    [Space(5)]
+
+
+
+    [Header("Leak Params")]
+
+    private GameObject _currLeakTargeted;
+
+    private float _repairLeakCurrTime;
+
+
+
+    [SerializeField] private float _repairLeakMaxTime;
+
+    [SerializeField] private LayerMask _leakLayer;
+
+    [SerializeField] private LayerMask partLayer;
+
+
 
     private void Awake()
     {
@@ -23,7 +50,8 @@ public class CharacterMovementHandler : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        IsMoving = true;
+        IsMovingOld = false;
     }
 
     // Update is called once per frame
@@ -34,6 +62,39 @@ public class CharacterMovementHandler : NetworkBehaviour
         cameraRotationX = Mathf.Clamp(cameraRotationX, -60, 60);
         
         localCamera.transform.localRotation = Quaternion.Euler(cameraRotationX, 0, 0);
+
+        if (!playe.IsInSomething)
+        {
+            
+            if (chara.isGrounded)
+            {
+                if (IsMoving && (!IsMovingOld || isWasJumping))
+                {
+                    IsMovingOld = true;
+                    isWasJumping = false;
+                    MySetTrigger("IsMoving");
+                }
+                else if (!IsMoving && (IsMovingOld || isWasJumping))
+                {
+                    IsMovingOld = false;
+                    isWasJumping = false;
+                    MySetTrigger("IsIdle");
+                }
+            }
+            else if (!isWasJumping)
+            {
+                isWasJumping = true;
+                MySetTrigger("Jump");
+            }
+        }
+        else
+        {
+            MySetTrigger("Idle");
+            Debug.Log("second step");
+        }
+
+
+
     }
 
     public override void FixedUpdateNetwork()
@@ -53,6 +114,8 @@ public class CharacterMovementHandler : NetworkBehaviour
             if (networkInputData.isJumpPressed) _networkCharacterControllerPrototypeCustom.Jump();
             
             if (networkInputData.isRequestingToSpawn) SpawnerVehicule.instance.SpawnCar();
+
+            if (networkInputData.isRepairing) CheckLeakReapir();
         }
     }
 
@@ -60,4 +123,37 @@ public class CharacterMovementHandler : NetworkBehaviour
     {
         this.viewInput = viewInputVector;
     }
+    
+    
+    public void MySetTrigger(string trigger)
+    {
+        if (Object.HasStateAuthority)
+            anim.SetTrigger(trigger);
+        else if (Object.HasInputAuthority && Runner.IsForward)
+            anim.Animator.SetTrigger(trigger);
+    }
+
+    void CheckLeakReapir()
+    {
+        RaycastHit hit;
+        Physics.Raycast(localCamera.transform.position, localCamera.transform.forward, out hit, Mathf.Infinity, _leakLayer);
+        if (hit.collider != null && (_currLeakTargeted == null | (_currLeakTargeted != hit.collider.gameObject)))
+        {
+            _repairLeakCurrTime = _repairLeakMaxTime;
+            _currLeakTargeted = hit.collider.gameObject;
+        }
+        else if (hit.collider != null && _currLeakTargeted == hit.collider.gameObject)
+        {
+            _repairLeakCurrTime -= Time.deltaTime;
+            if (_repairLeakCurrTime <= 0.0f)
+                _currLeakTargeted.transform.parent.GetComponent<Leak>().OnDoneRepair();
+        }
+
+        else
+        {
+            _repairLeakCurrTime = _repairLeakMaxTime;
+            _currLeakTargeted = null;
+        }
+    }
+
 }

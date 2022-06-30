@@ -14,13 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turretName: Basic Turret
   fireRate: 5
-  bulletToOverheat: 50
+  bulletToOverheat: 20
   coolDownPerSecond: 50
   timeBeforeCoolDown: 1
   mainColor: {r: 1, g: 0.6666667, b: 0.9960785, a: 1}
   overHeatColor: {r: 0.4666667, g: 0.36078432, b: 0.47058827, a: 1}
   wType: 0
   fType: 0
+  maxDistanceRayCast: 50
+  shootingEffect: {fileID: 3853778323762076991, guid: 49c7c10f24555044b873883eedbc053f,
+    type: 3}
   spread: 1
   numberOfShots: 1
   damage: 10
+  weaponSound: {fileID: 8300000, guid: bbdccdcd0c1c01d478a6d3c0355a1638, type: 3}
+  timeBtwSound: 0

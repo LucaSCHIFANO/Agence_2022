@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class Map : SimulationBehaviour, ISpawned
 {
 	[SerializeField] private Text _countdownMessage;
 	[SerializeField] private Transform[] _spawnPoints;
+	[SerializeField] private GameObject blackScreen;
 
 	private Dictionary<Player, NetworkedPlayer> _playerCharacters = new Dictionary<Player, NetworkedPlayer>();
 	
@@ -22,13 +24,37 @@ public class Map : SimulationBehaviour, ISpawned
 		{
 			SpawnAvatar(player, false);
 		}
+
+		StartCoroutine(desableBlackscreen());
+
 		// Tell the master that we're done loading
 		App.Instance.Session.RPC_FinishedLoading(Runner.LocalPlayer);
 		// Show the countdown message
 		_countdownMessage.gameObject.SetActive(true);
 
+		StartCoroutine(WaitPlayersInitialization());
+
 		App.Instance.Session.Map = this;
 	}
+
+	IEnumerator WaitPlayersInitialization()
+	{
+		yield return new WaitForSeconds(2f);
+		
+		EnemiesZoneTrigger[] zoneTriggers = FindObjectsOfType<EnemiesZoneTrigger>();
+		foreach (EnemiesZoneTrigger zoneTrigger in zoneTriggers)
+		{
+			zoneTrigger.Initialization();
+		}
+	}
+
+	IEnumerator desableBlackscreen()
+	{
+		blackScreen.GetComponent<Animator>().SetTrigger("ActivateFadeOut");
+		yield return new WaitForSeconds(1f);
+		blackScreen.SetActive(false);
+	}
+	
 	
 	public void SpawnAvatar(Player player, bool lateJoiner)
 	{
@@ -39,9 +65,12 @@ public class Map : SimulationBehaviour, ISpawned
 			Debug.Log($"Spawning avatar for player {player.Name} with input auth {player.Object.InputAuthority}");
 			// Note: This only works if the number of spawnpoints in the map matches the maximum number of players - otherwise there's a risk of spawning multiple players in the same location.
 			// For example, with 4 spawnpoints and a 5 player limit, the first player will get index 4 (max-1) and the second will get index 0, and both will then use the first spawn point.
-			Transform t = _spawnPoints[((int)player.Object.InputAuthority) % _spawnPoints.Length];
-			NetworkedPlayer character = Runner.Spawn(player.CharacterPrefab, t.position, t.rotation, player.Object.InputAuthority);
+			Transform t = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
+			NetworkedPlayer character = Runner.Spawn(player.CharacterPrefab, t.position, Quaternion.identity, player.Object.InputAuthority);
+			Debug.Log($"Spawned player at location {t.position} but real position is {character.transform.position}");
+			if (t.position != character.transform.position) Debug.LogError("You did not spawned at the right place");
 			Runner.SetPlayerObject(player.Object.InputAuthority, character.Object);
+			character.GetComponent<NetworkCharacterControllerPrototypeCustom>().TeleportToPosition(t.position);
 			_playerCharacters[player] = character;
 			player.InputEnabled = lateJoiner;
 		}

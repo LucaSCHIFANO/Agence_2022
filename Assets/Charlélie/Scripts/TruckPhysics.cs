@@ -9,11 +9,30 @@ public enum ControlMode { simple = 1, touch = 2 }
 
 public class TruckPhysics : TruckBase
 {
-    [SerializeField] private AudioClip honking;
+    [SerializeField] private List<AudioClip> honking;
     [SerializeField] private ParticleSystem _exhaust;
 
     [SerializeField] public List<Transform> teleport;
     private AudioSource _audioSource;
+    
+    [SerializeField] private ParticleSystem dust;
+    [SerializeField] private float minimSpeedToDust;
+    
+    [SerializeField] private List<ParticleSystem> particleImpact = new List<ParticleSystem>();
+    [SerializeField] private List<float> pourcentageImpact = new List<float>();
+    [SerializeField] private TruckReference Reference;
+    [SerializeField] private List<Transform> _respawnPoints;
+
+    public List<Transform> RespawnPoints
+    {
+        get => _respawnPoints;
+    }
+
+    [SerializeField] private float timeToStart;
+
+    public bool Started { get; set; } = false;
+
+    CarInteractable interact;
 
     TruckFuel fuel;
     
@@ -26,7 +45,19 @@ public class TruckPhysics : TruckBase
     public bool Reverse;
 
     private Rewired.Player player;
-    public Rewired.InputAction action;
+
+    // Debug Settings /////////////////////////////////
+
+    public Debugs debugs;
+
+    [System.Serializable]
+    public class Debugs
+    {
+        public float MotorTorque;
+        public float BreakTorque;
+        public bool IsBreaking;
+        public float Accel;
+    }
 
 
     // Wheels Setting /////////////////////////////////
@@ -75,7 +106,7 @@ public class TruckPhysics : TruckBase
 
     // Car sounds /////////////////////////////////
 
-    [HideInInspector] public CarSounds carSounds;
+    public CarSounds carSounds;
 
     [System.Serializable]
     public class CarSounds
@@ -268,6 +299,7 @@ public class TruckPhysics : TruckBase
         base.Init();
         player = Rewired.ReInput.players.GetPlayer(0);
         fuel = GetComponent<TruckFuel>();
+        interact = GetComponent<CarInteractable>();
     }
 
     private WheelComponent SetWheelComponent(Transform wheel, float maxSteer, bool drive, float pos_y)
@@ -301,7 +333,7 @@ public class TruckPhysics : TruckBase
 
     void Awake()
     {
-
+        (Reference as IReferenceHead<TruckPhysics>).Set(this);
         if (carSetting.automaticGear) NeutralGear = false;
 
         myRigidbody = transform.GetComponent<Rigidbody>();
@@ -352,6 +384,34 @@ public class TruckPhysics : TruckBase
         }
 
         _audioSource = gameObject.AddComponent<AudioSource>();
+    }
+
+    public void StartTruck()
+    {
+        StartCoroutine(StartCarCor());
+    }
+
+    IEnumerator StartCarCor()
+    {
+        yield return new WaitForSeconds(timeToStart);
+        Started = true;
+        AskStarded();
+        carSounds.IdleEngine.Play();
+        carSounds.HighEngine.Play();
+        carSounds.LowEngine.Play();
+    }
+    
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    void AskStarded()
+    {
+        Started = true;
+    }
+
+    public void onExit()
+    {
+        carSounds.IdleEngine.Stop();
+        carSounds.HighEngine.Stop();
+        carSounds.LowEngine.Stop();
     }
 
     #endregion
@@ -473,6 +533,7 @@ public class TruckPhysics : TruckBase
     #region Updates
     void Update()
     {
+        if (!Started) return;
         if (!carSetting.automaticGear && activeControl)
         {
             if (shiftUp)
@@ -493,9 +554,14 @@ public class TruckPhysics : TruckBase
 
     public override void FixedUpdateNetwork()
     {
+        Debug.Log(currentGear);
         base.FixedUpdateNetwork();
         if (GetInput(out VehiculeInputData input))
         {
+            throttle = interact.isPossessed ? throttle : 0;
+            braking = interact.isPossessed ? braking : true;
+            if (!Started) return;
+
             shiftUp = input.shiftUp;
             shiftDown = input.shiftDown;
 
@@ -513,8 +579,13 @@ public class TruckPhysics : TruckBase
             {
                 braking = input.breaking;
                 throttle = input.movement.y;
+
+                //if (speed > 1 && throttle == 0)
+                //    throttle = -1;
             }
+
             
+
             turn = input.movement.x;
             shift = input.shift;
             leftControl = input.leftControl;
@@ -529,17 +600,12 @@ public class TruckPhysics : TruckBase
 
             if (input.isHonking)
             {
-                HonkeRPC();
+                HonkeRPC(Random.Range(0, honking.Count));
             }
 
-            if (throttle > 0 && !leftControl)
-            {
-                PlayParticle();
-            }
-            else
-            {
-                StopParticle();
-            }
+            if (throttle > 0 && !leftControl) PlayParticle();
+            else StopParticle();
+            
 
             if (input.teleportToSpawn) { TeleportTo(0); }
             if (input.teleportToBigDrop) { TeleportTo(1); }
@@ -548,6 +614,7 @@ public class TruckPhysics : TruckBase
             if (input.teleportToBigDrop4) { TeleportTo(4); }
         }
 
+        
 
         // speed of car
         speed = myRigidbody.velocity.magnitude * 2.7f;
@@ -562,6 +629,8 @@ public class TruckPhysics : TruckBase
         lastSpeed = speed;
 
 
+        if(speed > minimSpeedToDust && Object.HasInputAuthority) PlayParticleDust();
+        else if(Object.HasInputAuthority) StopParticleDust();
 
 
         if (slip2 != 0.0f)
@@ -590,6 +659,7 @@ public class TruckPhysics : TruckBase
                     steer = Mathf.MoveTowards(steer, turn, 0.2f);
                     accel = throttle;
                     brake = braking;
+                    debugs.IsBreaking = brake;
                 }
 
             }
@@ -651,7 +721,7 @@ public class TruckPhysics : TruckBase
 
         
 
-        Debug.Log("Backwarding: " + Backward + "  Throttle: " + (throttle > 0) + "  Braking: " + braking);
+        //Debug.Log("Backwarding: " + Backward + "  Throttle: " + (throttle > 0) + "  Braking: " + braking);
         
         if (Backward)
         {
@@ -797,10 +867,12 @@ public class TruckPhysics : TruckBase
 
 
                     wantedRPM = 0.0f;
-                    col.brakeTorque = carSetting.brakePower;
                     w.rotation = w_rotate;
 
                 }
+
+                if (brake)
+                    col.brakeTorque = carSetting.brakePower;
             }
             else
             {
@@ -1028,8 +1100,12 @@ public class TruckPhysics : TruckBase
 
             if (w.drive)
             {
-
-                if (Mathf.Abs(col.rpm) > Mathf.Abs(wantedRPM))
+                if (!brake && accel == 0)
+                {
+                    Debug.Log("HEEEERE");
+                    col.brakeTorque = carSetting.brakePower / 5;
+                }
+                else if (Mathf.Abs(col.rpm) > Mathf.Abs(wantedRPM))
                 {
 
                     col.motorTorque = 0;
@@ -1040,7 +1116,6 @@ public class TruckPhysics : TruckBase
 
                     if (!brake && accel != 0 && NeutralGear == false)
                     {
-
                         if ((speed < carSetting.LimitForwardSpeed && currentGear > 0) ||
                             (speed < carSetting.LimitBackwardSpeed && currentGear == 0))
                         {
@@ -1054,17 +1129,22 @@ public class TruckPhysics : TruckBase
                             col.motorTorque = 0;
                             col.brakeTorque = 2000;
                         }
-
-
                     }
-                    else
+                    else if (brake && accel == 0)
                     {
-                        col.motorTorque = 0;
+                        if (Backward)
+                            col.motorTorque = curTorqueCol * 0.9f + newTorque * 1.0f;
+                        else
+                            col.motorTorque = -(curTorqueCol * 0.9f + newTorque * 1.0f);
+                        //col.motorTorque = 0;
                     }
 
                 }
 
-
+                debugs.MotorTorque = col.motorTorque;
+                debugs.Accel = accel;
+                Debug.Log(throttle);
+                debugs.BreakTorque = col.brakeTorque;
             }
 
 
@@ -1088,39 +1168,39 @@ public class TruckPhysics : TruckBase
 
 
         // calculate pitch (keep it within reasonable bounds)
-        Pitch = Mathf.Clamp(1.2f + ((motorRPM - carSetting.idleRPM) / (carSetting.shiftUpRPM - carSetting.idleRPM)), 1.0f, 10.0f);
+        Pitch = Mathf.Clamp(1.2f + ((motorRPM - carSetting.idleRPM) / (carSetting.shiftUpRPM - carSetting.idleRPM)), 0.5f, 1.25f);
 
         shiftTime = Mathf.MoveTowards(shiftTime, 0.0f, 0.1f);
 
         if (Pitch == 1)
         {
-            //carSounds.IdleEngine.volume = Mathf.Lerp(carSounds.IdleEngine.volume, 1.0f, 0.1f);
-            //carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.5f, 0.1f);
-            //carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 0.0f, 0.1f);
+            carSounds.IdleEngine.volume = Mathf.Lerp(carSounds.IdleEngine.volume, 1.0f, 0.1f);
+            carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.5f, 0.1f);
+            carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 0.0f, 0.1f);
 
         }
         else
         {
 
-            //carSounds.IdleEngine.volume = Mathf.Lerp(carSounds.IdleEngine.volume, 1.8f - Pitch, 0.1f);
+            carSounds.IdleEngine.volume = Mathf.Lerp(carSounds.IdleEngine.volume, 1.8f - Pitch, 0.1f);
 
 
             if ((Pitch > PitchDelay || accel > 0) && shiftTime == 0.0f)
             {
-                //carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.0f, 0.2f);
-                ////carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 1.0f, 0.1f);
+                carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.0f, 0.2f);
+                carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 1.0f, 0.1f);
             }
             else
             {
-                //carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.5f, 0.1f);
-                //carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 0.0f, 0.2f);
+                carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.5f, 0.1f);
+                carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 0.0f, 0.2f);
             }
 
 
 
 
-            //carSounds.HighEngine.pitch = Pitch;
-            //carSounds.LowEngine.pitch = Pitch;
+            carSounds.HighEngine.pitch = Pitch;
+            carSounds.LowEngine.pitch = Pitch;
 
             PitchDelay = Pitch;
         }
@@ -1134,6 +1214,18 @@ public class TruckPhysics : TruckBase
 
     #endregion
 
+    
+    public void activateDamageParticle(float pourcentage)
+    {
+        for (int i = 0; i < pourcentageImpact.Count; i++)
+        {
+            if(pourcentageImpact[i] >= pourcentage) particleImpact[i].Play();
+            else particleImpact[i].Stop();
+        }
+    }
+    
+    
+    
     #region Gizmos
 
     /////////////// Show Normal Gizmos ////////////////////////////
@@ -1157,9 +1249,10 @@ public class TruckPhysics : TruckBase
 
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
-    public void HonkeRPC()
+    public void HonkeRPC(int honk)
     {
-        _audioSource.clip = honking;
+        _audioSource.clip = honking[honk];
+        _audioSource.maxDistance = 20;
         _audioSource.Play();
     }
 
@@ -1175,6 +1268,18 @@ public class TruckPhysics : TruckBase
         _exhaust.Stop();
     }
 
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+    public void PlayParticleDust()
+    {
+        dust.Play();
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+    public void StopParticleDust()
+    {
+        dust.Stop();
+    }
+    
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     public void TeleportTo(int location)
     {

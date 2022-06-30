@@ -10,31 +10,11 @@ namespace Enemies
     {
         [SerializeField] private LayerMask playersLayerMask;
 
-        public override void Initialization(EnemySO _enemySo)
-        {
-            base.Initialization(_enemySo);
-
-            target = GameObject.FindWithTag("Player");
-
-            if (Runner.IsServer && target != null)
-            {
-                asker.AskNewPath(target.transform, speed, null);
-                targetLastPosition = target.transform.position;
-            }
-        }
-
         public override void FixedUpdateNetwork()
         {
             base.FixedUpdateNetwork();
             
-            if (target == null)
-            {
-                target = GameObject.FindWithTag("Player");
-                
-                return;
-            }
-            
-            if (!Runner.IsServer || asker == null)
+            if (!Runner.IsServer || asker == null || !isChasing)
                 return;
             
             if (Physics.CheckBox(transform.position, transform.localScale + Vector3.one * range, transform.rotation,
@@ -43,9 +23,19 @@ namespace Enemies
                 Explode();
             }
 
-            if (Vector3.Distance(targetLastPosition, target.transform.position) >= range * speed / 2)
+            if (Vector3.Distance(targetLastPosition, target.transform.position) >= range)
             {
-                asker.AskNewPath(target.transform, speed, null);
+                asker.AskNewPath(target.transform, speed, null, false);
+                /*if (asker.pathEnd)
+                {
+                    asker.AskNewPath(target.transform, speed, null);
+                }
+                else
+                {
+                    // Add line calcul
+                    asker.AskNewPathAtEnd(target.transform.position);
+                }*/
+
                 targetLastPosition = target.transform.position;
             }
         }
@@ -54,6 +44,16 @@ namespace Enemies
         private void Explode()
         {
             Debug.Log("Boom");
+
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 5f);
+            foreach (Collider collider in colliders)
+            {
+                HP hp = collider.GetComponent<HP>();
+                if (hp != null)
+                {
+                    hp.TrueReduceHP(50f);
+                }
+            }
 
             Die();
         }

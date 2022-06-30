@@ -9,9 +9,11 @@ using TMPro;
 public class ScrapMetal : NetworkBehaviour
 {
     [SerializeField] protected int startScrap;
-    public TextMeshProUGUI textSmetals;
-
+    [SerializeField] protected TextMeshProUGUI textSmetals;
+    [SerializeField] protected TextMeshProUGUI textSmetalsInGame;
+    
     [HideInInspector] public int scrapLeft;
+    [HideInInspector] public int scrapLeftInGame;
     [Networked(OnChanged = nameof(OnScrapChanged))/*, Capacity(1)*/] private int scrapLeftOnline { get; set; }
 
     #region Singleton
@@ -57,12 +59,18 @@ public class ScrapMetal : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     public void addMoneyServerRpc(int lint)
     {
-        scrapLeft += lint;
-        scrapLeftOnline = scrapLeft;
+        AddServerScrap(lint);
     }
 
     public void actuText()
     {
         textSmetals.text = "Metals : " + scrapLeft;
+        textSmetalsInGame.text = scrapLeft.ToString();
+    }
+
+    public void AddServerScrap(int lint)
+    {
+        scrapLeft += lint;
+        scrapLeftOnline = scrapLeft;
     }
 }

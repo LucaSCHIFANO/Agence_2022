@@ -34,10 +34,15 @@ public abstract class WeaponBase : NetworkBehaviour
     [SerializeField] protected Color maincolor;
     [SerializeField] protected Color overHeatColor;
 
-    [SerializeField] protected GameObject bulletEffect;
+    [SerializeField] protected GameObject bulletEffectSand;
+    [SerializeField] protected GameObject bulletEffectNormal;
 
     [SerializeField] protected ParticleSystem overHParticle;
     [SerializeField] protected float OHParticleOverTime;
+    
+    [SerializeField] protected GameObject shootParticle;
+
+    
     [SerializeField] protected bool allieTouret;
 
 
@@ -55,7 +60,9 @@ public abstract class WeaponBase : NetworkBehaviour
 
     [HideInInspector] public bool isPossessed;
     
-    public CanvasInGame canvas;
+    [SerializeField] protected CanvasInGame canvas;
+    
+    [SerializeField] protected SoundTransmitter sound;
 
 
     public float overHeatPourcent;
@@ -82,7 +89,7 @@ public abstract class WeaponBase : NetworkBehaviour
     {
         overHeatPourcent = overHeatPourcentOnline;
         if (overHeatPourcent >= 100) _isOverHeat = true;
-
+        if (overHeatPourcent <= 0) _isOverHeat = false;
 
         if (Object.HasInputAuthority)
         {
@@ -95,13 +102,16 @@ public abstract class WeaponBase : NetworkBehaviour
     public virtual void Shoot()
     {
         if (Object == null) return;
-        overHeatPourcent += (100 / _bulletToOverHeat);
-        overHeatPourcentOnline = overHeatPourcent;
+        if (Runner.IsServer)
+        {
+            overHeatPourcent += (100 / _bulletToOverHeat);
+            overHeatPourcentOnline = overHeatPourcent;
         
-        if (overHeatPourcent >= 100) _isOverHeat = true;
-        _timeCoolDown = _timeBeforeCoolDown;
+            if (overHeatPourcent >= 100) _isOverHeat = true;
+            _timeCoolDown = _timeBeforeCoolDown;
         
-        EventSystem.ShootEvent();
+            EventSystem.ShootEvent();
+        }
     }
 
     public void Reload()
@@ -125,7 +135,7 @@ public abstract class WeaponBase : NetworkBehaviour
         em.rateOverTime = OHParticleOverTime;
     }
 
-    private void Update()
+    public virtual void Update()
     {
         if (Runner != null)
         {
@@ -144,27 +154,59 @@ public abstract class WeaponBase : NetworkBehaviour
                 overHeatPourcentOnline = overHeatPourcent;
             }
         }
-        
-        var em = overHParticle.emission;
-        em.enabled = true;
 
-        if (_isOverHeat) em.rateOverTime = OHParticleOverTime;
-        else em.rateOverTime = 0f;
+        if (overHParticle != null)
+        {
+            var em = overHParticle.emission;
+            em.enabled = true;
+
+            if (_isOverHeat) em.rateOverTime = OHParticleOverTime;
+            else em.rateOverTime = 0f;
+        }
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    public void AskToShoot()
+    {
+        Shoot();
+    }
+    
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    protected void ShootSoundRpc()
+    {
+        if (sound != null)
+            sound.Play("Shoot");
     }
     
     
     //creer une particule qd une bullet touche un mur
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    protected void BulletEffectClientRpc(Vector3 impactPoint)
+    protected void BulletEffectClientRpc(Vector3 impactPoint, string tag)
     {
-        // if(IsOwner) return;
-        Instantiate(bulletEffect, impactPoint, transform.rotation);
+        switch (tag)
+        {
+            case "Sand" : 
+                Instantiate(bulletEffectSand, impactPoint, transform.rotation);
+                break;
+            default :
+                Instantiate(bulletEffectNormal, impactPoint, transform.rotation);
+                break;
+        }
+        
     }
     
-    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-    protected void CreateBulletEffectServerRpc(Vector3 impactPoint)
+    //creer une particule au bout du canon
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    protected void ShootEffectClientRpc()
     {
-        BulletEffectClientRpc(impactPoint);
+        Instantiate(shootParticle, _shootingPoint.position, _shootingPoint.rotation);
+    }
+    
+    
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    protected void CreateBulletEffectServerRpc(Vector3 impactPoint, string tag)
+    {
+        BulletEffectClientRpc(impactPoint, tag);
     }
     
     

@@ -9,16 +9,28 @@ public class WeaponUltima : WeaponBase
 {
 
     [SerializeField] protected weapon actualWeapon;
-    [SerializeField] public WeaponFireType fireType;
+    [SerializeField] protected WeaponFireType fireType;
 
-    [SerializeField] public float spread;
-    [SerializeField] public int numberOfShot;
-    [SerializeField] public float damage;
+    [SerializeField] protected float maxDistance;
+
+    [SerializeField] protected float spread;
+    [SerializeField] protected int numberOfShot;
+    [SerializeField] protected float damage;
     
-    [SerializeField] public GameObject particleFire;
-    [SerializeField] private WScriptable startingWeapon;
+    [SerializeField] protected GameObject particleFire;
+    [SerializeField] protected WScriptable startingWeapon;
     
-    
+    [SerializeField] protected AudioClip audioClip;
+
+    [SerializeField] protected float timeBtwSound;
+    [SerializeField] protected float actualTimeBtwSound;
+
+    [SerializeField] protected List<GameObject> listPrefabW = new List<GameObject>();
+
+    [SerializeField] LayerMask leakLayer;
+
+    ReservoirParts parts;
+
     public enum weapon
     {
         BASIC,
@@ -36,6 +48,7 @@ public class WeaponUltima : WeaponBase
     private void Start()
     {
         actuAllStats(startingWeapon);
+        parts = FindObjectOfType<ReservoirParts>();
     }
 
     public override void FixedUpdateNetwork()
@@ -51,12 +64,19 @@ public class WeaponUltima : WeaponBase
         }
     }
 
-
+    public override void Update()
+    {
+        base.Update();
+        actualTimeBtwSound -= Time.deltaTime;
+    }
+    
     public void actuAllStats(WScriptable SObject)
     {
-        if (Object == null) return;
-
-        GetComponent<WeaponInteractable>().weaponName = SObject.turretName;
+        if (Object == null || SObject == null) return;
+        
+        WeaponInteractable interactable = GetComponent<WeaponInteractable>();
+        if (interactable != null) interactable.weaponName = SObject.turretName;
+        
         _fireRate = SObject.fireRate;
         _bulletToOverHeat = SObject.bulletToOverheat;
         _coolDownPerSecond = SObject.coolDownPerSecond;
@@ -65,55 +85,152 @@ public class WeaponUltima : WeaponBase
         overHeatColor = SObject.overHeatColor;
         actualWeapon = SObject.wType;
         fireType = SObject.fType;
+        maxDistance = SObject.maxDistanceRayCast;
+        shootParticle = SObject.shootingEffect;
+        
+        
         spread = SObject.spread;
         numberOfShot = SObject.numberOfShots;
         damage = SObject.damage;
+        audioClip = SObject.weaponSound;
+        if (sound != null && audioClip != null)
+            sound.sounds[0].clip = audioClip;
 
+        timeBtwSound = SObject.timeBtwSound;
+        
         _isOverHeat = false;
         _isCoolDown = false;
         isShooting = false;
         overHeatPourcentOnline = 0;
         _shootingTimer = 0;
         _timeCoolDown = 0;
+
+        var leInt = 0;
+        switch (SObject.wType)
+        {
+            case weapon.BASIC : leInt = 0; break;
+            case weapon.BURST : leInt = 0; break;
+            case weapon.SNIPER : leInt = 4; break;
+            case weapon.SHOTGUN : leInt = 2; break;
+            case weapon.MACHINEGUN : leInt = 3; break;
+            
+        }
+
+        for (int i = 0; i < listPrefabW.Count; i++)
+        {
+            if(i == leInt) listPrefabW[i].SetActive(true);
+            else listPrefabW[i].SetActive(false);
+        }
     }
 
     public override void Shoot()
     {
+        if (Object == null) return;
+        if (!Runner.IsServer) return;
         if (actualWeapon == weapon.BASIC || actualWeapon == weapon.BURST) isShooting = true;
         
         if (_shootingTimer > 0) return;
         if (_isOverHeat) return;
         
         base.Shoot();
-
+        
+        if (actualTimeBtwSound <= 0)
+        {
+            ShootSoundRpc();
+            actualTimeBtwSound = timeBtwSound;
+        }
+        
+        
         if (fireType == WeaponFireType.Hitscan)
         {
-            
-            RaycastHit hit;
-            Vector3 shootingDir = Quaternion.Euler(Random.Range(-spread, spread), Random.Range(-spread, spread), Random.Range(-spread, spread)) * _shootingPoint.forward;
-            Debug.DrawRay(_shootingPoint.position, shootingDir * 1000, Color.red, 10);
-            if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit))
+            ShootEffectClientRpc();
+
+            if (actualWeapon == weapon.SHOTGUN)
             {
-                CreateBulletEffectServerRpc(hit.point);
-                Instantiate(bulletEffect, hit.point, transform.rotation);
-                
-                if (hit.collider.gameObject.GetComponent<HP>())
+                for (int i = 0; i < numberOfShot; i++)
                 {
-                    if (allieTouret)
+                    RaycastHit hit;
+                    Vector3 shootingDir = Quaternion.Euler(Random.Range(-spread, spread), Random.Range(-spread, spread),
+                        Random.Range(-spread, spread)) * _shootingPoint.forward;
+
+                    if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance))
                     {
-                        if(hit.collider.gameObject.GetComponent<HPPlayer>() || hit.collider.gameObject.GetComponent<HPSubTruck>()) return;
-                        hit.collider.gameObject.GetComponent<HP>().reduceHP(damage * (Generator.Instance.pourcentageList[0] / 100));
+
+                        // Instantiate(bulletEffect, , transform.rotation);
+
+                        if (hit.collider.gameObject.TryGetComponent(out HP hp))
+                        {
+                            if (allieTouret)
+                            {
+                                if (hp is HPPlayer || hp is HPSubTruck || hp is HPTruck) Debug.Log("friendly fire not allowed");
+                                else
+                                {
+                                   
+                                    sound.Play("Shoot");
+                                    hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                                }
+                            }
+                            else
+                            {
+                                if ((hp is HPPlayer || hp is HPSubTruck|| hp is HPTruck)) hp.reduceHPToServ(damage);
+                            }
+
+
+                        }
+                        else if (hit.collider.gameObject.layer == 10)
+                        {
+                            parts.HitReservoir(hit);
+                        }
+                        else
+                        {
+                            BulletEffectClientRpc(hit.point, hit.collider.tag);
+                        }
                     }
-                    else
-                    {
-                        if(!hit.collider.gameObject.GetComponent<HPPlayer>() && !hit.collider.gameObject.GetComponent<HPSubTruck>()) return;
-                        hit.collider.gameObject.GetComponent<HP>().reduceHP(damage);
-                    }
-                        
-                    
                 }
             }
             
+            else
+            {
+                RaycastHit hit;
+                Vector3 shootingDir = Quaternion.Euler(Random.Range(-spread, spread), Random.Range(-spread, spread),
+                    Random.Range(-spread, spread)) * _shootingPoint.forward;
+                Debug.DrawRay(_shootingPoint.position, shootingDir * 1000, Color.red, 10);
+                // LagCompensatedHit hit;
+                // Runner.LagCompensation.Raycast(_shootingPoint.position, shootingDir, 100, Object.InputAuthority, out hitComp) <- Only check if enemy are hit
+                if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance))
+                {
+                    Debug.Log((hit.collider));
+                    // Instantiate(bulletEffect, , transform.rotation);
+
+                    if (hit.collider.gameObject.TryGetComponent(out HP hp))
+                    {
+                        if (allieTouret)
+                        {
+                            if (hp is HPPlayer || hp is HPSubTruck || hp is HPTruck) Debug.Log("friendly fire not allowed");
+                            else
+                            {
+                                if(Object.StateAuthority == Runner.GetPlayerObject(Runner.LocalPlayer))sound.Play("Hit");
+                                hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                            }
+                        }
+                        else
+                        {
+                            if ((hp is HPPlayer || hp is HPSubTruck|| hp is HPTruck)) hp.reduceHPToServ(damage);
+                        }
+
+
+                    }
+                    else if (hit.collider.gameObject.layer == 10)
+                    {
+                        parts.HitReservoir(hit);
+                    }
+                    else
+                    {
+                        BulletEffectClientRpc(hit.point, hit.collider.tag);
+                    }
+                }
+            }
+
         }
         else
         {

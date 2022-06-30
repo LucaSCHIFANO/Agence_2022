@@ -10,6 +10,9 @@ public class CharacterInputHandler : MonoBehaviour
     private bool isJumpButtonPressed;
     private bool isRequestingToSpawn;
 
+    private bool isRepairing;
+    private bool isShooting;
+
     private CharacterMovementHandler _characterMovementHandler;
 
     private void Awake()
@@ -35,6 +38,9 @@ public class CharacterInputHandler : MonoBehaviour
 
         isJumpButtonPressed = Input.GetButton("Jump");
         isRequestingToSpawn = Input.GetKeyDown(KeyCode.P);
+
+        isShooting = Input.GetMouseButtonDown(0);
+        isRepairing = Input.GetMouseButton(1);
     }
 
     public NetworkInputData GetNetworkInput()
@@ -48,6 +54,9 @@ public class CharacterInputHandler : MonoBehaviour
 
         inputData.isJumpPressed = isJumpButtonPressed;
         inputData.isRequestingToSpawn = isRequestingToSpawn;
+
+        inputData.isRepairing = isRepairing;
+        inputData.isShooting = isShooting;
 
         return inputData;
     }

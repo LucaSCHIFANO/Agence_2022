@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Fusion;
@@ -10,6 +11,7 @@ public class Shop : NetworkBehaviour
     [Networked] private bool isPossessed { get; set; }
     public TruckArea truckArea;
 
+    private PlayerRef _playerRef;
 
     #region Singleton
 
@@ -25,22 +27,23 @@ public class Shop : NetworkBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
+        if (Instance != null) Destroy(gameObject);
+        
+        Instance = this;
     }
-
 
 
     public void quitShop()
     {
+        _playerController.ChangeInputHandler(PossessingType.CHARACTER, gameObject);
         UpgradeMenu.Instance.gotoScreen(0);
         CanvasInGame.Instance.showShop(false);
-                
+
         if (_playerController.Object.HasInputAuthority)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            
+
             _playerController.CharacterInputHandler.enabled = true;
             isPossessed = false;
         }
@@ -62,18 +65,17 @@ public class Shop : NetworkBehaviour
 
         if (!okay) return;
 
-        CanvasInGame.Instance.showShop(true);
-
         if (other.Object.HasInputAuthority)
         {
+            other.ChangeInputHandler(PossessingType.NONE, gameObject);
+            CanvasInGame.Instance.showShop(true);
+
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
             _playerController = other;
-            other.CharacterInputHandler.enabled = false;
+            
             isPossessed = true;
         }
-
-
     }
 }

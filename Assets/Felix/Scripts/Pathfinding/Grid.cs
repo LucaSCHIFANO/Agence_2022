@@ -6,14 +6,15 @@ namespace Pathfinding
 {
     public class Grid : MonoBehaviour
     {
-        private Node[,,] grid;
+        private Node[,] grid;
+
         private float nodeDiameter;
-        private int gridSizeX, gridSizeY, gridSizeZ;
+        private int gridSizeX, gridSizeZ;
 
-        public int MaxSize => gridSizeX * gridSizeY * gridSizeZ;
+        public int MaxSize => gridSizeX * gridSizeZ;
 
-        public bool displayGrid = true;
-        public bool displayObstructed = false;
+        public bool displayGrid;
+        public bool displayObstructed;
         [Space]
         public Vector3 gridSize;
         public float nodeRadius;
@@ -24,37 +25,30 @@ namespace Pathfinding
         {
             nodeDiameter = nodeRadius * 2;
             gridSizeX = Mathf.RoundToInt(gridSize.x / nodeDiameter);
-            gridSizeY = Mathf.RoundToInt(gridSize.y / nodeDiameter);
             gridSizeZ = Mathf.RoundToInt(gridSize.z / nodeDiameter);
 
-            CreateGrid();
+            grid = CreateGrid();
         }
 
-        private void CreateGrid()
+        private Node[,] CreateGrid()
         {
-            grid = new Node[gridSizeX, gridSizeY, gridSizeZ];
-            Vector3 bottomLeft = transform.position - Vector3.right * gridSize.x / 2 - Vector3.up * gridSizeY / 2 - Vector3.forward * gridSize.z / 2;
+            Node[,] newGrid = new Node[gridSizeX, gridSizeZ];
+            Vector3 bottomLeft = transform.position - Vector3.right * gridSize.x / 2 - Vector3.forward * gridSize.z / 2;
 
             for (int x = 0; x < gridSizeX; x++)
             {
                 for (int z = 0; z < gridSizeZ; z++)
                 {
-                    for (int y = 0; y < gridSizeY; y++)
-                    {
-                        Vector3 point = bottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.up * (y * nodeDiameter + nodeRadius) + Vector3.forward * (z * nodeDiameter + nodeRadius);
-                        bool isObstructed = Physics.CheckSphere(point, nodeRadius, obstructedMask);
+                    Vector3 point = bottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (z * nodeDiameter + nodeRadius);
+                    bool isObstructed = Physics.CheckSphere(point, nodeRadius, obstructedMask);
 
-                        bool isWalkable = !isObstructed && y - 1 >= 0 && grid[x, y - 1, z].isObstructed;
+                    bool toShowGui = true; // TODO
 
-                        if (y == 0 && !isObstructed)
-                            isWalkable = true;
-                        
-                        bool toShowGui = true; // TODO
-
-                        grid[x, y, z] = new Node(isObstructed, isWalkable, point, x, y, z, toShowGui);
-                    }
+                    newGrid[x, z] = new Node(isObstructed, point, x, z, toShowGui);
                 }
             }
+
+            return newGrid;
         }
 
         public List<Node> GetNeighbourNodes(Node _node)
@@ -63,21 +57,17 @@ namespace Pathfinding
 
             for (int x = -1; x <= 1; x++)
             {
-                for (int y = -1; y <= 1; y++)
+                for (int z = -1; z <= 1; z++)
                 {
-                    for (int z = -1; z <= 1; z++)
+                    if (x == 0 && z == 0)
+                        continue;
+
+                    int checkX = _node.gridX + x;
+                    int checkZ = _node.gridZ + z;
+
+                    if (checkX >= 0 && checkX < gridSizeX && checkZ >= 0 && checkZ < gridSizeZ)
                     {
-                        if (x == 0 && y == 0 && z == 0)
-                            continue;
-
-                        int checkX = _node.gridX + x;
-                        int checkY = _node.gridY + y;
-                        int checkZ = _node.gridZ + z;
-
-                        if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY && checkZ >= 0 && checkZ < gridSizeZ)
-                        {
-                            neighbours.Add(grid[checkX, checkY, checkZ]);
-                        }
+                        neighbours.Add(grid[checkX, checkZ]);
                     }
                 }
             }
@@ -85,59 +75,121 @@ namespace Pathfinding
             return neighbours;
         }
 
+        public List<Node> PruneNeighbours(Node _currentNode, Node _destinationNode)
+        {
+            List<Node> returnNeighbours = new List<Node>();
+            
+            List<Node> neighbours = GetNeighbourNodes(_currentNode);
+
+            foreach (Node neighbour in neighbours)
+            {
+                int x = Mathf.Clamp(neighbour.gridX - _currentNode.gridX, -1, 1);
+                int y = Mathf.Clamp(neighbour.gridZ - _currentNode.gridZ, -1, 1);
+
+                Node jumpPoint = Jump(_currentNode, x, y, _destinationNode);
+                
+                if (jumpPoint != null)
+                    returnNeighbours.Add(jumpPoint);
+            }
+
+            return returnNeighbours;
+        }
+
+        private Node Jump(Node _currentNode, int _xDirection, int _yDirection, Node _destination)
+        {
+            int xJumpPosition = _currentNode.gridX + _xDirection;
+            int yJumpPosition = _currentNode.gridZ + _yDirection;
+
+            if (!IsWalkable(xJumpPosition, yJumpPosition))
+                return null;
+
+            Node jumpPoint = grid[xJumpPosition, yJumpPosition];
+
+            if (jumpPoint == _destination)
+                return jumpPoint;
+
+            // Horizontals
+            if (_xDirection != 0 && _yDirection == 0)
+            {
+                if (!IsWalkable(_currentNode.gridX, _currentNode.gridZ + 1) &&
+                    IsWalkable(_currentNode.gridX + _xDirection, _currentNode.gridZ + 1))
+                {
+                    return jumpPoint;
+                }
+                else if (!IsWalkable(_currentNode.gridX, _currentNode.gridZ - 1) &&
+                         IsWalkable(_currentNode.gridX + _xDirection, _currentNode.gridZ - 1))
+                {
+                    return jumpPoint;
+                }
+            }
+            // Verticals
+            else if (_xDirection == 0 && _yDirection != 0)
+            {
+                if (!IsWalkable(_currentNode.gridX + 1, _currentNode.gridZ) &&
+                    IsWalkable(_currentNode.gridX + 1, _currentNode.gridZ + _yDirection))
+                {
+                    return jumpPoint;
+                }
+                else if (!IsWalkable(_currentNode.gridX - 1, _currentNode.gridZ) &&
+                         IsWalkable(_currentNode.gridX - 1, _currentNode.gridZ + _yDirection))
+                {
+                    return jumpPoint;
+                }
+            }
+            // Diagonals
+            else if (_xDirection != 0 && _yDirection != 0)
+            {
+                if (!IsWalkable(_currentNode.gridX + _xDirection, _currentNode.gridZ))
+                {
+                    return jumpPoint;
+                }
+                else if (!IsWalkable(_currentNode.gridX, _currentNode.gridZ + _yDirection))
+                {
+                    return jumpPoint;
+                }
+
+                if (Jump(jumpPoint, _xDirection, 0, _destination) != null ||
+                    Jump(jumpPoint, 0, _yDirection, _destination) != null)
+                {
+                    return jumpPoint;
+                }
+            }
+
+            return Jump(jumpPoint, _xDirection, _yDirection, _destination);
+        }
+
         public Node NodeFromPoint(Vector3 _position)
         {
             float xPercentage = (_position.x + gridSize.x / 2 - transform.position.x) / gridSize.x;
-            float yPercentage = (_position.y + gridSize.y / 2 - transform.position.y) / gridSize.y;
             float zPercentage = (_position.z + gridSize.z / 2 - transform.position.z) / gridSize.z;
             xPercentage = Mathf.Clamp01(xPercentage);
-            yPercentage = Mathf.Clamp01(yPercentage);
             zPercentage = Mathf.Clamp01(zPercentage);
 
             int x = Mathf.RoundToInt((gridSizeX - 1) * xPercentage);
-            int y = Mathf.RoundToInt((gridSizeY - 1) * yPercentage);
             int z = Mathf.RoundToInt((gridSizeZ - 1) * zPercentage);
 
-            return grid[x, y, z];
+            return grid[x, z];
         }
-
-        public Node WalkableNodeFromPoint(Vector3 _position)
+        
+        public Node NodeFromPoint(Vector2 _position)
         {
             float xPercentage = (_position.x + gridSize.x / 2 - transform.position.x) / gridSize.x;
-            float yPercentage = (_position.y + gridSize.y / 2 - transform.position.y) / gridSize.y;
-            float zPercentage = (_position.z + gridSize.z / 2 - transform.position.z) / gridSize.z;
+            float yPercentage = (_position.y + gridSize.z / 2 - transform.position.z) / gridSize.z;
             xPercentage = Mathf.Clamp01(xPercentage);
             yPercentage = Mathf.Clamp01(yPercentage);
-            zPercentage = Mathf.Clamp01(zPercentage);
 
             int x = Mathf.RoundToInt((gridSizeX - 1) * xPercentage);
-            int y = Mathf.RoundToInt((gridSizeY - 1) * yPercentage);
-            int z = Mathf.RoundToInt((gridSizeZ - 1) * zPercentage);
+            int y = Mathf.RoundToInt((gridSizeZ - 1) * yPercentage);
 
-            Node rNode = grid[x, y, z];
+            return grid[x, y];
+        }
+        
+        private bool IsWalkable(int _gridX, int _gridY)
+        {
+            if (_gridX < 0 || _gridX > gridSize.x - 1 || _gridY < 0 || _gridY > gridSize.z - 1)
+                return false;
 
-            if (rNode.isObstructed)
-            {
-                for (int i = y+1; i < gridSizeY; i++)
-                {
-                    rNode = grid[x, i, z];
-
-                    if (rNode.isWalkable)
-                        break;
-                }
-            }
-            else if (!rNode.isWalkable)
-            {
-                for (int i = y-1; i >= 0; i--)
-                {
-                    rNode = grid[x, i, z];
-
-                    if (rNode.isWalkable)
-                        break;
-                }
-            }
-            
-            return rNode;
+            return !grid[_gridX, _gridY].isObstructed;
         }
 
         public Node[] OptimizedNodesFromTransform(Transform _object)
@@ -181,60 +233,50 @@ namespace Pathfinding
             List<Node> nodes = new List<Node>();
 
             int nbX = Mathf.RoundToInt(_object.localScale.x / nodeRadius / 2 + 0.5f);
-            int nbY = Mathf.RoundToInt(_object.localScale.y / nodeRadius / 2 + 0.5f);
             int nbZ = Mathf.RoundToInt(_object.localScale.z / nodeRadius / 2 + 0.5f);
-
-            for (int y = -nbY; y <= nbY; y+=nbY*2)
+            
+            for (int x = -nbX; x <= nbX; x+=nbX*2)
             {
-                for (int x = -nbX; x <= nbX; x+=nbX*2)
+                for (int z = -nbZ; z <= nbZ; z++)
                 {
-                    for (int z = -nbZ; z <= nbZ; z++)
-                    {
-                    
-                        //Node node = NodeFromPoint(new Vector3(_position.x + i * _object.localScale.x / (nbX * 2), _position.y, _position.z + w * _object.localScale.z / (nbZ * 2)));
-                        Node node = NodeFromPoint(_position + _object.right * (x * _object.localScale.x / (nbX * 2)) +
-                                                  _object.up * (y * _object.localScale.y / (nbY * 2)) +
-                                                  _object.forward * (z * _object.localScale.z / (nbZ * 2)));
+                    //Node node = NodeFromPoint(new Vector3(_position.x + i * _object.localScale.x / (nbX * 2), _position.y, _position.z + w * _object.localScale.z / (nbZ * 2)));
+                    Node node = NodeFromPoint(_position + _object.right * (x * _object.localScale.x / (nbX * 2)) +
+                                              _object.forward * (z * _object.localScale.z / (nbZ * 2)));
 
-                        if (!nodes.Contains(node))
-                            nodes.Add(node);
-                    }
+                    if (!nodes.Contains(node))
+                        nodes.Add(node);
                 }
             }
-
-            for (int y = -nbY; y <= nbY; y+=nbY*2)
+            
+            for (int z = -nbZ; z <= nbZ; z+=nbZ*2)
             {
-                for (int z = -nbZ; z <= nbZ; z+=nbZ*2)
+                for (int x = -nbX; x <= nbX; x++)
                 {
-                    for (int x = -nbX; x <= nbX; x++)
-                    {
+                
+                    //Node node = NodeFromPoint(new Vector3(_position.x + w * _object.localScale.x / (nbX * 2), _position.y, _position.z + i * _object.localScale.z / (nbZ * 2)));
+                    Node node = NodeFromPoint(_position + _object.right * (x * _object.localScale.x / (nbX * 2)) + 
+                                              _object.forward * (z * _object.localScale.z / (nbZ * 2)));
                     
-                        //Node node = NodeFromPoint(new Vector3(_position.x + w * _object.localScale.x / (nbX * 2), _position.y, _position.z + i * _object.localScale.z / (nbZ * 2)));
-                        Node node = NodeFromPoint(_position + _object.right * (x * _object.localScale.x / (nbX * 2)) + 
-                                                  _object.up * (y * _object.localScale.y / (nbY * 2)) +
-                                                  _object.forward * (z * _object.localScale.z / (nbZ * 2)));
-                        
-                        if (!nodes.Contains(node))
-                            nodes.Add(node);
-                    }
+                    if (!nodes.Contains(node))
+                        nodes.Add(node);
                 }
             }
 
             return nodes.ToArray();
         }
-        
+
         private void OnDrawGizmos()
         {
             if (Application.isPlaying)
             {
                 Gizmos.color = Color.black;
                 
-                Gizmos.DrawWireCube(transform.position, new Vector3(gridSize.x, gridSize.y, gridSize.z));
+                Gizmos.DrawWireCube(transform.position, new Vector3(gridSize.x, 1, gridSize.z));
             }
             else
             {
                 Gizmos.color = new Color(0f, 0f, 0f, 0.5f);
-                Gizmos.DrawCube(transform.position, new Vector3(gridSize.x, gridSize.y, gridSize.z));
+                Gizmos.DrawCube(transform.position, new Vector3(gridSize.x, 1, gridSize.z));
             }
             
             if (grid != null && displayGrid)
@@ -248,15 +290,12 @@ namespace Pathfinding
                         Gizmos.color = new Color(1f, 0f, 0f, 0.5f);
                     else if (n.isObstructed && !displayObstructed)
                         continue;
-                    else if (n.isWalkable)
-                        Gizmos.color = new Color(0f, 1f, 0f, 0.5f);
                     else
-                        continue;
+                        Gizmos.color = new Color(0f, 1f, 0f, 0.5f);
 
                     Gizmos.DrawCube(n.position, Vector3.one * (nodeDiameter - 0.1f));
                 }
             }
-            
         }
     }
 }

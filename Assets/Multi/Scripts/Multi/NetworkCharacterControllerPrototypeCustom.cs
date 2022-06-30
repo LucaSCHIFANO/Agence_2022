@@ -15,12 +15,15 @@ public class NetworkCharacterControllerPrototypeCustom : NetworkTransform
     public float acceleration = 10.0f;
     public float braking = 10.0f;
     public float maxSpeed = 2.0f;
-    public float rotationSpeed = 15.0f;
+    
     public float rotationSpeedX = 50f;
 
     [Networked] [HideInInspector] public bool IsGrounded { get; set; }
 
     [Networked] [HideInInspector] public Vector3 Velocity { get; set; }
+    
+    [Networked] public float rotationSpeed { get; set; }
+    
 
     /// <summary>
     /// Sets the default teleport interpolation velocity to be the CC's current velocity.
@@ -39,7 +42,24 @@ public class NetworkCharacterControllerPrototypeCustom : NetworkTransform
     protected override void Awake()
     {
         base.Awake();
-        CacheController();
+        CacheController(); 
+    }
+
+    private void Start()
+    {
+        changeSensi();
+
+    }
+
+    public void changeSensi()
+    {
+        changeSensiRpc();
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    protected void changeSensiRpc()
+    {
+        rotationSpeed = PlayerPrefs.GetFloat("Sensi");
     }
 
     public override void Spawned()
@@ -88,6 +108,7 @@ public class NetworkCharacterControllerPrototypeCustom : NetworkTransform
             Velocity = newVel;
         }
     }
+    
 
     /// <summary>
     /// Basic implementation of a character controller's movement function based on an intended direction.

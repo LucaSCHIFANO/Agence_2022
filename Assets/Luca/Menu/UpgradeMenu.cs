@@ -13,6 +13,7 @@ using Random = UnityEngine.Random;
 public class UpgradeMenu : NetworkBehaviour
 {
     public List<GameObject> screenList = new List<GameObject>();
+    public List<GameObject> screenListInRed = new List<GameObject>();
 
     private int intUpgrade = 4;
 
@@ -26,13 +27,13 @@ public class UpgradeMenu : NetworkBehaviour
     private List<int> upgradesF = new List<int>(); //upgrades forteresse en int
 
     [Header("Camion")] [SerializeField]
-    private List<Image> upgradesCVisu = new List<Image>(); //upgrades forteresse mais les visus
+    private List<Image> upgradesCVisu = new List<Image>(); //upgrades camion mais les visus
 
     [SerializeField]
-    private List<GameObject> upgradesCButton = new List<GameObject>(); //upgrades forteresse mais les buttons +
+    private List<GameObject> upgradesCButton = new List<GameObject>(); //upgrades camion mais les buttons +
 
     [SerializeField] private List<TextMeshProUGUI> listPriceC = new List<TextMeshProUGUI>();
-    private List<int> upgradesC = new List<int>(); //upgrades forteresse en int
+    [HideInInspector] public List<int> upgradesC = new List<int>(); //upgrades camion en int
 
     [Header("Weapons1")] 
     public List<WTreeButton> listAllButton1 = new List<WTreeButton>();
@@ -53,6 +54,15 @@ public class UpgradeMenu : NetworkBehaviour
 
 
     private bool sellMode;
+
+    [Header("Repair")] [SerializeField] protected HPTruck truck;
+    [SerializeField] protected TextMeshProUGUI fullText;
+    [SerializeField] protected TextMeshProUGUI partialText;
+    [SerializeField] protected float fullRepairPrice;
+    [SerializeField] protected Slider hpSlider;
+    [SerializeField] protected TextMeshProUGUI hpText;
+
+    [SerializeField] private TruckFuel fuel;
 
     #region Singleton
 
@@ -137,8 +147,19 @@ public class UpgradeMenu : NetworkBehaviour
     {
         for (int i = 0; i < screenList.Count; i++)
         {
-            if (i == lint) screenList[i].SetActive(true);
-            else screenList[i].SetActive(false);
+            
+            if (i == lint)
+            {
+                if (i != 0 && i != 1) screenListInRed[i].SetActive(true); 
+                screenList[i].SetActive(true);
+            }
+            else
+            {
+                if (i != 0 && i != 1) screenListInRed[i].SetActive(false); 
+                screenList[i].SetActive(false);
+            }
+            
+            if(i == 5) forRepair(); 
         }
 
         if (sellMode)
@@ -343,6 +364,9 @@ public class UpgradeMenu : NetworkBehaviour
 
     private void visuC()
     {
+
+        fuel.changeMaxFuel();
+
         var multi = 1;
         for (int i = 0; i < upgradesC.Count; i++)
         {
@@ -429,6 +453,40 @@ public class UpgradeMenu : NetworkBehaviour
             }else upgradeWeapon(lastUpgrade2, false);
         }
         
+    }
+
+    public void forRepair()
+    {
+        hpSlider.value = truck.currenthealth / truck.maxhealth;
+        hpText.text = truck.currenthealth + " / " + truck.maxhealth;
+
+        float prePriceFull = (truck.currenthealth / truck.maxhealth);
+        float priceFull = fullRepairPrice - (fullRepairPrice * prePriceFull);
+        float pricePartial = fullRepairPrice / 10;
+        
+        
+        fullText.text = "Full repair : " + ((int)priceFull).ToString() + " metals";
+        
+        if(priceFull > pricePartial) partialText.text = "Partial repair : " + ((int)pricePartial).ToString() + " metals";
+        else partialText.text = "Partial repair : " + ((int)priceFull).ToString() + " metals";
+    }
+    
+    public void healTruck(bool fullHeal)
+    {
+        int price1 = (int)fullRepairPrice / 10;
+        int price2 = (int)(fullRepairPrice - (fullRepairPrice * (truck.currenthealth / truck.maxhealth)));
+
+        if (fullHeal) if(price2 <= ScrapMetal.Instance.scrapLeft) ScrapMetal.Instance.addMoneyServerRpc(-price2);
+            
+        else
+        {
+            var cheap = Mathf.Min(price1, price2);
+            if(cheap <= ScrapMetal.Instance.scrapLeft) ScrapMetal.Instance.addMoneyServerRpc(-cheap);
+
+        }
+        
+        truck.heal(fullHeal);
+        forRepair();
     }
     
 
@@ -538,5 +596,10 @@ public class UpgradeMenu : NetworkBehaviour
     }
     
     #endregion
+
+    public void quitShopPanel()
+    {
+        Shop.Instance.quitShop();
+    }
 }
 

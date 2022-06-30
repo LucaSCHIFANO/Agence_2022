@@ -6,47 +6,24 @@ namespace Enemies
 {
     public class Basic : Enemy
     {
-        //[SerializeField] private LayerMask obstaclesLayerMask;
-        
-        public override void Initialization(EnemySO _enemySo)
-        {
-            base.Initialization(_enemySo);
-            
-            target = GameObject.FindWithTag("Player");
-
-            if (Runner.IsServer && target != null)
-            {
-                /*Vector3 nPos = (transform.position - target.transform.position).normalized * (range - 5) +
-                               target.transform.position;
-
-                asker.AskNewPath(nPos, speed, OnPathFound);
-                targetLastPosition = target.transform.position;*/
-            }
-        }
+        [SerializeField] private LayerMask obstaclesLayerMask;
 
         public override void FixedUpdateNetwork()
         {
             base.FixedUpdateNetwork();
-
-            if (target == null)
-            {
-                target = GameObject.FindWithTag("Player");
-                
-                return;
-            }
             
-            if (!Runner.IsServer)
+            if (!Runner.IsServer || asker == null || !isChasing)
                 return;
             
-            /*float distance = Vector3.Distance(transform.position, target.transform.position);
+            float distance = Vector3.Distance(transform.position, target.transform.position);
         
             if (distance <= range)
             {
-                foreach (WeaponBase weapon in weapons)
+                foreach (WeaponUltima weapon in weapons)
                 {
                     if (Physics.Raycast(weapon.transform.position, weapon.transform.forward, out RaycastHit hit))
                     {
-                        if (hit.collider.CompareTag("Player"))
+                        if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Car"))
                         {
                             weapon.Shoot();
                         }
@@ -54,53 +31,44 @@ namespace Enemies
                 }
             }
 
-            if (Vector3.Distance(targetLastPosition, target.transform.position) > 5 && (distance <= range - 5 || distance > range))
+            if (Vector3.Distance(targetLastPosition, target.transform.position) >= range)
             {
-                Vector3 nPos = (transform.position - target.transform.position).normalized * (range - 5) + target.transform.position;
-            
-                asker.AskNewPath(nPos, speed, OnPathFound);
+                asker.AskNewPath(FindNewPosition(), speed, null, false);
                 targetLastPosition = target.transform.position;
-            }*/
+            }
         }
 
-        public void OnPathFound(Vector3[] _points)
+        private Vector3 FindNewPosition()
         {
-            /*if (_points.Length == 0) return;
+            float distance = range / 10;
             
-            Vector3 direction = target.transform.position - _points[^1];
-
-            if (Physics.Raycast(_points[^1], direction.normalized, out RaycastHit hit, range, obstaclesLayerMask))
+            for (int i = -1; i <= 1; i += 2)
             {
-                if (hit.collider.CompareTag("Player"))
+                Vector3 dir = target.transform.right * i;
+                if (Physics.Raycast(target.transform.position, dir, out RaycastHit hit, distance, obstaclesLayerMask))
                 {
-                    print("Sniper will see player at end");
-                    return;
-                }
-            }
-            
-            direction.y = 0;
-            direction.Normalize();
-            
-            print("Sniper will not see player at end,looking for a new  position");
-
-            for (int i = 5; i < 360; i+=5)
-            {
-                float x2 = Mathf.Cos(i * direction.x) - Mathf.Sin(i*direction.z);
-                float z2 = Mathf.Sign(i * direction.x) + Mathf.Cos(i * direction.z);
-
-                Vector3 nVector = new Vector3(x2, 0, z2) * range;
-                nVector.y = target.transform.position.y;
-
-                if (Physics.Raycast(nVector, (target.transform.position - nVector).normalized, out RaycastHit hit2, range, obstaclesLayerMask))
-                {
-                    if (hit2.collider.CompareTag("Player"))
+                    if (Vector3.Distance(target.transform.position, hit.point) > range)
                     {
-                        print("Sniper found a new position where he will see player at end");
-                        asker.AskNewPath(nVector, speed, null);
-                        return;
+                        return target.transform.position + target.transform.right * i * (distance - distance / 2);
                     }
                 }
-            }*/
+                else
+                {
+                    return target.transform.position + target.transform.right * i * distance;
+                }
+            }
+
+            bool isBehind = isPointLeft(
+                new Vector2(-target.transform.right.x, -target.transform.right.z),
+                new Vector2(target.transform.right.x, target.transform.right.z),
+                new Vector2(transform.position.x, transform.position.z));
+
+            return target.transform.position + target.transform.forward * (isBehind ? -1f : 1f) * distance / 2;
+        }
+
+        private bool isPointLeft(Vector2 _a, Vector2 _b, Vector2 _point)
+        {
+            return ((_b.x - _a.x)*(_point.y - _a.y) - (_b.y - _a.y)*(_point.x - _a.x)) > 0;
         }
     }
 }

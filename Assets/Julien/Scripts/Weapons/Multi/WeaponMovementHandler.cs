@@ -19,7 +19,10 @@ public class WeaponMovementHandler : NetworkBehaviour
 
             if (input.isShooting)
             {
-                _weaponBase.Shoot();
+                if (Object.HasInputAuthority)
+                {
+                    _weaponBase.AskToShoot();
+                }
             }
 
             if (input.isExiting)

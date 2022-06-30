@@ -8,5 +8,16 @@ namespace GameUI
 		{
 			App.Instance.Session.LoadMap(MapIndex.Staging);
 		}
+
+		public void OnBackMenu()
+		{
+			App.Instance.Disconnect();
+		}
+
+		public void OnQuit()
+		{
+			App.Instance.Disconnect();
+			Application.Quit();
+		}
 	}
 }

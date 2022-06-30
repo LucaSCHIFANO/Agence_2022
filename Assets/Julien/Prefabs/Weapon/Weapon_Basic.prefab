@@ -43,9 +43,7 @@ GameObject:
   - component: {fileID: 109741272987210334}
   - component: {fileID: 109741272987210335}
   - component: {fileID: 109741272987210304}
-  - component: {fileID: 109741272987210305}
   - component: {fileID: 7475111732151002209}
-  - component: {fileID: 1877550816450224837}
   - component: {fileID: -6790107726250607592}
   - component: {fileID: 7051901382812926194}
   m_Layer: 8
@@ -122,19 +120,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &109741272987210305
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 109741272987210308}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7475111732151002209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,6 +146,7 @@ MonoBehaviour:
     type: 3}
   overHParticle: {fileID: 4395588890976388399}
   OHParticleOverTime: 2
+  allieTouret: 0
   possessor: {fileID: 0}
   isPossessed: 0
   canvas: {fileID: 0}
@@ -169,19 +155,6 @@ MonoBehaviour:
   _fireType: 0
   _spread: 1
   _numberOfShot: 1
---- !u!65 &1877550816450224837
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 109741272987210308}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 5, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-6790107726250607592
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,33 +15,36 @@ namespace Enemies
         
         protected Vector3 targetLastPosition;
 
+        protected bool isChasing;
+
         protected float speed;
-        public float range;
+        protected float range;
         protected bool isDead;
 
-        protected WeaponBase[] weapons; // WeaponSO type
-        [SerializeField] protected EnemySO enemySo; // TEMP
+        protected WeaponUltima[] weapons;
+        
+        public EnemySO EnemySo
+        {
+            get => enemySo;
+            private set => enemySo = value;
+        }
+
+        [SerializeField] protected EnemySO enemySo;
 
         [SerializeField] protected Transform[] weaponsPosition;
+
+        // For waves
+        protected NewNwWaves waves;
 
         protected void Awake()
         {
             hp = GetComponent<HPEnemy>();
         }
 
-        public override void Spawned()
-        {
-            base.Spawned();
-            
-            if (asker == null)
-            {
-                Initialization(enemySo);
-            }
-        }
-
         public virtual void Initialization(EnemySO _enemySo)
         {
             asker = GetComponent<Asker>();
+            hp = GetComponent<HPEnemy>();
 
             hp.InitializeHP(_enemySo.health);
             speed = _enemySo.speed;
@@ -70,14 +73,31 @@ namespace Enemies
                     }
                 }
 
-                weapons = new WeaponBase[weaponsObject.Length];
+                weapons = new WeaponUltima[weaponsObject.Length];
 
-                for (int i = 0; i < weaponsObject.Length; i++)
+                for (int i = 0; i < weapons.Length; i++)
                 {
-                    GameObject nWeapon = Instantiate(weaponsObject[i], weaponsPosition[i]);
-                    weapons[i] = nWeapon.GetComponent<WeaponBase>();
+                    GameObject nWeapon = Runner.Spawn(weaponsObject[i].GetComponent<NetworkObject>(), weaponsPosition[i].position, weaponsPosition[i].rotation).gameObject;
+                    nWeapon.transform.SetParent(weaponsPosition[i]);
+                    WeaponUltima weaponUltima = nWeapon.GetComponent<WeaponUltima>();
+                    weaponUltima.actuAllStats(enemySo.weaponsScriptable[i]);
+                    weaponUltima.isPossessed = false;
+                    
+                    weapons[i] = weaponUltima;
                 } 
             }
+        }
+
+        public void Chase(GameObject _target)
+        {
+            isChasing = true;
+            target = _target;
+        }
+
+        public void StopChasing(Vector3 _returnPosition)
+        {
+            isChasing = false;
+            asker.AskNewPath(_returnPosition, speed, null, false);
         }
 
         protected virtual void FixedUpdate()
@@ -85,9 +105,9 @@ namespace Enemies
             if (target == null || weapons == null)
                 return;
             
-            foreach (WeaponBase weapon in weapons)
+            foreach (WeaponUltima weapon in weapons)
             {
-                weapon.transform.LookAt(target.transform);
+                weapon.transform.LookAt(target.transform.position + new Vector3(0f, 1f, 0f));
             }
         }
 
@@ -98,7 +118,7 @@ namespace Enemies
             if (_damages < 0)
                 _damages = Mathf.Abs(_damages);
 
-            hp.reduceHP(_damages);
+            if(Object.HasInputAuthority) hp.reduceHPToServ(_damages);
         }
 
         public virtual void TakeDamage(int _damages, Vector3 _collisionPoint, Vector3 _collisionDirection)
@@ -121,6 +141,16 @@ namespace Enemies
 
             // TEMP
             Destroy(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            waves?.removeEnemy(this);
+        }
+
+        public void SetWaves(NewNwWaves _wave)
+        {
+            waves = _wave;
         }
     }
 }
