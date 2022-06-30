@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Fusion;
@@ -10,6 +11,7 @@ public class Shop : NetworkBehaviour
     [Networked] private bool isPossessed { get; set; }
     public TruckArea truckArea;
 
+    private PlayerRef _playerRef;
 
     #region Singleton
 
@@ -25,10 +27,10 @@ public class Shop : NetworkBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
+        if (Instance != null) Destroy(gameObject);
+        
+        Instance = this;
     }
-
 
 
     public void quitShop()
@@ -36,12 +38,13 @@ public class Shop : NetworkBehaviour
         _playerController.ChangeInputHandler(PossessingType.CHARACTER, gameObject);
         UpgradeMenu.Instance.gotoScreen(0);
         CanvasInGame.Instance.showShop(false);
-                
+
+        // ReactivateController(_playerRef);
         if (_playerController.Object.HasInputAuthority)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            
+
             _playerController.CharacterInputHandler.enabled = true;
             isPossessed = false;
         }
@@ -67,14 +70,33 @@ public class Shop : NetworkBehaviour
         {
             other.ChangeInputHandler(PossessingType.NONE, gameObject);
             CanvasInGame.Instance.showShop(true);
-            
+
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
             _playerController = other;
+            SetPlayerController();
+            
             isPossessed = true;
         }
-
-
     }
+
+    [Rpc(RpcSources.All, RpcTargets.All, HostMode = RpcHostMode.SourceIsHostPlayer)]
+    public void SetPlayerController(RpcInfo rpcInfo = default)
+    {
+        _playerRef = rpcInfo.Source;
+    }
+
+    /*[Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void ReactivateController([RpcTarget] PlayerRef playerRef)
+    {
+        Runner.GetPlayerObject(playerRef).GetComponent<NetworkedPlayer>()
+            .ChangeInputHandler(PossessingType.CHARACTER, gameObject);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        _playerController.CharacterInputHandler.enabled = true;
+        isPossessed = false;
+    }*/
 }

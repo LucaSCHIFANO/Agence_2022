@@ -1303,6 +1303,8 @@ MonoBehaviour:
   - {fileID: 1780717131953843799}
   - {fileID: 4304235971524839374}
   - {fileID: 8999252992053039502}
+  isOvercloaking: 0
+  overCloakeInt: 0
   overclokePourcent: 150
   overclokePourcentOther: 0
   pourcentageList: []
@@ -4412,7 +4414,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5103211548772673408}
     - target: {fileID: 1271723468641161455, guid: c2f9fad8581f66746916343fb97d60dd,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -4421,12 +4423,12 @@ PrefabInstance:
     - target: {fileID: 1271723468641161455, guid: c2f9fad8581f66746916343fb97d60dd,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: quitShop
+      value: quitShopPanel
       objectReference: {fileID: 0}
     - target: {fileID: 1271723468641161455, guid: c2f9fad8581f66746916343fb97d60dd,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Shop, Assembly-CSharp
+      value: UpgradeMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1271723468641161455, guid: c2f9fad8581f66746916343fb97d60dd,
         type: 3}

@@ -14,6 +14,8 @@ public class Player : NetworkBehaviour
 	[Networked] public Color Color { get; set; }
 	[Networked] public NetworkBool Ready { get; set; }
 	[Networked] public NetworkBool InputEnabled { get; set; }
+	
+	public double RTT { get; set; }
 
 	public override void Spawned()
 	{
