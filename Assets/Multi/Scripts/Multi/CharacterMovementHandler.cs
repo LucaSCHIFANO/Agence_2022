@@ -14,11 +14,13 @@ public class CharacterMovementHandler : NetworkBehaviour
     private float cameraRotationX;
 
     private CharacterController chara;
+    private NetworkedPlayer playe;
+    
     public bool IsMoving;
     private bool IsMovingOld;
     private bool isWasJumping;
     
-    [SerializeField] protected NetworkMecanimAnimator anim;
+    [HideInInspector] public NetworkMecanimAnimator anim;
 
     [Space(5)]
 
@@ -49,6 +51,7 @@ public class CharacterMovementHandler : NetworkBehaviour
         _networkCharacterControllerPrototypeCustom = GetComponent<NetworkCharacterControllerPrototypeCustom>();
         parts = FindObjectOfType<ReservoirParts>();
         chara = GetComponent<CharacterController>();
+        playe = GetComponent<NetworkedPlayer>();
     }
 
     // Start is called before the first frame update
@@ -67,29 +70,37 @@ public class CharacterMovementHandler : NetworkBehaviour
         
         localCamera.transform.localRotation = Quaternion.Euler(cameraRotationX, 0, 0);
 
-        if (chara.isGrounded)
+        if (!playe.IsInSomething)
         {
-            if (IsMoving && (!IsMovingOld || isWasJumping))
+            
+            if (chara.isGrounded)
             {
-                IsMovingOld = true;
-                isWasJumping = false;
-                MySetTrigger("IsMoving");
-                Debug.Log("move");
+                if (IsMoving && (!IsMovingOld || isWasJumping))
+                {
+                    IsMovingOld = true;
+                    isWasJumping = false;
+                    MySetTrigger("IsMoving");
+                }
+                else if (!IsMoving && (IsMovingOld || isWasJumping))
+                {
+                    IsMovingOld = false;
+                    isWasJumping = false;
+                    MySetTrigger("IsIdle");
+                }
             }
-            else if (!IsMoving && (IsMovingOld || isWasJumping))
+            else if (!isWasJumping)
             {
-                IsMovingOld = false;
-                isWasJumping = false;
-                MySetTrigger("IsIdle");
-                Debug.Log("idle");
+                isWasJumping = true;
+                MySetTrigger("Jump");
             }
         }
-        else if (!isWasJumping)
+        else
         {
-            isWasJumping = true;
-            MySetTrigger("Jump");
-            Debug.Log("in the air ");
+            MySetTrigger("Idle");
+            Debug.Log("second step");
         }
+
+
 
     }
 
@@ -171,4 +182,6 @@ public class CharacterMovementHandler : NetworkBehaviour
         if (Physics.Raycast(localCamera.transform.position, localCamera.transform.forward, out hit, Mathf.Infinity, partLayer)) parts.HitReservoir(hit);
 
     }
+
+
 }

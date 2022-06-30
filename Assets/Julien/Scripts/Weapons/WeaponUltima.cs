@@ -25,6 +25,8 @@ public class WeaponUltima : WeaponBase
     [SerializeField] protected float timeBtwSound;
     [SerializeField] protected float actualTimeBtwSound;
 
+    [SerializeField] protected List<GameObject> listPrefabW = new List<GameObject>();
+
 
     public enum weapon
     {
@@ -98,6 +100,23 @@ public class WeaponUltima : WeaponBase
         overHeatPourcentOnline = 0;
         _shootingTimer = 0;
         _timeCoolDown = 0;
+
+        var leInt = 0;
+        switch (SObject.wType)
+        {
+            case weapon.BASIC : leInt = 0; break;
+            case weapon.BURST : leInt = 0; break;
+            case weapon.SNIPER : leInt = 4; break;
+            case weapon.SHOTGUN : leInt = 2; break;
+            case weapon.MACHINEGUN : leInt = 3; break;
+            
+        }
+
+        for (int i = 0; i < listPrefabW.Count; i++)
+        {
+            if(i == leInt) listPrefabW[i].SetActive(true);
+            else listPrefabW[i].SetActive(false);
+        }
     }
 
     public override void Shoot()
@@ -140,7 +159,12 @@ public class WeaponUltima : WeaponBase
                             if (allieTouret)
                             {
                                 if (hp is HPPlayer || hp is HPSubTruck || hp is HPTruck) Debug.Log("friendly fire not allowed");
-                                else hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                                else
+                                {
+                                   
+                                    sound.Play("Shoot");
+                                    hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                                }
                             }
                             else
                             {
@@ -175,7 +199,11 @@ public class WeaponUltima : WeaponBase
                         if (allieTouret)
                         {
                             if (hp is HPPlayer || hp is HPSubTruck || hp is HPTruck) Debug.Log("friendly fire not allowed");
-                            else hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                            else
+                            {
+                                if(Object.StateAuthority == Runner.GetPlayerObject(Runner.LocalPlayer))sound.Play("Hit");
+                                hp.reduceHPToServ(damage * (Generator.Instance.pourcentageList[0] / 100));
+                            }
                         }
                         else
                         {
