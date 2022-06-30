@@ -116,7 +116,6 @@ public class CharacterMovementHandler : NetworkBehaviour
             if (networkInputData.isRequestingToSpawn) SpawnerVehicule.instance.SpawnCar();
 
             if (networkInputData.isRepairing) CheckLeakReapir();
-            if (networkInputData.isShooting) HarmTruck();
         }
     }
 
