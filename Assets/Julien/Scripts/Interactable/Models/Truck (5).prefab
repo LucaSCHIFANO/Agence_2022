@@ -3028,12 +3028,15 @@ MonoBehaviour:
   - {fileID: 9133890984825485082}
   - {fileID: 3931813419827711182}
   - {fileID: 6617175567376397979}
-  - {fileID: 177074283}
-  - {fileID: 1241235836}
-  - {fileID: 1364813915}
-  - {fileID: 328031017}
   - {fileID: 597431596}
+  - {fileID: 177074283}
+  - {fileID: 731943979}
+  - {fileID: 2086260453}
+  - {fileID: 328031017}
+  - {fileID: 1364813915}
+  - {fileID: 1241235836}
   - {fileID: 213025052}
+  - {fileID: 2033787668}
   - {fileID: 1051694909}
   - {fileID: 2033787668}
   - {fileID: 731943979}
@@ -4351,6 +4354,41 @@ Transform:
   m_Father: {fileID: 5458369659628322679}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 3.4, y: 0, z: 0}
+--- !u!1 &4987555241764041677
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 3216633681911002541, guid: bd3229b59b0fc354f95d7dd86e2203fe,
+    type: 3}
+  m_PrefabInstance: {fileID: 7607877588348241504}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4303309349791629583}
+  - component: {fileID: 1364813910}
+  - component: {fileID: 1364813915}
+  m_Layer: 0
+  m_Name: Placeholder for referenced GameObject in Prefab instance (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4303309349791629583
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 9223372036854775802, guid: bd3229b59b0fc354f95d7dd86e2203fe,
+    type: 3}
+  m_PrefabInstance: {fileID: 7607877588348241504}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4987555241764041677}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7934820441877275019}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5328663739150933312
 GameObject:
   m_ObjectHideFlags: 0
@@ -10139,6 +10177,76 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: 2367f3eccca72d648a9f993fdcd54cd9, type: 3}
+--- !u!1 &7603801210893800183
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: -9218098016292596585, guid: bd3229b59b0fc354f95d7dd86e2203fe,
+    type: 3}
+  m_PrefabInstance: {fileID: 7607877588348241504}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8973877258454798773}
+  - component: {fileID: 213025047}
+  - component: {fileID: 213025052}
+  m_Layer: 0
+  m_Name: Placeholder for referenced GameObject in Prefab instance (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8973877258454798773
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 9223372036854775800, guid: bd3229b59b0fc354f95d7dd86e2203fe,
+    type: 3}
+  m_PrefabInstance: {fileID: 7607877588348241504}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7603801210893800183}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7934820441877275019}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7634112533366775778
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 28513348933392770, guid: bd3229b59b0fc354f95d7dd86e2203fe,
+    type: 3}
+  m_PrefabInstance: {fileID: 7607877588348241504}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3682258489628417811}
+  - component: {fileID: 2033787663}
+  - component: {fileID: 2033787668}
+  m_Layer: 0
+  m_Name: Placeholder for referenced GameObject in Prefab instance (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3682258489628417811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 9223372036854775799, guid: bd3229b59b0fc354f95d7dd86e2203fe,
+    type: 3}
+  m_PrefabInstance: {fileID: 7607877588348241504}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7634112533366775778}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7934820441877275019}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7790192897189620699
 GameObject:
   m_ObjectHideFlags: 0
@@ -12939,12 +13047,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd3229b59b0fc354f95d7dd86e2203fe, type: 3}
---- !u!1 &2214540079805236191 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8588149137882416575, guid: bd3229b59b0fc354f95d7dd86e2203fe,
-    type: 3}
-  m_PrefabInstance: {fileID: 7607877588348241504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!64 &597431591
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12978,12 +13080,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   hptruck: {fileID: 6617175567376397979}
---- !u!1 &2817128101802445886 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -3563210084478383522, guid: bd3229b59b0fc354f95d7dd86e2203fe,
-    type: 3}
-  m_PrefabInstance: {fileID: 7607877588348241504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!64 &177074278
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13017,12 +13113,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   hptruck: {fileID: 6617175567376397979}
---- !u!1 &2898734822192075208 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4732935409749153704, guid: bd3229b59b0fc354f95d7dd86e2203fe,
-    type: 3}
-  m_PrefabInstance: {fileID: 7607877588348241504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!64 &731943974
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13056,12 +13146,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   hptruck: {fileID: 6617175567376397979}
---- !u!1 &3626194290777188701 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -2610319610255904963, guid: bd3229b59b0fc354f95d7dd86e2203fe,
-    type: 3}
-  m_PrefabInstance: {fileID: 7607877588348241504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!64 &2086260448
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13095,12 +13179,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   hptruck: {fileID: 6617175567376397979}
---- !u!1 &3951906687524581030 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -2358933572216969018, guid: bd3229b59b0fc354f95d7dd86e2203fe,
-    type: 3}
-  m_PrefabInstance: {fileID: 7607877588348241504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!64 &328031012
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13134,12 +13212,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   hptruck: {fileID: 6617175567376397979}
---- !u!1 &4987555241764041677 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3216633681911002541, guid: bd3229b59b0fc354f95d7dd86e2203fe,
-    type: 3}
-  m_PrefabInstance: {fileID: 7607877588348241504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!64 &1364813910
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13173,12 +13245,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   hptruck: {fileID: 6617175567376397979}
---- !u!1 &5860735471085246617 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4089584604409126649, guid: bd3229b59b0fc354f95d7dd86e2203fe,
-    type: 3}
-  m_PrefabInstance: {fileID: 7607877588348241504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!64 &1241235831
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13212,12 +13278,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   hptruck: {fileID: 6617175567376397979}
---- !u!1 &7603801210893800183 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -9218098016292596585, guid: bd3229b59b0fc354f95d7dd86e2203fe,
-    type: 3}
-  m_PrefabInstance: {fileID: 7607877588348241504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!64 &213025047
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13251,12 +13311,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   hptruck: {fileID: 6617175567376397979}
---- !u!1 &7634112533366775778 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 28513348933392770, guid: bd3229b59b0fc354f95d7dd86e2203fe,
-    type: 3}
-  m_PrefabInstance: {fileID: 7607877588348241504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!64 &2033787663
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13290,18 +13344,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   hptruck: {fileID: 6617175567376397979}
---- !u!4 &7934820441877275019 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bd3229b59b0fc354f95d7dd86e2203fe,
-    type: 3}
-  m_PrefabInstance: {fileID: 7607877588348241504}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8377212924147430203 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2149706442217190747, guid: bd3229b59b0fc354f95d7dd86e2203fe,
-    type: 3}
-  m_PrefabInstance: {fileID: 7607877588348241504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!64 &1051694904
 MeshCollider:
   m_ObjectHideFlags: 0
