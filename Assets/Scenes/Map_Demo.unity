@@ -1526,16 +1526,12 @@ PrefabInstance:
       value: 2561
       objectReference: {fileID: 0}
     - target: {fileID: 639639400, guid: f3066092f2cc974499dbcfba0556e878, type: 3}
-      propertyPath: NetworkedBehaviours.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 639639400, guid: f3066092f2cc974499dbcfba0556e878, type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
-      value: -627448149776212425
+      value: 8448998821717283792
       objectReference: {fileID: 0}
     - target: {fileID: 639639400, guid: f3066092f2cc974499dbcfba0556e878, type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
-      value: 4439539753420901281
+      value: 852303113671172274
       objectReference: {fileID: 0}
     - target: {fileID: 518831518953086508, guid: f3066092f2cc974499dbcfba0556e878,
         type: 3}
@@ -3640,6 +3636,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 543450653329986626, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 543450653685359875, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 1766707134442733644, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: m_Name
@@ -3780,6 +3786,11 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 205625334}
+    - target: {fileID: 6617175567376397979, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: maxHP
+      value: 10000000
+      objectReference: {fileID: 0}
     - target: {fileID: 6639255481687269755, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: canvas
@@ -3871,16 +3882,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 612347251}
     m_Modifications:
-    - target: {fileID: 3323683867169605653, guid: 048259f9db17a28489a9e9e023a9b9e8,
-        type: 3}
-      propertyPath: NetworkedBehaviours.Array.data[0]
-      value: 
-      objectReference: {fileID: 384934816}
-    - target: {fileID: 3323683867169605653, guid: 048259f9db17a28489a9e9e023a9b9e8,
-        type: 3}
-      propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
-      value: 526086367392207367
-      objectReference: {fileID: 0}
     - target: {fileID: 3323683867169605653, guid: 1c50dbbd474775b4e90949f560c96fdb,
         type: 3}
       propertyPath: Flags
@@ -3960,6 +3961,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323683867169605653, guid: 048259f9db17a28489a9e9e023a9b9e8,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 384934816}
+    - target: {fileID: 3323683867169605653, guid: 048259f9db17a28489a9e9e023a9b9e8,
+        type: 3}
+      propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
+      value: 526086367392207367
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c50dbbd474775b4e90949f560c96fdb, type: 3}
@@ -5990,41 +6001,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6194862443763125159, guid: 682d2a75842959f468e79d09e788ac8f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194862443763125163, guid: 682d2a75842959f468e79d09e788ac8f,
-        type: 3}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194862443763125163, guid: 682d2a75842959f468e79d09e788ac8f,
-        type: 3}
-      propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194862443763125163, guid: 682d2a75842959f468e79d09e788ac8f,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194862444308805060, guid: 682d2a75842959f468e79d09e788ac8f,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194862444308805060, guid: 682d2a75842959f468e79d09e788ac8f,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194862444308805060, guid: 682d2a75842959f468e79d09e788ac8f,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9faf0ba73bad0bf4e9b99b7cc22f165c,
         type: 3}
       propertyPath: m_Name
@@ -6108,17 +6084,17 @@ PrefabInstance:
     - target: {fileID: 6194862444308805060, guid: 682d2a75842959f468e79d09e788ac8f,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6194862444308805060, guid: 682d2a75842959f468e79d09e788ac8f,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6194862444308805060, guid: 682d2a75842959f468e79d09e788ac8f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 460
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 682d2a75842959f468e79d09e788ac8f, type: 3}
@@ -9046,7 +9022,7 @@ PrefabInstance:
     - target: {fileID: 3323683867169605653, guid: 1c50dbbd474775b4e90949f560c96fdb,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 3323683867169605653, guid: 1c50dbbd474775b4e90949f560c96fdb,
         type: 3}
@@ -9325,7 +9301,7 @@ PrefabInstance:
     - target: {fileID: 3323683867169605653, guid: 1c50dbbd474775b4e90949f560c96fdb,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 3323683867169605653, guid: 1c50dbbd474775b4e90949f560c96fdb,
         type: 3}
@@ -9653,7 +9629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1270292898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9671,7 +9647,7 @@ MonoBehaviour:
   DestroyWhenStateAuthorityLeaves: 0
   AllowStateAuthorityOverride: 0
   AoiPositionSource: {fileID: 0}
-  Flags: 2561
+  Flags: 133633
   NetworkGuid:
     RawGuidValue: 55f4138b33ef4a248e3964eabb8e2a35
   NestedObjects:
@@ -16463,16 +16439,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 431193265}
     m_Modifications:
-    - target: {fileID: 3323683867169605653, guid: 048259f9db17a28489a9e9e023a9b9e8,
-        type: 3}
-      propertyPath: NetworkedBehaviours.Array.data[0]
-      value: 
-      objectReference: {fileID: 2092635725}
-    - target: {fileID: 3323683867169605653, guid: 048259f9db17a28489a9e9e023a9b9e8,
-        type: 3}
-      propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
-      value: -8123508592631146742
-      objectReference: {fileID: 0}
     - target: {fileID: 3323683867169605653, guid: 1c50dbbd474775b4e90949f560c96fdb,
         type: 3}
       propertyPath: Flags
@@ -16552,6 +16518,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323683867169605653, guid: 048259f9db17a28489a9e9e023a9b9e8,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 2092635725}
+    - target: {fileID: 3323683867169605653, guid: 048259f9db17a28489a9e9e023a9b9e8,
+        type: 3}
+      propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
+      value: -8123508592631146742
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c50dbbd474775b4e90949f560c96fdb, type: 3}
@@ -17069,7 +17045,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2146507276}
+      objectReference: {fileID: 0}
     - target: {fileID: 1736842777858770341, guid: 7155ffc9e90adff42be892838432656c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName

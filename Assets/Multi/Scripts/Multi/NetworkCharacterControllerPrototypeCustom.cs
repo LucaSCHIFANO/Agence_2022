@@ -42,8 +42,13 @@ public class NetworkCharacterControllerPrototypeCustom : NetworkTransform
     protected override void Awake()
     {
         base.Awake();
-        CacheController();
+        CacheController(); 
+    }
+
+    private void Start()
+    {
         changeSensi();
+
     }
 
     public void changeSensi()
