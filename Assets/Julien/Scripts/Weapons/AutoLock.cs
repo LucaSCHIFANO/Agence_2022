@@ -11,14 +11,18 @@ public class AutoLock : NetworkBehaviour
     [SerializeField] private Vector3 maxAimOffset;
 
 
-    private List<Transform> playersTargets;
+    private List<Transform> playersTargets = new List<Transform>();
     private WeaponBase _weaponBase;
     
-    void Start()
+    public override void Spawned()
     {
-        playersTargets = new List<Transform>();
-        _weaponBase = GetComponent<WeaponBase>();
-        StartCoroutine(RefreshPlayerList());
+        base.Spawned();
+        if (Runner.IsServer)
+        {
+            playersTargets = new List<Transform>();
+            _weaponBase = GetComponent<WeaponBase>();
+            // StartCoroutine(RefreshPlayerList());
+        }
     }
 
     void Update()
@@ -82,7 +86,9 @@ public class AutoLock : NetworkBehaviour
             {
                 foreach (PlayerRef player in App.Instance.PlayerRefs)
                 {
-                    playersTargets.Add(Runner.GetPlayerObject(player).transform);
+                    playersTargets.Add(
+                        Runner.GetPlayerObject(player)
+                            .transform);
                 }
             }
 

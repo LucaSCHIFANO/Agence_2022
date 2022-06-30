@@ -34,6 +34,10 @@ public class GenPanel : NetworkBehaviour
 
     public void quitPanel()
     {
+        sendUpgradePosRpc(Generator.Instance.pourcentageListWOutChange.ToArray(), Generator.Instance.pourcentageList.ToArray());
+        //Part2Rpc(Generator.Instance.pourcentageList);
+        
+        _playerController.ChangeInputHandler(PossessingType.CHARACTER, gameObject);
         CanvasInGame.Instance.showGen(false);
         
         if (_playerController.Object.HasInputAuthority)
@@ -46,17 +50,37 @@ public class GenPanel : NetworkBehaviour
         }
 
     }
+    
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void sendUpgradePosRpc(float[] pourcent, float[] pourcentChanged)
+    {
+        var value1 = new List<float>(pourcent);
+        var value2 = new List<float>(pourcentChanged);
+        
+        Generator.Instance.pourcentageListWOutChange = value1;
+        Generator.Instance.pourcentageList = value1;
+        Generator.Instance.visuelChange();
+        
+    }
+
+    /*[Rpc(RpcSources.All, RpcTargets.All)]
+    private void Part2Rpc(List<float> pourcentChanged)
+    {
+        Generator.Instance.pourcentageList = pourcentChanged;
+        Generator.Instance.visuelChange();
+    }*/
 
 
 
     public void Interact(NetworkedPlayer other)
     {
         if (isPossessed) return;
-        
-        CanvasInGame.Instance.showGen(true);
 
         if (other.Object.HasInputAuthority)
         {
+            other.ChangeInputHandler(PossessingType.NONE, gameObject);
+            CanvasInGame.Instance.showGen(true);
+            
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 

@@ -27,13 +27,13 @@ public class UpgradeMenu : NetworkBehaviour
     private List<int> upgradesF = new List<int>(); //upgrades forteresse en int
 
     [Header("Camion")] [SerializeField]
-    private List<Image> upgradesCVisu = new List<Image>(); //upgrades forteresse mais les visus
+    private List<Image> upgradesCVisu = new List<Image>(); //upgrades camion mais les visus
 
     [SerializeField]
-    private List<GameObject> upgradesCButton = new List<GameObject>(); //upgrades forteresse mais les buttons +
+    private List<GameObject> upgradesCButton = new List<GameObject>(); //upgrades camion mais les buttons +
 
     [SerializeField] private List<TextMeshProUGUI> listPriceC = new List<TextMeshProUGUI>();
-    private List<int> upgradesC = new List<int>(); //upgrades forteresse en int
+    [HideInInspector] public List<int> upgradesC = new List<int>(); //upgrades camion en int
 
     [Header("Weapons1")] 
     public List<WTreeButton> listAllButton1 = new List<WTreeButton>();
@@ -61,6 +61,8 @@ public class UpgradeMenu : NetworkBehaviour
     [SerializeField] protected float fullRepairPrice;
     [SerializeField] protected Slider hpSlider;
     [SerializeField] protected TextMeshProUGUI hpText;
+
+    [SerializeField] private TruckFuel fuel;
 
     #region Singleton
 
@@ -362,6 +364,9 @@ public class UpgradeMenu : NetworkBehaviour
 
     private void visuC()
     {
+
+        fuel.changeMaxFuel();
+
         var multi = 1;
         for (int i = 0; i < upgradesC.Count; i++)
         {
@@ -450,7 +455,7 @@ public class UpgradeMenu : NetworkBehaviour
         
     }
 
-    void forRepair()
+    public void forRepair()
     {
         hpSlider.value = truck.currenthealth / truck.maxhealth;
         hpText.text = truck.currenthealth + " / " + truck.maxhealth;

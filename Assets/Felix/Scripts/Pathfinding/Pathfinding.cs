@@ -20,11 +20,11 @@ namespace Pathfinding
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
             
-            Vector3[] wayPoints = new Vector3[0];
+            Vector3[] wayPoints = Array.Empty<Vector3>();
             bool pathSuccess = false;
             
             Node startNode = grid.NodeFromPoint(_request.startPoint);
-            Node targetNode = grid.WalkableNodeFromPoint(_request.endPoint);
+            Node targetNode = grid.NodeFromPoint(_request.endPoint);
 
             /*Node[] optiNodes = grid.OptimizedNodesFromTransform(targetNode.position, _startTransform);
 
@@ -60,7 +60,7 @@ namespace Pathfinding
 
                     foreach (Node neighbour in grid.GetNeighbourNodes(currentNode))
                     {
-                        if (neighbour.isObstructed || !neighbour.isWalkable || closeSet.Contains(neighbour))
+                        if (neighbour.isObstructed || closeSet.Contains(neighbour))
                             continue;
 
                         /*optiNodes = grid.OptimizedNodesFromTransform(neighbour.position, _startTransform);
@@ -131,11 +131,11 @@ namespace Pathfinding
         {
             List<Vector3> waypoints = new List<Vector3>();
             
-            Vector3 oldDirection = Vector3.zero;
+            Vector2 oldDirection = Vector2.zero;
 
             for (int i = 1; i < _path.Count; i++)
             {
-                Vector3 newDirection = new Vector3(_path[i - 1].gridX - _path[i].gridX, _path[i - 1].gridY - _path[i].gridY, _path[i - 1].gridZ - _path[i].gridZ);
+                Vector2 newDirection = new Vector3(_path[i - 1].gridX - _path[i].gridX, _path[i - 1].gridZ - _path[i].gridZ);
 
                 if (newDirection != oldDirection)
                 {
@@ -151,41 +151,12 @@ namespace Pathfinding
         private int GetDistance(Node _a, Node _b)
         {
             int distX = Mathf.Abs(_a.gridX - _b.gridX);
-            int distY = Mathf.Abs(_a.gridY - _b.gridY);
             int distZ = Mathf.Abs(_a.gridZ - _b.gridZ);
 
-            if (distZ > distX && distZ > distY)
-                return distZ / 2 + distY + distX;
-            else if (distY > distX && distY > distZ)
-                return distY / 2 + distZ + distX;
-            else if (distX > distY && distY > distZ)
-                return distX / 2 + distZ + distY;
-            
-            
-            return distY + distZ + distX;
+            if (distX > distZ)
+                return 14 * distZ + 10 * (distX - distZ);
 
-            /*if (distX > distZ)
-            {
-                if (distY > distX)
-                {
-                    return 14 * distZ + 14 * distX + 10 * (distY - distZ - distX);
-                }
-                else
-                {
-                    return 14 * distZ + 14 * distY + 10 * (distX - distY - distZ);
-                }
-            }
-            else
-            {
-                if (distY > distZ)
-                {
-                    return 14 * distX + 14 * distZ + 10 * (distY - distZ - distX);
-                }
-                else
-                {
-                    return 14 * distX + 14 * distY + 10 * (distZ - distY - distZ);
-                }
-            }*/
+            return 14 * distX + 10 * (distZ - distX);
         }
     }
 }

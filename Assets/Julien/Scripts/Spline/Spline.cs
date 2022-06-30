@@ -13,6 +13,8 @@ public class Spline : SimulationBehaviour
     [SerializeField] private Transform visual;
     [SerializeField] private float movementSpeed;
     [SerializeField] private bool restartWhenEnded;
+    
+    public float getSpeed {get => movementSpeed; set => movementSpeed = value; }
 
     private float interpolateAmount;
     public int currentSegment = 0;

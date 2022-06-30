@@ -30,6 +30,8 @@ public class SoundTransmitter : MonoBehaviour
     
         public bool playOnAwake = false;
         public bool loop = false;
+        public bool in3D = true;
+        public float spatialBlend = 0;
 
         [HideInInspector]
         public AudioSource source;
@@ -45,27 +47,15 @@ public class SoundTransmitter : MonoBehaviour
             s.source.clip = s.clip;
             s.source.outputAudioMixerGroup = s.audioMixerGroup;
             
-            if (s.useRandomVolume)
-            {
-                var minim = Mathf.Max(s.volume, s.volumeRandom);
-                var max = Mathf.Min(s.volume, s.volumeRandom);
-
-                s.source.volume = Random.Range(minim, max);
-            }
-            else s.source.volume = s.volume;
+            s.source.volume = s.volume;
             
-            if (s.useRandomPitch)
-            {
-                var minim = Mathf.Max(s.pitch, s.pitchRandom);
-                var max = Mathf.Min(s.pitch, s.pitchRandom);
-
-                s.source.pitch = Random.Range(minim, max);
-            }
-            else s.source.pitch = s.pitch;
+            s.source.pitch = s.pitch;
 
             s.source.maxDistance = s.maxDistance;
             s.source.playOnAwake = s.playOnAwake;
             s.source.loop = s.loop;
+            s.source.spatialize = s.in3D;
+            s.source.spatialBlend = s.spatialBlend;
             
             if(s.playOnAwake) Play(s.name);
         }
@@ -74,6 +64,23 @@ public class SoundTransmitter : MonoBehaviour
     public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
+        
+        if (s.useRandomVolume)
+        {
+            var minim = Mathf.Max(s.volume, s.volumeRandom);
+            var max = Mathf.Min(s.volume, s.volumeRandom);
+
+            s.source.volume = Random.Range(minim, max);
+        }
+        
+        if (s.useRandomPitch)
+        {
+            var minim = Mathf.Max(s.pitch, s.pitchRandom);
+            var max = Mathf.Min(s.pitch, s.pitchRandom);
+
+            s.source.pitch = Random.Range(minim, max);
+        }
+        
         s.source.Play();
     }
 

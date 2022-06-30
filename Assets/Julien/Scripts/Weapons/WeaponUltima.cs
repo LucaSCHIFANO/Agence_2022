@@ -16,11 +16,18 @@ public class WeaponUltima : WeaponBase
     [SerializeField] protected float spread;
     [SerializeField] protected int numberOfShot;
     [SerializeField] protected float damage;
-    
+
     [SerializeField] protected GameObject particleFire;
     [SerializeField] protected WScriptable startingWeapon;
-    
-    
+
+    [SerializeField] protected AudioClip audioClip;
+
+    [SerializeField] protected float timeBtwSound;
+    [SerializeField] protected float actualTimeBtwSound;
+
+    [SerializeField] protected List<GameObject> listPrefabW = new List<GameObject>();
+
+
     public enum weapon
     {
         BASIC,
@@ -43,7 +50,7 @@ public class WeaponUltima : WeaponBase
     public override void FixedUpdateNetwork()
     {
         base.FixedUpdateNetwork();
-        
+
         if (actualWeapon == weapon.BASIC || actualWeapon == weapon.BURST)
         {
             if (isShooting && isPossessed)
@@ -53,14 +60,19 @@ public class WeaponUltima : WeaponBase
         }
     }
 
+    public override void Update()
+    {
+        base.Update();
+        actualTimeBtwSound -= Time.deltaTime;
+    }
 
     public void actuAllStats(WScriptable SObject)
     {
-        if (Object == null) return;
-        
+        if (Object == null || SObject == null) return;
+
         WeaponInteractable interactable = GetComponent<WeaponInteractable>();
         if (interactable != null) interactable.weaponName = SObject.turretName;
-        
+
         _fireRate = SObject.fireRate;
         _bulletToOverHeat = SObject.bulletToOverheat;
         _coolDownPerSecond = SObject.coolDownPerSecond;
@@ -71,11 +83,16 @@ public class WeaponUltima : WeaponBase
         fireType = SObject.fType;
         maxDistance = SObject.maxDistanceRayCast;
         shootParticle = SObject.shootingEffect;
-        
-        
+
+
         spread = SObject.spread;
         numberOfShot = SObject.numberOfShots;
         damage = SObject.damage;
+        audioClip = SObject.weaponSound;
+        if (sound != null && audioClip != null)
+            sound.sounds[0].clip = audioClip;
+
+        timeBtwSound = SObject.timeBtwSound;
 
         _isOverHeat = false;
         _isCoolDown = false;
@@ -83,6 +100,23 @@ public class WeaponUltima : WeaponBase
         overHeatPourcentOnline = 0;
         _shootingTimer = 0;
         _timeCoolDown = 0;
+
+        var leInt = 0;
+        switch (SObject.wType)
+        {
+            case weapon.BASIC: leInt = 0; break;
+            case weapon.BURST: leInt = 0; break;
+            case weapon.SNIPER: leInt = 4; break;
+            case weapon.SHOTGUN: leInt = 2; break;
+            case weapon.MACHINEGUN: leInt = 3; break;
+
+        }
+
+        for (int i = 0; i < listPrefabW.Count; i++)
+        {
+            if (i == leInt) listPrefabW[i].SetActive(true);
+            else listPrefabW[i].SetActive(false);
+        }
     }
 
     public override void Shoot()
@@ -90,13 +124,19 @@ public class WeaponUltima : WeaponBase
         if (Object == null) return;
         if (!Runner.IsServer) return;
         if (actualWeapon == weapon.BASIC || actualWeapon == weapon.BURST) isShooting = true;
-        
+
         if (_shootingTimer > 0) return;
         if (_isOverHeat) return;
-        
+
         base.Shoot();
-        
-        
+
+        if (actualTimeBtwSound <= 0)
+        {
+            ShootSoundRpc();
+            actualTimeBtwSound = timeBtwSound;
+        }
+
+
         if (fireType == WeaponFireType.Hitscan)
         {
             ShootEffectClientRpc();
@@ -108,7 +148,7 @@ public class WeaponUltima : WeaponBase
                     RaycastHit hit;
                     Vector3 shootingDir = Quaternion.Euler(Random.Range(-spread, spread), Random.Range(-spread, spread),
                         Random.Range(-spread, spread)) * _shootingPoint.forward;
-                    
+
                     if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance))
                     {
 
@@ -132,12 +172,12 @@ public class WeaponUltima : WeaponBase
                             FindObjectOfType<CharacterMovementHandler>().HarmTruck(hit); //TODO: Change
                         else
                         {
-                            BulletEffectClientRpc(hit.point);
+                            BulletEffectClientRpc(hit.point, hit.collider.tag);
                         }
                     }
                 }
             }
-            
+
             else
             {
                 RaycastHit hit;
@@ -160,16 +200,16 @@ public class WeaponUltima : WeaponBase
                         }
                         else
                         {
-                            if ((hp is HPPlayer || hp is HPSubTruck|| hp is HPTruck)) hp.reduceHPToServ(damage);
+                            if ((hp is HPPlayer || hp is HPSubTruck || hp is HPTruck)) hp.reduceHPToServ(damage);
                         }
 
 
                     }
-                    else if (hit.collider.gameObject.layer == 10) 
+                    else if (hit.collider.gameObject.layer == 10)
                         FindObjectOfType<CharacterMovementHandler>().HarmTruck(hit); //TODO: Change
                     else
                     {
-                        BulletEffectClientRpc(hit.point);
+                        BulletEffectClientRpc(hit.point, hit.collider.tag);
                     }
                 }
             }
@@ -193,24 +233,25 @@ public class WeaponUltima : WeaponBase
                 _shootingTimer = 1 / _fireRate;
                 isShooting = false;
             }
-        }else _shootingTimer = 1 / _fireRate;
+        }
+        else _shootingTimer = 1 / _fireRate;
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     protected override void ShootBulletClientRpc()
     {
         // if(IsOwner) return;
-        
-        if(fireType == WeaponFireType.Projectile) shootWeaponBullet();
-        
-        
+
+        if (fireType == WeaponFireType.Projectile) shootWeaponBullet();
+
+
     }
 
 
@@ -218,16 +259,18 @@ public class WeaponUltima : WeaponBase
     {
         switch (actualWeapon)
         {
-            case weapon.BASIC: case weapon.BURST : case weapon.MACHINEGUN :
+            case weapon.BASIC:
+            case weapon.BURST:
+            case weapon.MACHINEGUN:
                 Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation * Quaternion.Euler(new Vector3(Random.Range(-spread, spread),
                     Random.Range(-spread, spread), Random.Range(-spread, spread))));
                 break;
-            
-            case weapon.FLAMETHROWER :
+
+            case weapon.FLAMETHROWER:
                 Instantiate(particleFire, _shootingPoint.position, _shootingPoint.rotation);
                 break;
-            
-            case weapon.SHOTGUN :
+
+            case weapon.SHOTGUN:
                 for (int i = 0; i < numberOfShot; i++)
                 {
                     Instantiate(_bulletPrefab, _shootingPoint.position,
@@ -235,12 +278,13 @@ public class WeaponUltima : WeaponBase
                             Random.Range(-spread, spread), Random.Range(-spread, spread))));
                 }
                 break;
-            
-            case weapon.SNIPER : case weapon.TESLA :
+
+            case weapon.SNIPER:
+            case weapon.TESLA:
                 Instantiate(_bulletPrefab, _shootingPoint.position, _shootingPoint.rotation);
                 break;
 
         }
     }
-    
+
 }

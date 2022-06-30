@@ -25,10 +25,12 @@ public class ReservoirParts : MonoBehaviour
 
         public void GetHit(float value, RaycastHit hitPoint, GameObject hitGo)
         {
+            Debug.Log("PART HIT");
             if (isLeaking) { return; }
             curResistance -= value;
             if (curResistance <= 0)
             {
+                Debug.Log("NO RES");
                 isLeaking = true;
                 App.Instance.Session.Runner.Spawn(leakPrefab, hitPoint.point, Quaternion.Euler(hitPoint.normal), onBeforeSpawned : (runner, obj) => {
                     leak = obj;
@@ -42,6 +44,7 @@ public class ReservoirParts : MonoBehaviour
                     {
                         l.Damage = f.AddConstDamage(l.DamageName);
                     }
+                    Debug.Log("PART LEAK");
                 });
             }
         }
@@ -77,10 +80,11 @@ public class ReservoirParts : MonoBehaviour
 
     public void HitReservoir(RaycastHit hit)
     {
+        Debug.Log("RECEIVE HIT");
         foreach (Part part in parts)
         {
             BoxCollider c = part.col as BoxCollider;
-            if (hit.collider != null && hit.collider == c) part.GetHit(5, hit, c.gameObject);
+            if (hit.collider != null && hit.collider == c) { Debug.Log("SEND HIT"); part.GetHit(5, hit, c.gameObject); }
         }
     }
 

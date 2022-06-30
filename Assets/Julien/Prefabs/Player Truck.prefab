@@ -6985,7 +6985,8 @@ MonoBehaviour:
   - {fileID: 0}
   dust: {fileID: 2994571205460733185}
   minimSpeedToDust: 50
-  fire: {fileID: 7796902470171349842}
+  particleImpact: []
+  pourcentageImpact: []
   controlMode: 1
   activeControl: 1
   Reverse: 0
@@ -7376,7 +7377,6 @@ MonoBehaviour:
   _currentHP: 0
   impactEffect: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
     type: 3}
-  pourcentageCritique: 30
 --- !u!114 &5346935273172696601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8090,12 +8090,6 @@ PrefabInstance:
 --- !u!4 &6898775566631682381 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8800583660555424535, guid: b703fd20d4caf1b4daf425f435cfb3bc,
-    type: 3}
-  m_PrefabInstance: {fileID: 2710230078720741978}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &7796902470171349842 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5307635754755113224, guid: b703fd20d4caf1b4daf425f435cfb3bc,
     type: 3}
   m_PrefabInstance: {fileID: 2710230078720741978}
   m_PrefabAsset: {fileID: 0}

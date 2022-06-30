@@ -6,6 +6,8 @@ using UnityEngine;
 public class HPBoss : HP
 {
     public GameObject impactEffect;
+    [SerializeField] protected ParticleSystem dust;
+    [SerializeField] protected WinRef winReference;
     
     public override void reduceHPToServ(float damage)
     {
@@ -19,16 +21,20 @@ public class HPBoss : HP
         
         if (currentHP <= 0)
         {
-            RPC_ShowCursor();
-            App.Instance.Session.LoadMap(MapIndex.Win);
+            RPC_EndBoss();
+            //App.Instance.Session.LoadMap(MapIndex.Win);
         }
     }
     
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_ShowCursor()
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void RPC_EndBoss()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        
+        dust.Stop();
+        WinManager _winReference = winReference.Acquire();
+        _winReference.callTheEnd();
     }
     
     [Rpc(RpcSources.All, RpcTargets.All)]

@@ -20,6 +20,13 @@ public class TruckPhysics : TruckBase
     
     [SerializeField] private List<ParticleSystem> particleImpact = new List<ParticleSystem>();
     [SerializeField] private List<float> pourcentageImpact = new List<float>();
+    [SerializeField] private TruckReference Reference;
+    [SerializeField] private List<Transform> _respawnPoints;
+
+    public List<Transform> RespawnPoints
+    {
+        get => _respawnPoints;
+    }
 
     [SerializeField] private float timeToStart;
 
@@ -326,7 +333,7 @@ public class TruckPhysics : TruckBase
 
     void Awake()
     {
-
+        (Reference as IReferenceHead<TruckPhysics>).Set(this);
         if (carSetting.automaticGear) NeutralGear = false;
 
         myRigidbody = transform.GetComponent<Rigidbody>();
@@ -388,6 +395,19 @@ public class TruckPhysics : TruckBase
     {
         yield return new WaitForSeconds(timeToStart);
         Started = true;
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    void AskStarded()
+    {
+        Started = true;
+    }
+
+    public void onExit()
+    {
+        carSounds.IdleEngine.Stop();
+        carSounds.HighEngine.Stop();
+        carSounds.LowEngine.Stop();
     }
 
     #endregion
