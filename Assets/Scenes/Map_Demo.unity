@@ -2840,6 +2840,11 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 205625334}
+    - target: {fileID: 6617175567376397979, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: maxHP
+      value: 1000000
+      objectReference: {fileID: 0}
     - target: {fileID: 6639255481687269755, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: canvas
@@ -3093,12 +3098,6 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &441151067 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 441151067, guid: f97c49aa221ddd141a8d7faf4c699dce,
-    type: 3}
-  m_PrefabInstance: {fileID: 353842810}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &452967807
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7782,7 +7781,7 @@ MonoBehaviour:
   bossVisual: {fileID: 1313894158}
   camera: {fileID: 72605844}
   truckVisual: {fileID: 353842813}
-  camera2: {fileID: 441151067}
+  camera2: {fileID: 0}
   timeBtwExplosion: {x: 0.25, y: 0.75}
   plusOuMoins: {x: -1, y: 5}
   explosion: {fileID: 3280915942492169377, guid: 5b0b906fe4b94ab4e9900272da41dc09,
@@ -9716,7 +9715,7 @@ PrefabInstance:
     - target: {fileID: 4461469335234737447, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
       propertyPath: damage
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4461469335234737447, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
@@ -9742,6 +9741,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _coolDownPerSecond
       value: 50000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461469335234737447, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: ignoreLayer.m_Bits
+      value: 4096
       objectReference: {fileID: 0}
     - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
