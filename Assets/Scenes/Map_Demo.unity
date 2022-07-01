@@ -3435,12 +3435,12 @@ PrefabInstance:
     - target: {fileID: 543450653329986626, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: m_RootOrder
-      value: 26
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 543450653685359875, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: m_RootOrder
-      value: 25
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 1766707134435982014, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
@@ -3636,6 +3636,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.473
+      objectReference: {fileID: 0}
+    - target: {fileID: 6855683791000344704, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: constantDamageType.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6855683791000344704, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: constantDamageType.Array.data[0].damageName
+      value: Leak
+      objectReference: {fileID: 0}
+    - target: {fileID: 6855683791000344704, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: constantDamageType.Array.data[0].isPersistant
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6855683791000344704, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: constantDamageType.Array.data[0].damagePercentagePerSecond
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7490717165535407015, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
@@ -3876,7 +3896,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 157a5e18786250e4bbf7d13bdaae25b4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 24
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 157a5e18786250e4bbf7d13bdaae25b4,
         type: 3}
