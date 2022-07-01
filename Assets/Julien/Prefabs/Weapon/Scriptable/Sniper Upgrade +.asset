@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8fe74749fed9de84b847ce6488762201, type: 3}
-  m_Name: Sniper Upgrade
+  m_Name: Sniper Upgrade +
   m_EditorClassIdentifier: 
   turretName: Sniper
   fireRate: 1
   bulletToOverheat: 1
-  coolDownPerSecond: 65
+  coolDownPerSecond: 60
   timeBeforeCoolDown: 0
   mainColor: {r: 0.2392157, g: 0.86666673, b: 0.19215688, a: 1}
   overHeatColor: {r: 0, g: 0.2627451, b: 0.027450982, a: 1}
@@ -26,6 +26,6 @@ MonoBehaviour:
     type: 3}
   spread: 0
   numberOfShots: 0
-  damage: 20
+  damage: 30
   weaponSound: {fileID: 8300000, guid: bbdccdcd0c1c01d478a6d3c0355a1638, type: 3}
   timeBtwSound: 0
