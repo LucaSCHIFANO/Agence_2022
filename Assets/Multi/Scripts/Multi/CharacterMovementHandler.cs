@@ -45,6 +45,8 @@ public class CharacterMovementHandler : NetworkBehaviour
     private void Awake()
     {
         _networkCharacterControllerPrototypeCustom = GetComponent<NetworkCharacterControllerPrototypeCustom>();
+        playe = GetComponent<NetworkedPlayer>();
+        chara = GetComponent<CharacterController>();
     }
 
     // Start is called before the first frame update
