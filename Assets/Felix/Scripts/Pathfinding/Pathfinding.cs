@@ -2,13 +2,26 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace Pathfinding
 {
     public class Pathfinding : MonoBehaviour
     {
         private Grid grid;
+
+        public struct ThreadingPath
+        {
+            public PathRequest request;
+            public Action<PathResult> callback;
+            public bool isAstar;
+        }
+
+        public List<ThreadingPath> tPath = new List<ThreadingPath>();
+
+        public static Thread mainThread;
 
         private void Awake()
         {
@@ -17,13 +30,31 @@ namespace Pathfinding
 
         public void FindPath(PathRequest _request, Action<PathResult> _callback, bool _isAStar)
         {
-            if (_isAStar)
+            tPath.Add(new ThreadingPath{request = _request, callback = _callback, isAstar = _isAStar});
+            mainThread = Thread.CurrentThread;
+        }
+
+        public void IteratePath()
+        {
+            while (true)
             {
-                FindPathAStar(_request, _callback);
-            }
-            else
-            {
-                FindPathJPS(_request, _callback);
+                if (tPath.Count <= 0)
+                {
+                    Thread.Sleep(500);
+                    Debug.Log(mainThread == Thread.CurrentThread ? "Same thread" : "Not same thread");
+                    continue;
+                }
+
+                if (tPath[0].isAstar)
+                {
+                    FindPathAStar(tPath[0].request, tPath[0].callback);
+                }
+                else
+                {
+                    FindPathJPS(tPath[0].request, tPath[0].callback);
+                }
+
+                tPath.Remove(tPath[0]);
             }
         }
         

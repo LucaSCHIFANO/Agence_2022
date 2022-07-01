@@ -13,10 +13,22 @@ namespace Pathfinding
 
         private Queue<PathResult> results = new Queue<PathResult>();
 
+        private Thread t;
+
         private void Awake()
         {
             instance = this;
             pathfinding = GetComponent<Pathfinding>();
+        }
+
+        private void Start()
+        {
+            ThreadStart threadStart = delegate
+            {
+                pathfinding.IteratePath();
+            };
+            t = new Thread(threadStart);
+            t.Start();
         }
 
         private void Update()
@@ -37,12 +49,7 @@ namespace Pathfinding
 
         public static void RequestPath(PathRequest _request, bool _isAStar)
         {
-            ThreadStart threadStart = delegate
-            {
-                instance.pathfinding.FindPath(_request, instance.FinishedProcessingPath, _isAStar);
-            };
-            Thread t = new Thread(threadStart);
-            t.Start();
+            instance.pathfinding.FindPath(_request, instance.FinishedProcessingPath, _isAStar);
         }
 
         public void FinishedProcessingPath(PathResult _pathResult)
@@ -51,6 +58,11 @@ namespace Pathfinding
             {
                 results.Enqueue(_pathResult);
             }
+        }
+
+        private void OnApplicationQuit()
+        {
+            t.Abort();
         }
     }
     
