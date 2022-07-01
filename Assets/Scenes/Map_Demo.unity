@@ -509,7 +509,7 @@ PrefabInstance:
     - target: {fileID: 5290944184768339658, guid: 475bebb759406aa499bc50725c716f76,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 5290944184768339658, guid: 475bebb759406aa499bc50725c716f76,
         type: 3}
@@ -1759,6 +1759,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -1817,7 +1822,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -1860,6 +1865,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Kamikaze (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -1919,7 +1929,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -2037,6 +2047,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -2095,7 +2110,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -2241,7 +2256,7 @@ PrefabInstance:
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
@@ -2257,6 +2272,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sniper (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403682534012146080, guid: 9a9e32a70e4fb6b409c139647336c8a3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6403682534012146084, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
@@ -2604,7 +2624,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -3515,7 +3535,7 @@ PrefabInstance:
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
@@ -3531,6 +3551,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sniper (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403682534012146080, guid: 9a9e32a70e4fb6b409c139647336c8a3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6403682534012146084, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
@@ -3793,13 +3818,43 @@ PrefabInstance:
     - target: {fileID: 543450653329986626, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 543450653685359875, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 18
       objectReference: {fileID: 0}
+    - target: {fileID: 1711813855399636781, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 092a1356c570ebe42ad4056694aaa0e4, type: 2}
+    - target: {fileID: 1711813855399636781, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_Materials.Array.data[7]
+      value: 
+      objectReference: {fileID: 2100000, guid: b61d2a1502785804282710b780abf9eb, type: 2}
+    - target: {fileID: 1711813855399636781, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_Materials.Array.data[8]
+      value: 
+      objectReference: {fileID: 2100000, guid: b61d2a1502785804282710b780abf9eb, type: 2}
+    - target: {fileID: 1711813855618883180, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 092a1356c570ebe42ad4056694aaa0e4, type: 2}
+    - target: {fileID: 1711813855618883180, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_Materials.Array.data[7]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7af1b86b01afa984590e01d01d54c734, type: 2}
+    - target: {fileID: 1711813855618883180, guid: f97c49aa221ddd141a8d7faf4c699dce,
+        type: 3}
+      propertyPath: m_Materials.Array.data[8]
+      value: 
+      objectReference: {fileID: 2100000, guid: b61d2a1502785804282710b780abf9eb, type: 2}
     - target: {fileID: 1766707134435982014, guid: f97c49aa221ddd141a8d7faf4c699dce,
         type: 3}
       propertyPath: carSetting.brakePower
@@ -4132,80 +4187,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c30717b6025f94491a64858ef8ffa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &376763538
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 2104968015}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 157a5e18786250e4bbf7d13bdaae25b4,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 157a5e18786250e4bbf7d13bdaae25b4,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.1519928
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 157a5e18786250e4bbf7d13bdaae25b4,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.9347725
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 157a5e18786250e4bbf7d13bdaae25b4,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.076999664
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 157a5e18786250e4bbf7d13bdaae25b4,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 157a5e18786250e4bbf7d13bdaae25b4,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 157a5e18786250e4bbf7d13bdaae25b4,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 157a5e18786250e4bbf7d13bdaae25b4,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 157a5e18786250e4bbf7d13bdaae25b4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 157a5e18786250e4bbf7d13bdaae25b4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 157a5e18786250e4bbf7d13bdaae25b4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 157a5e18786250e4bbf7d13bdaae25b4,
-        type: 3}
-      propertyPath: m_Name
-      value: SocleDesArmes
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 157a5e18786250e4bbf7d13bdaae25b4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 157a5e18786250e4bbf7d13bdaae25b4, type: 3}
 --- !u!1001 &382696184
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4217,6 +4198,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Kamikaze
+      objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -4276,7 +4262,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -4409,7 +4395,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &420582936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4427,7 +4413,7 @@ MonoBehaviour:
   DestroyWhenStateAuthorityLeaves: 0
   AllowStateAuthorityOverride: 0
   AoiPositionSource: {fileID: 0}
-  Flags: 2561
+  Flags: 133633
   NetworkGuid:
     RawGuidValue: 76a717d2390d4d84b537c7ff0da362a6
   NestedObjects:
@@ -5050,6 +5036,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3996402}
     m_Modifications:
+    - target: {fileID: 1414305089494747835, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3579213555381976242, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
       propertyPath: InterpolationSpace
@@ -5761,6 +5752,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Basic
       objectReference: {fileID: 0}
+    - target: {fileID: 3975719529546811569, guid: 475bebb759406aa499bc50725c716f76,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3975719529546811573, guid: 475bebb759406aa499bc50725c716f76,
         type: 3}
       propertyPath: m_RootOrder
@@ -5819,7 +5815,7 @@ PrefabInstance:
     - target: {fileID: 5290944184768339658, guid: 475bebb759406aa499bc50725c716f76,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 5290944184768339658, guid: 475bebb759406aa499bc50725c716f76,
         type: 3}
@@ -5908,6 +5904,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -5966,7 +5967,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -6009,6 +6010,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Kamikaze (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -6068,7 +6074,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -6877,6 +6883,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -6935,7 +6946,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -7048,6 +7059,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Basic
       objectReference: {fileID: 0}
+    - target: {fileID: 3975719529546811569, guid: 475bebb759406aa499bc50725c716f76,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3975719529546811573, guid: 475bebb759406aa499bc50725c716f76,
         type: 3}
       propertyPath: m_RootOrder
@@ -7106,7 +7122,7 @@ PrefabInstance:
     - target: {fileID: 5290944184768339658, guid: 475bebb759406aa499bc50725c716f76,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 5290944184768339658, guid: 475bebb759406aa499bc50725c716f76,
         type: 3}
@@ -7148,7 +7164,7 @@ PrefabInstance:
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
@@ -7164,6 +7180,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sniper
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403682534012146080, guid: 9a9e32a70e4fb6b409c139647336c8a3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6403682534012146084, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
@@ -7357,6 +7378,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Weapon_N (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 4332460894668131283, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4332460895376048081, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -7445,7 +7471,7 @@ PrefabInstance:
     - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 5038244686413396802, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
@@ -7699,6 +7725,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -7757,7 +7788,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -7988,7 +8019,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -8287,6 +8318,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -8345,7 +8381,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -8456,7 +8492,7 @@ PrefabInstance:
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
@@ -8644,6 +8680,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3996402}
     m_Modifications:
+    - target: {fileID: 3302403940701185125, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3579213555381976242, guid: ebb70dc5fecceca49940f2910c67ecd0,
         type: 3}
       propertyPath: InterpolationSpace
@@ -8921,6 +8962,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -8979,7 +9025,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -9357,6 +9403,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -9415,7 +9466,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -9921,6 +9972,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -9979,7 +10035,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -10191,6 +10247,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -10249,7 +10310,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -10395,6 +10456,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -10453,7 +10519,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -10576,7 +10642,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1270292898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10594,7 +10660,7 @@ MonoBehaviour:
   DestroyWhenStateAuthorityLeaves: 0
   AllowStateAuthorityOverride: 0
   AoiPositionSource: {fileID: 0}
-  Flags: 2561
+  Flags: 133633
   NetworkGuid:
     RawGuidValue: 55f4138b33ef4a248e3964eabb8e2a35
   NestedObjects:
@@ -10658,7 +10724,7 @@ PrefabInstance:
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
@@ -10674,6 +10740,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sniper
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403682534012146080, guid: 9a9e32a70e4fb6b409c139647336c8a3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6403682534012146084, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
@@ -11299,7 +11370,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1319724033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11317,7 +11388,7 @@ MonoBehaviour:
   DestroyWhenStateAuthorityLeaves: 0
   AllowStateAuthorityOverride: 0
   AoiPositionSource: {fileID: 0}
-  Flags: 2561
+  Flags: 133633
   NetworkGuid:
     RawGuidValue: ef4b069010d3488b8c76cb9ab1e68dd7
   NestedObjects:
@@ -11559,7 +11630,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1361775272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11577,7 +11648,7 @@ MonoBehaviour:
   DestroyWhenStateAuthorityLeaves: 0
   AllowStateAuthorityOverride: 0
   AoiPositionSource: {fileID: 0}
-  Flags: 2561
+  Flags: 133633
   NetworkGuid:
     RawGuidValue: d381975797604a1682391e2715ecb4dc
   NestedObjects:
@@ -12871,6 +12942,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -12929,7 +13005,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -13418,7 +13494,7 @@ PrefabInstance:
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
@@ -13434,6 +13510,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sniper
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403682534012146080, guid: 9a9e32a70e4fb6b409c139647336c8a3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6403682534012146084, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
@@ -13527,7 +13608,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1528684635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13545,7 +13626,7 @@ MonoBehaviour:
   DestroyWhenStateAuthorityLeaves: 0
   AllowStateAuthorityOverride: 0
   AoiPositionSource: {fileID: 0}
-  Flags: 2561
+  Flags: 133633
   NetworkGuid:
     RawGuidValue: 1eb759a7afa141dc80ca4553bf39b43c
   NestedObjects:
@@ -14758,6 +14839,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -14816,7 +14902,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -15305,6 +15391,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -15363,7 +15454,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -15406,6 +15497,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Kamikaze
+      objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -15465,7 +15561,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -15633,6 +15729,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -15691,7 +15792,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -15978,7 +16079,7 @@ PrefabInstance:
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
@@ -15994,6 +16095,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sniper (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403682534012146080, guid: 9a9e32a70e4fb6b409c139647336c8a3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6403682534012146084, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
@@ -16220,6 +16326,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -16278,7 +16389,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -16321,6 +16432,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Kamikaze (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -16380,7 +16496,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -16444,6 +16560,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -16502,7 +16623,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -16630,6 +16751,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -16688,7 +16814,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -16930,7 +17056,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -17442,7 +17568,7 @@ PrefabInstance:
     - target: {fileID: 5290944184768339658, guid: 475bebb759406aa499bc50725c716f76,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 5290944184768339658, guid: 475bebb759406aa499bc50725c716f76,
         type: 3}
@@ -17484,7 +17610,7 @@ PrefabInstance:
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
@@ -17500,6 +17626,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sniper
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403682534012146080, guid: 9a9e32a70e4fb6b409c139647336c8a3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6403682534012146084, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
@@ -17588,6 +17719,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -17646,7 +17782,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -17779,6 +17915,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -17837,7 +17978,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -17892,6 +18033,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Kamikaze (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -17951,7 +18097,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -18374,6 +18520,11 @@ PrefabInstance:
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
       value: -7185252690666955638
       objectReference: {fileID: 0}
+    - target: {fileID: 8864089089388875640, guid: ebb70dc5fecceca49940f2910c67ecd0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6935165382737472116, guid: ebb70dc5fecceca49940f2910c67ecd0, type: 3}
     - {fileID: 8079274123542673255, guid: ebb70dc5fecceca49940f2910c67ecd0, type: 3}
@@ -18463,6 +18614,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Basic
       objectReference: {fileID: 0}
+    - target: {fileID: 3975719529546811569, guid: 475bebb759406aa499bc50725c716f76,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3975719529546811573, guid: 475bebb759406aa499bc50725c716f76,
         type: 3}
       propertyPath: m_RootOrder
@@ -18521,7 +18677,7 @@ PrefabInstance:
     - target: {fileID: 5290944184768339658, guid: 475bebb759406aa499bc50725c716f76,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 5290944184768339658, guid: 475bebb759406aa499bc50725c716f76,
         type: 3}
@@ -18634,6 +18790,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Basic
       objectReference: {fileID: 0}
+    - target: {fileID: 3975719529546811569, guid: 475bebb759406aa499bc50725c716f76,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3975719529546811573, guid: 475bebb759406aa499bc50725c716f76,
         type: 3}
       propertyPath: m_RootOrder
@@ -18692,7 +18853,7 @@ PrefabInstance:
     - target: {fileID: 5290944184768339658, guid: 475bebb759406aa499bc50725c716f76,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 5290944184768339658, guid: 475bebb759406aa499bc50725c716f76,
         type: 3}
@@ -18818,7 +18979,7 @@ PrefabInstance:
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 2783173147021232091, guid: 9a9e32a70e4fb6b409c139647336c8a3,
         type: 3}
@@ -19176,12 +19337,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e5e83d8757e7e841a0479d2f2da3546, type: 3}
---- !u!4 &2104968015 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7879574448218091112, guid: f97c49aa221ddd141a8d7faf4c699dce,
-    type: 3}
-  m_PrefabInstance: {fileID: 353842810}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2118311907 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4860650480643067721, guid: ebb70dc5fecceca49940f2910c67ecd0,
@@ -19205,7 +19360,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2126677276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19223,7 +19378,7 @@ MonoBehaviour:
   DestroyWhenStateAuthorityLeaves: 0
   AllowStateAuthorityOverride: 0
   AoiPositionSource: {fileID: 0}
-  Flags: 2561
+  Flags: 133633
   NetworkGuid:
     RawGuidValue: c8c909f2e5d949d8bcec50d74168c35c
   NestedObjects:
@@ -19301,6 +19456,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kamikaze
       objectReference: {fileID: 0}
+    - target: {fileID: 3283644992054455800, guid: f4300997f775b2f4aad3e729514866a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283644992054455804, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: m_RootOrder
@@ -19359,7 +19519,7 @@ PrefabInstance:
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 6039463251192118147, guid: f4300997f775b2f4aad3e729514866a5,
         type: 3}
@@ -19637,7 +19797,7 @@ PrefabInstance:
     - target: {fileID: 5103211548772673411, guid: 7155ffc9e90adff42be892838432656c,
         type: 3}
       propertyPath: startScrap
-      value: 20
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 5891317641868352293, guid: 7155ffc9e90adff42be892838432656c,
         type: 3}
