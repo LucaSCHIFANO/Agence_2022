@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +22,11 @@ namespace Pathfinding
 
         public LayerMask obstructedMask;
 
+        private void OnEnable()
+        {
+            gridPosition = transform.position;
+        }
+        
         private void Awake()
         {
             nodeDiameter = nodeRadius * 2;
