@@ -80,6 +80,8 @@ GameObject:
   - component: {fileID: 5290944184768339658}
   - component: {fileID: 749038038119365332}
   - component: {fileID: 992528566979537324}
+  - component: {fileID: 8612855579509217608}
+  - component: {fileID: 6322555585631985807}
   m_Layer: 11
   m_Name: Basic
   m_TagString: Untagged
@@ -198,7 +200,19 @@ MonoBehaviour:
   _currentHP: 0
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8612855579509217608}
+        m_TargetAssemblyTypeName: Dropper, Assembly-CSharp
+        m_MethodName: DropperDied
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   impactEffect: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
     type: 3}
 --- !u!114 &5290944184768339658
@@ -225,6 +239,8 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 8533861803138868755}
   - {fileID: 749038038119365332}
+  - {fileID: 8612855579509217608}
+  - {fileID: 6322555585631985807}
   SimulationBehaviours: []
 --- !u!114 &749038038119365332
 MonoBehaviour:
@@ -281,6 +297,47 @@ MonoBehaviour:
     in3D: 1
     spatialBlend: 0
     source: {fileID: 0}
+--- !u!114 &8612855579509217608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3975719529546811569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0381fedc46450e4995d62cdedd17651, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  _dropsList:
+  - _dropName: Drop
+    _dropObject: 0
+    _spawnedDropPrefab: {fileID: 0}
+    _ammountDropped: 100
+    _dropChance: 0.75
+    _addFuel: 1
+    _addScrap: 1
+  _truckReference: {fileID: 11400000, guid: e9aab27ce2c17d545be0d41ba6367da5, type: 2}
+--- !u!114 &6322555585631985807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3975719529546811569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307ca7dc288d0a74e82414be0de3a3fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  enemySo: {fileID: 11400000, guid: 655036a823493e84d9f6b82443254296, type: 2}
+  weaponsPosition:
+  - {fileID: 1145703160081904013}
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &7591031818662086679
 GameObject:
   m_ObjectHideFlags: 0

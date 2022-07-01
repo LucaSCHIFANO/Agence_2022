@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 6039463251192118147}
   - component: {fileID: 1213808337590804381}
   - component: {fileID: 1692057243373260005}
+  - component: {fileID: 215014956387356727}
   m_Layer: 11
   m_Name: Kamikaze
   m_TagString: Untagged
@@ -185,7 +186,19 @@ MonoBehaviour:
   _currentHP: 0
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 215014956387356727}
+        m_TargetAssemblyTypeName: Dropper, Assembly-CSharp
+        m_MethodName: DropperDied
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   impactEffect: {fileID: 2117361076564832419, guid: dcde325c6dc36fc49b3d955de38765ab,
     type: 3}
 --- !u!114 &6039463251192118147
@@ -213,6 +226,7 @@ MonoBehaviour:
   - {fileID: 8250723391134801721}
   - {fileID: 7841629485651723098}
   - {fileID: 1213808337590804381}
+  - {fileID: 215014956387356727}
   SimulationBehaviours: []
 --- !u!114 &1213808337590804381
 MonoBehaviour:
@@ -269,6 +283,28 @@ MonoBehaviour:
     in3D: 1
     spatialBlend: 0
     source: {fileID: 0}
+--- !u!114 &215014956387356727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3283644992054455800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0381fedc46450e4995d62cdedd17651, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  _dropsList:
+  - _dropName: Drop
+    _dropObject: 0
+    _spawnedDropPrefab: {fileID: 0}
+    _ammountDropped: 200
+    _dropChance: 0.25
+    _addFuel: 1
+    _addScrap: 1
+  _truckReference: {fileID: 11400000, guid: e9aab27ce2c17d545be0d41ba6367da5, type: 2}
 --- !u!1 &8351236494682713438
 GameObject:
   m_ObjectHideFlags: 0
