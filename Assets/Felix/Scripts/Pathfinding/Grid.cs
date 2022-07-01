@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +6,8 @@ namespace Pathfinding
     public class Grid : MonoBehaviour
     {
         private Node[,] grid;
+
+        private Vector3 gridPosition;
 
         private float nodeDiameter;
         private int gridSizeX, gridSizeZ;
@@ -21,11 +22,18 @@ namespace Pathfinding
 
         public LayerMask obstructedMask;
 
+        private void OnEnable()
+        {
+            gridPosition = transform.position;
+        }
+        
         private void Awake()
         {
             nodeDiameter = nodeRadius * 2;
             gridSizeX = Mathf.RoundToInt(gridSize.x / nodeDiameter);
             gridSizeZ = Mathf.RoundToInt(gridSize.z / nodeDiameter);
+
+            gridPosition = transform.position;
 
             grid = CreateGrid();
         }
@@ -160,8 +168,8 @@ namespace Pathfinding
 
         public Node NodeFromPoint(Vector3 _position)
         {
-            float xPercentage = (_position.x + gridSize.x / 2 - transform.position.x) / gridSize.x;
-            float zPercentage = (_position.z + gridSize.z / 2 - transform.position.z) / gridSize.z;
+            float xPercentage = (_position.x + gridSize.x / 2 - gridPosition.x) / gridSize.x;
+            float zPercentage = (_position.z + gridSize.z / 2 - gridPosition.z) / gridSize.z;
             xPercentage = Mathf.Clamp01(xPercentage);
             zPercentage = Mathf.Clamp01(zPercentage);
 
@@ -173,8 +181,8 @@ namespace Pathfinding
         
         public Node NodeFromPoint(Vector2 _position)
         {
-            float xPercentage = (_position.x + gridSize.x / 2 - transform.position.x) / gridSize.x;
-            float yPercentage = (_position.y + gridSize.z / 2 - transform.position.z) / gridSize.z;
+            float xPercentage = (_position.x + gridSize.x / 2 - gridPosition.x) / gridSize.x;
+            float yPercentage = (_position.y + gridSize.z / 2 - gridPosition.z) / gridSize.z;
             xPercentage = Mathf.Clamp01(xPercentage);
             yPercentage = Mathf.Clamp01(yPercentage);
 
@@ -271,12 +279,12 @@ namespace Pathfinding
             {
                 Gizmos.color = Color.black;
                 
-                Gizmos.DrawWireCube(transform.position, new Vector3(gridSize.x, 1, gridSize.z));
+                Gizmos.DrawWireCube(gridPosition, new Vector3(gridSize.x, 1, gridSize.z));
             }
             else
             {
                 Gizmos.color = new Color(0f, 0f, 0f, 0.5f);
-                Gizmos.DrawCube(transform.position, new Vector3(gridSize.x, 1, gridSize.z));
+                Gizmos.DrawCube(gridPosition, new Vector3(gridSize.x, 1, gridSize.z));
             }
             
             if (grid != null && displayGrid)

@@ -33,7 +33,7 @@ namespace Enemies
             {
                 Vector3 nPos = (transform.position - target.transform.position).normalized * (range - range / 10) + target.transform.position;
             
-                asker.AskNewPath(nPos, speed, OnPathFound, false);
+                asker.AskNewPath(nPos, speed, OnPathFound, true);
                 targetLastPosition = target.transform.position;
             }
         }

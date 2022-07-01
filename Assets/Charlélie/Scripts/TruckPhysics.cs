@@ -554,7 +554,7 @@ public class TruckPhysics : TruckBase
 
     public override void FixedUpdateNetwork()
     {
-        Debug.Log(currentGear);
+        // Debug.Log(currentGear);
         base.FixedUpdateNetwork();
         if (GetInput(out VehiculeInputData input))
         {
@@ -731,7 +731,7 @@ public class TruckPhysics : TruckBase
             //accel = -accel;
             if (speed < 1.0f && braking)
             {
-                Debug.Log("STOP BACK");
+                // Debug.Log("STOP BACK");
                 Backward = false;
                 Reverse = false;
                 
@@ -985,7 +985,7 @@ public class TruckPhysics : TruckBase
                     bool WGrounded = false;
 
 
-                    for (int i = 0; i < carSetting.hitGround.Length; i++)
+                    /*for (int i = 0; i < carSetting.hitGround.Length; i++)
                     {
 
                         //if (hit.collider.CompareTag(carSetting.hitGround[i].tag))
@@ -1007,7 +1007,7 @@ public class TruckPhysics : TruckBase
                         }
 
 
-                    }
+                    }*/
 
 
 
@@ -1102,7 +1102,7 @@ public class TruckPhysics : TruckBase
             {
                 if (!brake && accel == 0)
                 {
-                    Debug.Log("HEEEERE");
+                    // Debug.Log("HEEEERE");
                     col.brakeTorque = carSetting.brakePower / 5;
                 }
                 else if (Mathf.Abs(col.rpm) > Mathf.Abs(wantedRPM))
@@ -1143,7 +1143,7 @@ public class TruckPhysics : TruckBase
 
                 debugs.MotorTorque = col.motorTorque;
                 debugs.Accel = accel;
-                Debug.Log(throttle);
+                // Debug.Log(throttle);
                 debugs.BreakTorque = col.brakeTorque;
             }
 

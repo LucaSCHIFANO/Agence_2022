@@ -6,12 +6,15 @@ using Fusion;
 public class Leak : NetworkBehaviour
 {
     [SerializeField] private GameObject _decal;
+    [SerializeField] private GameObject _vfxFuelLeak;
     [SerializeField] private string damageName;
     public string DamageName { get => damageName; set => damageName = value; }
     public ReservoirParts.Part Part { get; set; }
     public TruckFuel.ConstantDamageType Damage { get => damage; set => damage = value; }
     private TruckFuel.ConstantDamageType damage;
 
+    public GameObject VFXFuelLeak { get => _vfxFuelLeak; set => _vfxFuelLeak = value; }
+    
     public override void Spawned()
     {
         

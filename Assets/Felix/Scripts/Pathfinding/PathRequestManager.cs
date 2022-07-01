@@ -41,7 +41,8 @@ namespace Pathfinding
             {
                 instance.pathfinding.FindPath(_request, instance.FinishedProcessingPath, _isAStar);
             };
-            threadStart.Invoke();
+            Thread t = new Thread(threadStart);
+            t.Start();
         }
 
         public void FinishedProcessingPath(PathResult _pathResult)

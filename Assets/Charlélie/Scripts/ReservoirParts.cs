@@ -27,6 +27,7 @@ public class ReservoirParts : MonoBehaviour
         {
             if (isLeaking) { return; }
             curResistance -= value;
+            Debug.Log(hitGo + " was hit");
             if (curResistance <= 0)
             {
                 isLeaking = true;
@@ -34,9 +35,11 @@ public class ReservoirParts : MonoBehaviour
                     leak = obj;
                     obj.transform.SetParent(hitGo.transform);
                     obj.transform.forward = -hitPoint.normal;
-                    obj.GetComponent<Leak>().Part = this;
-                    leakPos = hitPoint.point;
                     Leak l = obj.GetComponent<Leak>();
+                    l.Part = this;
+                    leakPos = hitPoint.point;
+                    Debug.DrawRay(hitPoint.point, hitPoint.normal, Color.black, 10f);
+                    l.VFXFuelLeak.transform.LookAt(hitPoint.point + hitPoint.normal);
                     TruckFuel[] t = FindObjectsOfType<TruckFuel>(); //TO CHANGE
                     foreach (TruckFuel f in t)
                     {
@@ -77,6 +80,7 @@ public class ReservoirParts : MonoBehaviour
 
     public void HitReservoir(RaycastHit hit)
     {
+        Debug.Log("You hit a part");
         foreach (Part part in parts)
         {
             BoxCollider c = part.col as BoxCollider;

@@ -33,7 +33,7 @@ namespace Enemies
 
             if (Vector3.Distance(targetLastPosition, target.transform.position) >= range)
             {
-                asker.AskNewPath(FindNewPosition(), speed, null, false);
+                asker.AskNewPath(FindNewPosition(), speed, null, true);
                 targetLastPosition = target.transform.position;
             }
         }
