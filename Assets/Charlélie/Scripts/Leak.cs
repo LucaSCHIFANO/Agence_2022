@@ -40,7 +40,6 @@ public class Leak : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
     void OnDoneRepairRpc()
     {
-        Debug.Log("HERE");
         TruckFuel[] t = FindObjectsOfType<TruckFuel>(); //TO CHANGE
         foreach (TruckFuel f in t)
         {

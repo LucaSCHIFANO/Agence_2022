@@ -28,6 +28,7 @@ public class WeaponUltima : WeaponBase
     [SerializeField] protected List<GameObject> listPrefabW = new List<GameObject>();
 
     [SerializeField] LayerMask leakLayer;
+    [SerializeField] LayerMask ignoreLayer;
 
     ReservoirParts parts;
 
@@ -153,7 +154,7 @@ public class WeaponUltima : WeaponBase
                     Vector3 shootingDir = Quaternion.Euler(Random.Range(-spread, spread), Random.Range(-spread, spread),
                         Random.Range(-spread, spread)) * _shootingPoint.forward;
 
-                    if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance))
+                    if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance, ~ignoreLayer))
                     {
 
                         // Instantiate(bulletEffect, , transform.rotation);
@@ -192,7 +193,7 @@ public class WeaponUltima : WeaponBase
                 Debug.DrawRay(_shootingPoint.position, shootingDir * 1000, Color.red, 10);
                 // LagCompensatedHit hit;
                 // Runner.LagCompensation.Raycast(_shootingPoint.position, shootingDir, 100, Object.InputAuthority, out hitComp) <- Only check if enemy are hit
-                if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance))
+                if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance, ~ignoreLayer))
                 {
                     Debug.Log((hit.collider));
                     // Instantiate(bulletEffect, , transform.rotation);
