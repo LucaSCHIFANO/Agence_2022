@@ -199,7 +199,7 @@ public class WeaponUltima : WeaponBase
                 // Runner.LagCompensation.Raycast(_shootingPoint.position, shootingDir, 100, Object.InputAuthority, out hitComp) <- Only check if enemy are hit
                 if (Physics.Raycast(_shootingPoint.position, shootingDir, out hit, maxDistance))
                 {
-                    Debug.Log((hit.collider));
+                    Debug.Log(hit.collider.gameObject.layer + " layer");
                     // Instantiate(bulletEffect, , transform.rotation);
 
                     if (hit.collider.gameObject.TryGetComponent(out HP hp))
@@ -220,7 +220,7 @@ public class WeaponUltima : WeaponBase
 
 
                     }
-                    else if (hit.collider.gameObject.layer == 10)
+                    else if (hit.collider.gameObject.layer == 9)
                     {
                         parts.HitReservoir(hit);
                     }
