@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fe74749fed9de84b847ce6488762201, type: 3}
+  m_Name: Sniper
+  m_EditorClassIdentifier: 
+  turretName: Sniper
+  fireRate: 1
+  bulletToOverheat: 1
+  coolDownPerSecond: 70
+  timeBeforeCoolDown: 0
+  mainColor: {r: 0.2392157, g: 0.86666673, b: 0.19215688, a: 1}
+  overHeatColor: {r: 0, g: 0.2627451, b: 0.027450982, a: 1}
+  wType: 5
+  fType: 0
+  maxDistanceRayCast: 100
+  shootingEffect: {fileID: 7131023055154786762, guid: 5eb2935ee30b45244b0a52e720afbdfe,
+    type: 3}
+  spread: 0
+  numberOfShots: 0
+  damage: 10
+  weaponSound: {fileID: 8300000, guid: bbdccdcd0c1c01d478a6d3c0355a1638, type: 3}
+  timeBtwSound: 0
